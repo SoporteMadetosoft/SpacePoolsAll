@@ -27,14 +27,14 @@ export const Select = ({
         }
     }
 
-    const options = () => {
-        if (typeof field_options === 'object') {
-            return field_options
-        } else {
-            const {[types[field_options]]: result} = useSelector(state => state[field_options])
-            return result
-        }
-    }
+    // const options = () => {
+    //     if (typeof field_options === 'object') {
+    //         return field_options
+    //     } else {
+    //         const {[types[field_options]]: result} = useSelector(state => state[field_options])
+    //         return result
+    //     }
+    // }
 
     
     return (
@@ -45,7 +45,7 @@ export const Select = ({
                 name={field_name}
                 className={field_className}
                 placeholder={field_placeholder}
-                options={options()}
+                // options={options()}
                 value={field_value}
                 onChange={handleSelectValue}
             />

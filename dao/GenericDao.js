@@ -80,6 +80,28 @@ class GenericDao {
         })
     }
 
+    multipleAccess = async (data, obj, id, foreign) => {
+        const idsDb =await obj.findAllId(id, foreign)
+        const idsForm = []
+        data.forEach( element => {
+            if (typeof obj.unMountBase == 'function') { element =  obj.unMountBase(element) }
+            const action = 'id' in element ? 'update' : 'insert'
+
+            if (action === 'insert') { 
+                element[foreign] = id 
+            }else{
+                idsForm.push(element.id)
+            }
+
+            obj[action](element)
+        })
+        const diff = idsDb.filter(x => !idsForm.includes(x))
+        
+        diff.forEach(id => {
+            obj.deleteById(id)
+        })
+    }
+
     #formatUpdate (params){
         let update=''
         Object.entries(params).forEach(element => {
@@ -101,6 +123,16 @@ class GenericDao {
         return obj.value
     }
 
+    datetimeToDate(date) {
+        if (date !== null) {
+            let month = date.getMonth() + 1
+            let year = date.getFullYear()
+            month = month >= 10 ? month : '0' + month
+            let dt = date.getDate()
+            dt = dt >= 10 ? dt : '0' + dt
+            return (year + '-' + month + '-' + dt)
+        }
+    }
 
 }
 

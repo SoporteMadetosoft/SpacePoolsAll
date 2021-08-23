@@ -66,7 +66,7 @@ class CustomerDao extends GenericDao {
             idCustomerActivity: await this.createSelect(activity.base),
             idCustomerOrigin: await this.createSelect(origin.base),
             addresses: await this.CustomerAddressDao.findByCustomerId(data.id),
-            contactPersons: await this.CustomerContactPersonDao.findByCustomerId(data.id)
+            contacts: await this.CustomerContactPersonDao.findByCustomerId(data.id)
         }
         return new Customer(customer)
     }
@@ -120,7 +120,7 @@ class CustomerDao extends GenericDao {
     async createSelect(obj){
         let obj2 = {}
         obj2.value = obj.id
-        obj2.label = obj.comercialName
+        obj2.label = obj.name
         return obj2
     }
 

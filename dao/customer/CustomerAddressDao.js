@@ -34,7 +34,6 @@ class CustomerAddressDao extends GenericDao{
     async mountObj(data) {
         const type =await this.addressTypesDao.findById(data.addressType)
         const docs = {
-            _id: '0',
             ...data,
             addressType: await this.addressTypesDao.createSelect(await type.base)
         }

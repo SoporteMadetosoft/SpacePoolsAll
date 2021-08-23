@@ -48,13 +48,17 @@ exports.insert = async (req, res) => {
 
         /** INSERT CUSTOMER */
         const customer = req.body.form
+        const addresses = req.body.form.addresses
+        const contacts = req.body.form.contacts
+        console.log(req.body.form)
         delete customer.addresses
         delete customer.contacts
         const insert = await customerDao.insert(customer)
         /** INSERT ADDRESSES**/
-        customerDao.multipleAccess(req.body.form.addresses, customerDao.CustomerAddressDao, insert.insertId, 'idCustomer')
+        
+        customerDao.multipleAccess(addresses, customerDao.CustomerAddressDao, insert.insertId, 'idCustomer')
         /** INSERT CONTACT PERSONS**/
-        customerDao.multipleAccess(req.body.form.contacts, customerDao.centerContactPersonDao, insert.insertId, 'idCustomer')
+        customerDao.multipleAccess(contacts, customerDao.CustomerContactPersonDao, insert.insertId, 'idCustomer')
 
         res.json({ ok: true })
     } catch (error) {

@@ -1,5 +1,4 @@
 class ContactPerson {
-    _id
     id
     name
     phone
@@ -11,7 +10,6 @@ class ContactPerson {
     department = []
 
     constructor({ id, name, phone, email, charge, startSchedule, endSchedule, defaultContact, department }) {
-        this._id = '0'
         this.id = id
         this.name = name
         this.phone = phone

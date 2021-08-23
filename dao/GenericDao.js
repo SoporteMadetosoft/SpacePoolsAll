@@ -40,6 +40,23 @@ class GenericDao {
         })
     }
 
+    findAllId(id, foreign) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT id FROM ?? WHERE ?? = ?', [this.auxModel.table, foreign, id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    let idList = []
+                    for (const res of result) {
+                        idList.push(res.id)
+                    }
+
+                    resolve(idList)
+                }
+            });
+        })
+    }
+
     /**Delete from databse, returns the id on the success **/
     deleteById(id) {
         return new Promise((resolve, reject) => {
@@ -81,9 +98,10 @@ class GenericDao {
     }
 
     multipleAccess = async (data, obj, id, foreign) => {
-        const idsDb =await obj.findAllId(id, foreign)
+        const idsDb = await obj.findAllId(id, foreign)
         const idsForm = []
-        data.forEach( element => {
+        const d = data
+        d.forEach( element => {
             if (typeof obj.unMountBase == 'function') { element =  obj.unMountBase(element) }
             const action = 'id' in element ? 'update' : 'insert'
 
@@ -105,7 +123,7 @@ class GenericDao {
     #formatUpdate (params){
         let update=''
         Object.entries(params).forEach(element => {
-            if(element[0]!='id' && element[0]!='_id'){
+            if(element[0]!='id'){
                 update= update.concat("`",element[0], "` = ", "'" ,element[1],"', ")
             }
         });
@@ -119,7 +137,7 @@ class GenericDao {
         return obj2
     }
 
-    async undoSelect(obj){
+    undoSelect(obj){
         return obj.value
     }
 

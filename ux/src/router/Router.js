@@ -189,6 +189,7 @@ const Router = () => {
   const dispatch = useDispatch()
 
 useEffect( () => {
+  dispatch(startAddSelectOptions('/setup/general/department', 'departmentOpt'))
   dispatch(startAddSelectOptions('/setup/general/paymentMethod', 'paymentMethodOpt'))
   dispatch(startAddSelectOptions('/global/payday', 'paymentDayOpt'))
   dispatch(startAddSelectOptions('/setup/customers/origin', 'customerOriginOpt'))

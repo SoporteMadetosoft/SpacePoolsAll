@@ -96,7 +96,6 @@ const DocumentsForm = ({ position }) => {
                 {/* <button 
                     name={`url`} 
                     className="btn btn-primary"
-                    onClick={() => { console.log('hey') } }
                 > 
                     <FontAwesomeIcon icon={ faCloudDownloadAlt } /> 
                 </button> */}

@@ -27,6 +27,10 @@ export const CustomerFormScreen = () => {
     
     const dispatch = useDispatch()
     const history = useHistory()
+
+    useEffect(() => {
+        dispatch( initNormalForm(structureForm) )
+    }, [initNormalForm])
     
     const { normalForm, selectReducer } = useSelector(state => state)
     const form = useSelector(state => state.normalForm)
@@ -42,9 +46,9 @@ export const CustomerFormScreen = () => {
         email,
         accountNumber,
         observations,
-        payDay,
-        mode,
-        status,
+        idPayDay,
+        idMode,
+        idStatus,
         idLanguage,
         idPaymentMethod,
         idCustomerOrigin,
@@ -67,10 +71,6 @@ export const CustomerFormScreen = () => {
 
 
     const customerName = normalForm.comercialName ? normalForm.comercialName : title
-    
-    useEffect(() => {
-        dispatch( initNormalForm(structureForm) )
-    }, [cleanSelectOptions, initNormalForm])
 
     useEffect(() => {
         if (id) {
@@ -114,13 +114,13 @@ export const CustomerFormScreen = () => {
         const prettyForm = {
             ...form,
             idPaymentMethod: form.idPaymentMethod.value,
-            payDay: form.payDay.value,
+            idPayDay: form.idPayDay.value,
             idCustomerOrigin: form.idCustomerOrigin.value,
             idCustomerType: form.idCustomerType.value,
             idCustomerActivity: form.idCustomerActivity.value,
             idCustomerCategory: form.idCustomerCategory.value,
-            mode: form.mode.value,
-            status: form.status.value,
+            idMode: form.idMode.value,
+            idStatus: form.idStatus.value,
             idLanguage: form.idLanguage.value,
             addresses: [...addressesPretty],
             contacts: [...contactPretty]
@@ -219,10 +219,10 @@ export const CustomerFormScreen = () => {
                     <div className="col-md-2">
                         <label className="control-label">Día de pago</label>
                         <Select
-                            name="payDay"
+                            name="idPayDay"
                             options={ paymentDayOpt }
-                            value={payDay}
-                            onChange={ (value) => { handleSelectChange('payDay', value) }}
+                            value={idPayDay}
+                            onChange={ (value) => { handleSelectChange('idPayDay', value) }}
                         />
                     </div>
                     
@@ -277,21 +277,21 @@ export const CustomerFormScreen = () => {
                     <div className="col-md-2">
                         <label className="control-label">Modo</label>
                         <Select
-                            name="mode"
+                            name="idMode"
                             placeholder="Modo"
                             options={ modeOpt }
-                            value={mode}
-                            onChange={ (value) => { handleSelectChange('mode', value) }}
+                            value={idMode}
+                            onChange={ (value) => { handleSelectChange('idMode', value) }}
                         />
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">Estado</label>
                         <Select
-                            name="status"
+                            name="idStatus"
                             placeholder="Estado"
                             options={ statusOpt }
-                            value={status}
-                            onChange={ (value) => { handleSelectChange('status', value) }}
+                            value={idStatus}
+                            onChange={ (value) => { handleSelectChange('idStatus', value) }}
                         />
                     </div>
                     <div className="col-md-2">

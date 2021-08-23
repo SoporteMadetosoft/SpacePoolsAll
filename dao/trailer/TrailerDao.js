@@ -27,7 +27,6 @@ class TrailerDao extends GenericDao{
             status: await this.createSelect(status.base),
             model: await this.createSelect(model.base)
         }
-        console.log(trailer)
         return new Trailer(trailer)
     }
 

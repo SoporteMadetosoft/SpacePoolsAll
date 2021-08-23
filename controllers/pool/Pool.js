@@ -73,7 +73,7 @@ exports.update = (req, res) => {
 
     try {
         /** UPDATE POOL */
-        console.log(req.body)
+        
         poolDao.update(req.body.formData.base)
        
         res.json({ ok: true })

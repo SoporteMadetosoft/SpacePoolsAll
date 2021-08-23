@@ -62,7 +62,7 @@ exports.insert = async (req, res) => {
         const insert = await itemDao.insert(req.body.formData.base)
         /** INSERT ITEM */
         req.body.repairs.forEach(element => {
-            element.vendorId = insert.insertId
+            element.idVendor = insert.insertId
             addressDao.insert(element)
         });
         res.json({ ok: true })

@@ -27,33 +27,38 @@ class VendorDao extends GenericDao {
     }
 
     async mountObj(data) {
-        const vendorType = await this.VendorType.findById(data.vendorType)
-        const paymentMethod = await this.PaymentMethodDao.findById(data.paymentMethod)
-        const status = await this.StatusDao.findById(data.status)
+        const vendorType = await this.VendorType.findById(data.idVendorType)
+        const paymentMethod = await this.PaymentMethodDao.findById(data.idPaymentMethod)
+        const status = await this.StatusDao.findById(data.idStatus)
 
         const vendor = {
             ...data,
-            contact: await this.ContactDao.findByVendorId(data.id),
-            address: await this.AddressDao.findByVendorId(data.id),
-            purchase: await this.PurchaseDao.findByVendorId(data.id),
-            vendorType: await this.createSelect(vendorType.base),
-            paymentMethod: await this.createSelect(paymentMethod.base),
-            status: await this.createSelect(status.base)
+            contacts: await this.ContactDao.findByVendorId(data.id),
+            addresses: await this.AddressDao.findByVendorId(data.id),
+            idVendorType: await this.createSelect(vendorType.base),
+            idPaymentMethod: await this.createSelect(paymentMethod.base),
+            idStatus: await this.createSelect(status.base)
             
         }
-        console.log(vendor)
         return new Vendor(vendor)
+    }
+
+    async createSelect(obj){
+        let obj2 = {}
+        obj2.value = obj.id
+        obj2.label = obj.name
+        return obj2
     }
 
     async mountList(data) {
         const contact = await this.ContactDao.findMainContactById(data.id)
         const list = {
             ...data,
-            contactName: contact != undefined ? contact.name : '',
-            contactPhone: contact != undefined ? contact.phone : '',
+            ContactName: contact != undefined ? contact.name : '',
+            ContactPhone: contact != undefined ? contact.phone : '',
         }
-        const{vendorCode, comercialName, CIF, phone, email, contactName, contactPhone} =list
-        const nObj = {vendorCode :vendorCode, comercialName :comercialName, CIF: CIF, phone : phone, email: email , contactName:contactName, contactPhone:contactPhone}
+        const {id, vendorCode, comercialName, CIF, phone, email, ContactName, ContactPhone} = list
+        const nObj = {id: id, vendorCode :vendorCode, comercialName :comercialName, CIF: CIF, phone : phone, email: email , contactName:ContactName, contactPhone:ContactPhone}
         return nObj
     }
 

@@ -13,8 +13,9 @@ export const VendorsForm = (id) => {
     const { normalForm, selectReducer } = useSelector(state => state)
 
     const {
+        vendorCode,
         comercialName,
-        cif,
+        CIF,
         socialReason,
         phone,
         email,
@@ -47,7 +48,17 @@ export const VendorsForm = (id) => {
         <>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
-                    <div className="col-md-3">
+                    <div className="col-md-2">
+                        <label className="control-label">Nº Proveedor</label>
+                        <input
+                            className="form-control"
+                            name="vendorCode"
+                            placeholder="Nº Proveedor"
+                            value={vendorCode}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className="col-md-4">
                         <label className="control-label">Nombre Comercial</label>
                         <input
                             className="form-control"
@@ -63,7 +74,7 @@ export const VendorsForm = (id) => {
                             className="form-control"
                             name="CIF"
                             placeholder="C.I.F."
-                            value={cif}
+                            value={CIF}
                             onChange={handleInputChange}
                         />
                     </div>
@@ -98,33 +109,33 @@ export const VendorsForm = (id) => {
 
                         />
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                         <label className="control-label">Forma de pago</label>
                         <Select
                             name="idPaymentMethod"
                             placeholder="Forma de pago"
                             options={ paymentMethodOpt }
-                            defaultValue={idPaymentMethod}
+                            value={idPaymentMethod}
                             onChange={ (value) => { handleSelectChange('idPaymentMethod', value) }}
                         />
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                         <label className="control-label">Tipo de proveedor</label>
                         <Select
                             name="idVendorType"
                             placeholder="Tipo de proveedor"
                             options={ vendorTypesOpt }
-                            defaultValue={idVendorType}
+                            value={idVendorType}
                             onChange={ (value) => { handleSelectChange('idVendorType', value) }}
                         />
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                         <label className="control-label">Estado</label>
                         <Select
                             name="idStatus"
                             placeholder="Estado"
                             options={ statusOpt }
-                            defaultValue={idStatus}
+                            value={idStatus}
                             onChange={ (value) => { handleSelectChange('idStatus', value) }}
                         />
                     </div>

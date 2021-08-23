@@ -5,7 +5,7 @@ class Purchase {
 
     constructor({
         id,
-        vendorId,
+        idVendor,
         purchaseCode,
         purchaseDate,
         deliveryDate,
@@ -13,7 +13,7 @@ class Purchase {
         items = []
     }){
         this.base.id = id
-        this.base.vendorId = vendorId
+        this.base.idVendor = idVendor
         this.base.purchaseCode = purchaseCode
         this.base.purchaseDate = purchaseDate
         this.base.deliveryDate = deliveryDate

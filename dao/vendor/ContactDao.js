@@ -53,15 +53,14 @@ class ContactDao extends GenericDao {
 
     findByVendorId (id) {
         return new Promise((resolve, reject) => { 
-            this.db.query('SELECT * FROM vendors_contact WHERE vendorId= ?', [id], (err, result) => {
+            this.db.query('SELECT * FROM vendors_contact WHERE idVendor = ?', [id], async (err, result) => {
                 if(err){ 
                     reject(err)
                 }else{
                     const contactList = []
                     for(const centerDB of result){
-                        contactList.push(this.mountObj(centerDB))
+                        contactList.push(await this.mountObj(centerDB))
                     }
-                    console.log(resolve(contactList))
                     resolve(contactList)
                 }
             })
@@ -70,16 +69,12 @@ class ContactDao extends GenericDao {
 
     findMainContactById (id) {
         return new Promise((resolve, reject) => { 
-            this.db.query('SELECT * FROM vendors_contact WHERE vendorId = ? AND defaultContact = 1', [id], (err, result) => {
+            this.db.query('SELECT * FROM vendors_contact WHERE idVendor = ? AND defaultContact = 1', [id], (err, result) => {
                 if(err){ 
                     reject(err)
                 }else{
-                    const contactList = []
-                    for(const centerDB of result){
-                        contactList.push(this.mountObj(centerDB))
-                    }
-                  
-                    resolve(contactList)
+                    resolve(result[0])
+
                 }
             })
         })

@@ -31,7 +31,6 @@ class RepairDao extends GenericDao{
         const repair={
             ...data
         }
-        console.log(repair)
         return new Repair(repair)
     }
 

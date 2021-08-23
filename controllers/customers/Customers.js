@@ -50,7 +50,7 @@ exports.insert = async (req, res) => {
         const customer = req.body.form
         const addresses = req.body.form.addresses
         const contacts = req.body.form.contacts
-        console.log(req.body.form)
+        
         delete customer.addresses
         delete customer.contacts
         const insert = await customerDao.insert(customer)
@@ -71,24 +71,18 @@ exports.update = async (req, res) => {
 
     try {
         /** UPDATE CUSTOMER **/
-        const base = await customerDao.unMountBase(req.body.formData.base)
-        
-        customerDao.update(base)
-        /** UPDATE ADDRESSES **/
-        req.body.formData.addresses.forEach(async (element) => {
-            const address = await customerDao.unMountAddress(element)
-            if (address.id) {
-                customerAddressDao.update(address)
-            } else {
-                element.idCustomer = insert.address.idCustomer
-                customerAddressDao.insert(address)
-            }
-        })
-        // /** UPDATE CONTACT PERSONS **/
-        req.body.formData.contactPersons.forEach(async (element) => {
-            const contacts = await customerDao.unMountContacts(element)
-            contactPersonsDao.update(contacts)
-        })
+        const customer = req.body.form
+        const addresses = req.body.form.addresses
+        const contacts = req.body.form.contacts
+
+        delete customer.addresses
+        delete customer.contacts
+        customerDao.update(customer)
+        /** UPDATE ADDRESSES**/
+        customerDao.multipleAccess(addresses, customerDao.CustomerAddressDao, customer.id, 'idCustomer')
+        /** UPDATE CONTACT PERSONS**/
+        customerDao.multipleAccess(contacts, customerDao.CustomerContactPersonDao, customer.id, 'idCustomer')
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

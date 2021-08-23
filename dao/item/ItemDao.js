@@ -21,8 +21,7 @@ class ItemDao extends GenericDao {
     async mountObj(data) {
         const productFamily = await this.ProductFamilyDao.findById(data.subfamily)
         const productPlace = await this.ProductPlaceDao.findById(data.place)
-        console.log(productFamily)
-        console.log(productPlace)
+        
         const item = {
             ...data,
             family: await this.createSelect(productFamily.base),
@@ -31,7 +30,7 @@ class ItemDao extends GenericDao {
             //purchasesItems: await this.PurchaseItemsDao.findByItemId(data.id)
 
         }
-        console.log(item)
+    
         return new Item(item)
     }
 

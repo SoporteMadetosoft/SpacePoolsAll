@@ -14,7 +14,6 @@ class RoleDao extends GenericDao {
             ...data,
         }
 
-        console.log(role)
         return new Role(role)
     }
 

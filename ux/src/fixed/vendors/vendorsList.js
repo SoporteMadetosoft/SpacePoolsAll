@@ -20,7 +20,7 @@ export const vendorList = [
   },
   {
     name: 'Nombre comercial',
-    selector: 'businessName',
+    selector: 'comercialName',
     sortable: true,
     searchable: true,
     minWidth: '300px'

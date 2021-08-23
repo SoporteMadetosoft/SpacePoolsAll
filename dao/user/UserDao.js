@@ -13,13 +13,11 @@ class UserDao extends GenericDao{
     }
 
     async mountObj(data){
-        console.log(data)
         const status = await this.StatusDao.findById(data.status)
         const user={
             ...data,
             status: await this.createSelect(status.base),
         }
-        console.log(user)
         return new User(user)
     }
 

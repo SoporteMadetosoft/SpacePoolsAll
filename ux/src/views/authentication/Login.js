@@ -66,7 +66,6 @@ const Login = props => {
         .then(res => {
           const data = { ...res.data.userData, accessToken: res.data.accessToken, refreshToken: res.data.refreshToken }
           dispatch(handleLogin(data))
-          console.log('3')
           ability.update(res.data.userData.ability)
           history.push(getHomeRouteForLoggedInUser(data.role))
           toast.success(

@@ -1,4 +1,4 @@
-const Address = require("../../models/vendors/Address");
+const VendorAddress = require("../../models/vendors/VendorAddress");
 const GenericDao = require("../GenericDao");
 
 const AddressTypeDao = require("../setup/general/AddressesTypesDao");
@@ -7,7 +7,7 @@ class AddressDao extends GenericDao {
     AddressTypeDao
 
     constructor() {
-        super(Address);
+        super(VendorAddress);
         this.AddressTypeDao = new AddressTypeDao()
     }
 
@@ -17,15 +17,15 @@ class AddressDao extends GenericDao {
             ...data,
             addressType: await this.createSelect(addressType.base),
         }
-        return new Address(address)
+        return new VendorAddress(address)
     }
 
     async mountList(data) {
         const list = {
             ...data,
         }
-        const{vendorId, address, satet, town} =list
-        const nObj = {vendorId :vendorId, address :address, satet: satet, town : town}
+        const{idVendor, address, population, province} =list
+        const nObj = {idVendor :idVendor, address :address, population: population, province : province}
         return nObj
     }
 
@@ -54,16 +54,18 @@ class AddressDao extends GenericDao {
     
     findByVendorId (id) {
         return new Promise((resolve, reject) => { 
-            this.db.query('SELECT * FROM vendors_addresses WHERE vendorId = ?', [id], (err, result) => {
+            this.db.query('SELECT * FROM vendors_addresses WHERE idVendor = ?', [id], async (err, result) => {
                 if(err){ 
                     reject(err)
                 }else{
-                    const adressesList = []
-                    for(const centerDB of result){
-                        adressesList.push(this.mountObj(centerDB))
+                    let Addresslist =[]
+                    for (const data of result) {
+                        const obj = await this.mountObj(data)
+
+                        Addresslist.push(obj)
+
                     }
-                  
-                    resolve(adressesList)
+                    resolve(Addresslist)
                 }
             })
         })

@@ -4,6 +4,8 @@ import { X, Plus } from 'react-feather'
 import { Button } from 'reactstrap'
 import RadioButton from '@material-ui/core/Radio'
 import { useDispatch, useSelector } from 'react-redux'
+import Select from 'react-select'
+
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 
@@ -49,14 +51,17 @@ const ContactsForm = ({ position }) => {
 
     const dispatch = useDispatch()
 
-    const { normalForm } = useSelector(state => state)
-    
+    const { normalForm, selectReducer } = useSelector(state => state)
+    const { departmentOpt } = selectReducer
+
     const { 
         name,
         phone,
         email,
         charge,
-        schedule,
+        startSchedule,
+        endSchedule,
+        defaultContact,
         department } = normalForm.contacts[position]
 
     const decreaseCount = () => {
@@ -71,6 +76,17 @@ const ContactsForm = ({ position }) => {
         }
 
         dispatch(editRepeaterRegister( 'contacts', position,  obj ))
+    }
+
+    const handleSelectChange = (key, element) => {
+
+        const obj = {
+            name: key, 
+            value: element 
+        }
+        dispatch(
+            editRepeaterRegister('contacts', position, obj)
+        )
     }
 
     return (
@@ -104,7 +120,7 @@ const ContactsForm = ({ position }) => {
                 value={ email }/>
             </div>
             <div className="col-md-2">
-                <label className="control-label">cargo</label>
+                <label className="control-label">Cargo</label>
                 <input 
                 type="text" 
                 name="charge" 
@@ -115,7 +131,11 @@ const ContactsForm = ({ position }) => {
             <div className="col-md-1">
                 <label className="control-label">Principal</label>
                 <br/>
-                <RadioButton type="radio" name="defaultContact"/>
+                <RadioButton 
+                    type="radio"
+                    checked={ defaultContact }
+                    name="defaultContact"
+                />
             </div>
             <div className="col-md-1">
                 <Button.Ripple className='btn-icon form-control mt-2 btn-sm' color='danger' outline onClick={decreaseCount}>
@@ -123,22 +143,31 @@ const ContactsForm = ({ position }) => {
                 </Button.Ripple>
             </div>
             <div className="col-md-3">
-                <label className="control-label">Horario de contacto</label>
+                <label className="control-label">Inicio de contacto</label>
                 <input 
-                type="text" 
-                name="schedule" 
+                type="time" 
+                name="startSchedule" 
                 className="form-control" 
                 onChange={ handleInputChange }
-                value={ schedule }/>
+                value={ startSchedule }/>
             </div>
-            <div className="col-md-2">
-                <label className="control-label">Departamento</label>
+            <div className="col-md-3">
+                <label className="control-label">Fin de contacto</label>
                 <input 
-                type="text" 
-                name="department" 
+                type="time" 
+                name="endSchedule" 
                 className="form-control" 
                 onChange={ handleInputChange }
-                value={ department }/>
+                value={ endSchedule }/>
+            </div>
+            <div className="col-md-4">
+                <label className="control-label">Departamento</label>
+                <Select 
+                    name="department"
+                    options={departmentOpt}
+                    onChange={ (value) => { handleSelectChange('department', value) }}
+                    defaultValue={ department }
+                />
             </div>
         </div>
 

@@ -22,18 +22,7 @@ import BlankLayout from '@layouts/BlankLayout'
 import VerticalLayout from '@src/components/layouts/VerticalLayout'
 
 import { useDispatch } from 'react-redux'
-import { startLoadingAddresses } from '../views/setup/general/addressesTypes/redux/actions'
-import { startLoadingOrigin } from '../views/setup/customers/origin/redux/actions'
-import { startLoadingActivities } from '../views/setup/customers/activity/redux/actions'
-import { startLoadingCustomerCategory } from '../views/setup/customers/customerCategory/redux/actions'
-import { startLoadingCustomerType } from '../views/setup/customers/customerType/redux/actions'
-import { startLoadingsPaymentMethods } from '../views/setup/general/paymentMethods/redux/actions'
-import { startLoadingLanguages } from '../views/global/language/redux/actions'
-import { startLoadingMode } from '../views/global/mode/redux/actions'
-import { startLoadingPayDay } from '../views/global/payDay/redux/actions'
-import { startLoadingStatus } from '../views/global/status/redux/actions'
-import { startLoadingBrands } from '../views/setup/vehicles/brand/redux/actions'
-import { startLoadingDepartments } from '../views/setup/general/departments/redux/actions'
+import { startAddSelectOptions } from '../redux/actions/selects'
 // import HorizontalLayout from '@src/layouts/HorizontalLayout'
 
 const Router = () => {
@@ -198,19 +187,19 @@ const Router = () => {
   }
 
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(startLoadingAddresses())
-    dispatch(startLoadingOrigin())
-    dispatch(startLoadingActivities())
-    dispatch(startLoadingCustomerCategory())
-    dispatch(startLoadingCustomerType())
-    dispatch(startLoadingsPaymentMethods())
-    dispatch(startLoadingLanguages())
-    dispatch(startLoadingMode())
-    dispatch(startLoadingPayDay())
-    dispatch(startLoadingStatus())
-    dispatch(startLoadingBrands())
-    dispatch(startLoadingDepartments())
+
+useEffect( () => {
+  dispatch(startAddSelectOptions('/setup/general/paymentMethod', 'paymentMethodOpt'))
+  dispatch(startAddSelectOptions('/global/payday', 'paymentDayOpt'))
+  dispatch(startAddSelectOptions('/setup/customers/origin', 'customerOriginOpt'))
+  dispatch(startAddSelectOptions('/setup/customers/type', 'customerTypeOpt'))
+  dispatch(startAddSelectOptions('/setup/customers/activities', 'customerActivityOpt'))
+  dispatch(startAddSelectOptions('/setup/customers/category', 'customerCategoryOpt'))
+  dispatch(startAddSelectOptions('/setup/customers/logisticZone', 'logisticZoneOpt'))
+  dispatch(startAddSelectOptions('/global/mode', 'modeOpt'))
+  dispatch(startAddSelectOptions('/global/status', 'statusOpt'))
+  dispatch(startAddSelectOptions('/global/language', 'languageOpt'))
+
 }, [])
 
   return (

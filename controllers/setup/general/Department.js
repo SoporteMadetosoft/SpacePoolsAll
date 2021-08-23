@@ -1,0 +1,76 @@
+
+const DepartmentDao = require('../../../dao/setup/general/DepartmentDao')
+const Department = require('../../../models/setup/general/Department')
+
+const departmentDao = new DepartmentDao(Department)
+exports.list = async (req, res) => {
+
+    try{
+        res.json({
+            ok:true,
+            data: await departmentDao.findAll() 
+        })
+    }catch(error){
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+exports.select = async (req, res) => {
+
+    try{
+        res.json({
+            ok:true,
+            data:  await departmentDao.getSelect()
+        })
+    }catch(error){
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+exports.listByID = async (req, res) => {
+    const id = parseInt(req.body.id, 10)
+    try {
+        res.json({
+            ok: true,
+            data: await departmentDao.findById(id)
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+exports.delete = async (req, res) => {
+    const id = parseInt(req.params.id, 10)
+    try {
+        await departmentDao.deleteById(id)
+        res.json({ ok: true, msg: `Success deleting id ${id}` })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+exports.insert = (req, res) => {
+    try{
+        departmentDao.insert(req.body.formData.base)
+        res.json({ok: true})
+    }catch(error){
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}
+
+exports.update =(req, res)=>{
+    
+    try{
+        departmentDao   .update(req.body.formData.base)
+        res.json({ok: true})
+    }catch(error){
+        console.log(error)
+        return res.status(500).send(error)
+    }    
+}

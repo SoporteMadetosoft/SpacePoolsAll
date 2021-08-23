@@ -1,0 +1,60 @@
+#actionButtons {
+    position: fixed !important;
+    right: 3.3vW;
+    bottom: 5vH;
+    z-index: 999;
+}
+
+#actionButtons button{
+    border-radius: 50px !important;
+    color: #FFF;
+    float:right;
+    text-align: center;
+    z-index: 999;
+    
+}
+
+#actionButtons button svg{
+    position: absolute;
+}
+
+.float-back-button{
+    background-color: #e71b34;
+    border-color: #e71b34;
+    padding: 1rem !important;
+    height: 10px;
+    right: 5vW;
+    width: 10px;
+}
+
+.float-back-button svg{
+    top: 8px;
+    right: .5rem;
+}
+
+.float-options-button{
+    background-color: #e78b1b;
+    border-color: #e78b1b;
+    padding: 1rem !important;
+    height: 10px;
+    right: .8vW;
+    width: 10px;
+}
+
+.float-options-button svg{
+    top: 8px;
+    right: .5rem;
+}
+
+.float-save-button{
+    background-color: #4655fe;
+    border-color: #4655fe;
+    padding: 1rem !important;
+    height: 70px;
+    width: 70px;
+}
+
+.float-save-button svg{
+    top: 1rem;
+    right: 1rem;
+}

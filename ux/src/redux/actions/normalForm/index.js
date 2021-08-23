@@ -1,5 +1,5 @@
 import { formTypes } from "../../types/normalForm/types"
-import { getFormData } from "../../../utility/helpers/axios/getFormData"
+import { getFormData } from "../../../utility/helpers/Axios/getFormData"
 
 export const handleChangeController = (name, value) => ({
   type: formTypes.inputChange,

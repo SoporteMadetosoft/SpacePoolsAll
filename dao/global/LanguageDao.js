@@ -1,4 +1,4 @@
-const Language = require("../../models/setup/customer/CustomerLanguage");
+const Language = require("../../models/global/Language");
 const SetupDao = require("../setup/SetupDao");
 
 

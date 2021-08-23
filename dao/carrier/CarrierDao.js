@@ -18,7 +18,7 @@ class CarrierDao extends GenericDao{
             ...data,
             status: await this.createSelect(status.base)
         }
-        console.log(carrier)
+    
         return new Carrier(carrier)
     }
 

@@ -45,9 +45,9 @@ class CustomerDao extends GenericDao {
     }
 
     async mountObj(data) {
-        const payDay = await this.PayDayDao.findById(data.payDay)
-        const status = await this.StatusDao.findById(data.status)
-        const mode = await this.ModeDao.findById(data.mode)
+        const idPayDay = await this.PayDayDao.findById(data.idPayDay)
+        const idStatus = await this.StatusDao.findById(data.idStatus)
+        const idMode = await this.ModeDao.findById(data.idMode)
         const language = await this.Language.findById(data.idLanguage)
         const payment = await this.PaymentMethodDao.findById(data.idPaymentMethod)    
         const type = await this.CustomerTypeDao.findById(data.idCustomerType)
@@ -56,9 +56,9 @@ class CustomerDao extends GenericDao {
         const origin = await this.CustomerOriginDao.findById(data.idCustomerOrigin)
         const customer = {
             ...data,
-            payDay: await this.createSelect(payDay.base),
-            status: await this.createSelect(status.base),
-            mode: await this.createSelect(mode.base),
+            idPayDay: await this.createSelect(idPayDay.base),
+            idStatus: await this.createSelect(idStatus.base),
+            idMode: await this.createSelect(idMode.base),
             idLanguage: await this.createSelect(language.base),
             idPaymentMethod: await this.createSelect(payment.base ),
             idCustomerType: await this.createSelect(type.base),

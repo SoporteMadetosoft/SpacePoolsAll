@@ -12,9 +12,9 @@ class ItemDao extends GenericDao {
     }
 
     async mountObj(data) {
-        console.log(data)
+        
         const itemId = await this.RItemDao.findById(data.itemId)
-        console.log(itemId)
+        
         const item = {
             ...data,
             itemId: await this.RItemDao.createSelect(itemId.base)

@@ -1,9 +1,9 @@
 
 export const endPoints = {
 
-    // CUSTOMERS STARTS
     Customers: '/customers',
-    // CUSTOMERS ENDS
+
+    Vendors: '/vendors/vendor',
 
     //SETUP STARTS
     PaymentMethods: '/setup/general/paymentMethod',

@@ -1,7 +1,7 @@
 class Customer {
     base={}
     addresses = []
-    contactPersons = []
+    contacts = []
     #table = 'customers'
 
     constructor({
@@ -15,9 +15,9 @@ class Customer {
         email,
         observations,
         accountNumber,
-        payDay,
-        status,
-        mode,
+        idPayDay,
+        idStatus,
+        idMode,
         idLanguage,
         idPaymentMethod,
         idCustomerCategory,
@@ -37,9 +37,9 @@ class Customer {
         this.base.email = email
         this.base.observations = observations
         this.base.accountNumber = accountNumber
-        this.base.payDay = payDay
-        this.base.status = status
-        this.base.mode = mode
+        this.base.idPayDay = idPayDay
+        this.base.idStatus = idStatus
+        this.base.idMode = idMode
         this.base.idLanguage = idLanguage
         this.base.idPaymentMethod = idPaymentMethod
         this.base.idCustomerType = idCustomerType

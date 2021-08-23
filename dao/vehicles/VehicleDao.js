@@ -18,7 +18,6 @@ class VehicleDao extends GenericDao{
     }
 
     async mountObj(data){
-        console.log(data)
         const status = await this.StatusDao.findById(data.status)
         const model = await this.ModelDao.findById(data.model)
         const vehicle={
@@ -27,7 +26,6 @@ class VehicleDao extends GenericDao{
             status: await this.createSelect(status.base),
             model: await this.createSelect(model.base)
         }
-        console.log(vehicle)
         return new Vehicle(vehicle)
     }
 

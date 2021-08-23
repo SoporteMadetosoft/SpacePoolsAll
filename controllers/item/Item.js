@@ -67,17 +67,17 @@ exports.insert = async (req, res) => {
         const insert = await itemDao.insert(req.body.formData.base)
         /** INSERT PRODUCT FAMILY */
         req.body.family.forEach(element => {
-            element.vendorId = insert.insertId
+            element.idVendor = insert.insertId
             productFamilyDao.insert(element)
         });
         /** INSERT PRODUCT FAMILY (subfamily)*/
         req.body.subfamily.forEach(element => {
-            element.vendorId = insert.insertId
+            element.idVendor = insert.insertId
             productFamilyDao.insert(element)
         });
         /** INSERT PRODUCT PLACE */
         req.body.place.forEach(element => {
-            element.vendorId = insert.insertId
+            element.idVendor = insert.insertId
             productPlaceDao.insert(element)
         });
         

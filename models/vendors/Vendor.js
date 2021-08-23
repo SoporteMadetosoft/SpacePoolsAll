@@ -1,14 +1,14 @@
 class Vendor{
     base = {}
-    contact = []
-    adresses = []
+    contacts = []
+    addresses = []
     purchase = []
     #table = 'vendors'
 
     constructor({
         id,
-        vendorType,
-        paymentMethod,
+        idVendorType,
+        idPaymentMethod,
         vendorCode,
         comercialName,
         CIF,
@@ -16,14 +16,14 @@ class Vendor{
         phone,
         email,
         observations,
-        status,
-        contact = [],
-        adresses = [],
+        idStatus,
+        contacts= [],
+        addresses = [],
         purchase = []
     }){
         this.base.id = id
-        this.base.vendorType = vendorType
-        this.base.paymentMethod = paymentMethod
+        this.base.idVendorType = idVendorType
+        this.base.idPaymentMethod = idPaymentMethod
         this.base.vendorCode = vendorCode
         this.base.comercialName = comercialName
         this.base.CIF = CIF
@@ -31,9 +31,9 @@ class Vendor{
         this.base.phone = phone
         this.base.email = email
         this.base.observations = observations
-        this.base.status = status
-        this.contact = contact
-        this.adresses = adresses
+        this.base.idStatus = idStatus
+        this.contacts = contacts
+        this.addresses = addresses
         this.purchase = purchase
     }
     get table() {

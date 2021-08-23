@@ -1,14 +1,6 @@
 const VendorDao = require('../../dao/vendor/VendorDao')
-const ContactDao = require('../../dao/vendor/ContactDao')
-const AddressDao = require('../../dao/vendor/AddressDao')
-const PurchaseDao = require('../../dao/purchase/PurchaseDao')
 
 const vendorDao = new VendorDao()
-const contactDao = new ContactDao()
-const addressDao = new AddressDao()
-const purchaseDao = new PurchaseDao()
-
-
 
 exports.list = async (req, res) => {
     try {
@@ -65,24 +57,20 @@ exports.delete = async (req, res) => {
 
 exports.insert = async (req, res) => {
     try {
-        /** INSERT VENDOR */
-        const insert = await vendorDao.insert(req.body.formData.base)
-        /** INSERT ADDRESS */
-        req.body.repairs.forEach(element => {
-            element.vendorId = insert.insertId
-            addressDao.insert(element)
-        });
-        /** INSERT CONTACT */
-        req.body.repairs.forEach(element => {
-            element.vendorId = insert.insertId
-            contactDao.insert(element)
-        });
-        /** INSERT PURCHASE */
-        req.body.repairs.forEach(element => {
-            element.vendorId = insert.insertId
-            purchaseDao.insert(element)
-        });
+
+        /** INSERT CUSTOMER */
+        const vendor = req.body.form
+        const addresses = req.body.form.addresses
+        const contacts = req.body.form.contacts
         
+        delete vendor.addresses
+        delete vendor.contacts
+        const insert = await vendorDao.insert(vendor)
+        /** INSERT ADDRESSES**/
+        
+        vendorDao.multipleAccess(addresses, vendorDao.AddressDao, insert.insertId, 'idVendor')
+        /** INSERT CONTACT PERSONS**/
+        vendorDao.multipleAccess(contacts, vendorDao.ContactDao, insert.insertId, 'idVendor')
 
         res.json({ ok: true })
     } catch (error) {
@@ -91,24 +79,22 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
     try {
-        /** UPDATE VENDOR */
-        vendorDao.update(req.body.formData.base)
-        /** UPDATE ADDRESS*/
-        req.body.formData.repairs.forEach(element => {
-            addressDao.update(element)
-        })
-        /** UPDATE CONTACT */
-        req.body.formData.repairs.forEach(element => {
-            contactDao.update(element)
-        })
-        /** UPDATE PURCHASE */
-        req.body.formData.repairs.forEach(element => {
-            purchaseDao.update(element)
-        })
-       
+        /** UPDATE CUSTOMER **/
+        const vendor = req.body.form
+        const addresses = req.body.form.addresses
+        const contacts = req.body.form.contacts
+
+        delete vendor.addresses
+        delete vendor.contacts
+        vendorDao.update(vendor)
+        /** UPDATE ADDRESSES**/
+        vendorDao.multipleAccess(addresses, vendorDao.AddressDao, vendor.id, 'idVendor')
+        /** UPDATE CONTACT PERSONS**/
+        vendorDao.multipleAccess(contacts, vendorDao.ContactDao, vendor.id, 'idVendor')
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

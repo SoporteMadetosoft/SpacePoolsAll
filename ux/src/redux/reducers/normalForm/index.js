@@ -44,7 +44,7 @@ const normalForm = (state = initialState, action) => {
                 [key]: [ ...state[key] ] 
             }
         case formTypes.fillFormData:
-            console.log(action.payload)
+            
             return {
                 ...action.payload
             }

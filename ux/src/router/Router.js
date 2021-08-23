@@ -189,14 +189,17 @@ const Router = () => {
   const dispatch = useDispatch()
 
 useEffect( () => {
-  dispatch(startAddSelectOptions('/setup/general/department', 'departmentOpt'))
-  dispatch(startAddSelectOptions('/setup/general/paymentMethod', 'paymentMethodOpt'))
-  dispatch(startAddSelectOptions('/global/payday', 'paymentDayOpt'))
   dispatch(startAddSelectOptions('/setup/customers/origin', 'customerOriginOpt'))
   dispatch(startAddSelectOptions('/setup/customers/type', 'customerTypeOpt'))
   dispatch(startAddSelectOptions('/setup/customers/activities', 'customerActivityOpt'))
   dispatch(startAddSelectOptions('/setup/customers/category', 'customerCategoryOpt'))
-  dispatch(startAddSelectOptions('/setup/customers/logisticZone', 'logisticZoneOpt'))
+  
+  dispatch(startAddSelectOptions('/setup/vendors/type', 'vendorTypesOpt'))
+
+  dispatch(startAddSelectOptions('/setup/general/department', 'departmentOpt'))
+  dispatch(startAddSelectOptions('/setup/general/paymentMethod', 'paymentMethodOpt'))
+
+  dispatch(startAddSelectOptions('/global/payday', 'paymentDayOpt'))
   dispatch(startAddSelectOptions('/global/mode', 'modeOpt'))
   dispatch(startAddSelectOptions('/global/status', 'statusOpt'))
   dispatch(startAddSelectOptions('/global/language', 'languageOpt'))

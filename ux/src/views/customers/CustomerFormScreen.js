@@ -52,6 +52,7 @@ export const CustomerFormScreen = () => {
         idCustomerActivity,
         idCustomerCategory } = normalForm
 
+
         const { 
             paymentMethodOpt,
             paymentDayOpt,
@@ -62,6 +63,7 @@ export const CustomerFormScreen = () => {
             modeOpt,
             statusOpt,
             languageOpt } = selectReducer
+
 
 
     const customerName = normalForm.comercialName ? normalForm.comercialName : title

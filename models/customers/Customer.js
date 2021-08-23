@@ -25,7 +25,7 @@ class Customer {
         idCustomerActivity,
         idCustomerOrigin,
         addresses = [],
-        contactPersons = []
+        contacts = []
     }) {
         this.base.id = id
         this.base.customerCode = customerCode
@@ -47,7 +47,7 @@ class Customer {
         this.base.idCustomerActivity = idCustomerActivity
         this.base.idCustomerOrigin = idCustomerOrigin
         this.addresses = addresses
-        this.contactPersons = contactPersons
+        this.contacts = contacts
     }
     get table() {
         return this.#table;

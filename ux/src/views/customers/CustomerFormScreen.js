@@ -50,17 +50,17 @@ export const CustomerFormScreen = () => {
         idStatus,
         idLanguage } = normalForm
 
-        const { 
-            paymentMethodOpt,
-            paymentDayOpt,
-            customerOriginOpt,
-            customerTypeOpt,
-            customerActivityOpt,
-            customerCategoryOpt,
-            logisticZoneOpt,
-            modeOpt,
-            statusOpt,
-            languageOpt } = selectReducer
+    const { 
+        paymentMethodOpt,
+        paymentDayOpt,
+        customerOriginOpt,
+        customerTypeOpt,
+        customerActivityOpt,
+        customerCategoryOpt,
+        logisticZoneOpt,
+        modeOpt,
+        statusOpt,
+        languageOpt } = selectReducer
 
 
     const customerName = normalForm.name ? normalForm.name : title

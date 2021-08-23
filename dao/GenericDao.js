@@ -40,6 +40,23 @@ class GenericDao {
         })
     }
 
+    findAllId(id, foreign) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT id FROM ?? WHERE ?? = ?', [this.auxModel.table, foreign, id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    let idList = []
+                    for (const res of result) {
+                        idList.push(res.id)
+                    }
+
+                    resolve(idList)
+                }
+            });
+        })
+    }
+
     /**Delete from databse, returns the id on the success **/
     deleteById(id) {
         return new Promise((resolve, reject) => {
@@ -80,10 +97,33 @@ class GenericDao {
         })
     }
 
+    multipleAccess = async (data, obj, id, foreign) => {
+        const idsDb = await obj.findAllId(id, foreign)
+        const idsForm = []
+        const d = data
+        d.forEach( element => {
+            if (typeof obj.unMountBase == 'function') { element =  obj.unMountBase(element) }
+            const action = 'id' in element ? 'update' : 'insert'
+
+            if (action === 'insert') { 
+                element[foreign] = id 
+            }else{
+                idsForm.push(element.id)
+            }
+
+            obj[action](element)
+        })
+        const diff = idsDb.filter(x => !idsForm.includes(x))
+        
+        diff.forEach(id => {
+            obj.deleteById(id)
+        })
+    }
+
     #formatUpdate (params){
         let update=''
         Object.entries(params).forEach(element => {
-            if(element[0]!='id' && element[0]!='_id'){
+            if(element[0]!='id'){
                 update= update.concat("`",element[0], "` = ", "'" ,element[1],"', ")
             }
         });
@@ -97,10 +137,20 @@ class GenericDao {
         return obj2
     }
 
-    async undoSelect(obj){
+    undoSelect(obj){
         return obj.value
     }
 
+    datetimeToDate(date) {
+        if (date !== null) {
+            let month = date.getMonth() + 1
+            let year = date.getFullYear()
+            month = month >= 10 ? month : '0' + month
+            let dt = date.getDate()
+            dt = dt >= 10 ? dt : '0' + dt
+            return (year + '-' + month + '-' + dt)
+        }
+    }
 
 }
 

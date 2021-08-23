@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import Select from 'react-select'
 import BreadCrumbs from '@components/breadcrumbs'
 
-import { handleStartEditing } from '../../redux/actions/form'
+import { handleStartEditing } from '../../redux/actions/normalForm'
 import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 import { save } from '../../utility/helpers/Axios/save'
 
@@ -29,26 +29,28 @@ export const CustomerFormScreen = () => {
     const history = useHistory()
     
     const { normalForm, selectReducer } = useSelector(state => state)
+    const form = useSelector(state => state.normalForm)
+
     
     const {
-        name,
-        cif,
-        businessName,
-        phone,
+        customerCode,
+        comercialName,
         comercialNum,
+        CIF,
+        socialReason,
+        phone,
         email,
-        idPaymentMethod,
-        idPaymentDay,
-        pickupTime,
-        idCustomerOrigin,
         accountNumber,
+        observations,
+        payDay,
+        mode,
+        status,
+        idLanguage,
+        idPaymentMethod,
+        idCustomerOrigin,
         idCustomerType,
         idCustomerActivity,
-        idCustomerCategory,
-        idLogisticZone,
-        idMode,
-        idStatus,
-        idLanguage } = normalForm
+        idCustomerCategory } = normalForm
 
         const { 
             paymentMethodOpt,
@@ -57,13 +59,12 @@ export const CustomerFormScreen = () => {
             customerTypeOpt,
             customerActivityOpt,
             customerCategoryOpt,
-            logisticZoneOpt,
             modeOpt,
             statusOpt,
             languageOpt } = selectReducer
 
 
-    const customerName = normalForm.name ? normalForm.name : title
+    const customerName = normalForm.comercialName ? normalForm.comercialName : title
     
     useEffect(() => {
         dispatch( initNormalForm(structureForm) )
@@ -85,7 +86,45 @@ export const CustomerFormScreen = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault()
-        save('Customers', id, form)
+
+        let addressesPretty = ''
+
+        form.addresses.forEach(e => {
+            addressesPretty = [
+                {
+                    ...e,
+                    addressType: e.addressType.value
+                }
+            ]
+        })
+
+        let contactPretty = ''
+
+        form.contacts.forEach(e => {
+            contactPretty = [
+                {
+                    ...e,
+                    department: e.department.value
+                }
+            ]
+        })
+
+        const prettyForm = {
+            ...form,
+            idPaymentMethod: form.idPaymentMethod.value,
+            payDay: form.payDay.value,
+            idCustomerOrigin: form.idCustomerOrigin.value,
+            idCustomerType: form.idCustomerType.value,
+            idCustomerActivity: form.idCustomerActivity.value,
+            idCustomerCategory: form.idCustomerCategory.value,
+            mode: form.mode.value,
+            status: form.status.value,
+            idLanguage: form.idLanguage.value,
+            addresses: [...addressesPretty],
+            contacts: [...contactPretty]
+
+        }
+        save('Customers', id, prettyForm)
         history.push('/customers')
     }
 
@@ -94,13 +133,23 @@ export const CustomerFormScreen = () => {
             <BreadCrumbs breadCrumbTitle={ customerName } breadCrumbParent='Clientes' breadCrumbActive={title} />
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
+                    <div className="col-md-2">
+                        <label className="control-label">Nº Cliente</label>
+                        <input
+                            className="form-control"
+                            name="customerCode"
+                            placeholder="Nº Cliente"
+                            value={customerCode}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                     <div className="col-md-4">
                         <label className="control-label">Nombre</label>
                         <input
                             className="form-control"
-                            name="name"
+                            name="comercialName"
                             placeholder="Nombre"
-                            value={name}
+                            value={comercialName}
                             onChange={handleInputChange}
                         />
                     </div>
@@ -108,9 +157,9 @@ export const CustomerFormScreen = () => {
                         <label className="control-label">C.I.F.</label>
                         <input
                             className="form-control"
-                            name="cif"
+                            name="CIF"
                             placeholder="C.I.F."
-                            value={cif}
+                            value={CIF}
                             onChange={handleInputChange}
                         />
                     </div>
@@ -118,9 +167,9 @@ export const CustomerFormScreen = () => {
                         <label className="control-label">Razon social</label>
                         <input
                             className="form-control"
-                            name="businessName"
+                            name="socialReason"
                             placeholder="Razon social"
-                            value={businessName}
+                            value={socialReason}
                             onChange={handleInputChange}
                         />
                     </div>
@@ -161,35 +210,26 @@ export const CustomerFormScreen = () => {
                         <Select
                             name="idPaymentMethod"
                             options={ paymentMethodOpt }
-                            defaultValue={idPaymentMethod}
+                            value={idPaymentMethod}
                             onChange={ (value) => { handleSelectChange('idPaymentMethod', value) }}
                         />
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">Día de pago</label>
                         <Select
-                            name="idPaymentDay"
+                            name="payDay"
                             options={ paymentDayOpt }
-                            defaultValue={idPaymentDay}
-                            onChange={ (value) => { handleSelectChange('idPaymentDay', value) }}
+                            value={payDay}
+                            onChange={ (value) => { handleSelectChange('payDay', value) }}
                         />
                     </div>
-                    <div className="col-md-2">
-                        <label className="control-label">Hora de recogida</label>
-                        <input
-                            className="form-control"
-                            type="time"
-                            name="pickupTime"
-                            value={pickupTime}
-
-                        />
-                    </div>
+                    
                     <div className="col-md-2">
                         <label className="control-label">Origen</label>
                         <Select
                             name="idCustomerOrigin"
                             options={ customerOriginOpt }
-                            defaultValue={idCustomerOrigin}
+                            value={idCustomerOrigin}
                             onChange={ (value) => { handleSelectChange('idCustomerOrigin', value) }}
                         />
                     </div>
@@ -209,7 +249,7 @@ export const CustomerFormScreen = () => {
                         <Select
                             name="idCustomerType"
                             options={ customerTypeOpt }
-                            defaultValue={idCustomerType}
+                            value={idCustomerType}
                             onChange={ (value) => { handleSelectChange('idCustomerType', value) }}
                         />
                     </div>
@@ -218,7 +258,7 @@ export const CustomerFormScreen = () => {
                         <Select
                             name="idCustomerActivity"
                             options={ customerActivityOpt }
-                            defaultValue={idCustomerActivity}
+                            value={idCustomerActivity}
                             onChange={ (value) => { handleSelectChange('idCustomerActivity', value) }}
                         />
                     </div>
@@ -227,38 +267,29 @@ export const CustomerFormScreen = () => {
                         <Select
                             name="idCustomerCategory"
                             options={ customerCategoryOpt }
-                            defaultValue={idCustomerCategory}
+                            value={idCustomerCategory}
                             onChange={ (value) => { handleSelectChange('idCustomerCategory', value) }}
                         />
                     </div>
-                    <div className="col-md-2">
-                        <label className="control-label">Zona logística</label>
-                        <Select
-                            name="idLogisticZone"
-                            placeholder="Zona logística"
-                            options={ logisticZoneOpt }
-                            defaultValue={idLogisticZone}
-                            onChange={ (value) => { handleSelectChange('idLogisticZone', value) }}
-                        />
-                    </div>
+                    
                     <div className="col-md-2">
                         <label className="control-label">Modo</label>
                         <Select
-                            name="idMode"
+                            name="mode"
                             placeholder="Modo"
                             options={ modeOpt }
-                            defaultValue={idMode}
-                            onChange={ (value) => { handleSelectChange('idMode', value) }}
+                            value={mode}
+                            onChange={ (value) => { handleSelectChange('mode', value) }}
                         />
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">Estado</label>
                         <Select
-                            name="idStatus"
+                            name="status"
                             placeholder="Estado"
                             options={ statusOpt }
-                            defaultValue={idStatus}
-                            onChange={ (value) => { handleSelectChange('idStatus', value) }}
+                            value={status}
+                            onChange={ (value) => { handleSelectChange('status', value) }}
                         />
                     </div>
                     <div className="col-md-2">
@@ -267,9 +298,18 @@ export const CustomerFormScreen = () => {
                             name="idLanguage"
                             placeholder="Idioma"
                             options={ languageOpt }
-                            defaultValue={idLanguage}
+                            value={idLanguage}
                             onChange={ (value) => { handleSelectChange('idLanguage', value) }}
 
+                        />
+                    </div>
+                    <div className="col-md-12">
+                        <label className="control-label">Observaciones</label>
+                        <textarea
+                            className="form-control"
+                            name="observations"
+                            value={observations}
+                            onChange={handleInputChange}
                         />
                     </div>
                 </div>

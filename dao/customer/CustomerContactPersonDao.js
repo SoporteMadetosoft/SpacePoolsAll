@@ -40,7 +40,6 @@ class CustomerContactPersonDao extends GenericDao{
     async mountObj(data) {
         const department = await this.CustomerDepartmentDao.findById(data.department)
          const docs = {
-            _id: '0',
             ...data,            
             department: await this.CustomerDepartmentDao.createSelect(await department.base)
         }

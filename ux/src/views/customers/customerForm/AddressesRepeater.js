@@ -14,7 +14,7 @@ export const AddressesRepeater = () => {
     const dispatch = useDispatch()
     const formValues = useSelector(state => state.normalForm)
 
-    const { addresses, id } = formValues
+    const { addresses } = formValues
 
     const count = addresses ? addresses.length : 0
 
@@ -58,7 +58,8 @@ const AddressesForm = ({ position }) => {
         address,  
         population, 
         province, 
-        postalCode } = normalForm.addresses[position]
+        postcode,
+        defaultAddress } = normalForm.addresses[position]
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('addresses', position))
@@ -110,7 +111,7 @@ const AddressesForm = ({ position }) => {
                     value={ address }/>
             </div>
             <div className="col-md-2">
-                <label className="control-label">Poblacíon</label>
+                <label className="control-label">Población</label>
                 <input 
                     type="text" 
                     name="population" 
@@ -131,15 +132,19 @@ const AddressesForm = ({ position }) => {
                 <label className="control-label">Código Postal</label>
                 <input 
                     type="text" 
-                    name="postalCode" 
+                    name="postcode" 
                     className="form-control"
                     onChange={ handleInputChange }
-                    value={ postalCode }/>
+                    value={ postcode }/>
             </div>
             <div className="col-md-1">
                 <label className="control-label">Principal</label>
                 <br/>
-                <RadioButton type="radio" name="defaultAddress"/>
+                <RadioButton 
+                    type="radio" 
+                    checked={defaultAddress}
+                    name="defaultAddress"
+                />
             </div>
             <div className="col-md-1">
                 <Button.Ripple className='btn-icon form-control mt-2 btn-sm' color='danger' outline onClick={decreaseCount}>

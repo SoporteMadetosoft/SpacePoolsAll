@@ -1,12 +1,5 @@
-
-const CustomerContactPersonDao = require('../../dao/customer/CustomerContactPersonDao')
-const CustomerAddressDao = require('../../dao/customer/CustomerAddressDao')
 const CustomerDao = require('../../dao/customer/CustomerDao')
-const CustomerLanguage = require('../../models/setup/customer/CustomerLanguage')
-
 const customerDao = new CustomerDao()
-const customerAddressDao = new CustomerAddressDao()
-const contactPersonsDao = new CustomerContactPersonDao()
 
 exports.list = async (req, res) => {
     try {
@@ -52,24 +45,20 @@ exports.delete = async (req, res) => {
 
 exports.insert = async (req, res) => {
     try {
-        /** INSERT CUSTOMER **/
 
-        const base = await customerDao.unMountBase(req.body.formData.base)
-        const insert = await customerDao.insert(base)
-        
+        /** INSERT CUSTOMER */
+        const customer = req.body.form
+        const addresses = req.body.form.addresses
+        const contacts = req.body.form.contacts
+        console.log(req.body.form)
+        delete customer.addresses
+        delete customer.contacts
+        const insert = await customerDao.insert(customer)
         /** INSERT ADDRESSES**/
-        req.body.formData.addresses.forEach(async (element) => {
-            element.idCustomer = insert.insertId
-            const addresses = await customerDao.unMountAddress(element)
-            customerAddressDao.insert(addresses)
-        });
-
-        // /** INSERT CONTACT PERSONS**/
-        req.body.formData.contactPersons.forEach(async (element) => {
-            element.idCustomer = insert.insertId
-            const contacts = await customerDao.unMountContacts(element)
-            contactPersonsDao.insert(contacts)
-        });
+        
+        customerDao.multipleAccess(addresses, customerDao.CustomerAddressDao, insert.insertId, 'idCustomer')
+        /** INSERT CONTACT PERSONS**/
+        customerDao.multipleAccess(contacts, customerDao.CustomerContactPersonDao, insert.insertId, 'idCustomer')
 
         res.json({ ok: true })
     } catch (error) {

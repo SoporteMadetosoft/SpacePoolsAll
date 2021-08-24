@@ -196,8 +196,14 @@ useEffect( () => {
   
   dispatch(startAddSelectOptions('/setup/vendors/type', 'vendorTypesOpt'))
 
+  dispatch(startAddSelectOptions('/setup/vehicles/brand', 'brandOpt'))
+  dispatch(startAddSelectOptions('/setup/vehicles/brandModel', 'modelOpt'))
+
   dispatch(startAddSelectOptions('/setup/general/department', 'departmentOpt'))
   dispatch(startAddSelectOptions('/setup/general/paymentMethod', 'paymentMethodOpt'))
+  dispatch(startAddSelectOptions('/setup/general/addressesTypes', 'addresseTypesOpt'))
+
+  dispatch(startAddSelectOptions('/setup/items/place', 'placeOpt'))
 
   dispatch(startAddSelectOptions('/global/payday', 'paymentDayOpt'))
   dispatch(startAddSelectOptions('/global/mode', 'modeOpt'))

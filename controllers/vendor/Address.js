@@ -59,7 +59,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT ADDRESS */
-        await addressDao.insert(req.body.formData.base)
+        await addressDao.insert(req.body.form)
 
         res.json({ ok: true })
     } catch (error) {
@@ -72,7 +72,7 @@ exports.update = (req, res) => {
 
     try {
         /**UPDATE ADDRESS */
-        addressDao.update(req.body.formData.base)
+        addressDao.update(req.body.form)
        
         res.json({ ok: true })
     } catch (error) {

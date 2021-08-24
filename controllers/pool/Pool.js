@@ -59,7 +59,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT POOL */
-        const insert = await poolDao.insert(req.body.formData.base)
+        const insert = await poolDao.insert(req.body.form)
         
 
         res.json({ ok: true })
@@ -74,7 +74,7 @@ exports.update = (req, res) => {
     try {
         /** UPDATE POOL */
         
-        poolDao.update(req.body.formData.base)
+        poolDao.update(req.body.form)
        
         res.json({ ok: true })
     } catch (error) {

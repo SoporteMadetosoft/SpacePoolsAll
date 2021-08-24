@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Repeater from '@components/repeater'
 import { X, Plus } from 'react-feather'
 import { Button } from 'reactstrap'
@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
-import { startAddSelectOptions } from '../../../redux/actions/selects'
 
 export const AddressesRepeater = () => {
   
@@ -17,10 +16,6 @@ export const AddressesRepeater = () => {
     const { addresses } = formValues
 
     const count = addresses ? addresses.length : 0
-
-    useEffect( () => {
-        dispatch(startAddSelectOptions('/setup/general/addressesTypes', 'addresseTypesOpt'))
-    }, [])
 
     const increaseCount = () => {
         dispatch(addRepeaterRegister('addresses'))

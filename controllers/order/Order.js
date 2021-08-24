@@ -67,7 +67,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT ORDER */
-        const insert = await orderDao.insert(req.body.formData.base)
+        const insert = await orderDao.insert(req.body.form)
         /** INSERT PODUCTION */
         req.body.production.forEach(element => {
             element.orderId = insert.insertId
@@ -96,7 +96,7 @@ exports.update = (req, res) => {
 
     try {
         /** UPDATE ORDER */
-        orderDao.update(req.body.formData.base)
+        orderDao.update(req.body.form)
         /** UPDATE PRODUCTION*/
         req.body.formData.production.forEach(element => {
             productionDao.update(element)

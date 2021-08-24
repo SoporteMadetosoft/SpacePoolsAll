@@ -59,7 +59,7 @@ exports.delete = async (req, res) => {
 
 exports.insert = async (req, res) => {
     try {
-        const insert = await repairDao.insert(req.body.formData.base)
+        const insert = await repairDao.insert(req.body.form)
 
         res.json({ ok: true })
     } catch (error) {
@@ -71,7 +71,7 @@ exports.insert = async (req, res) => {
 exports.update = (req, res) => {
 
     try {
-        repairDao.update(req.body.formData.base)
+        repairDao.update(req.body.form)
        
         res.json({ ok: true })
     } catch (error) {

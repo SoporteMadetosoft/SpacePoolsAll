@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import BreadCrumbs from '@components/breadcrumbs'
 
-import { vendorTypeForm } from '@fixed/setup/vendors/vendorType/formComposition/vendorTypeForm'
-import { DynamicForm } from '@cc/form/DynamicForm'
 import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleStartEditing } from '../../../../redux/actions/form'
+import { startAddSelectOptions } from '../../../../redux/actions/selects'
+import { VendorTypeForm } from './vendorTypeForm/VendorTypeForm'
+import { save } from '../../../../utility/helpers/Axios/save'
 
 export const VendorTypeFormScreen = () => {
                  
@@ -15,17 +15,19 @@ export const VendorTypeFormScreen = () => {
     const titulo = (id) ? 'Editar tipo de vendedor' : 'Añadir tipo de vendedor'
    
     const dispatch = useDispatch()
-    const {base} = useSelector(state => state.form.formData)
+    const history = useHistory()
+    const form = useSelector(state => state.normalForm)
     
-    useEffect(() => {
-        if (id) {
-            dispatch(handleStartEditing('VendorType', id))
-        }
-    }, [])
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        save('VendorType', id, form)
+        dispatch(startAddSelectOptions('/setup/vendors/type', 'vendorTypesOpt'))
+        history.push('/setup/vendors/vendorType')
+    }
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Tipos de proveedor' breadCrumbActive={titulo} />
-            <DynamicForm formCustom={ vendorTypeForm } data={base} />
+            <VendorTypeForm />
             <ActionButtons />
         </form>
     )

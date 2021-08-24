@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import BreadCrumbs from '@components/breadcrumbs'
 
-import { modelForm } from '@fixed/setup/vehicles/model/formComposition/modelForm'
-import { DynamicForm } from '@cc/form/DynamicForm'
 import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleStartEditing } from '../../../../redux/actions/form'
+import { startAddSelectOptions } from '../../../../redux/actions/selects'
 import { save } from '../../../../utility/helpers/Axios/save'
+import { ModelForm } from './modelForm/ModelForm'
 
 export const ModelFormScreen = () => {
                  
@@ -17,24 +16,18 @@ export const ModelFormScreen = () => {
    
     const dispatch = useDispatch()
     const history = useHistory()
-    const {base} = useSelector(state => state.form.formData)
-    const form = useSelector(state => state.form)
-
-    useEffect(() => {
-        if (id) {
-            dispatch(handleStartEditing('Model', id))
-        }
-    }, [])
+    const form = useSelector(state => state.normalForm)
     
     const handleSubmit = async (e) => {
         e.preventDefault()
         save('Model', id, form)
+        dispatch(startAddSelectOptions('/setup/vehicles/brandModel', 'modelOpt'))
         history.push('/setup/vehicles/model')
     }
     return (
         <form onSubmit={handleSubmit}>
             <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Modelos' breadCrumbActive={titulo} />
-            <DynamicForm formCustom={ modelForm } data={base} />
+            <ModelForm />
             <ActionButtons />
         </form>
     )

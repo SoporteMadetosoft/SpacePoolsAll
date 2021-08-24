@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
 
 import { handleChangeController } from '../../../redux/actions/normalForm'
-import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { DocForm } from './DocForm'
 
 
@@ -26,12 +25,6 @@ export const CarriersForm = (id) => {
 
     const { statusOpt } = selectReducer
 
-    useEffect( () => {
-        dispatch(startAddSelectOptions('/Customers', 'customersOpt'))
-        dispatch(startAddSelectOptions('/Vendors', 'vendorsOpt'))
-        dispatch(startAddSelectOptions('/setup/general/status', 'statusOpt'))
-    }, [])
-
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
@@ -49,6 +42,7 @@ export const CarriersForm = (id) => {
                         <input
                             className="form-control"
                             name="name"
+                            required
                             placeholder="Nombre"
                             value={name}
                             onChange={handleInputChange}

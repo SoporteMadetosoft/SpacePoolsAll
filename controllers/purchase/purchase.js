@@ -58,7 +58,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT PURCAHSE */
-        const insert = await purchaseDao.insert(req.body.formData.base)
+        const insert = await purchaseDao.insert(req.body.form)
         /** INSERT ITEM */
         req.body.repairs.forEach(element => {
             element.purchaseId = insert.insertId
@@ -76,7 +76,7 @@ exports.update = (req, res) => {
 
     try {
         /** UPDATE PURCHASE */
-        purchaseDao.update(req.body.formData.base)
+        purchaseDao.update(req.body.form)
         /** UPDATE ITEM */
         req.body.formData.repairs.forEach(element => {
             itemDao.update(element)

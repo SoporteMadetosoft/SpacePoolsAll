@@ -46,7 +46,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT ROLE **/
-        const insert = await roleDao.insert(req.body.formData.base)
+        const insert = await roleDao.insert(req.body.form)
 
         res.json({ ok: true })
     } catch (error) {
@@ -59,7 +59,7 @@ exports.update = (req, res) => {
 
     try {
         /** UPDATE ROLE **/
-        roleDao.update(req.body.formData.base)
+        roleDao.update(req.body.form)
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

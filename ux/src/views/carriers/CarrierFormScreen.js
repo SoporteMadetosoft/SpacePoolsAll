@@ -6,7 +6,7 @@ import BreadCrumbs from '@components/breadcrumbs'
 import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 import { save } from '../../utility/helpers/Axios/save'
 import { CarriersForm } from './carriersForm/CarriersForm'
-import { initNormalForm } from '../../redux/actions/normalForm'
+import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm'
 
 const structureForm = {
     documents: []
@@ -21,9 +21,9 @@ export const CarrierFormScreen = () => {
     const titulo = (id) ? 'Editar Transportista' : 'Añadir Transportista'
     
     useEffect(() => {
-        // if (id) {
-        //     dispatch(handleStartEditing('Carriers', id))
-        // }
+        if (id) {
+            dispatch(handleStartEditing('Carriers', id))
+        }
         dispatch( initNormalForm(structureForm) )
     }, [])
     

@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import BreadCrumbs from '@components/breadcrumbs'
 
-import { originForm } from '@fixed/setup/customers/origin/formComposition/originForm'
-import { DynamicForm } from '@cc/form/DynamicForm'
 import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleStartEditing } from '../../../../redux/actions/form'
 import { save } from '../../../../utility/helpers/Axios/save'
-import { startLoadingOrigin } from './redux/actions'
+import { startAddSelectOptions } from '../../../../redux/actions/selects'
+import { OriginForm } from './originForm/OriginForm'
 
 export const OriginFormScreen = () => {
                  
@@ -18,25 +16,18 @@ export const OriginFormScreen = () => {
    
     const dispatch = useDispatch()
     const history = useHistory()
-    const {base} = useSelector(state => state.form.formData)
-    const form = useSelector(state => state.form)
-
-    useEffect(() => {
-        if (id) {
-            dispatch(handleStartEditing('Origin', id))
-        }
-    }, [])
+    const form = useSelector(state => state.normalForm)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         save('Origin', id, form)
-        dispatch(startLoadingOrigin())
+        dispatch(startAddSelectOptions('/setup/customers/origin', 'customerOriginOpt'))
         history.push('/setup/customer/origin')
     }
     return (
         <form onSubmit={handleSubmit}>
             <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Origenes' breadCrumbActive={titulo} />
-            <DynamicForm formCustom={ originForm } data={base} />
+            <OriginForm />
             <ActionButtons />
         </form>
     )

@@ -114,7 +114,7 @@ export const CustomersForm = () => {
         <>
             <form onSubmit={handleSubmit}>
                 <div className="card">
-                    <div className=" card-body row pb-3 px-3">
+                <div className=" card-body row pb-3 px-3">
                         <div className="col-md-2">
                             <label className="control-label">Nº Cliente</label>
                             <input

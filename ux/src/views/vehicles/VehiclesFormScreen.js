@@ -56,7 +56,7 @@ export const VehiclesFormScreen = () => {
 
     return (
         <>
-            <BreadCrumbs breadCrumbTitle={plateNumber} breadCrumbParent='vehículos' breadCrumbActive={title} />
+            <BreadCrumbs breadCrumbTitle={plateNumber} breadCrumbParent='Vehículos' breadCrumbActive={title} />
             <form onSubmit={ handleSubmit }>
                 <VechiclesForm />
                 <ActionButtons />

@@ -5,7 +5,7 @@ const VehiclesRoutes = [
   {
     path: '/porters/vehicles',
     exact: true,
-    component: () => <VehiclesListScreen titulo={'Transportistas'} />
+    component: () => <VehiclesListScreen titulo={'Vehículos'} />
   },
   {
     path: '/porters/vehicles/add',

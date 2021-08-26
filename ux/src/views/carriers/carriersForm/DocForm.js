@@ -74,7 +74,7 @@ const DocsForm = ({ position }) => {
     return (
 
         <div className="row border-bottom pb-1 mt-1 mx-1">
-            <div className="col-md-4 offset-md-1">
+            <div className="col-md-6">
                 <label className="control-label">Nombre del documento</label>
                 <input 
                     type="text" 
@@ -83,7 +83,7 @@ const DocsForm = ({ position }) => {
                     onChange={ handleInputChange }
                     value={ docName }/>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-5">
                 <label className="control-label">Documento</label>
                 <input type="file" name="file" className="form-control"/>
             </div>

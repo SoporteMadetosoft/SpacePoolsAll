@@ -4,7 +4,7 @@ class GenericDao {
     model
     db = dbCon
     auxModel
-    
+
     constructor(model) {
         this.model = model;
         this.auxModel = new model({});
@@ -87,7 +87,7 @@ class GenericDao {
 
     update(params) {
         return new Promise((resolve, reject) => {
-            this.db.query(`UPDATE ?? Set ${this.#formatUpdate(params)} WHERE id =  ? `, [this.auxModel.table, params.id ], async (err, result) => {
+            this.db.query(`UPDATE ?? Set ${this.#formatUpdate(params)} WHERE id =  ? `, [this.auxModel.table, params.id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -101,43 +101,43 @@ class GenericDao {
         const idsDb = await obj.findAllId(id, foreign)
         const idsForm = []
         const d = data
-        d.forEach( element => {
-            if (typeof obj.unMountBase == 'function') { element =  obj.unMountBase(element) }
+        d.forEach(element => {
+            if (typeof obj.unMountBase == 'function') { element = obj.unMountBase(element) }
             const action = 'id' in element ? 'update' : 'insert'
 
-            if (action === 'insert') { 
-                element[foreign] = id 
-            }else{
+            if (action === 'insert') {
+                element[foreign] = id
+            } else {
                 idsForm.push(element.id)
             }
 
             obj[action](element)
         })
         const diff = idsDb.filter(x => !idsForm.includes(x))
-        
+
         diff.forEach(id => {
             obj.deleteById(id)
         })
     }
 
-    #formatUpdate (params){
-        let update=''
+    #formatUpdate(params) {
+        let update = ''
         Object.entries(params).forEach(element => {
-            if(element[0]!='id'){
-                update= update.concat("`",element[0], "` = ", "'" ,element[1],"', ")
+            if (element[0] != 'id') {
+                update = update.concat("`", element[0], "` = ", "'", element[1], "', ")
             }
         });
-        return update.substring(0,update.length-2)
+        return update.substring(0, update.length - 2)
     }
 
-    async createSelect(obj){
+    async createSelect(obj) {
         let obj2 = {}
         obj2.value = obj.id
         obj2.label = obj.name
         return obj2
     }
 
-    undoSelect(obj){
+    undoSelect(obj) {
         return obj.value
     }
 

@@ -1,5 +1,12 @@
 
 const CarrierDao = require('../../dao/carrier/CarrierDao')
+const express = require('express');
+const fileUpload = require('express-fileupload');
+const fs = require('fs');
+
+const app = express();
+
+app.use(fileUpload());
 
 const carrierDao = new CarrierDao()
 
@@ -18,12 +25,12 @@ exports.list = async (req, res) => {
 
 exports.select = async (req, res) => {
 
-    try{
+    try {
         res.json({
-            ok:true,
-            data: await carrierDao.getSelect() 
+            ok: true,
+            data: await carrierDao.getSelect()
         })
-    }catch(error){
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
@@ -59,7 +66,13 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT CARRIER */
-        await carrierDao.insert(req.body.form)
+
+        const carrier = req.body.form
+        const documents = req.body.form.documents
+
+        delete carrier.documents
+
+        const insert = await carrierDao.insert(carrier)
 
         res.json({ ok: true })
     } catch (error) {
@@ -72,7 +85,9 @@ exports.update = (req, res) => {
 
     try {
         /**UPDATE CARRIER */
-        carrierDao.update(req.body.form)
+        const carrier = req.body.form
+
+        carrierDao.update(carrier)
 
         res.json({ ok: true })
     } catch (error) {
@@ -80,3 +95,30 @@ exports.update = (req, res) => {
         return res.status(500).send(error)
     }
 }
+
+exports.upload = (req, res) => {
+
+    try {
+
+        const dateNow = req.body.filePath;
+        var files = [].concat(req.files.file);
+        files.forEach(element => {
+            const file = element;
+            file.mv(`${__dirname}/../../public/${dateNow}/${file.name}`, err => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).send(err);
+                }
+            })
+        })
+
+        return res.json({ ok: true, filePath: `${dateNow}` });
+
+    } catch (error) {
+
+        console.log(error);
+        return res.status(500).send(error);
+
+    }
+}
+

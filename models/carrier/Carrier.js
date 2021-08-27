@@ -1,4 +1,4 @@
-class Carrier{
+class Carrier {
     base = {}
     #table = 'carriers'
 
@@ -17,8 +17,9 @@ class Carrier{
         phone2,
         startSchedule,
         endShedule,
-        status
-    }){
+        status,
+        filePath
+    }) {
         this.base.id = id
         this.base.carrierCode = carrierCode
         this.base.name = name
@@ -34,6 +35,7 @@ class Carrier{
         this.base.startSchedule = startSchedule
         this.base.endShedule = endShedule
         this.base.status = status
+        this.base.filePath = filePath
     }
     get table() {
         return this.#table;

@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
+const fileUpload = require('express-fileupload');
 
 dotenv.config({ path: './.envLocal' })
 
@@ -16,6 +17,8 @@ app.use(cors({
 app.use( express.static( 'ux/build' ) );
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
+app.use(fileUpload());
+
 
 //Auth Routes
 app.use('/auth', require('./routes/auth'));

@@ -2,7 +2,6 @@ import Select from 'react-select'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleChangeController, handleStartEditing } from '../../../redux/actions/normalForm'
-import { save } from '../../../utility/helpers/Axios/save'
 
 import { AddressesRepeater } from './AddressesRepeater'
 import { ContactsRepeater } from './ContactsRepeater'
@@ -14,7 +13,6 @@ export const CustomersForm = () => {
     const { id } = useParams()
 
     const { normalForm, selectReducer } = useSelector(state => state)
-    const form = useSelector(state => state.normalForm)
 
     
     const {
@@ -66,53 +64,10 @@ export const CustomersForm = () => {
         dispatch(handleChangeController(key, value))
     }
     
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-
-        let addressesPretty = ''
-
-        form.addresses.forEach(e => {
-            addressesPretty = [
-                {
-                    ...e,
-                    addressType: e.addressType.value
-                }
-            ]
-        })
-
-        let contactPretty = ''
-
-        form.contacts.forEach(e => {
-            contactPretty = [
-                {
-                    ...e,
-                    department: e.department.value
-                }
-            ]
-        })
-
-        const prettyForm = {
-            ...form,
-            idPaymentMethod: form.idPaymentMethod.value,
-            idPayDay: form.idPayDay.value,
-            idCustomerOrigin: form.idCustomerOrigin.value,
-            idCustomerType: form.idCustomerType.value,
-            idCustomerActivity: form.idCustomerActivity.value,
-            idCustomerCategory: form.idCustomerCategory.value,
-            idMode: form.idMode.value,
-            idStatus: form.idStatus.value,
-            idLanguage: form.idLanguage.value,
-            addresses: [...addressesPretty],
-            contacts: [...contactPretty]
-
-        }
-        save('Customers', id, prettyForm)
-        history.push('/customers')
-    }
+    
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
                 <div className="card">
                 <div className=" card-body row pb-3 px-3">
                         <div className="col-md-2">
@@ -308,7 +263,6 @@ export const CustomersForm = () => {
                         <ContactsRepeater />
                     </div>
                 </div>
-            </form>  
         </>
     )
 }

@@ -12,15 +12,6 @@ export const VechiclesForm = ({ id }) => {
     
     const dispatch = useDispatch()
         
-    const itineranciaOption = [
-        { value: true, label: 'Itinerante' },
-        { value: false, label: 'No itinerante' }
-    ]
-    const statusOptions = [
-        { value: true, label: 'Disponible' },
-        { value: false, label: 'No disponible' }
-    ]
-
     const { normalForm, selectReducer } = useSelector(state => state)
     const { 
         plateNumber,

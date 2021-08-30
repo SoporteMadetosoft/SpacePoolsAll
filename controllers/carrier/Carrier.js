@@ -66,14 +66,10 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT CARRIER */
-
         const carrier = req.body.form
-        const documents = req.body.form.documents
-
         delete carrier.documents
 
-        const insert = await carrierDao.insert(carrier)
-
+        await carrierDao.insert(carrier)
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
@@ -82,13 +78,12 @@ exports.insert = async (req, res) => {
 }
 
 exports.update = (req, res) => {
-
     try {
         /**UPDATE CARRIER */
         const carrier = req.body.form
+        delete carrier.documents
 
         carrierDao.update(carrier)
-
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

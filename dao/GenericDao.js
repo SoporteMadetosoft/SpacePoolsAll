@@ -71,6 +71,7 @@ class GenericDao {
     }
 
     insert(params) {
+        console.log(`INSERT INTO ${this.auxModel.table} (${Object.keys(params)}) VALUES  (${Object.values(params)})`)
         Object.keys(params).forEach((k) => { if (params[k] === '') { params[k] = null } })
         return new Promise((resolve, reject) => {
             this.db.query(`INSERT INTO ?? (??) VALUES  (?)`, [this.auxModel.table, Object.keys(params), Object.values(params)], async (err, result) => {
@@ -87,7 +88,7 @@ class GenericDao {
 
     update(params) {
         return new Promise((resolve, reject) => {
-            this.db.query(`UPDATE ?? Set ${this.#formatUpdate(params)} WHERE id =  ? `, [this.auxModel.table, params.id], async (err, result) => {
+            this.db.query(`UPDATE ?? SET ${this.#formatUpdate(params)} WHERE id =  ? `, [this.auxModel.table, params.id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -130,7 +131,7 @@ class GenericDao {
         return update.substring(0, update.length - 2)
     }
 
-    async createSelect(obj) {
+    createSelect(obj) {
         let obj2 = {}
         obj2.value = obj.id
         obj2.label = obj.name

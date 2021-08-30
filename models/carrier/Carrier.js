@@ -17,7 +17,7 @@ class Carrier {
         phone2,
         startSchedule,
         endShedule,
-        status,
+        idSstatus,
         filePath
     }) {
         this.base.id = id
@@ -34,7 +34,7 @@ class Carrier {
         this.base.phone2 = phone2
         this.base.startSchedule = startSchedule
         this.base.endShedule = endShedule
-        this.base.status = status
+        this.base.idSstatus = idSstatus
         this.base.filePath = filePath
     }
     get table() {

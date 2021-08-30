@@ -7,53 +7,40 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 
-export const carriersList = [
+export const vehiclesList = [
   {
     name: 'Nº',
-    selector: 'carrierCode',
+    selector: 'vehicleCode',
     sortable: true,
     minWidth: '50px',
     width: '5%'
   },
   {
-    name: 'Nombre',
-    selector: 'name',
+    name: 'Matrícula del vehículo',
+    selector: 'plate',
     sortable: true,
     searchable: true,
     minWidth: '300px'
   },
   {
-    name: 'DNI/NIF',
-    selector: 'NIF',
+    name: 'Conductor',
+    selector: 'carrierId',
     sortable: true,
     searchable: true,
     minWidth: '75px'
   },
   {
-    name: 'Email',
-    selector: 'email',
+    name: 'Número de bastidor',
+    selector: 'frameNumber',
     sortable: true,
     searchable: true,
     minWidth: '75px'
   },
   {
-    name: 'Teléfono',
-    selector: 'phone',
+    name: 'Fecha de ITV',
+    selector: 'ITVdate',
     sortable: true,
     searchable: true,
-    minWidth: '200px'
-  },
-  {
-    name: 'Móvil',
-    selector: 'phone2',
-    sortable: true,
-    searchable: true,
-    minWidth: '200px'
-  },
-  {
-    name: 'Estado',
-    selector: 'idStatus',
-    sortable: true,
     minWidth: '200px'
   },
   {
@@ -70,7 +57,7 @@ export const carriersList = [
               <MoreVertical size={15} />
             </DropdownToggle>
             <DropdownMenu right>
-              <Link to={`./carriers/edit/${row.id}`}>
+              <Link to={`./vehicles/edit/${row.id}`}>
                 <DropdownItem tag='a' href='/' className='w-100'>
                   <FileText size={15} />
                   <span className='align-middle ml-50'>Detalles</span>

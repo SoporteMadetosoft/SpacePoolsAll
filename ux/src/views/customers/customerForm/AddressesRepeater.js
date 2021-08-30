@@ -8,8 +8,16 @@ import Select from 'react-select'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 
+const formStructure = {
+    addressType: '',
+    address: '',
+    population: '',
+    province: '',
+    postcode: ''
+}
+
 export const AddressesRepeater = () => {
-  
+
     const dispatch = useDispatch()
     const formValues = useSelector(state => state.normalForm)
 
@@ -18,23 +26,23 @@ export const AddressesRepeater = () => {
     const count = addresses ? addresses.length : 0
 
     const increaseCount = () => {
-        dispatch(addRepeaterRegister('addresses'))
+        dispatch(addRepeaterRegister('addresses', formStructure))
     }
 
     return (
         <>
             <h1 className="card-title mb-2">Direcciones</h1>
             <Repeater count={count}>
-                
+
                 {i => {
                     const Tag = 'div'
                     return (
                         <Tag key={i} >
-                            <AddressesForm position={ i }/>
+                            <AddressesForm position={i} />
                         </Tag>
                     )
                 }}
-                   
+
             </Repeater>
             <Button.Ripple className='btn-icon form-control mt-1 btn-sm' color='primary' outline onClick={increaseCount}>
                 <Plus size={14} />
@@ -48,35 +56,35 @@ const AddressesForm = ({ position }) => {
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
     const { addresseTypesOpt } = selectReducer
-    const { 
-        addressType, 
-        address,  
-        population, 
-        province, 
+    const {
+        addressType,
+        address,
+        population,
+        province,
         postcode,
         defaultAddress } = normalForm.addresses[position]
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('addresses', position))
-    }   
+    }
 
     const handleInputChange = ({ target }) => {
 
         const obj = {
-            name: target.name, 
-            value: target.value 
+            name: target.name,
+            value: target.value
         }
 
         dispatch(
-            editRepeaterRegister( 'addresses', position, obj)
+            editRepeaterRegister('addresses', position, obj)
         )
     }
 
     const handleSelectChange = (key, element) => {
 
         const obj = {
-            name: key, 
-            value: element 
+            name: key,
+            value: element
         }
 
         dispatch(
@@ -89,54 +97,54 @@ const AddressesForm = ({ position }) => {
         <div className="row border-bottom pb-1 mt-1 mx-1">
             <div className="col-md-2">
                 <label className="control-label">Tipo de dirección</label>
-                <Select 
+                <Select
                     name="addressType"
                     options={addresseTypesOpt}
-                    onChange={ (value) => { handleSelectChange('addressType', value) }}
-                    defaultValue={ addressType }
+                    onChange={(value) => { handleSelectChange('addressType', value) }}
+                    value={addressType}
                 />
             </div>
             <div className="col-md-2">
                 <label className="control-label">Dirección</label>
-                <input 
-                    type="text" 
-                    name="address" 
+                <input
+                    type="text"
+                    name="address"
                     className="form-control"
-                    onChange={ handleInputChange }
-                    value={ address }/>
+                    onChange={handleInputChange}
+                    value={address} />
             </div>
             <div className="col-md-2">
                 <label className="control-label">Población</label>
-                <input 
-                    type="text" 
-                    name="population" 
+                <input
+                    type="text"
+                    name="population"
                     className="form-control"
-                    onChange={ handleInputChange }
-                    value={ population }/>
+                    onChange={handleInputChange}
+                    value={population} />
             </div>
             <div className="col-md-2">
                 <label className="control-label">Provincia</label>
-                <input 
-                    type="text" 
-                    name="province" 
+                <input
+                    type="text"
+                    name="province"
                     className="form-control"
-                    onChange={ handleInputChange }
-                    value={ province }/>
+                    onChange={handleInputChange}
+                    value={province} />
             </div>
             <div className="col-md-2">
                 <label className="control-label">Código Postal</label>
-                <input 
-                    type="text" 
-                    name="postcode" 
+                <input
+                    type="text"
+                    name="postcode"
                     className="form-control"
-                    onChange={ handleInputChange }
-                    value={ postcode }/>
+                    onChange={handleInputChange}
+                    value={postcode} />
             </div>
             <div className="col-md-1">
                 <label className="control-label">Principal</label>
-                <br/>
-                <RadioButton 
-                    type="radio" 
+                <br />
+                <RadioButton
+                    type="radio"
                     checked={defaultAddress}
                     name="defaultAddress"
                 />

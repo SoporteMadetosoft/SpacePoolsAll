@@ -25,8 +25,6 @@ export const CarrierFormScreen = () => {
     const form = useSelector(state => state.normalForm)
     const { upload, filePath } = useSelector(state => state.fileUpload)
 
-    const titulo = (id) ? 'Editar Transportista' : 'Añadir Transportista'
-
     useEffect(() => {
         if (id) {
             dispatch(handleStartEditing('Carriers', id))
@@ -44,17 +42,25 @@ export const CarrierFormScreen = () => {
 
         const prettyForm = {
             ...form,
+            idStatus: form.idStatus.value,
             filePath: filePath2
         }
 
         save('Carriers', id, prettyForm)
         dispatch(handleCleanUp())
-        history.push('/carriers')
+        history.push('/porters/carriers')
     }
+
+    if (!form.name) {
+        form.name = ''
+    }
+
+    const titulo = (id) ? 'Editar Transportista' : 'Añadir Transportista'
+    const customerName = (form.name) ? form.name : titulo
 
     return (
         <form onSubmit={handleSubmit}>
-            <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Transportista' breadCrumbActive={titulo} />
+            <BreadCrumbs breadCrumbTitle={customerName} breadCrumbParent='Transportista' breadCrumbActive={titulo} />
             <FileContext.Provider value={{ file, setFile }}>
                 <CarriersForm />
             </FileContext.Provider>

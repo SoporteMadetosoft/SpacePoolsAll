@@ -1,45 +1,58 @@
 const Repair = require("../../models/trailer/Repair");
 const Trailer = require("../../models/trailer/Trailer");
-const GenericDao = require("../GenericDao");
+const SetupDao = require("../setup/SetupDao");
 
 const StatusDao = require("../global/StatusDao");
 const RepairDao = require("../trailer/RepairDao");
-const ModelDao = require("../setup/general/ModelDao");
+const BrandModelDao = require("../setup/vehicles/BrandModelDao");
+const BrandDao = require("../setup/vehicles/BrandDao");
 
-class TrailerDao extends GenericDao{
+class TrailerDao extends SetupDao {
     RepairDao
     StatusDao
     ModelDao
+    BrandDao
 
-    constructor(){
+    constructor() {
         super(Trailer);
         this.RepairDao = new RepairDao()
         this.StatusDao = new StatusDao()
-        this.ModelDao = new ModelDao()
+        this.ModelDao = new BrandModelDao()
+        this.BrandDao = new BrandDao()
     }
 
-    async mountObj(data){
-        const status = await this.StatusDao.findById(data.status)
+    async mountObj(data) {
+        const status = await this.StatusDao.findById(data.idStatus)
         const model = await this.ModelDao.findById(data.model)
-        const trailer={
+        const br = await this.BrandDao.findById(model.base.idBrand.value)
+        const trailer = {
             ...data,
             repairs: await this.RepairDao.findByTrailerId(data.id),
-            status: await this.createSelect(status.base),
-            model: await this.createSelect(model.base)
+            idStatus: await this.createSelect(status.base),
+            ITVdate: await this.datetimeToDate(data.ITVdate),
+            maintenanceDate: await this.datetimeToDate(data.maintenanceDate),
+            insuranceDateLimit: await this.datetimeToDate(data.insuranceDateLimit),
+            model: await this.createSelect(model.base),
+            brand: await this.createSelect(br.base)
         }
         return new Trailer(trailer)
     }
 
-    async mountList(data){
+    async mountList(data) {
+        const model = await this.ModelDao.findById(data.model)
+        const brand = await this.BrandDao.findById(model.base.idBrand.value)
         const list = {
             ...data,
+            mod: model != undefined ? model.base.name : '',
+            br: brand != undefined ? brand.base.name : '',
+
         }
 
-        const{ id, plate, model}=list
-        const nObj = {id:id, plate:plate, model:model}
+        const { id, trailerCode, plate, br, mod, ITVdate } = list
+        const nObj = { id: id, trailerCode: trailerCode, plate: plate, brand: br, model: mod, ITVdate: this.datetimeToDate(ITVdate) }
         return nObj
     }
-    
+
     getSelect() {
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM ??', [this.objectAux.table], async (err, result) => {
@@ -56,10 +69,10 @@ class TrailerDao extends GenericDao{
             });
         })
     }
-    
-    async mountSelect(data){
+
+    async mountSelect(data) {
         return await this.createSelect(data)
-        
+
     }
-}   
+}
 module.exports = TrailerDao

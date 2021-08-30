@@ -7,7 +7,6 @@ import { useHistory, useParams } from 'react-router-dom'
 import { VechiclesForm } from './vehiclesForm/VehiclesForm'
 import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 import { initNormalForm } from '../../redux/actions/normalForm'
-import { cleanSelectOptions } from '../../redux/actions/selects'
 
 import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 import { undoMultiSelect } from '../../utility/helpers/undoMultiSelect'
@@ -25,9 +24,8 @@ export const VehiclesFormScreen = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(cleanSelectOptions())
         dispatch(initNormalForm(structureForm))
-    }, [cleanSelectOptions, initNormalForm])
+    }, [initNormalForm])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -57,7 +55,7 @@ export const VehiclesFormScreen = () => {
     return (
         <>
             <BreadCrumbs breadCrumbTitle={plateNumber} breadCrumbParent='Vehículos' breadCrumbActive={title} />
-            <form onSubmit={ handleSubmit }>
+            <form onSubmit={handleSubmit}>
                 <VechiclesForm />
                 <ActionButtons />
             </form>

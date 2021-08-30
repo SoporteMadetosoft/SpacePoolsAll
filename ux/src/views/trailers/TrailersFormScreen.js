@@ -22,27 +22,31 @@ export const TrailersFormScreen = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(cleanSelectOptions())
         dispatch(initNormalForm(structureForm))
     }, [cleanSelectOptions, initNormalForm])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         const prettyForm = {
-            ...formValues
+            ...formValues,
+            idStatus: formValues.idStatus.value,
+            model: formValues.model.value
         }
 
-        save('Vehicles', id, prettyForm)
-        //dispatch(handleCleanForm())
-
+        save('Trailers', id, prettyForm)
     }
+
+    if (!formValues.plate) {
+        formValues.plate = ''
+    }
+
     const title = (id) ? 'Editar Remolque' : 'Añadir Remolque'
-    const plateNumber = (formValues.plateNumber) ? formValues.plateNumber : title
+    const plateNumber = (formValues.plate) ? formValues.plate : title
 
     return (
         <>
-            <BreadCrumbs breadCrumbTitle={plateNumber} breadCrumbParent='remolques' breadCrumbActive={title} />
-            <form onSubmit={ handleSubmit }>
+            <BreadCrumbs breadCrumbTitle={plateNumber} breadCrumbParent='Remolques' breadCrumbActive={title} />
+            <form onSubmit={handleSubmit}>
                 <TrailersForm />
                 <ActionButtons />
             </form>

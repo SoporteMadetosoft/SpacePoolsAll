@@ -2,6 +2,10 @@
 export const endPoints = {
 
     Customers: '/customers',
+    Vehicles: '/vehicles/vehicle',
+
+    Carriers: '/carriers',
+    Trailers: '/Trailers/trailer',
 
     Vendors: '/vendors/vendor',
 
@@ -16,10 +20,10 @@ export const endPoints = {
     Origin: '/setup/customers/origin',
 
     VendorType: '/setup/vendors/type',
-    
+
     Brand: '/setup/vehicles/brand',
     Model: '/setup/vehicles/brandModel',
-    
+
     Place: '/setup/items/place',
     //SETUP ENDS
 
@@ -27,9 +31,8 @@ export const endPoints = {
     Language: '/global/language',
     Mode: '/global/mode',
     Status: '/global/status',
-    PayDay: '/global/payday',
+    PayDay: '/global/payday'
     // GLOBAL ENDS
 
-    Carriers: '/carriers'
 
 }

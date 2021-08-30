@@ -156,20 +156,20 @@ const Router = () => {
                             /*eslint-disable */
                             {...(route.appLayout
                               ? {
-                                  appLayout: route.appLayout
-                                }
+                                appLayout: route.appLayout
+                              }
                               : {})}
                             {...(route.meta
                               ? {
-                                  routeMeta: route.meta
-                                }
+                                routeMeta: route.meta
+                              }
                               : {})}
                             {...(route.className
                               ? {
-                                  wrapperClass: route.className
-                                }
+                                wrapperClass: route.className
+                              }
                               : {})}
-                            /*eslint-enable */
+                          /*eslint-enable */
                           >
                             <FinalRoute route={route} {...props} />
                           </LayoutWrapper>
@@ -188,29 +188,30 @@ const Router = () => {
 
   const dispatch = useDispatch()
 
-useEffect( () => {
-  dispatch(startAddSelectOptions('/setup/customers/origin', 'customerOriginOpt'))
-  dispatch(startAddSelectOptions('/setup/customers/type', 'customerTypeOpt'))
-  dispatch(startAddSelectOptions('/setup/customers/activities', 'customerActivityOpt'))
-  dispatch(startAddSelectOptions('/setup/customers/category', 'customerCategoryOpt'))
-  
-  dispatch(startAddSelectOptions('/setup/vendors/type', 'vendorTypesOpt'))
+  useEffect(() => {
+    dispatch(startAddSelectOptions('/setup/customers/origin', 'customerOriginOpt'))
+    dispatch(startAddSelectOptions('/setup/customers/type', 'customerTypeOpt'))
+    dispatch(startAddSelectOptions('/setup/customers/activities', 'customerActivityOpt'))
+    dispatch(startAddSelectOptions('/setup/customers/category', 'customerCategoryOpt'))
 
-  dispatch(startAddSelectOptions('/setup/vehicles/brand', 'brandOpt'))
-  dispatch(startAddSelectOptions('/setup/vehicles/brandModel', 'modelOpt'))
+    dispatch(startAddSelectOptions('/setup/vendors/type', 'vendorTypesOpt'))
 
-  dispatch(startAddSelectOptions('/setup/general/department', 'departmentOpt'))
-  dispatch(startAddSelectOptions('/setup/general/paymentMethod', 'paymentMethodOpt'))
-  dispatch(startAddSelectOptions('/setup/general/addressesTypes', 'addresseTypesOpt'))
+    dispatch(startAddSelectOptions('/setup/vehicles/brand', 'brandOpt'))
 
-  dispatch(startAddSelectOptions('/setup/items/place', 'placeOpt'))
+    dispatch(startAddSelectOptions('/setup/general/department', 'departmentOpt'))
+    dispatch(startAddSelectOptions('/setup/general/paymentMethod', 'paymentMethodOpt'))
+    dispatch(startAddSelectOptions('/setup/general/addressesTypes', 'addresseTypesOpt'))
 
-  dispatch(startAddSelectOptions('/global/payday', 'paymentDayOpt'))
-  dispatch(startAddSelectOptions('/global/mode', 'modeOpt'))
-  dispatch(startAddSelectOptions('/global/status', 'statusOpt'))
-  dispatch(startAddSelectOptions('/global/language', 'languageOpt'))
+    dispatch(startAddSelectOptions('/setup/items/place', 'placeOpt'))
 
-}, [])
+    dispatch(startAddSelectOptions('/global/payday', 'paymentDayOpt'))
+    dispatch(startAddSelectOptions('/global/mode', 'modeOpt'))
+    dispatch(startAddSelectOptions('/global/status', 'statusOpt'))
+    dispatch(startAddSelectOptions('/global/language', 'languageOpt'))
+
+    dispatch(startAddSelectOptions('/carriers', 'carriersOpt'))
+
+  }, [])
 
   return (
     <AppRouter basename={process.env.REACT_APP_BASENAME}>

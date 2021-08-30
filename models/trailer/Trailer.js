@@ -1,10 +1,11 @@
-class Trailer{
-    base={}
+class Trailer {
+    base = {}
     repairs = []
     #table = 'trailer'
 
     constructor({
         id,
+        brand,
         model,
         trailerCode,
         plate,
@@ -14,10 +15,11 @@ class Trailer{
         insuranceDateLimit,
         maintenanceDate,
         observations,
-        status,
-        repairs =[]
-    }){
+        idStatus,
+        repairs = []
+    }) {
         this.base.id = id
+        this.base.brand = brand
         this.base.model = model
         this.base.trailerCode = trailerCode
         this.base.plate = plate
@@ -27,7 +29,7 @@ class Trailer{
         this.base.insuranceDateLimit = insuranceDateLimit
         this.base.maintenanceDate = maintenanceDate
         this.base.observations = observations
-        this.base.status = status
+        this.base.idStatus = idStatus
         this.repairs = repairs
     }
     get table() {

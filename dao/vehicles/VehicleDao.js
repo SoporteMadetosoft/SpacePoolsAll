@@ -3,24 +3,24 @@ const GenericDao = require("../GenericDao");
 
 const RepairDao = require("../vehicles/RepairDao");
 const StatusDao = require("../global/StatusDao");
-const ModelDao = require("../setup/general/ModelDao");
+const BrandModelDao = require("../setup/vehicles/BrandModelDao");
 
-class VehicleDao extends GenericDao{
+class VehicleDao extends GenericDao {
     RepairDao
     StatusDao
     ModelDao
 
-    constructor(){
+    constructor() {
         super(Vehicle);
         this.RepairDao = new RepairDao()
         this.StatusDao = new StatusDao()
-        this.ModelDao = new ModelDao()
+        this.ModelDao = new BrandModelDao()
     }
 
-    async mountObj(data){
+    async mountObj(data) {
         const status = await this.StatusDao.findById(data.status)
         const model = await this.ModelDao.findById(data.model)
-        const vehicle={
+        const vehicle = {
             ...data,
             repairs: await this.RepairDao.findByVehicleId(data.id),
             status: await this.createSelect(status.base),
@@ -29,13 +29,13 @@ class VehicleDao extends GenericDao{
         return new Vehicle(vehicle)
     }
 
-    async mountList(data){
+    async mountList(data) {
         const list = {
             ...data,
 
         }
-        const{ vehicleCode, plate, carrierId, frameNumber}=list
-        const nObj = {vehicleCode:vehicleCode, plate:plate, carrierId:carrierId, frameNumber:frameNumber}
+        const { id, vehicleCode, plate, carrierId, frameNumber } = list
+        const nObj = { id: id, vehicleCode: vehicleCode, plate: plate, carrierId: carrierId, frameNumber: frameNumber }
         return nObj
     }
 
@@ -55,10 +55,10 @@ class VehicleDao extends GenericDao{
             });
         })
     }
-    
-    async mountSelect(data){
+
+    async mountSelect(data) {
         return await this.createSelect(data)
-        
+
     }
-}   
+}
 module.exports = VehicleDao

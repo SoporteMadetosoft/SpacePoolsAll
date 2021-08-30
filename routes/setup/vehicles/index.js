@@ -17,6 +17,7 @@ router.post('/brand/find', ControllerBrand.listByID);
 
 router.get('/brandModel/list', ControllerBrandModel.list);
 router.get('/brandModel/select', ControllerBrandModel.select);
+router.get('/brandModel/selectByIdBrand/:id', ControllerBrandModel.selectByIdBrand);
 router.post('/brandModel/insert', ControllerBrandModel.insert);
 router.put('/brandModel/update', ControllerBrandModel.update);
 router.delete('/brandModel/delete/:id', ControllerBrandModel.delete);

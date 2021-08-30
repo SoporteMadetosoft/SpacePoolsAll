@@ -13,16 +13,17 @@ export const CarriersForm = () => {
     const {
         carrierCode,
         country,
-        province,
+        state,
         postcode,
         city,
         address,
         email,
         name,
         NIF,
-        phone1,
+        phone,
         phone2,
-        status } = normalForm
+        startSchedule,
+        idStatus } = normalForm
 
     const { statusOpt } = selectReducer
 
@@ -75,11 +76,11 @@ export const CarriersForm = () => {
                     <div className="col-md-3">
                         <label className="control-label">Estado</label>
                         <Select
-                            name="status"
+                            name="idStatus"
                             placeholder="Estado"
                             options={statusOpt}
-                            defaultValue={status}
-                            onChange={(value) => { handleSelectChange('status', value) }}
+                            value={idStatus}
+                            onChange={(value) => { handleSelectChange('idStatus', value) }}
                         />
                     </div>
 
@@ -100,7 +101,7 @@ export const CarriersForm = () => {
                             className="form-control"
                             name="phone"
                             placeholder="Teléfono"
-                            value={phone1}
+                            value={phone}
                             onChange={handleInputChange}
                         />
                     </div>
@@ -120,11 +121,12 @@ export const CarriersForm = () => {
                         <input
                             className="form-control"
                             type="time"
-                            name="contactSchedule"
-                        // value={pickupTime}
+                            name="startSchedule"
+                            value={startSchedule}
+                            onChange={handleInputChange}
                         />
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-4">
                         <label className="control-label">País</label>
                         <input
                             className="form-control"
@@ -134,19 +136,19 @@ export const CarriersForm = () => {
                             onChange={handleInputChange}
                         />
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-4">
                         <label className="control-label">Provincia</label>
                         <input
                             className="form-control"
                             type="text"
-                            name="province"
+                            name="state"
                             placeholder="Provincia"
-                            value={province}
+                            value={state}
                             onChange={handleInputChange}
                         />
                     </div>
 
-                    <div className="col-md-3">
+                    <div className="col-md-4">
                         <label className="control-label">Ciudad</label>
                         <input
                             className="form-control"
@@ -157,7 +159,7 @@ export const CarriersForm = () => {
                             onChange={handleInputChange}
                         />
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-8">
                         <label className="control-label">Dirección</label>
                         <input
                             className="form-control"
@@ -168,7 +170,7 @@ export const CarriersForm = () => {
                             onChange={handleInputChange}
                         />
                     </div>
-                    <div className="col-md-1">
+                    <div className="col-md-4">
                         <label className="control-label">Código postal</label>
                         <input
                             className="form-control"

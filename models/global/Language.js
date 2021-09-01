@@ -1,7 +1,7 @@
 const Setup = require('../setup/Setup')
 
 class Language extends Setup {
-    #table = 'setup_language'
+    #table = 'global_language'
     constructor(param) {
        super(param)
     }

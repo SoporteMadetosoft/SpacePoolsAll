@@ -27,7 +27,7 @@ class ItemDao extends GenericDao {
             // family: await this.createSelect(productFamily),
             // subfamily: await this.createSelect(productFamily),
             // place: await this.createSelect(productPlace),
-            //purchasesItems: await this.PurchaseItemsDao.findByItemId(data.id)
+            // purchasesItems: await this.PurchaseItemsDao.findByItemId(data.id)
 
         }
 

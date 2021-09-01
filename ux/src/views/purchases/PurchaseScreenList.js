@@ -18,8 +18,9 @@ export const PurchaseScreenList = ({titulo}) => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Purchases'))   
     }, [])
-
+    console.log( data )
     return (
+        
         <CustomDataTable title={titulo} columns={purchasesList} data={data} />
     )
 }

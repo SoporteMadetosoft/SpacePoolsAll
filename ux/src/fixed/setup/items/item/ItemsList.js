@@ -7,45 +7,20 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 
-export const purchasesList = [
+export const itemList = [
     {
-        name: 'Nº',
+        name: 'ID',
         selector: 'id',
         sortable: true,
-        searchable: true,
         minWidth: '50px',
-        width: '5%'
+        width: '100px'
     },
     {
-        name: 'Proveedor',
-        selector: 'vendorId',
+        name: 'Prodcuto',
+        selector: 'name',
         sortable: true,
         searchable: true,
-        minWidth: '200px'
-    },
-    {
-        name: 'Productos',
-        selector: 'items',
-        sortable: true,
-        searchable: true,   
-        minWidth: '200px'
-    },
-    {
-        name: 'Fecha de compra',
-        selector: 'purchaseDate',
-        sortable: true,
-        minWidth: '200px'
-    },
-    {
-        name: 'Fecha de entrega',
-        selector: 'deliveryDate',
-        sortable: true,
-        minWidth: '200px'
-    },
-    {
-        name: 'Observaciones',
-        selector: 'observations',
-        minWidth: '200px'
+        minWidth: '450px'
     },
     {
         name: 'Acciones',
@@ -53,7 +28,7 @@ export const purchasesList = [
         cell: row => {
 
           const dispatch = useDispatch()
-          
+
           return (
             <div className='d-flex'>
               <UncontrolledDropdown>
@@ -61,20 +36,19 @@ export const purchasesList = [
                   <MoreVertical size={15} />
                 </DropdownToggle>
                 <DropdownMenu right>
-                <Link to={`./purchase/edit/${row.id}`}>
+                <Link to={`./item/edit/${row.id}`}>
                   <DropdownItem tag='a' href='/' className='w-100'>
                     <FileText size={15} />
                     <span className='align-middle ml-50'>Detalles</span>
                   </DropdownItem>
                   </Link>
-                  <Link onClick={ (e) => {
+                  <DropdownItem tag='a' href='/' className='w-100' onClick={ (e) => {
+                    e.preventDefault()
                     dispatch(startDeleteRegister(row.id))
-                    }}>  
-                  <DropdownItem tag='a' href='/' className='w-100'>
+                    }}>
                     <Trash size={15} />
                     <span className='align-middle ml-50'>Eliminar</span>
                   </DropdownItem>
-                  </Link>
                 </DropdownMenu>
               </UncontrolledDropdown>
             </div>

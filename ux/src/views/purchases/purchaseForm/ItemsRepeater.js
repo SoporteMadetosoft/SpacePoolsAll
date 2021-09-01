@@ -1,9 +1,11 @@
-import React from 'react'
+
 import Repeater from '@components/repeater'
 import { X, Plus } from 'react-feather'
 import { Button } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
+import { startAddSelectOptions } from '../../../redux/actions/selects'
+import React, { useEffect } from 'react'
 
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
@@ -25,6 +27,11 @@ export const ItemsRepeater = () => {
     const increaseCount = () => {
         dispatch(addRepeaterRegister('items', formStructure))
     }
+
+    useEffect(() => {
+        dispatch(startAddSelectOptions('Items','idOpt'))
+    }, [])
+
 
     return (
         <>
@@ -90,11 +97,12 @@ const ItemsForm = ({ position }) => {
         <div className="row border-bottom pb-1 mt-1 mx-1">
             <div className="col-md-2">
                 <label className="control-label">Producto</label>
-                <Select
+                <Select  
                     name="id"
                     options={idOpt}
                     onChange={(value) => { handleSelectChange('id', value) }}
                     value={id}
+                    multiple
                 />
             </div>
             <div className="col-md-2">

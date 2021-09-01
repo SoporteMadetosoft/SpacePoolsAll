@@ -37,6 +37,7 @@ export const endPoints = {
     Trailers: '/trailers',
 
     Purchases: '/purchases',
+    
     Pools: '/pools',
 
     Items: '/items/item',

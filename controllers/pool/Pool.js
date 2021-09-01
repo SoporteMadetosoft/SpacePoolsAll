@@ -16,19 +16,6 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.select = async (req, res) => {
-
-    try {
-        res.json({
-            ok: true,
-            data: await poolDao.getSelect()
-        })
-    } catch (error) {
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
 

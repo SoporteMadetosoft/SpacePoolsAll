@@ -8,7 +8,6 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/list', ControllerBrand.list);
-router.get('/select', ControllerBrand.select);
 router.post('/insert', ControllerBrand.insert);
 router.put('/update', ControllerBrand.update);
 router.delete('/delete/:id', ControllerBrand.delete);

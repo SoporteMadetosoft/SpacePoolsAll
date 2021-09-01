@@ -8,6 +8,6 @@ const ControllerMode = require('../../../controllers/global/Mode');
 
 const router = express.Router();
 
-router.get('/select', ControllerMode.select);
+router.get('/list', ControllerMode.list);
 
 module.exports = router;

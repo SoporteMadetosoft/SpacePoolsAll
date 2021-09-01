@@ -15,19 +15,6 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await repairDao.getSelect() 
-        })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
 
@@ -72,7 +59,7 @@ exports.update = (req, res) => {
     try {
         /**UPDATE REPAIR */
         repairDao.update(req.body.form)
-       
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

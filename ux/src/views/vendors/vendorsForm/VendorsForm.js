@@ -10,14 +10,9 @@ import { Select } from '../../../components/form/inputs/Select'
 export const VendorsForm = () => {
 
     const dispatch = useDispatch()
-    const { normalForm, selectReducer } = useSelector(state => state)
+    const { normalForm } = useSelector(state => state)
 
     const { observations } = normalForm
-
-    const {
-        paymentMethodOpt,
-        vendorTypesOpt,
-        statusOpt } = selectReducer
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
@@ -46,13 +41,13 @@ export const VendorsForm = () => {
                         <Input name="email" type="email" placeholder="Correo electrónico" label="Correo electrónico" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idPaymentMethod" label="Forma de pago" options={paymentMethodOpt} />
+                        <Select name="idPaymentMethod" label="Forma de pago" endpoint="PaymentMethods" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idVendorType" label="Tipo de proveedor" options={vendorTypesOpt} />
+                        <Select name="idVendorType" label="Tipo de proveedor" endpoint="VendorType" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idStatus" label="Estado" options={statusOpt} />
+                        <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-12">
                         <label className="control-label">Observaciones</label>

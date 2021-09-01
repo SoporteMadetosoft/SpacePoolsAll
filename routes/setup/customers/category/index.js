@@ -10,7 +10,6 @@ const ControllerCategory = require('../../../../controllers/setup/customers/Cust
 
 router.get('/list', ControllerCategory.list);
 router.post('/insert', ControllerCategory.insert);
-router.get('/select', ControllerCategory.select);
 router.put('/update', ControllerCategory.update);
 router.delete('/delete/:id', ControllerCategory.delete);
 router.post('/find', ControllerCategory.listByID);

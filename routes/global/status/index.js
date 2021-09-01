@@ -8,6 +8,6 @@ const ControllerStatus = require('../../../controllers/global/Status');
 
 const router = express.Router();
 
-router.get('/select', ControllerStatus.select);
+router.get('/list', ControllerStatus.list);
 
 module.exports = router;

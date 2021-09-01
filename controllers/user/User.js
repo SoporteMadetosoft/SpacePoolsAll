@@ -14,21 +14,7 @@ exports.list = async (req, res) => {
         console.log(error)
         return res.status(500).send(error);
     }
-    
-}
 
-
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await userDao.getSelect() 
-        })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
 }
 
 exports.listByID = async (req, res) => {
@@ -60,8 +46,8 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT USER **/
-       userDao.insert(req.body.form)
-        
+        userDao.insert(req.body.form)
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
@@ -74,7 +60,7 @@ exports.update = (req, res) => {
     try {
         /** UPDATE USER **/
         userDao.update(req.body.form)
-    
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

@@ -30,7 +30,7 @@ class ItemDao extends GenericDao {
             // purchasesItems: await this.PurchaseItemsDao.findByItemId(data.id)
 
         }
-
+    
         return new Item(item)
     }
 

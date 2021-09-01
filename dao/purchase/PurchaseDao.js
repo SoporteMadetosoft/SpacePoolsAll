@@ -23,11 +23,28 @@ class PurchaseDao extends GenericDao {
         console.log(data)
         const list = {
             ...data,
+            items: await this.ItemDao.findByPurchaseId(data.id)
+
         }
-        const {  vendorId, purchaseDate, deliveryDate , observations } = list
-        const nObj = { vendorId: vendorId, purchaseDate: purchaseDate.getDay()+"-"+purchaseDate.getMonth()+"-"+purchaseDate.getFullYear() , observations: observations, deliveryDate:deliveryDate.getDay()+"-"+deliveryDate.getMonth()+"-"+deliveryDate.getFullYear() }
+
+        const { items,  vendorId, purchaseDate, deliveryDate , observations } = list
+
+        var sfin =""
+        for (var i in items) {
+            sfin+=items[i]+" "
+            console.log(sfin+"\n");
+        }        
+
+        const nObj = { items: sfin, vendorId: vendorId, purchaseDate: purchaseDate.getDay()+"-"+purchaseDate.getMonth()+"-"+purchaseDate.getFullYear() , observations: observations, deliveryDate:deliveryDate.getDay()+"-"+deliveryDate.getMonth()+"-"+deliveryDate.getFullYear() }
         console.log(nObj);
+        console.log(list)
+        console.log("ttttttttttttt")
+       
         return nObj
+    }
+
+    listaAString(){
+       
     }
 
 

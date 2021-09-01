@@ -38,6 +38,9 @@ export const endPoints = {
 
     Pools: '/pools',
 
+    Items: '/items/item',
+    Family: '/items/productFamily',
+
     ...globalEndpoints,
     ...setupEndpoints
 }

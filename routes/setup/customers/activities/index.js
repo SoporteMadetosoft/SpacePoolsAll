@@ -9,7 +9,6 @@ const router = express.Router();
 const ControllerActivities = require('../../../../controllers/setup/customers/Activities');
 
 router.get('/list', ControllerActivities.list);
-router.get('/select', ControllerActivities.select);
 router.post('/insert', ControllerActivities.insert);
 router.put('/update', ControllerActivities.update);
 router.delete('/delete/:id', ControllerActivities.delete);

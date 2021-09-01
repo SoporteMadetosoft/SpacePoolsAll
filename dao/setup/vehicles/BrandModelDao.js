@@ -33,10 +33,7 @@ class BrandModelDao extends SetupDao {
             ...data,
             idBrand: brand.name
         }
-
-        const { id, name, idBrand } = list
-        const nObj = { id: id, name: name, idBrand: idBrand }
-        return nObj
+        return list
     }
 
     async mountObj(data) {

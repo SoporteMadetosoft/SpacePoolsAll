@@ -9,7 +9,6 @@ const ContollerDepartment = require('../../../../controllers/setup/general/Depar
 const router = express.Router();
 
 router.get('/list', ContollerDepartment.list);
-router.get('/select', ContollerDepartment.select);
 router.post('/insert', ContollerDepartment.insert);
 router.put('/update', ContollerDepartment.update);
 router.delete('/delete/:id', ContollerDepartment.delete);

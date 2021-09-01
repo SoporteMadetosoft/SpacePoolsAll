@@ -24,19 +24,6 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await orderDao.getSelect() 
-        })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
 
@@ -83,7 +70,7 @@ exports.insert = async (req, res) => {
             element.orderId = insert.insertId
             customerDataDao.insert(element)
         });
-        
+
 
         res.json({ ok: true })
     } catch (error) {
@@ -109,7 +96,7 @@ exports.update = (req, res) => {
         req.body.formData.customerData.forEach(element => {
             customerDataDao.update(element)
         })
-       
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

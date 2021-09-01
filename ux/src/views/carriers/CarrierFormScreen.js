@@ -8,34 +8,35 @@ import { save } from '../../utility/helpers/Axios/save'
 import { CarriersForm } from './carriersForm/CarriersForm'
 import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm'
 import { FileContext } from './carriersForm/FileContext'
-import { handleCleanUp, saveFiles } from '../../redux/actions/fileUpload'
-import { MkDir } from '../../utility/helpers/MkDir'
+import { handleCleanUp, handleLoadDocuments, saveFiles } from '../../redux/actions/fileUpload'
+import { MkDir } from '../../utility/helpers/Axios/MkDir'
+import { startAddSelectOptions } from '../../redux/actions/selects'
 
-const structureForm = {
-    documents: []
-}
+const structureForm = {}
 
 export const CarrierFormScreen = () => {
 
-    const dispatch = useDispatch()
     const { id } = useParams()
     const history = useHistory()
-
+    const dispatch = useDispatch()
     const [file, setFile] = useState('')
     const form = useSelector(state => state.normalForm)
     const { upload, filePath } = useSelector(state => state.fileUpload)
 
+    const realFilePath = form.filePath ? form.filePath : filePath
     useEffect(() => {
         if (id) {
             dispatch(handleStartEditing('Carriers', id))
         }
         dispatch(initNormalForm(structureForm))
-    }, [])
+    }, [initNormalForm])
+
+    const titulo = (id) ? 'Editar Transportista' : 'Añadir Transportista'
+    const customerName = (form.name) ? form.name : titulo
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const filePath2 = await MkDir(filePath)
-
+        const filePath2 = await MkDir(realFilePath)
         if (upload) {
             dispatch(await saveFiles('Carriers', filePath2, file))
         }
@@ -48,15 +49,9 @@ export const CarrierFormScreen = () => {
 
         save('Carriers', id, prettyForm)
         dispatch(handleCleanUp())
+        dispatch(startAddSelectOptions('/carriers', 'carriersOpt'))
         history.push('/porters/carriers')
     }
-
-    if (!form.name) {
-        form.name = ''
-    }
-
-    const titulo = (id) ? 'Editar Transportista' : 'Añadir Transportista'
-    const customerName = (form.name) ? form.name : titulo
 
     return (
         <form onSubmit={handleSubmit}>

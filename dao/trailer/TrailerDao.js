@@ -8,11 +8,6 @@ const BrandModelDao = require("../setup/vehicles/BrandModelDao");
 const BrandDao = require("../setup/vehicles/BrandDao");
 
 class TrailerDao extends SetupDao {
-    RepairDao
-    StatusDao
-    ModelDao
-    BrandDao
-
     constructor() {
         super(Trailer);
         this.RepairDao = new RepairDao()
@@ -22,29 +17,26 @@ class TrailerDao extends SetupDao {
     }
 
     async mountObj(data) {
-        const status = await this.StatusDao.findById(data.idStatus)
-        const model = await this.ModelDao.findById(data.model)
-        const br = await this.BrandDao.findById(model.base.idBrand.value)
         const trailer = {
             ...data,
             repairs: await this.RepairDao.findByTrailerId(data.id),
-            idStatus: await this.createSelect(status.base),
+            idStatus: await this.StatusDao.findById(data.idStatus),
             ITVdate: await this.datetimeToDate(data.ITVdate),
             maintenanceDate: await this.datetimeToDate(data.maintenanceDate),
             insuranceDateLimit: await this.datetimeToDate(data.insuranceDateLimit),
-            model: await this.createSelect(model.base),
-            brand: await this.createSelect(br.base)
+            model: await this.ModelDao.findById(data.model),
+            brand: await this.BrandDao.findById(model.idBrand.value)
         }
         return new Trailer(trailer)
     }
 
     async mountList(data) {
         const model = await this.ModelDao.findById(data.model)
-        const brand = await this.BrandDao.findById(model.base.idBrand.value)
+        const brand = await this.BrandDao.findById(model.idBrand.value)
         const list = {
             ...data,
-            mod: model != undefined ? model.base.name : '',
-            br: brand != undefined ? brand.base.name : '',
+            mod: model != undefined ? model.name : '',
+            br: brand != undefined ? brand.name : '',
 
         }
 
@@ -61,18 +53,13 @@ class TrailerDao extends SetupDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
                 }
             });
         })
-    }
-
-    async mountSelect(data) {
-        return await this.createSelect(data)
-
     }
 }
 module.exports = TrailerDao

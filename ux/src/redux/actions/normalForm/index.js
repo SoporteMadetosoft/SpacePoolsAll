@@ -39,9 +39,6 @@ export const fillFormData = (data) => ({
 export const handleStartEditing = (endpoint, id) => {
     return async (dispatch) => {
         const data = await getFormData(endpoint, id)
-        const base = data.base
-        delete data.base
-        console.log({ ...data, ...base })
-        dispatch(fillFormData({ ...data, ...base }))
+        dispatch(fillFormData(data))
     }
 }

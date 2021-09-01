@@ -1,47 +1,26 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Select from 'react-select'
-
 import { handleChangeController } from '../../../redux/actions/normalForm'
+
 import { AddressesRepeater } from './AddressesRepeater'
 import { ContactsRepeater } from './ContactsRepeater'
+import { Input } from '../../../components/form/inputs/Input'
+import { Select } from '../../../components/form/inputs/Select'
 
-
-export const VendorsForm = (id) => {
+export const VendorsForm = () => {
 
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
 
-    const {
-        vendorCode,
-        comercialName,
-        CIF,
-        socialReason,
-        phone,
-        email,
-        idVendorType,
-        idPaymentMethod,
-        idStatus,
-        observations } = normalForm
+    const { observations } = normalForm
 
-    const { 
+    const {
         paymentMethodOpt,
         vendorTypesOpt,
         statusOpt } = selectReducer
 
-    useEffect( () => {
-        // if (id) {
-        //     dispatch(handleStartEditing('Vehicles', id))
-        // }
-    }, [])
-
-
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
-    }
-
-    const handleSelectChange = (key, value) => {
-        dispatch(handleChangeController(key, value))
     }
 
     return (
@@ -49,95 +28,31 @@ export const VendorsForm = (id) => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <label className="control-label">Nº Proveedor</label>
-                        <input
-                            className="form-control"
-                            name="vendorCode"
-                            placeholder="Nº Proveedor"
-                            value={vendorCode}
-                            onChange={handleInputChange}
-                        />
+                        <Input name="vendorCode" placeholder="Nº Proveedor" label="Nº Proveedor" />
                     </div>
                     <div className="col-md-4">
-                        <label className="control-label">Nombre Comercial</label>
-                        <input
-                            className="form-control"
-                            name="comercialName"
-                            placeholder="Nombre Comercial"
-                            value={comercialName}
-                            onChange={handleInputChange}
-                        />
+                        <Input name="comercialName" placeholder="Nombre Comercial" label="Nombre Comercial" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">C.I.F.</label>
-                        <input
-                            className="form-control"
-                            name="CIF"
-                            placeholder="C.I.F."
-                            value={CIF}
-                            onChange={handleInputChange}
-                        />
+                        <Input name="CIF" placeholder="C.I.F." label="C.I.F." />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Razon social</label>
-                        <input
-                            className="form-control"
-                            name="socialReason"
-                            placeholder="Razon social"
-                            value={socialReason}
-                            onChange={handleInputChange}
-                        />
+                        <Input name="socialReason" placeholder="Razon social" label="Razon social" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Teléfono</label>
-                        <input
-                            className="form-control"
-                            name="phone"
-                            placeholder="Teléfono"
-                            value={phone}
-                            onChange={handleInputChange}
-                        />
+                        <Input name="phone" placeholder="Teléfono" label="Teléfono" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Correo electrónico</label>
-                        <input
-                            className="form-control"
-                            name="email"
-                            placeholder="Correo electrónico"
-                            value={email}
-                            onChange={handleInputChange}
-
-                        />
+                        <Input name="email" type="email" placeholder="Correo electrónico" label="Correo electrónico" />
                     </div>
                     <div className="col-md-2">
-                        <label className="control-label">Forma de pago</label>
-                        <Select
-                            name="idPaymentMethod"
-                            placeholder="Forma de pago"
-                            options={ paymentMethodOpt }
-                            value={idPaymentMethod}
-                            onChange={ (value) => { handleSelectChange('idPaymentMethod', value) }}
-                        />
+                        <Select name="idPaymentMethod" label="Forma de pago" options={paymentMethodOpt} />
                     </div>
                     <div className="col-md-2">
-                        <label className="control-label">Tipo de proveedor</label>
-                        <Select
-                            name="idVendorType"
-                            placeholder="Tipo de proveedor"
-                            options={ vendorTypesOpt }
-                            value={idVendorType}
-                            onChange={ (value) => { handleSelectChange('idVendorType', value) }}
-                        />
+                        <Select name="idVendorType" label="Tipo de proveedor" options={vendorTypesOpt} />
                     </div>
                     <div className="col-md-2">
-                        <label className="control-label">Estado</label>
-                        <Select
-                            name="idStatus"
-                            placeholder="Estado"
-                            options={ statusOpt }
-                            value={idStatus}
-                            onChange={ (value) => { handleSelectChange('idStatus', value) }}
-                        />
+                        <Select name="idStatus" label="Estado" options={statusOpt} />
                     </div>
                     <div className="col-md-12">
                         <label className="control-label">Observaciones</label>

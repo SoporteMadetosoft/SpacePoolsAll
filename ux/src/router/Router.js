@@ -77,7 +77,7 @@ const Router = () => {
       action = route.meta.action ? route.meta.action : null
       resource = route.meta.resource ? route.meta.resource : null
     }
-
+    console.log(route.meta)
     if (
       (!isUserLoggedIn() && route.meta === undefined) ||
       (!isUserLoggedIn() && route.meta && !route.meta.authRoute && !route.meta.publicRoute)
@@ -90,6 +90,8 @@ const Router = () => {
        */
 
       return <Redirect to='/login' />
+      // } else if (route.meta && route.meta.publicRoute) {
+      //   return <Redirect to={route.simpleUrl} />
     } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
       // ** If route has meta and authRole and user is Logged in then redirect user to home page (DefaultRoute)
       return <Redirect to='/' />
@@ -189,29 +191,32 @@ const Router = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(startAddSelectOptions('/setup/customers/origin', 'customerOriginOpt'))
-    dispatch(startAddSelectOptions('/setup/customers/type', 'customerTypeOpt'))
-    dispatch(startAddSelectOptions('/setup/customers/activities', 'customerActivityOpt'))
-    dispatch(startAddSelectOptions('/setup/customers/category', 'customerCategoryOpt'))
+    dispatch(startAddSelectOptions('PayDay', 'paymentDayOpt'))
+    dispatch(startAddSelectOptions('Mode', 'modeOpt'))
+    dispatch(startAddSelectOptions('Status', 'statusOpt'))
+    dispatch(startAddSelectOptions('Language', 'languageOpt'))
 
-    dispatch(startAddSelectOptions('/setup/vendors/type', 'vendorTypesOpt'))
+    dispatch(startAddSelectOptions('Origin', 'customerOriginOpt'))
+    dispatch(startAddSelectOptions('CustomerType', 'customerTypeOpt'))
+    dispatch(startAddSelectOptions('Activity', 'customerActivityOpt'))
+    dispatch(startAddSelectOptions('CustomerCategory', 'customerCategoryOpt'))
 
-    dispatch(startAddSelectOptions('/setup/vehicles/brand', 'brandOpt'))
+    dispatch(startAddSelectOptions('Departments', 'departmentOpt'))
+    dispatch(startAddSelectOptions('PaymentMethods', 'paymentMethodOpt'))
+    dispatch(startAddSelectOptions('AddressesTypes', 'addresseTypesOpt'))
 
-    dispatch(startAddSelectOptions('/setup/general/department', 'departmentOpt'))
-    dispatch(startAddSelectOptions('/setup/general/paymentMethod', 'paymentMethodOpt'))
-    dispatch(startAddSelectOptions('/setup/general/addressesTypes', 'addresseTypesOpt'))
+    dispatch(startAddSelectOptions('VendorType', 'vendorTypesOpt'))
 
-    dispatch(startAddSelectOptions('/setup/items/place', 'placeOpt'))
+    dispatch(startAddSelectOptions('Brand', 'brandOpt'))
 
-    dispatch(startAddSelectOptions('/global/payday', 'paymentDayOpt'))
-    dispatch(startAddSelectOptions('/global/mode', 'modeOpt'))
-    dispatch(startAddSelectOptions('/global/status', 'statusOpt'))
-    dispatch(startAddSelectOptions('/global/language', 'languageOpt'))
+    dispatch(startAddSelectOptions('Place', 'placeOpt'))
 
-    dispatch(startAddSelectOptions('/carriers', 'carriersOpt'))
+    dispatch(startAddSelectOptions('Carriers', 'carriersOpt'))
+    dispatch(startAddSelectOptions('Trailers', 'trailersOpt'))
 
   }, [])
+
+  console.log(ResolveRoutes())
 
   return (
     <AppRouter basename={process.env.REACT_APP_BASENAME}>

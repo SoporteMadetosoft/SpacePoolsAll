@@ -12,7 +12,7 @@ class ProductFamilyDao extends GenericDao {
 
         const productFamily = {
             ...data,
-            
+
         }
         return new ProductFamily(productFamily)
     }
@@ -21,8 +21,8 @@ class ProductFamilyDao extends GenericDao {
         const list = {
             ...data,
         }
-        const{name, familyCode, parent} =list
-        const nObj = {name :name, familyCode :familyCode, parent: parent}
+        const { name, familyCode, parent } = list
+        const nObj = { name: name, familyCode: familyCode, parent: parent }
         return nObj
     }
 
@@ -34,18 +34,13 @@ class ProductFamilyDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
                 }
             });
         })
-    }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
     }
 
 }

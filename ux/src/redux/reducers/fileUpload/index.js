@@ -3,7 +3,8 @@ import { fileUploadTypes } from "../../types/fileUpload/types"
 // ** Initial State
 const initialState = {
     filePath: null,
-    upload: null
+    upload: null,
+    documents: []
 }
 
 const fileUpload = (state = initialState, action) => {
@@ -19,8 +20,17 @@ const fileUpload = (state = initialState, action) => {
                 ...state,
                 upload: action.payload
             }
+
+        case fileUploadTypes.FillDocuments:
+            return {
+                ...state,
+                documents: action.payload
+            }
+
         case fileUploadTypes.CleanUp:
             return initialState
+
+
 
         default:
             return state

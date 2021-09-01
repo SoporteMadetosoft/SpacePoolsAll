@@ -1,5 +1,4 @@
-class Role{
-    base = {}
+class Role {
     users = []
     #table = 'users'
 
@@ -15,18 +14,18 @@ class Role{
         productfamily,
         pool,
         repair
-    }){
-        this.base.id = id
-        this.base.name = name
-        this.base.customers = customers
-        this.base.vendors = vendors
-        this.base.carriers = carriers
-        this.base.vehicles = vehicles
-        this.base.trailer = trailer
-        this.base.items = items
-        this.base.productfamily = productfamily
-        this.base.pool = pool
-        this.base.repair = repair
+    }) {
+        this.id = id
+        this.name = name
+        this.customers = customers
+        this.vendors = vendors
+        this.carriers = carriers
+        this.vehicles = vehicles
+        this.trailer = trailer
+        this.items = items
+        this.productfamily = productfamily
+        this.pool = pool
+        this.repair = repair
     }
     get table() {
         return this.#table;

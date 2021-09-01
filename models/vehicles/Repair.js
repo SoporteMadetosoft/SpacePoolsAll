@@ -1,5 +1,4 @@
-class Repair{
-    base = {}
+class Repair {
     #table = 'vehicle_repair'
 
     constructor({
@@ -9,13 +8,13 @@ class Repair{
         description,
         garage,
         cost
-    }){
-        this.base.id = id
-        this.base.vehicleId = vehicleId
-        this.base.date = date
-        this.base.description = description
-        this.base.garage = garage
-        this.base.cost = cost
+    }) {
+        this.id = id
+        this.vehicleId = vehicleId
+        this.date = date
+        this.description = description
+        this.garage = garage
+        this.cost = cost
     }
     get table() {
         return this.#table;

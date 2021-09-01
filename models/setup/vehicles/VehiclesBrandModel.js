@@ -5,7 +5,7 @@ class VehiclesBrandModel extends Setup {
     #table = 'setup_model'
     constructor(param) {
         super(param)
-        this.base.idBrand = param.idBrand
+        this.idBrand = param.idBrand
     }
 
     get table() {

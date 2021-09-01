@@ -4,30 +4,27 @@ const GenericDao = require("../GenericDao");
 const StatusDao = require("../global/StatusDao");
 
 
-class UserDao extends GenericDao{
-    StatusDao
-
-    constructor(){
+class UserDao extends GenericDao {
+    constructor() {
         super(User);
         this.StatusDao = new StatusDao()
     }
 
-    async mountObj(data){
-        const status = await this.StatusDao.findById(data.status)
-        const user={
+    async mountObj(data) {
+        const user = {
             ...data,
-            status: await this.createSelect(status.base),
+            status: await this.StatusDao.findById(data.status)
         }
         return new User(user)
     }
 
-    async mountList(data){
+    async mountList(data) {
         const list = {
             ...data,
         }
 
-        const{ name, login, group, status}=list
-        const nObj = {name:name, login:login, group:group, status:status}
+        const { name, login, group, status } = list
+        const nObj = { name: name, login: login, group: group, status: status }
         return nObj
     }
 
@@ -39,18 +36,13 @@ class UserDao extends GenericDao{
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
                 }
             });
         })
-    }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
     }
 }
 module.exports = UserDao

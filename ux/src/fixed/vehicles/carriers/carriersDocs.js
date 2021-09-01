@@ -10,17 +10,30 @@ import { Link } from "react-router-dom"
 export const carriersDocs = [
     {
         name: 'Nombre del documento',
-        selector: 'docName',
+        selector: 'filename',
         sortable: true,
-        minWidth: '500px',
-        width: '45%'
+        minWidth: '200px'
     },
     {
         name: 'Tamaño',
-        selector: 'docSize',
+        selector: 'filesize',
         sortable: true,
         searchable: true,
-        minWidth: '300px'
+        minWidth: '100px'
+    },
+    {
+        name: 'Tipo de documento',
+        selector: 'filetype',
+        sortable: true,
+        searchable: true,
+        minWidth: '100px'
+    },
+    {
+        name: 'Fecha de subida',
+        selector: 'mtime',
+        sortable: true,
+        searchable: true,
+        minWidth: '100px'
     },
     {
         name: 'Acciones',
@@ -36,20 +49,20 @@ export const carriersDocs = [
                             <MoreVertical size={15} />
                         </DropdownToggle>
                         <DropdownMenu right>
-                            <Link to={`./carriers/edit/${row.id}`}>
-                                <DropdownItem tag='a' href='/' className='w-100'>
+                            <DropdownItem className='w-100'>
+                                <a href={`file://\/${row.url}`} target="_blank" rel="canonical">
                                     <FileText size={15} />
                                     <span className='align-middle ml-50'>Detalles</span>
-                                </DropdownItem>
-                            </Link>
-                            <Link onClick={(e) => {
+                                </a>
+                            </DropdownItem>
+                            {/* <Link onClick={(e) => {
                                 dispatch(startDeleteRegister(row.id))
                             }}>
                                 <DropdownItem tag='a' href='/' className='w-100'>
                                     <Trash size={15} />
                                     <span className='align-middle ml-50'>Eliminar</span>
                                 </DropdownItem>
-                            </Link>
+                            </Link> */}
                         </DropdownMenu>
                     </UncontrolledDropdown>
                 </div>

@@ -17,7 +17,7 @@ class BrandModelDao extends SetupDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
@@ -26,35 +26,25 @@ class BrandModelDao extends SetupDao {
         })
     }
 
-    unMountBase(data) {
-        const model = {
-            ...data,
-            idBrand: this.undoSelect(data.idBrand)
-        }
-
-        return model
-    }
-
     async mountList(data) {
-    
+
         let brand = await this.brandDao.findById(data.idBrand);
         const list = {
             ...data,
-            idBrand: brand.base.name
+            idBrand: brand.name
         }
 
-        const{id, name, idBrand} = list
-        const nObj = {id :id, name: name, idBrand: idBrand}
+        const { id, name, idBrand } = list
+        const nObj = { id: id, name: name, idBrand: idBrand }
         return nObj
     }
 
     async mountObj(data) {
-        
+
         if (data !== undefined) {
-            const brand = await this.brandDao.findById(data.idBrand)
             const setup = {
                 ...data,
-                idBrand: await this.createSelect(brand.base)
+                idBrand: await this.brandDao.findById(data.idBrand)
             }
             return new this.object(setup)
         }

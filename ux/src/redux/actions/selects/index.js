@@ -1,4 +1,5 @@
 import axios from "axios"
+import { endPoints } from "@fixed/endPoints"
 
 import { selectTypes } from "../../types/selects/types"
 
@@ -7,12 +8,11 @@ export const addSelectOptions = (key, options) => ({
     payload: { key, options }
 })
 
-export const startAddSelectOptions = (url, key) => {
+export const startAddSelectOptions = (endPoint, key, labelName = 'name') => {
     return async (dispatch) => {
-        const { data } = await axios.get(`${process.env.REACT_APP_HOST_URI}${url}/select`)
-        dispatch(addSelectOptions(key, data.data))
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/select`)
+        dispatch(addSelectOptions(key, data.map(option => ({ label: option[labelName], value: option.id }))))
     }
-
 }
 
 export const cleanSelectOptions = () => ({

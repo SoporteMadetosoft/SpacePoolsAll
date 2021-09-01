@@ -19,18 +19,18 @@ class ItemDao extends GenericDao {
     }
 
     async mountObj(data) {
-        const productFamily = await this.ProductFamilyDao.findById(data.subfamily)
-        const productPlace = await this.ProductPlaceDao.findById(data.place)
-        
+        // const productFamily = await this.ProductFamilyDao.findById(data.subfamily)
+        // const productPlace = await this.ProductPlaceDao.findById(data.place)
+
         const item = {
             ...data,
-            family: await this.createSelect(productFamily.base),
-            subfamily: await this.createSelect(productFamily.base),
-            place: await this.createSelect(productPlace.base),
+            // family: await this.createSelect(productFamily),
+            // subfamily: await this.createSelect(productFamily),
+            // place: await this.createSelect(productPlace),
             //purchasesItems: await this.PurchaseItemsDao.findByItemId(data.id)
 
         }
-    
+
         return new Item(item)
     }
 
@@ -38,8 +38,8 @@ class ItemDao extends GenericDao {
         const list = {
             ...data,
         }
-        const{id, name, description, stock} =list
-        const nObj = {id:id, name:name, description:description, stock:stock}
+        const { id, name, description, stock } = list
+        const nObj = { id: id, name: name, description: description, stock: stock }
         return nObj
     }
 
@@ -51,7 +51,7 @@ class ItemDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
@@ -59,12 +59,6 @@ class ItemDao extends GenericDao {
             });
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
-
 }
 
 module.exports = ItemDao

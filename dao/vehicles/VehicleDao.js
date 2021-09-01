@@ -6,10 +6,6 @@ const StatusDao = require("../global/StatusDao");
 const BrandModelDao = require("../setup/vehicles/BrandModelDao");
 
 class VehicleDao extends GenericDao {
-    RepairDao
-    StatusDao
-    ModelDao
-
     constructor() {
         super(Vehicle);
         this.RepairDao = new RepairDao()
@@ -18,13 +14,11 @@ class VehicleDao extends GenericDao {
     }
 
     async mountObj(data) {
-        const status = await this.StatusDao.findById(data.status)
-        const model = await this.ModelDao.findById(data.model)
         const vehicle = {
             ...data,
             repairs: await this.RepairDao.findByVehicleId(data.id),
-            status: await this.createSelect(status.base),
-            model: await this.createSelect(model.base)
+            status: await this.StatusDao.findById(data.status),
+            model: await this.ModelDao.findById(data.model)
         }
         return new Vehicle(vehicle)
     }
@@ -47,18 +41,13 @@ class VehicleDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
                 }
             });
         })
-    }
-
-    async mountSelect(data) {
-        return await this.createSelect(data)
-
     }
 }
 module.exports = VehicleDao

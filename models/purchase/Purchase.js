@@ -1,7 +1,6 @@
 class Purchase {
-    base = {}
     items = []
-    #table  = 'purchases'
+    #table = 'purchases'
 
     constructor({
         id,
@@ -11,13 +10,13 @@ class Purchase {
         deliveryDate,
         observations,
         items = []
-    }){
-        this.base.id = id
-        this.base.idVendor = idVendor
-        this.base.purchaseCode = purchaseCode
-        this.base.purchaseDate = purchaseDate
-        this.base.deliveryDate = deliveryDate
-        this.base.observations = observations
+    }) {
+        this.id = id
+        this.idVendor = idVendor
+        this.purchaseCode = purchaseCode
+        this.purchaseDate = purchaseDate
+        this.deliveryDate = deliveryDate
+        this.observations = observations
         this.items = items
     }
     get table() {

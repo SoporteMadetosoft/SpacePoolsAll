@@ -3,19 +3,16 @@ const GenericDao = require("../GenericDao");
 
 const ItemDao = require("../item/ItemDao");
 
-
 class ExtraItemDao extends GenericDao {
-    ItemDao
     constructor() {
         super(ExtraItem);
         this.ItemDao = new ItemDao
     }
 
     async mountObj(data) {
-        const item = await this.ItemDao.findById(data.itemId)
         const extraItem = {
             ...data,
-            itemId: await this.createSelect(item.base),
+            itemId: await this.ItemDao.findById(data.itemId),
         }
         return new ExtraItem(extraItem)
     }
@@ -24,8 +21,8 @@ class ExtraItemDao extends GenericDao {
         const list = {
             ...data,
         }
-        const{orderId, itemId} =list
-        const nObj = {orderId :orderId, itemId :itemId}
+        const { orderId, itemId } = list
+        const nObj = { orderId: orderId, itemId: itemId }
         return nObj
     }
 
@@ -37,7 +34,7 @@ class ExtraItemDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
@@ -45,23 +42,18 @@ class ExtraItemDao extends GenericDao {
             });
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
 
-    findByOrderId (id) {
-        return new Promise((resolve, reject) => { 
+    findByOrderId(id) {
+        return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM orders_extra_items WHERE orderId = ?', [id], (err, result) => {
-                if(err){ 
+                if (err) {
                     reject(err)
-                }else{
+                } else {
                     const customerData = []
-                    for(const centerDB of result){
+                    for (const centerDB of result) {
                         customerData.push(this.mountObj(centerDB))
                     }
-                  
+
                     resolve(customerData)
                 }
             })

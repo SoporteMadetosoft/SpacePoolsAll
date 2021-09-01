@@ -1,9 +1,12 @@
-const express = require('express');
+/*
+    Path:  @src/app.js ->  @src/routes/carriers/index.js
+    URI: '/carriers' 
+*/
 
+const express = require('express');
 const ControllerCarrier = require('../../controllers/carrier/Carrier');
 
 const router = express.Router();
-
 
 router.get('/list', ControllerCarrier.list);
 router.get('/select', ControllerCarrier.select);

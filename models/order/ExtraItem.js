@@ -1,5 +1,4 @@
-class ExtraItem{
-    base = {}
+class ExtraItem {
     #table = 'orders_extra_items'
 
     constructor({
@@ -8,12 +7,12 @@ class ExtraItem{
         itemId,
         posX,
         posY
-    }){
-        this.base.id = id
-        this.base.orderId = orderId
-        this.base.itemId = itemId
-        this.base.posX = posX
-        this.base.posY = posY
+    }) {
+        this.id = id
+        this.orderId = orderId
+        this.itemId = itemId
+        this.posX = posX
+        this.posY = posY
     }
     get table() {
         return this.#table;

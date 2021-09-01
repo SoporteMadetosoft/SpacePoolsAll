@@ -14,59 +14,60 @@ app.use(cors({
   origin: origin,
 }));
 
-app.use( express.static( 'ux/build' ) );
-app.use(express.urlencoded({ extended: false}));
+app.use(express.static('ux/build'));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(fileUpload());
 
-
-//Auth Routes
-app.use('/auth', require('./routes/auth'));
-
-//Setup Routes
-app.use('/setup', require('./routes/setup'));
+//-------------------------------------------------------
 //Global Routes
 app.use('/global', require('./routes/global'));
-
+//-------------------------------------------------------
+//Auth Routes
+app.use('/auth', require('./routes/auth'));
+//-------------------------------------------------------
+//Setup Routes
+app.use('/setup', require('./routes/setup'));
+//-------------------------------------------------------
 //Customer Routes
 app.use('/customers', require('./routes/customers'));
-
-//Trailer Routes
-app.use('/trailers', require('./routes/trailers'));
+//-------------------------------------------------------
+//Vendors Routes
+app.use('/vendors', require('./routes/vendors'));
+//-------------------------------------------------------
+//Carrier Routes
+app.use('/carriers', require('./routes/carriers'));
 
 //Vehicles Routes
 app.use('/vehicles', require('./routes/vehicles'));
 
-//Carrier Routes
-app.use('/carriers', require('./routes/carriers'));
-
-//Users Routes
-app.use('/users', require('./routes/users'));
-
-//Roles Routes
-//app.use('/roles', require('./routes/role'));  
-
-//Vendors Routes
-app.use('/vendors', require('./routes/vendors'));
-
-//Purchases Routes
-app.use('/purchases', require('./routes/purchases'));
-
-//Production Routes
-app.use('/production', require('./routes/production'));
-
-//Orders Routes
-app.use('/orders', require('./routes/orders'));
-
-//Items Routes
-app.use('/items', require('./routes/items'));
-
+//Trailer Routes
+app.use('/trailers', require('./routes/trailers'));
+//-------------------------------------------------------
 //Pool Routes
 app.use('/pools', require('./routes/pools'));
+//-------------------------------------------------------
+//Items Routes
+app.use('/items', require('./routes/items'));
+//-------------------------------------------------------
+//Purchases Routes
+app.use('/purchases', require('./routes/purchases'));
+//-------------------------------------------------------
+//Orders Routes
+app.use('/orders', require('./routes/orders'));
+//-------------------------------------------------------
+//Production Routes
+app.use('/production', require('./routes/production'));
+//-------------------------------------------------------
+//Users Routes
+app.use('/users', require('./routes/users'));
+//-------------------------------------------------------
+//Roles Routes
+//app.use('/roles', require('./routes/role'));  
+//-------------------------------------------------------
 
-
-app.get('*', ( req, res ) => {
-  res.sendFile( path.join( __dirname+'/ux/build/index.html' ));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/ux/build/index.html'));
 });
 
 const server = app.listen(port, () => {

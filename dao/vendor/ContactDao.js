@@ -5,18 +5,15 @@ const DepartmentDao = require("../setup/general/DepartmentDao");
 
 
 class ContactDao extends GenericDao {
-    DepartmentDao
-
     constructor() {
         super(Contact);
         this.DepartmentDao = new DepartmentDao()
     }
 
     async mountObj(data) {
-        const department = await this.DepartmentDao.findById(data.department)
         const contact = {
             ...data,
-            department: await this.createSelect(department.base),
+            department: await this.DepartmentDao.findById(data.department)
         }
         return new Contact(contact)
     }
@@ -25,8 +22,8 @@ class ContactDao extends GenericDao {
         const list = {
             ...data,
         }
-        const{id, name, department, phone, email} =list
-        const nObj = {id :id, name :name, department: department, phone : phone, email: email}
+        const { id, name, department, phone, email } = list
+        const nObj = { id: id, name: name, department: department, phone: phone, email: email }
         return nObj
     }
 
@@ -38,7 +35,7 @@ class ContactDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
@@ -46,19 +43,15 @@ class ContactDao extends GenericDao {
             });
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-    }
 
-    findByVendorId (id) {
-        return new Promise((resolve, reject) => { 
+    findByVendorId(id) {
+        return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM vendors_contact WHERE idVendor = ?', [id], async (err, result) => {
-                if(err){ 
+                if (err) {
                     reject(err)
-                }else{
+                } else {
                     const contactList = []
-                    for(const centerDB of result){
+                    for (const centerDB of result) {
                         contactList.push(await this.mountObj(centerDB))
                     }
                     resolve(contactList)
@@ -67,12 +60,12 @@ class ContactDao extends GenericDao {
         })
     }
 
-    findMainContactById (id) {
-        return new Promise((resolve, reject) => { 
+    findMainContactById(id) {
+        return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM vendors_contact WHERE idVendor = ? AND defaultContact = 1', [id], (err, result) => {
-                if(err){ 
+                if (err) {
                     reject(err)
-                }else{
+                } else {
                     resolve(result[0])
 
                 }

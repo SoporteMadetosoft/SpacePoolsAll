@@ -5,10 +5,9 @@ import BreadCrumbs from '@components/breadcrumbs'
 
 import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 
-import { initNormalForm } from '../../redux/actions/normalForm/index.js'
+import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm/index.js'
 import { CustomersForm } from './customerForm/CustomersForm'
 import { save } from '../../utility/helpers/Axios/save'
-
 
 const structureForm = {
     addresses: [],
@@ -19,19 +18,18 @@ export const CustomerFormScreen = () => {
 
     const { id } = useParams()
     const history = useHistory()
-    const title = (id) ? 'Editar Cliente' : 'Añadir Cliente'
-
+    const dispatch = useDispatch()
     const form = useSelector(state => state.normalForm)
 
-    const dispatch = useDispatch()
-
     useEffect(() => {
+        if (id) {
+            dispatch(handleStartEditing('Customers', id))
+        }
         dispatch(initNormalForm(structureForm))
     }, [initNormalForm])
 
-    const { normalForm } = useSelector(state => state)
-
-    const customerName = normalForm.comercialName ? normalForm.comercialName : title
+    const title = (id) ? 'Editar Cliente' : 'Añadir Cliente'
+    const customerName = form.comercialName ? form.comercialName : title
 
     const handleSubmit = async (e) => {
         e.preventDefault()

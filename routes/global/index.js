@@ -10,7 +10,7 @@ router.use('/language', require('./language/index'));
 router.use('/mode', require('./mode/index'));
 router.use('/status', require('./status/index'));
 router.use('/payday', require('./payday/index'));
-router.use('/mkdir', require('./mkdir/index'));
+router.use('/fileManager', require('./fileManager/index'));
 
 
 module.exports = router;

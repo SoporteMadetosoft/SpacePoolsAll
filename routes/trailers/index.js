@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-const ControllerTrailer= require('../../controllers/trailer/Trailer')
-const ControllerRepair= require('../../controllers/trailer/Repair')
+const ControllerTrailer = require('../../controllers/trailer/Trailer')
+const ControllerRepair = require('../../controllers/trailer/Repair')
 
-router.get('/trailer/list', ControllerTrailer.list);
-router.post('/trailer/insert', ControllerTrailer.insert);
-router.get('/trailer/select', ControllerTrailer.select);
-router.put('/trailer/update', ControllerTrailer.update);
-router.delete('/trailer/delete/:id', ControllerTrailer.delete);
-router.post('/trailer/find', ControllerTrailer.listByID);
+router.get('/list', ControllerTrailer.list);
+router.post('/insert', ControllerTrailer.insert);
+router.get('/select', ControllerTrailer.select);
+router.put('/update', ControllerTrailer.update);
+router.delete('/delete/:id', ControllerTrailer.delete);
+router.post('/find', ControllerTrailer.listByID);
 
 router.get('/repair/list', ControllerRepair.list);
 router.post('/repair/insert', ControllerRepair.insert);

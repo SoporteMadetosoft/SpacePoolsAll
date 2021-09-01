@@ -1,9 +1,7 @@
 const Production = require("../../models/production/Production");
 const GenericDao = require("../GenericDao");
 
-
 class ProductionDao extends GenericDao {
-
     constructor() {
         super(Production);
     }
@@ -11,7 +9,7 @@ class ProductionDao extends GenericDao {
     async mountObj(data) {
         const production = {
             ...data,
-            
+
         }
         return new Production(production)
     }
@@ -20,8 +18,8 @@ class ProductionDao extends GenericDao {
         const list = {
             ...data,
         }
-        const{orderId, productionCode, status} =list
-        const nObj = {orderId :orderId, productionCode :productionCode, status: status}
+        const { orderId, productionCode, status } = list
+        const nObj = { orderId: orderId, productionCode: productionCode, status: status }
         return nObj
     }
 
@@ -33,7 +31,7 @@ class ProductionDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
@@ -41,23 +39,19 @@ class ProductionDao extends GenericDao {
             });
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
 
-    findByOrderId (id) {
-        return new Promise((resolve, reject) => { 
+
+    findByOrderId(id) {
+        return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM production WHERE orderId = ?', [id], (err, result) => {
-                if(err){ 
+                if (err) {
                     reject(err)
-                }else{
+                } else {
                     const order = []
-                    for(const centerDB of result){
+                    for (const centerDB of result) {
                         order.push(this.mountObj(centerDB))
                     }
-                  
+
                     resolve(order)
                 }
             })

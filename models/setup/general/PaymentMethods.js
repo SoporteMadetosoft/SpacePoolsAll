@@ -1,13 +1,13 @@
 const Setup = require('../Setup')
 
 class PaymentMethods extends Setup {
-    #table ='setup_payment_methods'
+    #table = 'setup_payment_methods'
 
-    constructor(params){
+    constructor(params) {
         super(params)
-        this.base.value = params.value
+        this.value = params.value
     }
-    
+
     get table() {
         return this.#table;
     }

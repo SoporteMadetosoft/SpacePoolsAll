@@ -1,5 +1,4 @@
-class Production{
-    base = {}
+class Production {
     #table = 'production'
 
     constructor({
@@ -7,11 +6,11 @@ class Production{
         orderId,
         productionCode,
         status
-    }){
-        this.base.id = id
-        this.base.orderId = orderId
-        this.base.productionCode = productionCode
-        this.base.status = status
+    }) {
+        this.id = id
+        this.orderId = orderId
+        this.productionCode = productionCode
+        this.status = status
     }
     get table() {
         return this.#table;

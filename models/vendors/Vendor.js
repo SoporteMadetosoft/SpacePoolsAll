@@ -1,5 +1,4 @@
-class Vendor{
-    base = {}
+class Vendor {
     contacts = []
     addresses = []
     purchase = []
@@ -17,21 +16,21 @@ class Vendor{
         email,
         observations,
         idStatus,
-        contacts= [],
+        contacts = [],
         addresses = [],
         purchase = []
-    }){
-        this.base.id = id
-        this.base.idVendorType = idVendorType
-        this.base.idPaymentMethod = idPaymentMethod
-        this.base.vendorCode = vendorCode
-        this.base.comercialName = comercialName
-        this.base.CIF = CIF
-        this.base.socialReason = socialReason
-        this.base.phone = phone
-        this.base.email = email
-        this.base.observations = observations
-        this.base.idStatus = idStatus
+    }) {
+        this.id = id
+        this.idVendorType = idVendorType
+        this.idPaymentMethod = idPaymentMethod
+        this.vendorCode = vendorCode
+        this.comercialName = comercialName
+        this.CIF = CIF
+        this.socialReason = socialReason
+        this.phone = phone
+        this.email = email
+        this.observations = observations
+        this.idStatus = idStatus
         this.contacts = contacts
         this.addresses = addresses
         this.purchase = purchase

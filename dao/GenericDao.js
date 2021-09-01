@@ -71,7 +71,6 @@ class GenericDao {
     }
 
     insert(params) {
-        console.log(`INSERT INTO ${this.auxModel.table} (${Object.keys(params)}) VALUES  (${Object.values(params)})`)
         Object.keys(params).forEach((k) => { if (params[k] === '') { params[k] = null } })
         return new Promise((resolve, reject) => {
             this.db.query(`INSERT INTO ?? (??) VALUES  (?)`, [this.auxModel.table, Object.keys(params), Object.values(params)], async (err, result) => {
@@ -103,7 +102,6 @@ class GenericDao {
         const idsForm = []
         const d = data
         d.forEach(element => {
-            if (typeof obj.unMountBase == 'function') { element = obj.unMountBase(element) }
             const action = 'id' in element ? 'update' : 'insert'
 
             if (action === 'insert') {
@@ -131,17 +129,6 @@ class GenericDao {
         return update.substring(0, update.length - 2)
     }
 
-    createSelect(obj) {
-        let obj2 = {}
-        obj2.value = obj.id
-        obj2.label = obj.name
-        return obj2
-    }
-
-    undoSelect(obj) {
-        return obj.value
-    }
-
     datetimeToDate(date) {
         if (date !== null) {
             let month = date.getMonth() + 1
@@ -152,7 +139,6 @@ class GenericDao {
             return (year + '-' + month + '-' + dt)
         }
     }
-
 }
 
 

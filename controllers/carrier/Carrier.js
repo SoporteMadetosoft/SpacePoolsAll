@@ -2,12 +2,14 @@
 const CarrierDao = require('../../dao/carrier/CarrierDao')
 const express = require('express');
 const fileUpload = require('express-fileupload');
+const FileManagerDao = require('../../dao/global/FileManagerDao');
 
 const app = express();
 
 app.use(fileUpload());
 
 const carrierDao = new CarrierDao()
+const fileManagerDao = new FileManagerDao()
 
 exports.list = async (req, res) => {
     try {
@@ -90,29 +92,17 @@ exports.update = (req, res) => {
     }
 }
 
-exports.upload = (req, res) => {
+exports.upload = async (req, res) => {
 
     try {
-
         const dateNow = req.body.filePath;
-        var files = [].concat(req.files.file);
-        files.forEach(element => {
-            const file = element;
-            file.mv(`${__dirname}/../../public/${dateNow}/${file.name}`, err => {
-                if (err) {
-                    console.error(err);
-                    return res.status(500).send(err);
-                }
-            })
-        })
+        const files = [].concat(req.files.file);
 
-        return res.json({ ok: true, filePath: `${dateNow}` });
+        await fileManagerDao.uploadFile(dateNow, files)
 
+        return res.json({ ok: true, filePath: dateNow })
     } catch (error) {
-
         console.log(error);
         return res.status(500).send(error);
-
     }
 }
-

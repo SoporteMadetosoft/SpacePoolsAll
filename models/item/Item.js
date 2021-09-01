@@ -1,7 +1,6 @@
 
-class Item{
-    base = {}
-    purchasesItems=[]
+class Item {
+    purchasesItems = []
     #table = 'item'
 
     constructor({
@@ -19,22 +18,22 @@ class Item{
         stock,
         itemType,
         description,
-        purchasesItems=[]
-    }){
-        this.base.id = id
-        this.base.family = family
-        this.base.subfamily = subfamily
-        this.base.place = place
-        this.base.itemCode = itemCode
-        this.base.name = name
-        this.base.priceVATout = priceVATout
-        this.base.priceVatin = priceVatin
-        this.base.cost = cost
-        this.base.maximumCost = maximumCost
-        this.base.minimumStock = minimumStock
-        this.base.stock = stock
-        this.base.itemType = itemType
-        this.base.description = description
+        purchasesItems = []
+    }) {
+        this.id = id
+        this.family = family
+        this.subfamily = subfamily
+        this.place = place
+        this.itemCode = itemCode
+        this.name = name
+        this.priceVATout = priceVATout
+        this.priceVatin = priceVatin
+        this.cost = cost
+        this.maximumCost = maximumCost
+        this.minimumStock = minimumStock
+        this.stock = stock
+        this.itemType = itemType
+        this.description = description
         this.purchasesItems = purchasesItems
     }
     get table() {

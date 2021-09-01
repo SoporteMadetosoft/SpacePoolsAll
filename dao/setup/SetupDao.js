@@ -1,21 +1,21 @@
 const Setup = require("../../models/setup/Setup");
 const GenericDao = require("../GenericDao");
 
-class SetupDao extends GenericDao{
+class SetupDao extends GenericDao {
 
     id
     nombre
     object
     objectAux
-    constructor(object){
+    constructor(object) {
         super(object)
         this.object = object
         this.objectAux = new this.object({})
     }
 
-    async mountObj(data){
+    async mountObj(data) {
 
-        const setup ={
+        const setup = {
             ...data
         }
 
@@ -30,7 +30,7 @@ class SetupDao extends GenericDao{
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
@@ -40,15 +40,9 @@ class SetupDao extends GenericDao{
     }
 
 
-    async mountList(data){
-        return {...data}
-        
-    }
+    async mountList(data) {
+        return { ...data }
 
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
     }
-
 }
 module.exports = SetupDao

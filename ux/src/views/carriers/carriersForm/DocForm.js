@@ -1,20 +1,26 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
 
-import { handleChangeUpload, saveFiles } from '../../../redux/actions/fileUpload'
+import { handleChangeUpload, handleLoadDocuments, saveFiles } from '../../../redux/actions/fileUpload'
 import { carriersDocs } from '../../../fixed/vehicles/carriers/carriersDocs'
 import { CustomMiniTable } from '../../../components/datatable/CustomMiniTable'
 import { FileContext } from './FileContext'
-import { MkDir } from '../../../utility/helpers/MkDir'
+import { MkDir } from '../../../utility/helpers/Axios/MkDir'
 
 export const DocForm = () => {
 
     const { file, setFile } = useContext(FileContext)
     const dispatch = useDispatch()
-    const { filePath, upload } = useSelector(state => state.fileUpload)
-    const { documents: data } = useSelector(state => state.normalForm)
+    const { upload, filePath, documents: data } = useSelector(state => state.fileUpload)
+    const { filePath: formFilePath } = useSelector(state => state.normalForm)
+
+    const realFilePath = formFilePath ? formFilePath : filePath
+
+    useEffect(() => {
+        dispatch(handleLoadDocuments(realFilePath))
+    }, [realFilePath])
 
     const handleFileInputChange = (e) => {
         setFile(e.target.files)
@@ -29,7 +35,7 @@ export const DocForm = () => {
     const uploadFileToCloud = async (e) => {
         e.preventDefault()
 
-        const filePath2 = await MkDir(filePath)
+        const filePath2 = await MkDir(realFilePath)
 
         dispatch(await saveFiles('Carriers', filePath2, file))
 

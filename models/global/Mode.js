@@ -3,7 +3,7 @@ const Setup = require('../setup/Setup')
 class Mode extends Setup {
     #table = 'global_mode'
     constructor(param) {
-       super(param)
+        super(param)
     }
 
     get table() {

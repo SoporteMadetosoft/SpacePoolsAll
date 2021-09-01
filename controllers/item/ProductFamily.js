@@ -16,19 +16,6 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await productFamilyDao.getSelect() 
-        })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
 
@@ -60,7 +47,7 @@ exports.insert = async (req, res) => {
     try {
         /** INSERT PRODUCT FAMILY */
         const insert = await productFamilyDao.insert(req.body.form)
-        
+
 
         res.json({ ok: true })
     } catch (error) {
@@ -74,8 +61,8 @@ exports.update = (req, res) => {
     try {
         /** UPDATE PRODUCT FAMILY */
         productFamilyDao.update(req.body.form)
-      
-       
+
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

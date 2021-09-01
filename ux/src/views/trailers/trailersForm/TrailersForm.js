@@ -4,7 +4,7 @@ import axios from 'axios'
 import ReactSelect from 'react-select'
 
 import { handleChangeController, handleStartEditing } from '../../../redux/actions/normalForm'
-import { addSelectOptions } from '../../../redux/actions/selects'
+import { addSelectOptions, startAddSelectOptions } from '../../../redux/actions/selects'
 import { useParams } from 'react-router-dom'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
@@ -24,17 +24,21 @@ export const TrailersForm = () => {
     const { normalForm, selectReducer } = useSelector(state => state)
     const { observations, brand } = normalForm
 
-    const { statusOpt, brandOpt, brandModelOpt } = selectReducer
+    const { brandOpt } = selectReducer
 
     const handleLoadModels = async (obj) => {
-        const { data } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/brandModel/selectByIdBrand/${obj.value}`)
-        dispatch(addSelectOptions('brandModelOpt', data.data))
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/brandModel/selectByIdBrand/${obj.value}`)
+        dispatch(addSelectOptions('brandModelOpt', data.map(option => ({ label: option.name, value: option.id }))))
         dispatch(handleChangeController('model', ''))
     }
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
+
+    useEffect(() => {
+        dispatch(startAddSelectOptions('Brand', 'brandOpt'))
+    }, [])
 
     return (
         <>
@@ -50,7 +54,7 @@ export const TrailersForm = () => {
                         <Input name="policyNumber" placeholder="Número de poliza" label="Número de poliza" />
                     </div>
                     <div className="col-md-3">
-                        <Select name="idStatus" label="Estado" options={statusOpt} />
+                        <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">Marca</label>
@@ -64,7 +68,7 @@ export const TrailersForm = () => {
                             }} />
                     </div>
                     <div className="col-md-3">
-                        <Select name="model" label="Modelo" options={brandModelOpt} />
+                        <Select name="model" label="Modelo" endpoint="brandModelOpt" />
                     </div>
 
                     <div className="col-md-3">

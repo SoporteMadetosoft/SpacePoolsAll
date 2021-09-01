@@ -12,35 +12,18 @@ class ProductFamilyDao extends GenericDao {
 
         const productFamily = {
             ...data,
-
         }
         return new ProductFamily(productFamily)
     }
 
     async mountList(data) {
+        const { name: parentName } = await this.findById(data.parent)
         const list = {
             ...data,
+            parent: parentName ? parentName : 'Nadie'
         }
-        const { name, familyCode, parent } = list
-        const nObj = { name: name, familyCode: familyCode, parent: parent }
+        const nObj = list
         return nObj
-    }
-
-    getSelect() {
-        return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM ??', [this.objectAux.table], async (err, result) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    let objList = []
-                    for (const res of result) {
-                        objList.push(res)
-                    }
-
-                    resolve(objList)
-                }
-            });
-        })
     }
 
 }

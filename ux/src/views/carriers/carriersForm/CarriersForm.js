@@ -25,7 +25,7 @@ export const CarriersForm = () => {
                         <Input name="NIF" placeholder="N.I.F." label="N.I.F." />
                     </div>
                     <div className="col-md-3">
-                        <Select name="idStatus" label="Estado" options={statusOpt} />
+                        <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-3">
                         <Input name="email" type="email" placeholder="Correo electrónico" label="Correo electrónico" />

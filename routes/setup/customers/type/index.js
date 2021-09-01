@@ -10,7 +10,6 @@ const ControllerType = require('../../../../controllers/setup/customers/Customer
 
 router.get('/list', ControllerType.list);
 router.post('/insert', ControllerType.insert);
-router.get('/select', ControllerType.select);
 router.put('/update', ControllerType.update);
 router.delete('/delete/:id', ControllerType.delete);
 router.post('/find', ControllerType.listByID);

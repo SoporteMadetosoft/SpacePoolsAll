@@ -8,6 +8,6 @@ const ControllerPayDay = require('../../../controllers/global/PayDay');
 
 const router = express.Router();
 
-router.get('/select', ControllerPayDay.select);
+router.get('/list', ControllerPayDay.list);
 
 module.exports = router;

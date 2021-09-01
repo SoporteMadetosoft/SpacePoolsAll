@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Repeater from '@components/repeater'
 import { X, Plus } from 'react-feather'
 import { Button } from 'reactstrap'
@@ -7,6 +7,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
+import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+import { startAddSelectOptions } from '../../../redux/actions/selects'
+
+const formStructure = {
+    name: '',
+    phone: '',
+    email: '',
+    charge: '',
+    startSchedule: '',
+    endSchedule: '',
+    department: ''
+}
 
 export const ContactsRepeater = () => {
 
@@ -17,8 +29,12 @@ export const ContactsRepeater = () => {
     const count = contacts ? contacts.length : 0
 
     const increaseCount = () => {
-        dispatch(addRepeaterRegister('contacts'))
+        dispatch(addRepeaterRegister('contacts', formStructure))
     }
+
+    useEffect(() => {
+        dispatch(startAddSelectOptions('Departments', 'departmentOpt'))
+    }, [])
 
     return (
         <>
@@ -61,6 +77,8 @@ const ContactsForm = ({ position }) => {
         department,
         defaultContact } = normalForm.contacts[position]
 
+    const SelectValue = department.name ? deconstructSelect(department) : null
+
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('contacts', position))
     }
@@ -76,10 +94,11 @@ const ContactsForm = ({ position }) => {
     }
 
     const handleSelectChange = (key, element) => {
+        const el = constructSelect(element)
 
         const obj = {
             name: key,
-            value: element
+            value: el
         }
         dispatch(
             editRepeaterRegister('contacts', position, obj)
@@ -163,7 +182,7 @@ const ContactsForm = ({ position }) => {
                     name="department"
                     options={departmentOpt}
                     onChange={(value) => { handleSelectChange('department', value) }}
-                    defaultValue={department}
+                    defaultValue={SelectValue}
                 />
             </div>
         </div>

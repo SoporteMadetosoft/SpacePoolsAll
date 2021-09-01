@@ -15,19 +15,6 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await vendorDao.getSelect() 
-        })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
 
@@ -62,12 +49,12 @@ exports.insert = async (req, res) => {
         const vendor = req.body.form
         const addresses = req.body.form.addresses
         const contacts = req.body.form.contacts
-        
+
         delete vendor.addresses
         delete vendor.contacts
         const insert = await vendorDao.insert(vendor)
         /** INSERT ADDRESSES**/
-        
+
         vendorDao.multipleAccess(addresses, vendorDao.AddressDao, insert.insertId, 'idVendor')
         /** INSERT CONTACT PERSONS**/
         vendorDao.multipleAccess(contacts, vendorDao.ContactDao, insert.insertId, 'idVendor')

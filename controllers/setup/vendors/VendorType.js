@@ -4,25 +4,12 @@ const Type = require('../../../models/setup/vendors/VendorsType')
 const type = new TypeDao(Type)
 exports.list = async (req, res) => {
 
-    try{
+    try {
         res.json({
-            ok:true,
-            data: await type.findAll() 
+            ok: true,
+            data: await type.findAll()
         })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data:  await type.getSelect()
-        })
-    }catch(error){
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
@@ -55,22 +42,22 @@ exports.delete = async (req, res) => {
 }
 
 exports.insert = (req, res) => {
-    try{
+    try {
         type.insert(req.body.form)
-        res.json({ok: true})
-    }catch(error){
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
     }
 }
 
-exports.update =(req, res)=>{
-    
-    try{
+exports.update = (req, res) => {
+
+    try {
         type.update(req.body.form)
-        res.json({ok: true})
-    }catch(error){
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
-    }    
+    }
 }

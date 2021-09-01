@@ -2,7 +2,7 @@ const Customer = require("../../models/customers/Customer");
 
 const GenericDao = require("../GenericDao");
 
-const PaymentMethodDao = require("../setup/PaymentMethodDao");
+const PaymentMethodDao = require("../setup/general/PaymentMethodDao");
 const CustomerTypeDao = require("../setup/customer/CustomerTypeDao");
 const CustomerCategoryDao = require("../setup/customer/CustomerCategoryDao");
 const CustomerActivityDao = require("../setup/customer/CustomerActivityDao");

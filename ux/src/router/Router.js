@@ -1,5 +1,5 @@
 // ** React Imports
-import { Suspense, useContext, lazy, useEffect } from 'react'
+import { Suspense, useContext, lazy } from 'react'
 
 // ** Utils
 import { isUserLoggedIn } from '@utils'
@@ -20,9 +20,6 @@ import { DefaultRoute, Routes } from './routes'
 // ** Layouts
 import BlankLayout from '@layouts/BlankLayout'
 import VerticalLayout from '@src/components/layouts/VerticalLayout'
-
-import { useDispatch } from 'react-redux'
-import { startAddSelectOptions } from '../redux/actions/selects'
 // import HorizontalLayout from '@src/layouts/HorizontalLayout'
 
 const Router = () => {
@@ -187,36 +184,6 @@ const Router = () => {
       )
     })
   }
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(startAddSelectOptions('PayDay', 'paymentDayOpt'))
-    dispatch(startAddSelectOptions('Mode', 'modeOpt'))
-    dispatch(startAddSelectOptions('Status', 'statusOpt'))
-    dispatch(startAddSelectOptions('Language', 'languageOpt'))
-
-    dispatch(startAddSelectOptions('Origin', 'customerOriginOpt'))
-    dispatch(startAddSelectOptions('CustomerType', 'customerTypeOpt'))
-    dispatch(startAddSelectOptions('Activity', 'customerActivityOpt'))
-    dispatch(startAddSelectOptions('CustomerCategory', 'customerCategoryOpt'))
-
-    dispatch(startAddSelectOptions('Departments', 'departmentOpt'))
-    dispatch(startAddSelectOptions('PaymentMethods', 'paymentMethodOpt'))
-    dispatch(startAddSelectOptions('AddressesTypes', 'addresseTypesOpt'))
-
-    dispatch(startAddSelectOptions('VendorType', 'vendorTypesOpt'))
-
-    dispatch(startAddSelectOptions('Brand', 'brandOpt'))
-
-    dispatch(startAddSelectOptions('Place', 'placeOpt'))
-
-    dispatch(startAddSelectOptions('Carriers', 'carriersOpt'))
-    dispatch(startAddSelectOptions('Trailers', 'trailersOpt'))
-
-  }, [])
-
-  console.log(ResolveRoutes())
 
   return (
     <AppRouter basename={process.env.REACT_APP_BASENAME}>

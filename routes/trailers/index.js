@@ -6,14 +6,12 @@ const ControllerRepair = require('../../controllers/trailer/Repair')
 
 router.get('/list', ControllerTrailer.list);
 router.post('/insert', ControllerTrailer.insert);
-router.get('/select', ControllerTrailer.select);
 router.put('/update', ControllerTrailer.update);
 router.delete('/delete/:id', ControllerTrailer.delete);
 router.post('/find', ControllerTrailer.listByID);
 
 router.get('/repair/list', ControllerRepair.list);
 router.post('/repair/insert', ControllerRepair.insert);
-router.get('/repair/select', ControllerRepair.select);
 router.put('/repair/update', ControllerRepair.update);
 router.delete('/repair/delete/:id', ControllerRepair.delete);
 router.post('/repair/find', ControllerRepair.listByID);

@@ -9,7 +9,6 @@ const router = express.Router();
 const ControllerType = require('../../../../controllers/setup/vendors/VendorType');
 
 router.get('/list', ControllerType.list);
-router.get('/select', ControllerType.select);
 router.post('/insert', ControllerType.insert);
 router.put('/update', ControllerType.update);
 router.delete('/delete/:id', ControllerType.delete);

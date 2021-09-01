@@ -8,6 +8,6 @@ const ControllerLenguage = require('../../../controllers/global/Language');
 
 const router = express.Router();
 
-router.get('/select', ControllerLenguage.select);
+router.get('/list', ControllerLenguage.list);
 
 module.exports = router;

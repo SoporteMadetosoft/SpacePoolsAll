@@ -8,6 +8,8 @@ import VehiclesRoutes from './porters/vehicles/Vechicles'
 import TrailersRoutes from './porters/trailers/Trailers'
 import PoolsRoutes from './pools/Pools'
 import PurchasesRoutes from './purchases/Purchases'
+import ItemsRoutes from './items/Items'
+
 
 // ** Document title
 const TemplateTitle = '%s - Vuexy React Admin Template'
@@ -16,7 +18,6 @@ const TemplateTitle = '%s - Vuexy React Admin Template'
 const DefaultRoute = '/customers'
 
 const sRoutes = setupRoutes()
-
 // ** Merge Routes
 const Routes = [
   ...TrailersRoutes,
@@ -26,6 +27,7 @@ const Routes = [
   ...CarriersRoutes,
   ...PoolsRoutes,
   ...PurchasesRoutes,
+  ...ItemsRoutes,
   ...PagesRoutes,
   ...sRoutes
 ]

@@ -1,7 +1,15 @@
 
 const CarrierDao = require('../../dao/carrier/CarrierDao')
+const express = require('express');
+const fileUpload = require('express-fileupload');
+const FileManagerDao = require('../../dao/global/FileManagerDao');
+
+const app = express();
+
+app.use(fileUpload());
 
 const carrierDao = new CarrierDao()
+const fileManagerDao = new FileManagerDao()
 
 exports.list = async (req, res) => {
     try {
@@ -18,12 +26,12 @@ exports.list = async (req, res) => {
 
 exports.select = async (req, res) => {
 
-    try{
+    try {
         res.json({
-            ok:true,
-            data: await carrierDao.getSelect() 
+            ok: true,
+            data: await carrierDao.getSelect()
         })
-    }catch(error){
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
@@ -59,8 +67,10 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT CARRIER */
-        await carrierDao.insert(req.body.formData.base)
+        const carrier = req.body.form
+        delete carrier.documents
 
+        await carrierDao.insert(carrier)
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
@@ -69,14 +79,30 @@ exports.insert = async (req, res) => {
 }
 
 exports.update = (req, res) => {
-
     try {
         /**UPDATE CARRIER */
-        carrierDao.update(req.body.formData.base)
+        const carrier = req.body.form
+        delete carrier.documents
 
+        carrierDao.update(carrier)
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)
+    }
+}
+
+exports.upload = async (req, res) => {
+
+    try {
+        const dateNow = req.body.filePath;
+        const files = [].concat(req.files.file);
+
+        await fileManagerDao.uploadFile(dateNow, files)
+
+        return res.json({ ok: true, filePath: dateNow })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
     }
 }

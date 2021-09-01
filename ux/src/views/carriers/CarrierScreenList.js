@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CustomDataTable } from '@cc/datatable/CustomDataTable'
 import { startLoadingTable } from '@redux/actions/custom'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-import { handleCleaningUp } from '../../redux/actions/form'
 
 import { carriersList } from '@fixed/vehicles/carriers/carriersList'
+import { handleCleanForm } from '../../redux/actions/normalForm'
 
 
 export const CarrierScreenList = ({titulo}) => { 
@@ -14,7 +14,7 @@ export const CarrierScreenList = ({titulo}) => {
     const {registros:data} = useSelector(state => state.registrosReducer)
 
     useEffect(() => {
-        dispatch(handleCleaningUp())
+        dispatch(handleCleanForm())
         dispatch(startLoadingTable('Carriers'))   
     }, [])
 

@@ -4,20 +4,15 @@ const GenericDao = require("../GenericDao");
 const RItemDao = require("../item/ItemDao");
 
 class ItemDao extends GenericDao {
-    RItemDao
-
     constructor() {
         super(Item);
         this.RItemDao = new RItemDao()
     }
 
     async mountObj(data) {
-        
-        const itemId = await this.RItemDao.findById(data.itemId)
-        
         const item = {
             ...data,
-            itemId: await this.RItemDao.createSelect(itemId.base)
+            itemId: await this.RItemDao.findById(data.itemId)
         }
         return new Item(item)
     }
@@ -26,8 +21,8 @@ class ItemDao extends GenericDao {
         const list = {
             ...data,
         }
-        const{purchaseId, itemId, quantity} =list
-        const nObj = {purchaseId :purchaseId, itemId :itemId, quantity: quantity}
+        const { purchaseId, itemId, quantity } = list
+        const nObj = { purchaseId: purchaseId, itemId: itemId, quantity: quantity }
         return nObj
     }
 
@@ -39,7 +34,7 @@ class ItemDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
@@ -47,40 +42,35 @@ class ItemDao extends GenericDao {
             });
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
 
-    findByPurchaseId (id) {
-        return new Promise((resolve, reject) => { 
+    findByPurchaseId(id) {
+        return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM purchases_items WHERE purchaseId = ?', [id], (err, result) => {
-                if(err){ 
+                if (err) {
                     reject(err)
-                }else{
+                } else {
                     const itemList = []
-                    for(const centerDB of result){
+                    for (const centerDB of result) {
                         itemList.push(this.mountObj(centerDB))
                     }
-                  
+
                     resolve(itemList)
                 }
             })
         })
     }
 
-    findByItemId (id) {
-        return new Promise((resolve, reject) => { 
+    findByItemId(id) {
+        return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM purchases_items WHERE itemId = ?', [id], (err, result) => {
-                if(err){ 
+                if (err) {
                     reject(err)
-                }else{
+                } else {
                     const itemsList = []
-                    for(const centerDB of result){
+                    for (const centerDB of result) {
                         itemsList.push(this.mountObj(centerDB))
                     }
-                  
+
                     resolve(itemsList)
                 }
             })

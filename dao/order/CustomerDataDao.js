@@ -11,7 +11,7 @@ class CustomerDataDao extends GenericDao {
 
         const customerData = {
             ...data,
-            
+
         }
         return new CustomerData(customerData)
     }
@@ -20,8 +20,8 @@ class CustomerDataDao extends GenericDao {
         const list = {
             ...data,
         }
-        const{id, phone, email} =list
-        const nObj = { id:id, phone : phone, email: email}
+        const { id, phone, email } = list
+        const nObj = { id: id, phone: phone, email: email }
         return nObj
     }
 
@@ -33,7 +33,7 @@ class CustomerDataDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
@@ -41,23 +41,18 @@ class CustomerDataDao extends GenericDao {
             });
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
 
-    findByOrderId (id) {
-        return new Promise((resolve, reject) => { 
+    findByOrderId(id) {
+        return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM orders_customer_data WHERE orderId = ?', [id], (err, result) => {
-                if(err){ 
+                if (err) {
                     reject(err)
-                }else{
+                } else {
                     const customerData = []
-                    for(const centerDB of result){
+                    for (const centerDB of result) {
                         customerData.push(this.mountObj(centerDB))
                     }
-                  
+
                     resolve(customerData)
                 }
             })

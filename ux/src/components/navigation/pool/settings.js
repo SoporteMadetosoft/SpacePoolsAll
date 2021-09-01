@@ -6,6 +6,6 @@ export default [
     id: 'pool',
     title: 'Piscinas',
     icon: <FontAwesomeIcon icon={faSwimmingPool} />,
-    navLink: '/pool'
-}
+    navLink: '/pools'
+  }
 ]

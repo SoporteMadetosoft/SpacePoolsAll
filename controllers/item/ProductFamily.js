@@ -59,7 +59,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT PRODUCT FAMILY */
-        const insert = await productFamilyDao.insert(req.body.formData.base)
+        const insert = await productFamilyDao.insert(req.body.form)
         
 
         res.json({ ok: true })
@@ -73,7 +73,7 @@ exports.update = (req, res) => {
 
     try {
         /** UPDATE PRODUCT FAMILY */
-        productFamilyDao.update(req.body.formData.base)
+        productFamilyDao.update(req.body.form)
       
        
         res.json({ ok: true })

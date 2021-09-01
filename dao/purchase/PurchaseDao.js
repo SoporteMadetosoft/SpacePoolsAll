@@ -11,7 +11,7 @@ class PurchaseDao extends GenericDao {
     }
 
     async mountObj(data) {
-        
+
         const purchase = {
             ...data,
             items: await this.ItemDao.findByPurchaseId(data.id)
@@ -23,8 +23,8 @@ class PurchaseDao extends GenericDao {
         const list = {
             ...data,
         }
-        const{idVendor, purchaseDate, observations} =list
-        const nObj = {idVendor :idVendor, purchaseDate :purchaseDate, observations: observations}
+        const { idVendor, purchaseDate, observations } = list
+        const nObj = { idVendor: idVendor, purchaseDate: purchaseDate, observations: observations }
         return nObj
     }
 
@@ -36,7 +36,7 @@ class PurchaseDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
@@ -44,24 +44,18 @@ class PurchaseDao extends GenericDao {
             });
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
 
-    
-    findByVendorId (id) {
-        return new Promise((resolve, reject) => { 
+    findByVendorId(id) {
+        return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM purchases WHERE idVendor = ?', [id], (err, result) => {
-                if(err){ 
+                if (err) {
                     reject(err)
-                }else{
+                } else {
                     const addressesList = []
-                    for(const centerDB of result){
+                    for (const centerDB of result) {
                         addressesList.push(this.mountObj(centerDB))
                     }
-                  
+
                     resolve(addressesList)
                 }
             })

@@ -56,7 +56,7 @@ exports.delete = async (req, res) => {
 
 exports.insert = (req, res) => {
     try{
-        paymentMethodDao.insert(req.body.formData.base)
+        paymentMethodDao.insert(req.body.form)
         res.json({ok: true})
     }catch(error){
         console.log(error)
@@ -67,7 +67,7 @@ exports.insert = (req, res) => {
 exports.update =(req, res)=>{
     
     try{
-        paymentMethodDao.update(req.body.formData.base)
+        paymentMethodDao.update(req.body.form)
         res.json({ok: true})
     }catch(error){
         console.log(error)

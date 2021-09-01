@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { startLoadingTable } from '@redux/actions/custom'
-import { handleCleaningUp } from '@redux/actions/form'
 import { CustomDataTable } from '@cc/datatable/CustomDataTable'
 import { customerTypeList } from '@fixed/setup/customers/customerType/customerTypeList'
+import { handleCleanForm } from '../../../../redux/actions/normalForm'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
@@ -14,7 +14,7 @@ export const CustomerTypeScreenList = ({titulo}) => {
     const {registros:data} = useSelector(state => state.registrosReducer)
 
     useEffect(() => {
-        dispatch(handleCleaningUp())
+        dispatch(handleCleanForm())
         dispatch(startLoadingTable('CustomerType'))   
     }, [])
 

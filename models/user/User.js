@@ -1,5 +1,4 @@
-class User{
-    base = {}
+class User {
     #table = 'users'
 
     constructor({
@@ -12,16 +11,16 @@ class User{
         phone,
         password,
         status
-    }){
-        this.base.id = id
-        this.base.idRole = idRole
-        this.base.username = username
-        this.base.login = login
-        this.base.group = group
-        this.base.email = email
-        this.base.phone = phone
-        this.base.password = password
-        this.base.status = status
+    }) {
+        this.id = id
+        this.idRole = idRole
+        this.username = username
+        this.login = login
+        this.group = group
+        this.email = email
+        this.phone = phone
+        this.password = password
+        this.status = status
     }
     get table() {
         return this.#table;

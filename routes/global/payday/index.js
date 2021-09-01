@@ -1,7 +1,7 @@
-/* 
-    Path: @src/routes/setup/general/index.js -> @src/routes/setup/general/addressTypes.js
-    URI: '/setup/general/addressTypes/*'
-*/ 
+/*
+    Path:  @src/app.js ->  @src/routes/global/payday/index.js
+    URI: '/global/payday 
+*/
 
 const express = require('express');
 const ControllerPayDay = require('../../../controllers/global/PayDay');

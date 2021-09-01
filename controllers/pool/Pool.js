@@ -18,12 +18,12 @@ exports.list = async (req, res) => {
 
 exports.select = async (req, res) => {
 
-    try{
+    try {
         res.json({
-            ok:true,
-            data: await poolDao.getSelect() 
+            ok: true,
+            data: await poolDao.getSelect()
         })
-    }catch(error){
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
@@ -59,9 +59,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT POOL */
-        const insert = await poolDao.insert(req.body.formData.base)
-        
-
+        await poolDao.insert(req.body.form)
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
@@ -69,13 +67,13 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
     try {
         /** UPDATE POOL */
-        
-        poolDao.update(req.body.formData.base)
-       
+
+        await poolDao.update(req.body.form)
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

@@ -1,5 +1,4 @@
-class Item{
-    base = {}
+class Item {
     #table = 'purchases_items'
 
     constructor({
@@ -7,11 +6,11 @@ class Item{
         purchaseId,
         itemId,
         quantity
-    }){
-        this.base.id = id
-        this.base.purchaseId = purchaseId
-        this.base.itemId = itemId
-        this.base.quantity = quantity
+    }) {
+        this.id = id
+        this.purchaseId = purchaseId
+        this.itemId = itemId
+        this.quantity = quantity
     }
     get table() {
         return this.#table;

@@ -1,11 +1,13 @@
 
-export const endPoints = {
 
-    Customers: '/customers',
+const globalEndpoints = {
+    Language: '/global/language',
+    Mode: '/global/mode',
+    Status: '/global/status',
+    PayDay: '/global/payday'
+}
 
-    Vendors: '/vendors/vendor',
-
-    //SETUP STARTS
+const setupEndpoints = {
     PaymentMethods: '/setup/general/paymentMethod',
     Departments: '/setup/general/department',
     AddressesTypes: '/setup/general/addressesTypes',
@@ -16,20 +18,26 @@ export const endPoints = {
     Origin: '/setup/customers/origin',
 
     VendorType: '/setup/vendors/type',
-    
+
     Brand: '/setup/vehicles/brand',
     Model: '/setup/vehicles/brandModel',
-    
-    Place: '/setup/items/place',
-    //SETUP ENDS
 
-    // GLOBAL STARTS
-    Language: '/global/language',
-    Mode: '/global/mode',
-    Status: '/global/status',
-    PayDay: '/global/payday',
-    // GLOBAL ENDS
+    Place: '/setup/items/place'
+}
 
-    Carriers: '/carriers'
 
+
+export const endPoints = {
+
+    Customers: '/customers',
+    Vendors: '/vendors',
+
+    Carriers: '/carriers',
+    Vehicles: '/vehicles',
+    Trailers: '/trailers',
+
+    Pools: '/pools',
+
+    ...globalEndpoints,
+    ...setupEndpoints
 }

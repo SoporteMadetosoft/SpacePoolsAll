@@ -1,5 +1,4 @@
-class CustomerData{
-    base ={}
+class CustomerData {
     #table = 'orders_customer_data'
 
     constructor({
@@ -8,12 +7,12 @@ class CustomerData{
         deliveryAddress,
         phone,
         email
-    }){
-       this.base.id = id
-       this.base.orderId = orderId
-       this.base.deliveryAddress = deliveryAddress
-       this.base.phone = phone
-       this.base.email = email
+    }) {
+        this.id = id
+        this.orderId = orderId
+        this.deliveryAddress = deliveryAddress
+        this.phone = phone
+        this.email = email
     }
     get table() {
         return this.#table;

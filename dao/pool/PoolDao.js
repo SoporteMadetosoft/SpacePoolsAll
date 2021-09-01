@@ -4,28 +4,27 @@ const GenericDao = require("../GenericDao");
 const StatusDao = require("../global/StatusDao");
 
 class PoolDao extends GenericDao {
-    StatusDao
-
     constructor() {
         super(Pool);
         this.StatusDao = new StatusDao()
     }
 
     async mountObj(data) {
-        const status = await this.StatusDao.findById(data.status)
         const pool = {
             ...data,
-            status: await this.createSelect(status.base)
+            idStatus: await this.StatusDao.findById(data.idStatus)
         }
         return new Pool(pool)
     }
 
     async mountList(data) {
+        const status = await this.StatusDao.findById(data.idStatus)
         const list = {
             ...data,
+            idStatus: status != undefined ? status.name : ''
         }
-        const{id, nameEuropa, cost, status} =list
-        const nObj = {id :id, nameEuropa :nameEuropa, cost: cost, status : status}
+        const { id, poolCode, fabricationName, cost, idStatus } = list
+        const nObj = { id: id, poolCode: poolCode, fabricationName: fabricationName, cost: cost, idStatus: idStatus }
         return nObj
     }
 
@@ -37,25 +36,13 @@ class PoolDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
                 }
             });
         })
-    }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
-
-    async createSelect(obj){
-        let obj2 = {}
-        obj2.value = obj.id
-        obj2.label = obj.nameEuropa
-        return obj2
     }
 
 }

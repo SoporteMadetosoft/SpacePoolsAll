@@ -1,173 +1,59 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import Select from 'react-select'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { Input } from '../../../components/form/inputs/Input'
+import { Select } from '../../../components/form/inputs/Select'
 
-import { handleChangeController } from '../../../redux/actions/normalForm'
-import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { DocForm } from './DocForm'
 
+export const CarriersForm = () => {
 
-export const CarriersForm = (id) => {
-
-    const dispatch = useDispatch()
-    const { normalForm, selectReducer } = useSelector(state => state)
-    const {
-        country,
-        province,
-        postcode,
-        city,
-        address,
-        email,
-        name,
-        NIF,
-        phone1,
-        phone2,
-        status} = normalForm
+    const { selectReducer } = useSelector(state => state)
 
     const { statusOpt } = selectReducer
-
-    useEffect( () => {
-        dispatch(startAddSelectOptions('/Customers', 'customersOpt'))
-        dispatch(startAddSelectOptions('/Vendors', 'vendorsOpt'))
-        dispatch(startAddSelectOptions('/setup/general/status', 'statusOpt'))
-    }, [])
-
-    const handleInputChange = ({ target }) => {
-        dispatch(handleChangeController(target.name, target.value))
-    }
-
-    const handleSelectChange = (key, value) => {
-        dispatch(handleChangeController(key, value))
-    }
 
     return (
         <>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
-                    <div className="col-md-3">
-                        <label className="control-label">Nombre</label>
-                        <input
-                            className="form-control"
-                            name="name"
-                            placeholder="Nombre"
-                            value={name}
-                            onChange={handleInputChange}
-                        />
+                    <div className="col-md-2">
+                        <Input name="carrierCode" placeholder="Nº Transportista" label="Nº Transportista" />
+                    </div>
+                    <div className="col-md-4">
+                        <Input name="name" placeholder="Nombre" label="Nombre" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">País</label>
-                        <input
-                            className="form-control"
-                            name="country"
-                            placeholder="País"
-                            value={country}
-                            onChange={handleInputChange}
-                        />
+                        <Input name="NIF" placeholder="N.I.F." label="N.I.F." />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">N.I.F.</label>
-                        <input
-                            className="form-control"
-                            name="NIF"
-                            placeholder="N.I.F."
-                            value={NIF}
-                            onChange={handleInputChange}
-                        />
+                        <Select name="idStatus" label="Estado" options={statusOpt} />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Provincia</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="province"
-                            placeholder="Provincia"
-                            value={province}
-                            onChange={handleInputChange}
-                        />
+                        <Input name="email" type="email" placeholder="Correo electrónico" label="Correo electrónico" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Código postal</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="postcode"
-                            placeholder="Código postal"
-                            value={postcode}
-                            onChange={handleInputChange}
-                        />
-                    </div> 
-                    <div className="col-md-3">
-                        <label className="control-label">Ciudad</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="city"
-                            placeholder="Ciudad"
-                            value={city}
-                            onChange={handleInputChange}
-                        />
-                    </div> 
-                    <div className="col-md-3">
-                        <label className="control-label">Dirección</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="address"
-                            placeholder="Dirección"
-                            value={address}
-                            onChange={handleInputChange}
-                        />
-                    </div> 
-                    <div className="col-md-3">
-                        <label className="control-label">Correo electrónico</label>
-                        <input
-                            className="form-control"
-                            name="email"
-                            placeholder="Correo electrónico"
-                            value={email}
-                            onChange={handleInputChange}
-
-                        />
+                        <Input name="phone" placeholder="Teléfono 1" label="Teléfono 1" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Teléfono 1</label>
-                        <input
-                            className="form-control"
-                            name="phone"
-                            placeholder="Teléfono"
-                            value={phone1}
-                            onChange={handleInputChange}
-                        />
+                        <Input name="phone2" placeholder="Teléfono 2" label="Teléfono 2" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Teléfono 2</label>
-                        <input
-                            className="form-control"
-                            name="phone2"
-                            placeholder="Teléfono"
-                            value={phone2}
-                            onChange={handleInputChange}
-                        />
-                    </div>  
-                    <div className="col-md-3">
-                        <label className="control-label">Estado</label>
-                        <Select
-                            name="status"
-                            placeholder="Estado"
-                            options={ statusOpt }
-                            defaultValue={status}
-                            onChange={ (value) => { handleSelectChange('status', value) }}
-                        />
+                        <Input name="startSchedule" type="time" placeholder="Horario de contacto" label="Horario de contacto" />
                     </div>
-                    <div className="col-md-3">
-                        <label className="control-label">Horario de contacto</label>
-                        <input
-                            className="form-control"
-                            type="time"
-                            name="contactSchedule"
-                            // value={pickupTime}
-                        />
-                    </div>                
+                    <div className="col-md-4">
+                        <Input name="country" placeholder="País" label="País" />
+                    </div>
+                    <div className="col-md-4">
+                        <Input name="state" placeholder="Provincia" label="Provincia" />
+                    </div>
+                    <div className="col-md-4">
+                        <Input name="city" placeholder="Ciudad" label="Ciudad" />
+                    </div>
+                    <div className="col-md-8">
+                        <Input name="address" placeholder="Dirección" label="Dirección" />
+                    </div>
+                    <div className="col-md-4">
+                        <Input name="postcode" placeholder="Código postal" label="Código postal" />
+                    </div>
                 </div>
             </div>
             <div className="card">

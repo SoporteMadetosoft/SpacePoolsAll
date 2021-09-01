@@ -1,5 +1,4 @@
-class Carrier{
-    base = {}
+class Carrier {
     #table = 'carriers'
 
     constructor({
@@ -17,23 +16,25 @@ class Carrier{
         phone2,
         startSchedule,
         endShedule,
-        status
-    }){
-        this.base.id = id
-        this.base.carrierCode = carrierCode
-        this.base.name = name
-        this.base.NIF = NIF
-        this.base.country = country
-        this.base.state = state
-        this.base.city = city
-        this.base.address = address
-        this.base.postcode = postcode
-        this.base.email = email
-        this.base.phone = phone
-        this.base.phone2 = phone2
-        this.base.startSchedule = startSchedule
-        this.base.endShedule = endShedule
-        this.base.status = status
+        idStatus,
+        filePath
+    }) {
+        this.id = id
+        this.carrierCode = carrierCode
+        this.name = name
+        this.NIF = NIF
+        this.country = country
+        this.state = state
+        this.city = city
+        this.address = address
+        this.postcode = postcode
+        this.email = email
+        this.phone = phone
+        this.phone2 = phone2
+        this.startSchedule = startSchedule
+        this.endShedule = endShedule
+        this.idStatus = idStatus
+        this.filePath = filePath
     }
     get table() {
         return this.#table;

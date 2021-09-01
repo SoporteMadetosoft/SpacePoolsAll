@@ -4,18 +4,15 @@ const GenericDao = require("../GenericDao");
 const AddressTypeDao = require("../setup/general/AddressesTypesDao");
 
 class AddressDao extends GenericDao {
-    AddressTypeDao
-
     constructor() {
         super(VendorAddress);
         this.AddressTypeDao = new AddressTypeDao()
     }
 
     async mountObj(data) {
-        const addressType = await this.AddressTypeDao.findById(data.addressType)
         const address = {
             ...data,
-            addressType: await this.createSelect(addressType.base),
+            addressType: await this.AddressTypeDao.findById(data.addressType)
         }
         return new VendorAddress(address)
     }
@@ -24,8 +21,8 @@ class AddressDao extends GenericDao {
         const list = {
             ...data,
         }
-        const{idVendor, address, population, province} =list
-        const nObj = {idVendor :idVendor, address :address, population: population, province : province}
+        const { idVendor, address, population, province } = list
+        const nObj = { idVendor: idVendor, address: address, population: population, province: province }
         return nObj
     }
 
@@ -37,7 +34,7 @@ class AddressDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
@@ -45,20 +42,15 @@ class AddressDao extends GenericDao {
             });
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
 
-    
-    findByVendorId (id) {
-        return new Promise((resolve, reject) => { 
+
+    findByVendorId(id) {
+        return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM vendors_addresses WHERE idVendor = ?', [id], async (err, result) => {
-                if(err){ 
+                if (err) {
                     reject(err)
-                }else{
-                    let Addresslist =[]
+                } else {
+                    let Addresslist = []
                     for (const data of result) {
                         const obj = await this.mountObj(data)
 

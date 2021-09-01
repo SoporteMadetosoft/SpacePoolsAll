@@ -2,7 +2,7 @@ import { formTypes } from "../../types/normalForm/types"
 
 // ** Initial State
 const initialState = {}
-  
+
 const normalForm = (state = initialState, action) => {
     switch (action.type) {
 
@@ -11,10 +11,10 @@ const normalForm = (state = initialState, action) => {
                 ...state,
                 [action.payload.name]: action.payload.value
             }
-        
+
         case formTypes.cleanForm:
             return initialState
-        
+
         case formTypes.initForm:
             return {
                 ...action.payload
@@ -23,28 +23,30 @@ const normalForm = (state = initialState, action) => {
         case formTypes.addRepeaterRegister:
             return {
                 ...state,
-                [action.payload]: [ ...state[action.payload], {}]
+                [action.payload.key]: [
+                    ...state[action.payload.key],
+                    { ...action.payload.structure }
+                ]
             }
 
         case formTypes.removeRepeaterRegister:
-            state[action.payload.key].splice(action.payload.position, 1)
+            const newState = state[action.payload.key].filter((element, index) => (index !== action.payload.position))
             return {
                 ...state,
-                [action.payload.key]: [ ...state[action.payload.key] ]
+                [action.payload.key]: [...newState]
             }
-        
+
         case formTypes.editRepeaterRegister:
             const { key, position, obj } = action.payload
-            state[key][position] = { 
+            state[key][position] = {
                 ...state[key][position],
-                 [obj.name]: obj.value
+                [obj.name]: obj.value
             }
             return {
                 ...state,
-                [key]: [ ...state[key] ] 
+                [key]: [...state[key]]
             }
         case formTypes.fillFormData:
-            
             return {
                 ...action.payload
             }
@@ -53,6 +55,5 @@ const normalForm = (state = initialState, action) => {
             return state
     }
 }
-  
+
 export default normalForm
-  

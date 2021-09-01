@@ -40,7 +40,7 @@ const generalRoutes = [
   {
     path: '/setup/general/addressesTypes',
     exact: true,
-    component: () => <AddressesTypesScreenList titulo={'Tipos de direcciones'} />
+    component: () => <AddressesTypesScreenList titulo={'Tipos de dirección'} />
   },
   {
     path: '/setup/general/addressesTypes/add',

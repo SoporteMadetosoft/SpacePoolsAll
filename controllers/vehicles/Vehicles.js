@@ -61,7 +61,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT VEHICLE */
-        const insert = await vehicleDao.insert(req.body.formData.base)
+        const insert = await vehicleDao.insert(req.body.form)
         /**INSERT REPAIR */
         req.body.repairs.forEach(element => {
             element.idTrailer = insert.insertId
@@ -80,7 +80,7 @@ exports.update = (req, res) => {
 
     try {
         /**UPDATE VEHICLE */
-        vehicleDao.update(req.body.formData.base)
+        vehicleDao.update(req.body.form)
         /**UPDATE REPAIR */
         req.body.formData.repairs.forEach(element => {
             repairDao.update(element)

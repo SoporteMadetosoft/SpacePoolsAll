@@ -1,5 +1,4 @@
-class Vehicles{
-    base = {}
+class Vehicles {
     repairs = []
     #table = 'vehicles'
 
@@ -21,23 +20,23 @@ class Vehicles{
         observations,
         status,
         repairs = []
-    }){
-        this.base.id = id
-        this.base.carrierId = carrierId
-        this.base.trailerId = trailerId
-        this.base.model = model
-        this.base.vehicleCode = vehicleCode
-        this.base.plate = plate
-        this.base.frameNumber = frameNumber
-        this.base.tare = tare
-        this.base.mma = mma
-        this.base.ITVdate = ITVdate
-        this.base.policyNumber = policyNumber
-        this.base.insurnaceDateLimit = insurnaceDateLimit
-        this.base.maintenanceDate = maintenanceDate
-        this.base.tachograph = tachograph
-        this.base.observations = observations
-        this.base.status = status
+    }) {
+        this.id = id
+        this.carrierId = carrierId
+        this.trailerId = trailerId
+        this.model = model
+        this.vehicleCode = vehicleCode
+        this.plate = plate
+        this.frameNumber = frameNumber
+        this.tare = tare
+        this.mma = mma
+        this.ITVdate = ITVdate
+        this.policyNumber = policyNumber
+        this.insurnaceDateLimit = insurnaceDateLimit
+        this.maintenanceDate = maintenanceDate
+        this.tachograph = tachograph
+        this.observations = observations
+        this.status = status
         this.repairs = repairs
     }
     get table() {

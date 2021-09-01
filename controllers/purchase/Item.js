@@ -59,7 +59,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT (purcase)ITEM */
-        const insert = await itemDao.insert(req.body.formData.base)
+        const insert = await itemDao.insert(req.body.form)
         /** INSERT ITEM */
         req.body.repairs.forEach(element => {
             element.idVendor = insert.insertId
@@ -76,7 +76,7 @@ exports.update = (req, res) => {
 
     try {
         /** UPDATE ITEM */
-        itemDao.update(req.body.formData.base)
+        itemDao.update(req.body.form)
        
         res.json({ ok: true })
     } catch (error) {

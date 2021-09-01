@@ -9,12 +9,6 @@ const ExtraItemDao = require("../order/ExtraItemDao");
 
 
 class OrderDao extends GenericDao {
-    ProductionDao
-    PoolDao
-    CustomerDao
-    CustomerDataDao
-    ExtraItemDao
-
     constructor() {
         super(Order);
         this.ProductionDao = new ProductionDao()
@@ -25,16 +19,13 @@ class OrderDao extends GenericDao {
     }
 
     async mountObj(data) {
-        const poolId = await this.PoolDao.findById(data.poolid)
         //const customerId = await this.CustomerDao.findById(data.customerId)
         const order = {
             ...data,
             production: await this.ProductionDao.findByOrderId(data.id),
             customerData: await this.CustomerDataDao.findByOrderId(data.id),
             extraItems: await this.ExtraItemDao.findByOrderId(data.id),
-            poolId: await this.PoolDao.createSelect(poolId.base),
-            //customerId:  await this.CustomerDao.createSelect(customerId.base),
-
+            poolId: await this.PoolDao.findById(data.poolid)
         }
         return new Order(order)
     }
@@ -48,8 +39,8 @@ class OrderDao extends GenericDao {
             customerEmail: customer != undefined ? customer.email : 'p',
 
         }
-        const{orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart} =list
-        const nObj = {orderCode :orderCode, customerName :customerName, customerPhone: customerPhone, customerEmail:customerEmail, orderDate:orderDate, deliverySchedulerStart:deliverySchedulerStart }
+        const { orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart } = list
+        const nObj = { orderCode: orderCode, customerName: customerName, customerPhone: customerPhone, customerEmail: customerEmail, orderDate: orderDate, deliverySchedulerStart: deliverySchedulerStart }
         return nObj
     }
 
@@ -61,7 +52,7 @@ class OrderDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
@@ -69,12 +60,6 @@ class OrderDao extends GenericDao {
             });
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
-
 }
 
 module.exports = OrderDao

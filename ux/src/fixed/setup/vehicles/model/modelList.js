@@ -24,7 +24,7 @@ export const modelList = [
     },
     {
       name: 'Marca',
-      selector: 'Brand',
+      selector: 'idBrand',
       sortable: true,
       searchable: true,
       minWidth: '450px'

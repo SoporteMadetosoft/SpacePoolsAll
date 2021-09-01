@@ -61,7 +61,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT PRODUCTION */
-        const insert = await productionDao.insert(req.body.formData.base)
+        const insert = await productionDao.insert(req.body.form)
        
 
         res.json({ ok: true })
@@ -75,7 +75,7 @@ exports.update = (req, res) => {
 
     try {
         /** UPDATE PRODUCTION */
-        productionDao.update(req.body.formData.base)
+        productionDao.update(req.body.form)
     
        
         res.json({ ok: true })

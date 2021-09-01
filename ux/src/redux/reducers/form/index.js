@@ -75,7 +75,7 @@ const formReducer = (state = initialState, action) => {
                 formData: {
                     ...state.formData,
                     base:{
-                        ...state.formData.base,
+                        ...state.form,
                         [action.payload.camp]: action.payload.value
                     }
                 }

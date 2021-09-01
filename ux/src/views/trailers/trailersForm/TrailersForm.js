@@ -1,129 +1,96 @@
-import React, { useEffect, useState } from 'react'
-import Select from 'react-select'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
+import ReactSelect from 'react-select'
 
 import { handleChangeController, handleStartEditing } from '../../../redux/actions/normalForm'
-import { startAddSelectOptions, addSelectOptions } from '../../../redux/actions/selects'
-import { DocumentsRepeater } from './DocumentsRepeater'
+import { addSelectOptions } from '../../../redux/actions/selects'
+import { useParams } from 'react-router-dom'
+import { Input } from '../../../components/form/inputs/Input'
+import { Select } from '../../../components/form/inputs/Select'
 
 
-export const TrailersForm = ({ id }) => {
-    
+export const TrailersForm = () => {
+
     const dispatch = useDispatch()
+    const { id } = useParams()
+
+    useEffect(() => {
+        if (id) {
+            dispatch(handleStartEditing('Trailers', id))
+        }
+    }, [])
+
     const { normalForm, selectReducer } = useSelector(state => state)
-    const { 
-        plate,
-        model,
-        trailerCode,
-        itvDate,
-        policyNumber,
-        insuranceNumber,
-        insuranceDateLimit,
-        maintenanceDate,
-        observations,
-        status,
-        brand} = normalForm
-    
-    const opts = selectReducer
+    const { observations, brand } = normalForm
+
+    const { statusOpt, brandOpt, brandModelOpt } = selectReducer
+
+    const handleLoadModels = async (obj) => {
+        const { data } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/brandModel/selectByIdBrand/${obj.value}`)
+        dispatch(addSelectOptions('brandModelOpt', data.data))
+        dispatch(handleChangeController('model', ''))
+    }
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
-    const handleSelectChange = (key, value) => {
-        dispatch(handleChangeController(key, value))
-    }
-        
     return (
         <>
             <div className="card">
                 <div className="row card-body">
                     <div className="col-md-3">
-                        <label className="control-label">Matrícula del remolque</label>
-                        <input 
-                            className="form-control" 
-                            placeholder="Matrícula" 
-                            name="plate"
-                            onChange={ handleInputChange } 
-                            value={ plate }/>
+                        <Input name="trailerCode" placeholder="Nº Remolque" label="Nº Remolque" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Número de poliza</label>
-                        <input 
-                            className="form-control" 
-                            placeholder="Número de bastidor" 
-                            name="policyNumber"
-                            onChange={handleInputChange}
-                            value={policyNumber} />
+                        <Input name="plate" placeholder="Matrícula del remolque" label="Matrícula del remolque" />
+                    </div>
+                    <div className="col-md-3">
+                        <Input name="policyNumber" placeholder="Número de poliza" label="Número de poliza" />
+                    </div>
+                    <div className="col-md-3">
+                        <Select name="idStatus" label="Estado" options={statusOpt} />
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">Marca</label>
-                        <Select 
-                            placeholder="Marca" 
+                        <ReactSelect
+                            placeholder="Marca"
                             name="brand"
-                            defaultValue={brand}
-                            options={opts.brand}
-                            onChange={ (obj) => { 
+                            value={brand}
+                            options={brandOpt}
+                            onChange={(obj) => {
                                 handleLoadModels(obj)
                             }} />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Modelo</label>
-                        <Select 
-                            placeholder="Modelo" 
-                            name="model" 
-                            defaultValue={model}
-                            options={opts.idVehicleBrandModel}
-                            onChange={ (obj) => { handleSelectChange('model', obj) }} />
+                        <Select name="model" label="Modelo" options={brandModelOpt} />
                     </div>
-                    
+
                     <div className="col-md-3">
-                        <label className="control-label">Fecha ITV</label>
-                        <input 
-                            className="form-control" 
-                            type="date" 
-                            placeholder="Fecha ITV" 
-                            name="itvDate"
-                            value={ itvDate }
-                            onChange={ handleInputChange } />
+                        <Input name="ITVdate" type="date" placeholder="Fecha ITV" label="Fecha ITV" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Fecha de mantenimiento</label>
-                        <input 
-                            className="form-control" 
-                            type="date" 
-                            placeholder="Fecha de mantenimiento" 
-                            name="maintenanceDate"
-                            value={ maintenanceDate }
-                            onChange={ handleInputChange } />
+                        <Input name="maintenanceDate" type="date" placeholder="Fecha de mantenimiento" label="Fecha de mantenimiento" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Fecha caducidad seguro</label>
-                        <input 
-                            className="form-control" 
-                            type="date" 
-                            placeholder="Fecha caducidad seguro" 
-                            name="insuranceDateLimit"
-                            value={ insuranceDateLimit }
-                            onChange={ handleInputChange } />
+                        <Input name="insuranceNumber" placeholder="Número de seguro" label="Número de seguro" />
+                    </div>
+                    <div className="col-md-3">
+                        <Input name="insuranceDateLimit" type="date" placeholder="Fecha caducidad seguro" label="Fecha caducidad seguro" />
                     </div>
                     <div className="col-md-12">
                         <label className="control-label">Observaciones</label>
-                        <textarea 
-                            className="form-control" 
-                            placeholder="Observaciones" 
+                        <textarea
+                            className="form-control"
+                            placeholder="Observaciones"
                             name="observations"
-                            defaultValue={ observations }
-                            onChange={ handleInputChange }
+                            defaultValue={observations}
+                            onChange={handleInputChange}
                         ></textarea>
                     </div>
                 </div>
-                
             </div>
-            
-            <DocumentsRepeater />
-               
         </>
     )
 }

@@ -11,13 +11,16 @@ import registrosReducer from './custom'
 import normalForm from './normalForm'
 import selectReducer from './selects'
 
+import fileUpload from './fileUpload'
+
 const rootReducer = combineReducers({
   auth,
   navbar,
   layout,
   registrosReducer,
   normalForm,
-  selectReducer
+  selectReducer,
+  fileUpload
 })
 
 export default rootReducer

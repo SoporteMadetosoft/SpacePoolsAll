@@ -3,19 +3,19 @@ const GenericDao = require("../GenericDao");
 
 
 class RepairDao extends GenericDao {
-    
+
     constructor() {
         super(Repair);
     }
 
     findByVehicleId(id) {
-        return new Promise( (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM vehicle_repair WHERE vehicleId  = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
 
-                    let RepairList =[]
+                    let RepairList = []
                     for (const data of result) {
                         const obj = await this.mountList(data)
 
@@ -33,12 +33,12 @@ class RepairDao extends GenericDao {
             ...data,
         }
 
-        const{date, description, garage} =list
-        const nObj = {date :date, description :description, garage: garage,}
+        const { date, description, garage } = list
+        const nObj = { date: date, description: description, garage: garage, }
         return nObj
     }
 
-    
+
     async mountObj(data) {
         const repair = {
             ...data,
@@ -54,7 +54,7 @@ class RepairDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
@@ -62,11 +62,7 @@ class RepairDao extends GenericDao {
             });
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
+
 }
 
 module.exports = RepairDao

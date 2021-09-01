@@ -1,21 +1,21 @@
 const Repair = require("../../models/trailer/Repair");
 const GenericDao = require("../GenericDao");
 
-class RepairDao extends GenericDao{
+class RepairDao extends GenericDao {
 
-    constructor(){
+    constructor() {
         super(Repair);
 
     }
 
     findByTrailerId(id) {
-        return new Promise( (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM trailer_repair WHERE trailerId = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
 
-                    let RepairList =[]
+                    let RepairList = []
                     for (const data of result) {
                         const obj = await this.mountObj(data)
 
@@ -27,20 +27,20 @@ class RepairDao extends GenericDao{
         })
     }
 
-    async mountObj(data){
-        const repair={
+    async mountObj(data) {
+        const repair = {
             ...data
         }
         return new Repair(repair)
     }
 
-    async mountList(data){
+    async mountList(data) {
         const list = {
             ...data,
         }
 
-        const{ date, description, garage}=list
-        const nObj = {date:date, description:description, garage:garage}
+        const { date, description, garage } = list
+        const nObj = { date: date, description: description, garage: garage }
         return nObj
     }
 
@@ -52,7 +52,7 @@ class RepairDao extends GenericDao{
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                        objList.push(res)
                     }
 
                     resolve(objList)
@@ -60,10 +60,5 @@ class RepairDao extends GenericDao{
             });
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
-}   
+}
 module.exports = RepairDao

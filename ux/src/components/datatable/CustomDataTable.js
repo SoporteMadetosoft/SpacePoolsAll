@@ -31,7 +31,7 @@ const BootstrapCheckbox = forwardRef(({ onClick, ...rest }, ref) => (
 ))
 
 
-export const CustomDataTable = ({title, columns, data}) => {
+export const CustomDataTable = ({ title, columns, data }) => {
   // ** States
   const [currentPage, setCurrentPage] = useState(0)
   const [searchValue, setSearchValue] = useState('')
@@ -58,11 +58,11 @@ export const CustomDataTable = ({title, columns, data}) => {
         const schCols = searchableColumns()
 
         let isFound
-        
+
         schCols.columnas.forEach(col => {
           const startsWith = item[col].toLowerCase().startsWith(value.toLowerCase())
           const includes = item[col].toLowerCase().includes(value.toLowerCase())
-          
+
           if (startsWith) {
             isFound = true
           } else if (!startsWith && includes) {
@@ -72,7 +72,7 @@ export const CustomDataTable = ({title, columns, data}) => {
           }
         })
         return isFound
-        
+
       })
       setFilteredData(updatedData)
       setSearchValue(value)
@@ -150,10 +150,10 @@ export const CustomDataTable = ({title, columns, data}) => {
       csv = `data:text/csv;charset=utf-8,${csv}`
     }
 
-    link.setAttribute( 'href', encodeURI(csv) )
-    link.setAttribute( 'download', filename )
+    link.setAttribute('href', encodeURI(csv))
+    link.setAttribute('download', filename)
     link.click()
-  }  
+  }
 
   return (
     <Fragment>
@@ -174,9 +174,9 @@ export const CustomDataTable = ({title, columns, data}) => {
             </UncontrolledButtonDropdown>
             <Link to={`${useLocation().pathname}/add`}>
               <Button className='ml-2' color='primary'>
-              <Plus size={15} />
-              <span className='align-middle ml-50'>Añadir {title}</span>
-            </Button>
+                <Plus size={15} />
+                <span className='align-middle ml-50'>Añadir {title}</span>
+              </Button>
             </Link>
           </div>
         </CardHeader>
@@ -198,6 +198,7 @@ export const CustomDataTable = ({title, columns, data}) => {
         <DataTable
           noHeader
           pagination
+          responsive
           // selectableRows
           noDataComponent={<span>No hay registros para mostrar</span>}
           columns={columns}

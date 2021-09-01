@@ -2,18 +2,18 @@ import { formTypes } from "../../types/normalForm/types"
 import { getFormData } from "../../../utility/helpers/Axios/getFormData"
 
 export const handleChangeController = (name, value) => ({
-  type: formTypes.inputChange,
-  payload: { name, value }
+    type: formTypes.inputChange,
+    payload: { name, value }
 })
 
 export const initNormalForm = (structure) => ({
     type: formTypes.initForm,
-    payload: structure 
+    payload: structure
 })
 
-export const addRepeaterRegister = (key) => ({
+export const addRepeaterRegister = (key, structure) => ({
     type: formTypes.addRepeaterRegister,
-    payload: key
+    payload: { key, structure }
 })
 
 export const removeRepeaterRegister = (key, position) => ({
@@ -39,9 +39,6 @@ export const fillFormData = (data) => ({
 export const handleStartEditing = (endpoint, id) => {
     return async (dispatch) => {
         const data = await getFormData(endpoint, id)
-        const base = data.base
-        delete data.base
-    
-        dispatch(fillFormData({ ...data, ...base }))
+        dispatch(fillFormData(data))
     }
-  }
+}

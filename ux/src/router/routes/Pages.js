@@ -6,7 +6,7 @@ const PagesRoutes = [
     simpleUrl: '/public/1630305744921/logo.png',
     layout: 'BlankLayout',
     meta: {
-      publicRoute: true
+      authRoute: true
     }
   },
   {

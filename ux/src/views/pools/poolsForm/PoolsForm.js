@@ -1,13 +1,8 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 
 export const PoolsForm = () => {
-
-    const { selectReducer } = useSelector(state => state)
-
-    const { statusOpt } = selectReducer
 
     return (
         <>
@@ -23,7 +18,7 @@ export const PoolsForm = () => {
                         <Input name="simultaneousFabrications" placeholder="Nº máximo de fabriación" label="Nº máximo de fabriación" />
                     </div>
                     <div className="col-md-3">
-                        <Select name="idStatus" label="Estado" options={statusOpt} />
+                        <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-3">
                         <Input name="nameEuropa" placeholder="Nombre Europa" label="Nombre Europa" />
@@ -48,7 +43,30 @@ export const PoolsForm = () => {
                     </div>
                 </div>
             </div>
+            <div className="row">
+                <div className="col-md-6">
 
+                    <div className="card">
+                        <div className=" card-body row pb-3 px-3">
+                            {/* TODO: Item list repeater
+                                - Select with all item list
+                                - Input for quantity
+                                + ONLY ITEMS
+                            */}
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-6">
+                    <div className="card">
+                        <div className=" card-body row pb-3 px-3">
+                            {/* TODO: Raw material list repeater
+                                - Select with all item list
+                                - Input with quantity
+                                + ONLY RAW MATERIAL */}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }

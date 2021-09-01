@@ -1,9 +1,9 @@
 const Setup = require('../setup/Setup')
 
 class Mode extends Setup {
-    #table = 'setup_mode'
+    #table = 'global_mode'
     constructor(param) {
-       super(param)
+        super(param)
     }
 
     get table() {

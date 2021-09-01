@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Repeater from '@components/repeater'
 import { X, Plus } from 'react-feather'
 import { Button } from 'reactstrap'
@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
+import { startAddSelectOptions } from '../../../redux/actions/selects'
+import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
 const formStructure = {
     addressType: '',
@@ -28,6 +30,10 @@ export const AddressesRepeater = () => {
     const increaseCount = () => {
         dispatch(addRepeaterRegister('addresses', formStructure))
     }
+
+    useEffect(() => {
+        dispatch(startAddSelectOptions('AddressesTypes', 'addresseTypesOpt'))
+    }, [])
 
     return (
         <>
@@ -64,6 +70,8 @@ const AddressesForm = ({ position }) => {
         postcode,
         defaultAddress } = normalForm.addresses[position]
 
+    const SelectValue = addressType.name ? deconstructSelect(addressType) : null
+
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('addresses', position))
     }
@@ -81,10 +89,10 @@ const AddressesForm = ({ position }) => {
     }
 
     const handleSelectChange = (key, element) => {
-
+        const el = constructSelect(element)
         const obj = {
             name: key,
-            value: element
+            value: el
         }
 
         dispatch(
@@ -101,7 +109,7 @@ const AddressesForm = ({ position }) => {
                     name="addressType"
                     options={addresseTypesOpt}
                     onChange={(value) => { handleSelectChange('addressType', value) }}
-                    value={addressType}
+                    value={SelectValue}
                 />
             </div>
             <div className="col-md-2">

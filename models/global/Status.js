@@ -1,9 +1,9 @@
 const Setup = require('../setup/Setup')
 
 class Status extends Setup {
-    #table = 'setup_status'
+    #table = 'global_status'
     constructor(param) {
-       super(param)
+        super(param)
     }
 
     get table() {

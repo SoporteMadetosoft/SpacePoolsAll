@@ -11,20 +11,9 @@ export const CustomersForm = () => {
 
     const dispatch = useDispatch()
 
-    const { normalForm, selectReducer } = useSelector(state => state)
+    const { normalForm } = useSelector(state => state)
 
     const { observations } = normalForm
-
-    const {
-        paymentMethodOpt,
-        paymentDayOpt,
-        customerOriginOpt,
-        customerTypeOpt,
-        customerActivityOpt,
-        customerCategoryOpt,
-        modeOpt,
-        statusOpt,
-        languageOpt } = selectReducer
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
@@ -56,34 +45,34 @@ export const CustomersForm = () => {
                         <Input name="email" type="email" placeholder="E-mail" label="E-mail" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idPaymentMethod" label="Forma de pago" options={paymentMethodOpt} />
+                        <Select name="idPaymentMethod" label="Forma de pago" endpoint="PaymentMethods" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idPayDay" label="Día de pago" options={paymentDayOpt} />
+                        <Select name="idPayDay" label="Día de pago" endpoint="PayDay" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idCustomerOrigin" label="Origen" options={customerOriginOpt} />
+                        <Select name="idCustomerOrigin" label="Origen" endpoint="Origin" />
                     </div>
                     <div className="col-md-2">
                         <Input name="accountNumber" placeholder="Número de cuenta" label="Número de cuenta" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idCustomerType" label="Tipo de cliente" options={customerTypeOpt} />
+                        <Select name="idCustomerType" label="Tipo de cliente" endpoint="CustomerType" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idCustomerActivity" label="Actividad" options={customerActivityOpt} />
+                        <Select name="idCustomerActivity" label="Actividad" endpoint="Activity" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idCustomerCategory" label="Categoria de cliente" options={customerCategoryOpt} />
+                        <Select name="idCustomerCategory" label="Categoria de cliente" endpoint="CustomerCategory" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idMode" label="Modo" options={modeOpt} />
+                        <Select name="idMode" label="Modo" endpoint="Mode" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idStatus" label="Estado" options={statusOpt} />
+                        <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idLanguage" label="Idioma" options={languageOpt} />
+                        <Select name="idLanguage" label="Idioma" endpoint="Language" />
                     </div>
                     <div className="col-md-12">
                         <label className="control-label">Observaciones</label>

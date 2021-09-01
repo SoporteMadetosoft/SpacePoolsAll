@@ -15,19 +15,6 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.select = async (req, res) => {
-
-    try {
-        res.json({
-            ok: true,
-            data: await brandModelDao.getSelect()
-        })
-    } catch (error) {
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
 exports.selectByIdBrand = async (req, res) => {
     const id = parseInt(req.params.id, 10)
     try {

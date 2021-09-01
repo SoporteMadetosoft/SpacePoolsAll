@@ -5,25 +5,12 @@ const Department = require('../../../models/setup/general/Department')
 const departmentDao = new DepartmentDao(Department)
 exports.list = async (req, res) => {
 
-    try{
+    try {
         res.json({
-            ok:true,
-            data: await departmentDao.findAll() 
+            ok: true,
+            data: await departmentDao.findAll()
         })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data:  await departmentDao.getSelect()
-        })
-    }catch(error){
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
@@ -55,22 +42,22 @@ exports.delete = async (req, res) => {
 }
 
 exports.insert = (req, res) => {
-    try{
+    try {
         departmentDao.insert(req.body.form)
-        res.json({ok: true})
-    }catch(error){
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
     }
 }
 
-exports.update =(req, res)=>{
-    
-    try{
-        departmentDao   .update(req.body.form)
-        res.json({ok: true})
-    }catch(error){
+exports.update = (req, res) => {
+
+    try {
+        departmentDao.update(req.body.form)
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
-    }    
+    }
 }

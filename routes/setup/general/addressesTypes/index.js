@@ -9,7 +9,6 @@ const ControllerAT = require('../../../../controllers/setup/general/AddressesTyp
 const router = express.Router();
 
 router.get('/list', ControllerAT.list);
-router.get('/select', ControllerAT.select);
 router.post('/insert', ControllerAT.insert);
 router.put('/update', ControllerAT.update);
 router.delete('/delete/:id', ControllerAT.delete);

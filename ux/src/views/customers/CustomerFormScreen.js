@@ -8,6 +8,7 @@ import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm/index.js'
 import { CustomersForm } from './customerForm/CustomersForm'
 import { save } from '../../utility/helpers/Axios/save'
+import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 
 const structureForm = {
     addresses: [],
@@ -58,15 +59,15 @@ export const CustomerFormScreen = () => {
 
         const prettyForm = {
             ...form,
-            idPaymentMethod: form.idPaymentMethod.value,
-            idPayDay: form.idPayDay.value,
-            idCustomerOrigin: form.idCustomerOrigin.value,
-            idCustomerType: form.idCustomerType.value,
-            idCustomerActivity: form.idCustomerActivity.value,
-            idCustomerCategory: form.idCustomerCategory.value,
-            idMode: form.idMode.value,
-            idStatus: form.idStatus.value,
-            idLanguage: form.idLanguage.value,
+            idPaymentMethod: exceptionController(form.idPaymentMethod),
+            idPayDay: exceptionController(form.idPayDay),
+            idCustomerOrigin: exceptionController(form.idCustomerOrigin),
+            idCustomerType: exceptionController(form.idCustomerType),
+            idCustomerActivity: exceptionController(form.idCustomerActivity),
+            idCustomerCategory: exceptionController(form.idCustomerCategory),
+            idMode: exceptionController(form.idMode),
+            idStatus: exceptionController(form.idStatus),
+            idLanguage: exceptionController(form.idLanguage),
             addresses: [...addressesPretty],
             contacts: [...contactPretty]
 

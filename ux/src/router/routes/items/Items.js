@@ -4,21 +4,7 @@ import { ItemsFamilyScreenList } from '../../../views/itemsFamily/ItemsFamilyScr
 import { ItemsFamilyFormScreen } from '../../../views/itemsFamily/ItemsFamilyFormScreen'
 
 const ItemsRoutes = [
-    {
-        path: '/items',
-        exact: true,
-        component: () => <CustomerScreenList titulo={'Clientes'} />
-    },
-    {
-        path: '/items/add',
-        exact: true,
-        component: () => <CustomerFormScreen />
-    },
-    {
-        path: '/items/edit/:id',
-        exact: true,
-        component: () => <CustomerFormScreen />
-    },
+
     {
         path: '/items/family',
         exact: true,

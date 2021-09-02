@@ -8,6 +8,7 @@ import { save } from '../../utility/helpers/Axios/save'
 import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm'
 import { handleCleanUp } from '../../redux/actions/fileUpload'
 import { ItemsFamilyForm } from './itemsFamilyForm/ItemsFamilyForm'
+import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 
 const structureForm = {}
 
@@ -31,9 +32,14 @@ export const ItemsFamilyFormScreen = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        save('Family', id, form)
+        const prettyForm = {
+            ...form,
+            parent: form.parent
+        }
+
+        save('Family', id, prettyForm)
         dispatch(handleCleanUp())
-        history.push('/pools')
+        history.push('/items/family')
     }
 
     return (

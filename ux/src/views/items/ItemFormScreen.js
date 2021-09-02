@@ -7,12 +7,12 @@ import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 import { save } from '../../utility/helpers/Axios/save'
 import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm'
 import { handleCleanUp } from '../../redux/actions/fileUpload'
-import { ItemsFamilyForm } from './itemsFamilyForm/ItemsFamilyForm'
+import { ItemForm } from './itemForm/ItemForm'
 import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 
 const structureForm = {}
 
-export const ItemsFamilyFormScreen = () => {
+export const ItemFormScreen = () => {
 
     const { id } = useParams()
     const history = useHistory()
@@ -21,12 +21,12 @@ export const ItemsFamilyFormScreen = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(handleStartEditing('Family', id))
+            dispatch(handleStartEditing('Items', id))
         }
         dispatch(initNormalForm(structureForm))
     }, [initNormalForm])
 
-    const titulo = (id) ? 'Editar Familia' : 'Añadir Familia'
+    const titulo = (id) ? 'Editar Artículo' : 'Añadir Artículo'
     const customerName = (form.name) ? form.name : titulo
 
     const handleSubmit = async (e) => {
@@ -34,18 +34,20 @@ export const ItemsFamilyFormScreen = () => {
 
         const prettyForm = {
             ...form,
-            parent: form.parent
+            itemType: exceptionController(form.itemType),
+            family: exceptionController(form.family),
+            place: exceptionController(form.place)
         }
 
-        save('Family', id, prettyForm)
+        save('Items', id, prettyForm)
         dispatch(handleCleanUp())
-        history.push('/items/family')
+        history.push('/items')
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <BreadCrumbs breadCrumbTitle={customerName} breadCrumbParent='Familias' breadCrumbActive={titulo} />
-            <ItemsFamilyForm />
+            <BreadCrumbs breadCrumbTitle={customerName} breadCrumbParent='Artículos' breadCrumbActive={titulo} />
+            <ItemForm />
             <ActionButtons />
         </form>
     )

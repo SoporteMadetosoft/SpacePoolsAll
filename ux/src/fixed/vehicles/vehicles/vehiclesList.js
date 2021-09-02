@@ -13,39 +13,39 @@ export const vehiclesList = [
     selector: 'vehicleCode',
     sortable: true,
     minWidth: '50px',
-    width: '5%'
+    width: '8%'
   },
   {
     name: 'Matrícula del vehículo',
     selector: 'plate',
     sortable: true,
     searchable: true,
-    minWidth: '300px'
+    width: '22%'
   },
   {
     name: 'Conductor',
     selector: 'carrierId',
     sortable: true,
     searchable: true,
-    minWidth: '75px'
+    width: '22%'
   },
   {
     name: 'Número de bastidor',
     selector: 'frameNumber',
     sortable: true,
     searchable: true,
-    minWidth: '75px'
+    width: '22%'
   },
   {
     name: 'Fecha de ITV',
     selector: 'ITVdate',
     sortable: true,
     searchable: true,
-    minWidth: '200px'
+    width: '22%'
   },
   {
-    name: 'Acciones',
-    width: '150px',
+    name: '',
+    width: '5%',
     cell: row => {
 
       const dispatch = useDispatch()

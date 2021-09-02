@@ -13,7 +13,7 @@ export const itemsFamilyList = [
         selector: 'id',
         sortable: true,
         minWidth: '50px',
-        width: '5%'
+        width: '10%'
     },
     {
         name: 'Código de familia',
@@ -50,7 +50,7 @@ export const itemsFamilyList = [
                             <MoreVertical size={15} />
                         </DropdownToggle>
                         <DropdownMenu right>
-                            <Link to={`./pools/edit/${row.id}`}>
+                            <Link to={`./family/edit/${row.id}`}>
                                 <DropdownItem tag='a' href='/' className='w-100'>
                                     <FileText size={15} />
                                     <span className='align-middle ml-50'>Detalles</span>

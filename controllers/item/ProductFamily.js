@@ -16,6 +16,21 @@ exports.list = async (req, res) => {
     }
 }
 
+
+exports.select = async (req, res) => {
+    const treeData = await productFamilyDao.findAllFamily(req.body.idNode)
+    try {
+        res.json({
+            ok: true,
+            data: treeData
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
 
@@ -46,6 +61,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT PRODUCT FAMILY */
+        console.log(req.body.form)
         const insert = await productFamilyDao.insert(req.body.form)
 
 
@@ -60,7 +76,17 @@ exports.update = (req, res) => {
 
     try {
         /** UPDATE PRODUCT FAMILY */
-        productFamilyDao.update(req.body.form)
+        console.log(req.body.form)
+        const familia = req.body.form
+        if (familia.id === familia.parent) {
+            return res.status(500).send()
+        }
+        if (familia.parent === null) {
+            productFamilyDao.setParentNullById(familia.id)
+            delete familia.parent
+        }
+
+        productFamilyDao.update(familia)
 
 
         res.json({ ok: true })

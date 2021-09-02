@@ -9,6 +9,7 @@ import { handleStartEditing, initNormalForm } from '../../redux/actions/normalFo
 import { save } from '../../utility/helpers/Axios/save'
 import { TrailersForm } from './trailersForm/TrailersForm'
 import { startAddSelectOptions } from '../../redux/actions/selects'
+import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 
 const structureForm = {}
 
@@ -33,8 +34,8 @@ export const TrailersFormScreen = () => {
         e.preventDefault()
         const prettyForm = {
             ...form,
-            idStatus: form.idStatus.value,
-            model: form.model.value
+            idStatus: exceptionController(form.idStatus),
+            model: exceptionController(form.model)
         }
 
         save('Trailers', id, prettyForm)

@@ -12,39 +12,39 @@ export const trailersList = [
         name: 'Nº',
         selector: 'trailerCode',
         sortable: true,
-        minWidth: '50px'
+        width: '8%'
     },
     {
         name: 'Matrícula del remolque',
         selector: 'plate',
         sortable: true,
         searchable: true,
-        minWidth: '300px'
+        width: '22%'
     },
     {
         name: 'Marca',
         selector: 'brand',
         sortable: true,
         searchable: true,
-        minWidth: '75px'
+        width: '22%'
     },
     {
         name: 'Modelo',
         selector: 'model',
         sortable: true,
         searchable: true,
-        minWidth: '75px'
+        width: '22%'
     },
     {
         name: 'Fecha de ITV',
         selector: 'ITVdate',
         sortable: true,
         searchable: true,
-        minWidth: '200px'
+        width: '22%'
     },
     {
-        name: 'Acciones',
-        width: '150px',
+        name: '',
+        width: '5%',
         cell: row => {
 
             const dispatch = useDispatch()

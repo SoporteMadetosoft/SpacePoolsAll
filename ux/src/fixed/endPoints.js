@@ -1,6 +1,7 @@
 
 
 const globalEndpoints = {
+    ItemType: '/global/itemType',
     Language: '/global/language',
     Mode: '/global/mode',
     Status: '/global/status',

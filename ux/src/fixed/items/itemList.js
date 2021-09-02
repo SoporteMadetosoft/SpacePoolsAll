@@ -7,20 +7,34 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 
-export const poolsList = [
+export const itemList = [
     {
         name: 'Nº',
-        selector: 'poolCode',
+        selector: 'itemCode',
         sortable: true,
         minWidth: '50px',
         width: '8%'
     },
     {
         name: 'Nombre',
-        selector: 'fabricationName',
+        selector: 'name',
         sortable: true,
         searchable: true,
-        width: '87%'
+        width: '45%'
+    },
+    {
+        name: 'Stock reservado',
+        selector: '',
+        sortable: true,
+        searchable: true,
+        width: '20%'
+    },
+    {
+        name: 'Stock en almacén',
+        selector: '',
+        sortable: true,
+        searchable: true,
+        width: '20%'
     },
     {
         name: '',
@@ -36,7 +50,7 @@ export const poolsList = [
                             <MoreVertical size={15} />
                         </DropdownToggle>
                         <DropdownMenu right>
-                            <Link to={`./pools/edit/${row.id}`}>
+                            <Link to={`./items/edit/${row.id}`}>
                                 <DropdownItem tag='a' href='/' className='w-100'>
                                     <FileText size={15} />
                                     <span className='align-middle ml-50'>Detalles</span>

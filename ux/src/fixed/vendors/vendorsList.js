@@ -13,47 +13,53 @@ import { handleLoadID, handleStartEditing } from "../../redux/actions/form"
 export const vendorList = [
   {
     name: 'Nº',
-    selector: 'id',
+    selector: 'vendorCode',
     sortable: true,
-    minWidth: '50px',
-    width: '5%'
+    width: '8%'
   },
   {
     name: 'Nombre comercial',
     selector: 'comercialName',
     sortable: true,
     searchable: true,
-    minWidth: '300px'
+    width: '20%'
   },
   {
     name: 'Cif',
     selector: 'CIF',
     sortable: true,
     searchable: true,
-    minWidth: '75px'
+    width: '10%'
   },
   {
     name: 'Teléfono',
     selector: 'phone',
     sortable: true,
     searchable: true,
-    minWidth: '75px'
+    width: '12%'
+  },
+  {
+    name: 'Email',
+    selector: 'email',
+    sortable: true,
+    searchable: true,
+    width: '17%'
   },
   {
     name: 'Nombre contacto',
     selector: 'contactName',
     sortable: true,
-    minWidth: '200px'
+    width: '17%'
   },
   {
-    name: 'Teléfono contacto',
+    name: 'Tel. contacto',
     selector: 'contactPhone',
     sortable: true,
-    minWidth: '200px'
+    width: '12%'
   },
   {
-    name: 'Acciones',
-    width: '150px',
+    name: '',
+    width: '5%',
     cell: row => {
 
       const dispatch = useDispatch()

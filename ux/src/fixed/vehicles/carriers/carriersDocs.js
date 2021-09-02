@@ -12,32 +12,32 @@ export const carriersDocs = [
         name: 'Nombre del documento',
         selector: 'filename',
         sortable: true,
-        minWidth: '200px'
+        width: '24%'
     },
     {
         name: 'Tamaño',
         selector: 'filesize',
         sortable: true,
         searchable: true,
-        minWidth: '100px'
+        width: '24%'
     },
     {
         name: 'Tipo de documento',
         selector: 'filetype',
         sortable: true,
         searchable: true,
-        minWidth: '100px'
+        width: '24%'
     },
     {
         name: 'Fecha de subida',
         selector: 'mtime',
         sortable: true,
         searchable: true,
-        minWidth: '100px'
+        width: '24%'
     },
     {
-        name: 'Acciones',
-        width: '150px',
+        name: '',
+        width: '5%',
         cell: row => {
 
             const dispatch = useDispatch()

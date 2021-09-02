@@ -51,23 +51,8 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT ITEM */
-        const insert = await itemDao.insert(req.body.form)
-        /** INSERT PRODUCT FAMILY */
-        req.body.family.forEach(element => {
-            element.idVendor = insert.insertId
-            productFamilyDao.insert(element)
-        });
-        /** INSERT PRODUCT FAMILY (subfamily)*/
-        req.body.subfamily.forEach(element => {
-            element.idVendor = insert.insertId
-            productFamilyDao.insert(element)
-        });
-        /** INSERT PRODUCT PLACE */
-        req.body.place.forEach(element => {
-            element.idVendor = insert.insertId
-            productPlaceDao.insert(element)
-        });
-
+        const item = req.body.form
+        await itemDao.insert(item)
 
         res.json({ ok: true })
     } catch (error) {
@@ -76,23 +61,12 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
     try {
         /** UPDATE ITEM */
-        itemDao.update(req.body.form)
-        /** INSERT PRODUCT FAMILY */
-        req.body.formData.family.forEach(element => {
-            productFamilyDao.update(element)
-        })
-        /** INSERT PRODUCT FAMILY (subfamily)*/
-        req.body.formData.subfamily.forEach(element => {
-            productFamilyDao.update(element)
-        })
-        /** INSERT PRODUCT PLACE */
-        req.body.formData.place.forEach(element => {
-            productPlaceDao.update(element)
-        })
+        const item = req.body.form
+        await itemDao.update(item)
 
         res.json({ ok: true })
     } catch (error) {

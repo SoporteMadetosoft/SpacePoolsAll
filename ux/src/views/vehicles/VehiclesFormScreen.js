@@ -9,7 +9,6 @@ import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm'
 
 import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
-import { undoMultiSelect } from '../../utility/helpers/undoMultiSelect'
 import { save } from '../../utility/helpers/Axios/save'
 
 const structureForm = {}

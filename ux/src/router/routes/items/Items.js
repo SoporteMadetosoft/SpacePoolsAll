@@ -1,23 +1,23 @@
-import { CustomerScreenList } from '@views/customers/CustomerScreenList'
-import { CustomerFormScreen } from '@views/customers/CustomerFormScreen'
 import { ItemsFamilyScreenList } from '../../../views/itemsFamily/ItemsFamilyScreenList'
 import { ItemsFamilyFormScreen } from '../../../views/itemsFamily/ItemsFamilyFormScreen'
+import { ItemScreenList } from '../../../views/items/ItemScreenList'
+import { ItemFormScreen } from '../../../views/items/ItemFormScreen'
 
 const ItemsRoutes = [
     {
         path: '/items',
         exact: true,
-        component: () => <CustomerScreenList titulo={'Clientes'} />
+        component: () => <ItemScreenList titulo={'Artículos'} />
     },
     {
         path: '/items/add',
         exact: true,
-        component: () => <CustomerFormScreen />
+        component: () => <ItemFormScreen />
     },
     {
         path: '/items/edit/:id',
         exact: true,
-        component: () => <CustomerFormScreen />
+        component: () => <ItemFormScreen />
     },
     {
         path: '/items/family',

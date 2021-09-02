@@ -12,53 +12,53 @@ export const carriersList = [
     name: 'Nº',
     selector: 'carrierCode',
     sortable: true,
-    minWidth: '50px',
-    width: '5%'
+    searchable: true,
+    width: '8%'
   },
   {
     name: 'Nombre',
     selector: 'name',
     sortable: true,
     searchable: true,
-    minWidth: '300px'
+    width: '20%'
   },
   {
     name: 'DNI/NIF',
     selector: 'NIF',
     sortable: true,
     searchable: true,
-    minWidth: '75px'
+    width: '10%'
   },
   {
     name: 'Email',
     selector: 'email',
     sortable: true,
     searchable: true,
-    minWidth: '75px'
+    width: '19%'
   },
   {
     name: 'Teléfono',
     selector: 'phone',
     sortable: true,
     searchable: true,
-    minWidth: '200px'
+    width: '14%'
   },
   {
     name: 'Móvil',
     selector: 'phone2',
     sortable: true,
     searchable: true,
-    minWidth: '200px'
+    width: '14%'
   },
   {
     name: 'Estado',
     selector: 'idStatus',
     sortable: true,
-    minWidth: '200px'
+    width: '10%'
   },
   {
-    name: 'Acciones',
-    width: '150px',
+    name: '',
+    width: '5%',
     cell: row => {
 
       const dispatch = useDispatch()

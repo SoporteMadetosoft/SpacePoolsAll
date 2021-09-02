@@ -8,6 +8,7 @@ import { save } from '../../utility/helpers/Axios/save'
 import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm'
 import { handleCleanUp } from '../../redux/actions/fileUpload'
 import { PoolsForm } from './poolsForm/PoolsForm'
+import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 
 const structureForm = {}
 
@@ -32,7 +33,7 @@ export const PoolFormScreen = () => {
         e.preventDefault()
         const prettyForm = {
             ...form,
-            idStatus: form.idStatus.value
+            idStatus: exceptionController(form.idStatus)
         }
 
         save('Pools', id, prettyForm)

@@ -11,6 +11,7 @@ import { FileContext } from './carriersForm/FileContext'
 import { handleCleanUp, handleLoadDocuments, saveFiles } from '../../redux/actions/fileUpload'
 import { MkDir } from '../../utility/helpers/Axios/MkDir'
 import { startAddSelectOptions } from '../../redux/actions/selects'
+import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 
 const structureForm = {}
 
@@ -43,7 +44,7 @@ export const CarrierFormScreen = () => {
 
         const prettyForm = {
             ...form,
-            idStatus: form.idStatus.value,
+            idStatus: exceptionController(form.idStatus),
             filePath: filePath2
         }
 

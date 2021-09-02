@@ -15,6 +15,7 @@ class ItemDao extends GenericDao {
             itemId: await this.RItemDao.findById(data.itemId)
         }
         return new Item(item)
+        
     }
 
     async mountList(data) {

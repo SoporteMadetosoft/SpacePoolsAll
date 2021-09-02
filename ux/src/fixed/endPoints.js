@@ -12,6 +12,7 @@ const setupEndpoints = {
     PaymentMethods: '/setup/general/paymentMethod',
     Departments: '/setup/general/department',
     AddressesTypes: '/setup/general/addressesTypes',
+    
 
     CustomerType: '/setup/customers/type',
     CustomerCategory: '/setup/customers/category',
@@ -24,6 +25,8 @@ const setupEndpoints = {
     Model: '/setup/vehicles/brandModel',
 
     Place: '/setup/items/place'
+
+    
 }
 
 
@@ -37,10 +40,14 @@ export const endPoints = {
     Vehicles: '/vehicles',
     Trailers: '/trailers',
 
+    Purchases: '/purchases',
+    
     Pools: '/pools',
 
+    Orders: '/orders',
     Items: '/items/item',
     Family: '/items/productFamily',
+    Productions: '/productions',
 
     ...globalEndpoints,
     ...setupEndpoints

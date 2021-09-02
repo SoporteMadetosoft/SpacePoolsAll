@@ -1,9 +1,11 @@
 const Production = require("../../models/production/Production");
 const GenericDao = require("../GenericDao");
+const OrderDao = require("../order/OrderDao")
 
 class ProductionDao extends GenericDao {
     constructor() {
         super(Production);
+        this.OrderDao = new OrderDao()
     }
 
     async mountObj(data) {
@@ -15,11 +17,14 @@ class ProductionDao extends GenericDao {
     }
 
     async mountList(data) {
+        const Order = await this.OrderDao.findByOrderId(data.orderId);
         const list = {
             ...data,
+
+
         }
         const { orderId, productionCode, status } = list
-        const nObj = { orderId: orderId, productionCode: productionCode, status: status }
+        const nObj = { orderCode: orderId, productionCode: productionCode, status: status }
         return nObj
     }
 

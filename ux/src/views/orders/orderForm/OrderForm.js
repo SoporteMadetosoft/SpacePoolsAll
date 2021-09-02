@@ -8,7 +8,7 @@ import { ItemsRepeater } from './ItemsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 
-export const PurchaseForm = () => {
+export const OrderForm = () => {
 
     const dispatch = useDispatch()
 
@@ -29,21 +29,35 @@ export const PurchaseForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <Input name="purchaseCode" placeholder="Nº venta" label="Nº venta" />
+                        <Input name="orderCode" placeholder="Nº Pedido" label="Nº Pedido" />
                     </div>
                     <div className="col-md-4">
-                        <Select name="idVendor" placeholder="Proveedor" label="Proveedor" endpoint="Vendors" labelName="comercialName"/>
+                        <Select name="customerId" placeholder="Cliente" label="Cliente" endpoint="Customers"  labelName="comercialName"/>
                     </div>
                     <div className="col-md-2">
-                        <Input name="purchaseDate" type="date" placeholder="Fecha de compra" label="Fecha de compra"/>
+                        <Input name="purchaseDate" placeholder="Dirección de entrega" label="Dirección"/>
                     </div>
                     <div className="col-md-2">
-                        <Input name="deliveryDate" type="date" placeholder="Fecha de entrega" label="Fecha de entrega"/>
+                        <Input name="phone" placeholder="Teléfono" label="Teléfono"/>
                     </div>
                     <div className="col-md-2">
-                        <Input name="phone" placeholder="Teléfono" label="Teléfono" />
+                        <Input name="email" placeholder="Correo Electrónico" label="Correo Electrónico" />
                     </div>
-
+                    <div className="col-md-2">
+                        <Select name="pool" placeholder="Piscina" label="Piscina" endpoint="Pools" labelName="fabricationName"/>
+                    </div>
+                    <div className="col-md-2">
+                        <Input name="orderDate" type="date" placeholder="Fecha de Pedido" label="Fecha de Pedido" />
+                    </div>
+                    <div className="col-md-2">
+                        <Input name="deliveryDate" type="date" placeholder="Fecha de Entrega" label="Fecha de Entrega" />
+                    </div>
+                    <div className="col-md-2">
+                        <Input name="deliverySchedulerStart" type="time" placeholder="" label="Inicio de Horario de entrega" />
+                    </div>
+                    <div className="col-md-2">
+                        <Input name="deliverySchedulerEnd" type="time" placeholder="" label="Fin de Horario de entrega" />
+                    </div>
                     <div className="col-md-12">
                         <label className="control-label">Observaciones</label>
                         <textarea
@@ -53,6 +67,8 @@ export const PurchaseForm = () => {
                             onChange={handleInputChange}
                         />
                     </div>
+   
+            
                 </div>
             </div>
             <div className="card">

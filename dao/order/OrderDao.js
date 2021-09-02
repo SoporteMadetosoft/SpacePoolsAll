@@ -32,6 +32,7 @@ class OrderDao extends GenericDao {
 
     async mountList(data) {
         let customer = await this.CustomerDao.findCustomer(data.customerId);
+        console.log(data)
         const list = {
             ...data,
             customerName: customer != undefined ? customer.comercialName : 'p',
@@ -39,8 +40,10 @@ class OrderDao extends GenericDao {
             customerEmail: customer != undefined ? customer.email : 'p',
 
         }
-        const { orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart } = list
-        const nObj = { orderCode: orderCode, customerName: customerName, customerPhone: customerPhone, customerEmail: customerEmail, orderDate: orderDate, deliverySchedulerStart: deliverySchedulerStart }
+        const { orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate } = list
+        const nObj = {deliveryTime: deliverySchedulerStart+" - "+deliverySchedulerEnd, orderCode: orderCode, customerName: customerName, customerPhone: customerPhone, customerEmail: customerEmail, orderDate: orderDate.getDay()+"-"+orderDate.getMonth()+"-"+orderDate.getFullYear(), deliveryDate:deliveryDate.getDay()+"-"+deliveryDate.getMonth()+"-"+deliveryDate.getFullYear() }
+        console.log(nObj)
+     
         return nObj
     }
 

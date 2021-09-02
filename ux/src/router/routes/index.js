@@ -9,7 +9,7 @@ import TrailersRoutes from './porters/trailers/Trailers'
 import PoolsRoutes from './pools/Pools'
 import PurchasesRoutes from './purchases/Purchases'
 import ItemsRoutes from './items/Items'
-
+import OrdersRoutes from './orders/Orders'
 
 // ** Document title
 const TemplateTitle = '%s - Vuexy React Admin Template'
@@ -28,6 +28,7 @@ const Routes = [
   ...PoolsRoutes,
   ...PurchasesRoutes,
   ...ItemsRoutes,
+  ...OrdersRoutes,
   ...PagesRoutes,
   ...sRoutes
 ]

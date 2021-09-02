@@ -1,5 +1,4 @@
 
-//import { CustomerFormScreen } from '@views/customers/CustomerFormScreen'
 import { PurchaseScreenList } from '@views/purchases/PurchaseScreenList'
 import { PurchaseFormScreen } from '../../../views/purchases/PurchaseFormScreen'
 

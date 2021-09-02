@@ -27,7 +27,7 @@ class PurchaseDao extends GenericDao {
 
         }
 
-        const { items,  vendorId, purchaseDate, deliveryDate , observations } = list
+        const {purchaseCode, items,  vendorId, purchaseDate, deliveryDate , observations } = list
 
         var sfin =""
         for (var i in items) {
@@ -35,17 +35,10 @@ class PurchaseDao extends GenericDao {
             console.log(sfin+"\n");
         }        
 
-        const nObj = { items: sfin, vendorId: vendorId, purchaseDate: purchaseDate.getDay()+"-"+purchaseDate.getMonth()+"-"+purchaseDate.getFullYear() , observations: observations, deliveryDate:deliveryDate.getDay()+"-"+deliveryDate.getMonth()+"-"+deliveryDate.getFullYear() }
-        console.log(nObj);
-        console.log(list)
-        console.log("ttttttttttttt")
-       
+        const nObj = {purchaseCode:purchaseCode, items: sfin, vendorId: vendorId, purchaseDate: purchaseDate.getDay()+"-"+purchaseDate.getMonth()+"-"+purchaseDate.getFullYear() , observations: observations, deliveryDate:deliveryDate.getDay()+"-"+deliveryDate.getMonth()+"-"+deliveryDate.getFullYear() }   
         return nObj
     }
 
-    listaAString(){
-       
-    }
 
 
     findByVendorId(id) {

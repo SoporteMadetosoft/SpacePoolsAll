@@ -66,16 +66,13 @@ class CustomerDao extends GenericDao {
 
     findCustomer(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM customers WHERE id = ? ', [id], (err, result) => {
+            this.db.query('SELECT * FROM customers WHERE id = ? ', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    const contactList = []
-                    for (const centerDB of result) {
-                        contactList.push(this.mountObj(centerDB))
-                    }
 
-                    resolve(contactList)
+                    resolve(result[0])
+                    
                 }
             })
         })

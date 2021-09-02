@@ -7,14 +7,13 @@ import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 
 import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm/index.js'
 import { save } from '../../utility/helpers/Axios/save'
-import { PurchaseForm } from './purchaseForm/PurchaseForm'
-
+import { OrderForm } from './orderForm/OrderForm'
 
 const structureForm = {
     items: []
 }
 
-export const PurchaseFormScreen = () => {
+export const OrderFormScreen = () => {
 
     const { id } = useParams()
     const history = useHistory()
@@ -23,13 +22,13 @@ export const PurchaseFormScreen = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(handleStartEditing('Purchases', id))
+            dispatch(handleStartEditing('Orders', id))
         }
         dispatch(initNormalForm(structureForm))
     }, [initNormalForm])
 
-    const title = (id) ? 'Editar Compra' : 'Añadir Compra'
-    const customerName = form.purchasecod ? form.comercialName : title
+    const title = (id) ? 'Editar Pedido' : 'Añadir Pedido'
+    const customerName = form.ordercod ? form.orderId : title
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -45,22 +44,26 @@ export const PurchaseFormScreen = () => {
             ]
         })
 
+
+       
         const prettyForm = {
             ...form,
+            
             items: [...itemsPretty]
-
         }
-        save('Purchases', id, prettyForm)
-        history.push('/purchases')
+        save('Orders', id, prettyForm)
+        history.push('/orders')
+ 
     }
 
     return (
         <>
             <form onSubmit={handleSubmit}>
                 <BreadCrumbs breadCrumbTitle={customerName} breadCrumbParent='Compras' breadCrumbActive={title} />
-                <PurchaseForm />
+                <OrderForm />
                 <ActionButtons />
             </form>
         </>
+       
     )
 }

@@ -11,7 +11,7 @@ import pool from './pool/settings'
 import purchases from './purchases/settings'
 import items from './items/settings'
 import orders from './orders/settings'
-import production from './production/settings'
+import productions from './production/settings'
 
 import administrator from './administrator/settings'
 
@@ -26,7 +26,7 @@ export default [
     ...items, 
     ...purchases, 
     ...orders, 
-    ...production,
+    ...productions,
     ...headerAdmin,
     ...administrator
 ]

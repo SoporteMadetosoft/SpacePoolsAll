@@ -20,13 +20,26 @@ class PurchaseDao extends GenericDao {
     }
 
     async mountList(data) {
+        console.log(data)
         const list = {
             ...data,
+            items: await this.ItemDao.findByPurchaseId(data.id)
+
         }
-        const { idVendor, purchaseDate, observations } = list
-        const nObj = { idVendor: idVendor, purchaseDate: purchaseDate, observations: observations }
+
+        const {purchaseCode, items,  vendorId, purchaseDate, deliveryDate , observations } = list
+
+        var sfin =""
+        for (var i in items) {
+            sfin+=items[i]+" "
+            console.log(sfin+"\n");
+        }        
+
+        const nObj = {purchaseCode:purchaseCode, items: sfin, vendorId: vendorId, purchaseDate: purchaseDate.getDay()+"-"+purchaseDate.getMonth()+"-"+purchaseDate.getFullYear() , observations: observations, deliveryDate:deliveryDate.getDay()+"-"+deliveryDate.getMonth()+"-"+deliveryDate.getFullYear() }   
         return nObj
     }
+
+
 
     findByVendorId(id) {
         return new Promise((resolve, reject) => {

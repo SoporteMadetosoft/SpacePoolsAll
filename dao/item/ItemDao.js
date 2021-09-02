@@ -23,9 +23,8 @@ class ItemDao extends GenericDao {
             ...data,
             family: await this.ProductFamilyDao.findById(data.family),
             place: await this.ProductPlaceDao.findById(data.place)
-
         }
-
+    
         return new Item(item)
     }
 

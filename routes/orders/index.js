@@ -6,11 +6,11 @@ const ControllerExtraItem = require('../../controllers/order/ExtraItem');
 
 const router = express.Router();
 
-router.get('/order/list', ControllerOrder.list);
-router.post('/order/insert', ControllerOrder.insert);
-router.put('/order/update', ControllerOrder.update);
-router.delete('/order/delete/:id', ControllerOrder.delete);
-router.post('/order/find', ControllerOrder.listByID);
+router.get('/list', ControllerOrder.list);
+router.post('/insert', ControllerOrder.insert);
+router.put('/update', ControllerOrder.update);
+router.delete('/delete/:id', ControllerOrder.delete);
+router.post('/find', ControllerOrder.listByID);
 
 router.get('/customerData/list', ControllerCustomerData.list);
 router.post('/customerData/insert', ControllerCustomerData.insert);

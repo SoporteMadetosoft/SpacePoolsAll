@@ -1,13 +1,8 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { Input } from '../../../components/form/inputs/Input'
-import { Select } from '../../../components/form/inputs/Select'
+import { SelectArbol } from '../../../components/form/inputs/SelectArbol'
 
 export const ItemsFamilyForm = () => {
-
-    const { selectReducer } = useSelector(state => state)
-
-    const { statusOpt } = selectReducer
 
     return (
         <>
@@ -20,7 +15,7 @@ export const ItemsFamilyForm = () => {
                         <Input name="name" placeholder="Nombre" label="Nombre" />
                     </div>
                     <div className="col-md-5">
-                        <Select name="idStatus" label="Estado" endpoint="Family" />
+                        <SelectArbol name="parent" label="Padre" endpoint="Family" />
                     </div>
                 </div>
             </div>

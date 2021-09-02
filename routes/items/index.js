@@ -7,6 +7,7 @@ const ControllerItem = require('../../controllers/item/Item');
 const router = express.Router();
 
 router.get('/productFamily/list', ControllerProductFamily.list);
+router.post('/productFamily/select', ControllerProductFamily.select);
 router.post('/productFamily/insert', ControllerProductFamily.insert);
 router.put('/productFamily/update', ControllerProductFamily.update);
 router.delete('/productFamily/delete/:id', ControllerProductFamily.delete);

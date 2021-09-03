@@ -8,7 +8,7 @@ import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 
 
-export const ordersList = [
+export const ProductionsList = [
     {
         name: 'Nº',
         selector: 'productionCode',
@@ -22,7 +22,7 @@ export const ordersList = [
         selector: 'orderCode',
         sortable: true,
         searchable: true,
-        minWidth: '200px'
+        minWidth: '150px'
     },
     {
         name: 'Piscina',
@@ -77,34 +77,31 @@ export const ordersList = [
                 </DropdownToggle>
                 <DropdownMenu right>
                 <Link to={`./production/edit/${row.id}`}>
-                  <DropdownItem tag='a' href='/' className='w-100'>
+                  <DropdownItem tag='a'  className='w-100'>
                     <FileText size={15} />
                     <span className='align-middle ml-50'>Detalles</span>
                   </DropdownItem>
                 </Link>
-                <Link onClick={ (e) => {
-                   
-                }}>  
-              <DropdownItem tag='a' href='/' className='w-100'>
-                <Trash size={15} />
-                <span className='align-middle ml-50'>Dibujo Pedido</span>
-              </DropdownItem>
-            </Link><Link onClick={ (e) => {
-                   
-                }}>  
-              <DropdownItem tag='a' href='/' className='w-100'>
-                <Trash size={15} />
-                <span className='align-middle ml-50'>Iniciar Tarea</span>
-              </DropdownItem>
-            </Link>
-            <Link onClick={ (e) => {
-                   
-                }}>  
-              <DropdownItem tag='a' href='/' className='w-100'>
-                <Trash size={15} />
-                <span className='align-middle ml-50'>Finalizar Tarea</span>
-              </DropdownItem>
-            </Link>
+
+                <Link to={``}>
+                  <DropdownItem tag='a'  className='w-100'>
+                    <FileText size={15} />
+                    <span className='align-middle ml-50'>Dibujo Pedido</span>
+                  </DropdownItem>
+                </Link>
+                <Link to={``}>
+                  <DropdownItem tag='a'  className='w-100'>
+                    <FileText size={15} />
+                    <span className='align-middle ml-50'>Iniciar Tarea</span>
+                  </DropdownItem>
+                </Link>
+                <Link to={``}>
+                  <DropdownItem tag='a'  className='w-100'>
+                    <FileText size={15} />
+                    <span className='align-middle ml-50'>Finalizar Tarea</span>
+                  </DropdownItem>
+                </Link>
+             
                 <Link onClick={ (e) => {
                     dispatch(startDeleteRegister(row.id))
                     }}>  

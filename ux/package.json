@@ -26,6 +26,7 @@
     "@material-ui/pickers": "^3.3.10",
     "@uppy/react": "1.10.8",
     "animate.css": "4.1.1",
+    "antd": "^4.16.13",
     "apexcharts": "3.23.0",
     "availity-reactstrap-validation-safe": "2.6.1",
     "axios": "0.21.1",

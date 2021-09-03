@@ -9,15 +9,15 @@ import { save } from '../../../../utility/helpers/Axios/save'
 import { ModelForm } from './modelForm/ModelForm'
 
 export const ModelFormScreen = () => {
-                 
+
     const { id } = useParams()
 
     const titulo = (id) ? 'Editar modelo' : 'Añadir modelo'
-   
+
     const dispatch = useDispatch()
     const history = useHistory()
     const form = useSelector(state => state.normalForm)
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         save('Model', id, form)

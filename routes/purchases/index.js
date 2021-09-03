@@ -2,7 +2,7 @@
 const express = require('express');
 
 const ControllerPurchase = require('../../controllers/purchase/purchase');
-const ControllerItem = require('../../controllers/purchase/item');
+const ControllerItem = require('../../controllers/purchase/Item');
 
 const router = express.Router();
 

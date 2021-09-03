@@ -32,17 +32,20 @@ class OrderDao extends GenericDao {
 
     async mountList(data) {
         let customer = await this.CustomerDao.findCustomer(data.customerId);
-        console.log(data)
         const list = {
             ...data,
             customerName: customer != undefined ? customer.comercialName : 'p',
             customerPhone: customer != undefined ? customer.phone : 'p',
             customerEmail: customer != undefined ? customer.email : 'p',
 
-        }
+        }        
+
         const { orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate } = list
-        const nObj = {deliveryTime: deliverySchedulerStart+" - "+deliverySchedulerEnd, orderCode: orderCode, customerName: customerName, customerPhone: customerPhone, customerEmail: customerEmail, orderDate: orderDate.getDay()+"-"+orderDate.getMonth()+"-"+orderDate.getFullYear(), deliveryDate:deliveryDate.getDay()+"-"+deliveryDate.getMonth()+"-"+deliveryDate.getFullYear() }
-        console.log(nObj)
+        
+        const newOrderDate = this.datetimeToEuropeDate(orderDate)
+        const newDliveryDate = this.datetimeToEuropeDate(deliveryDate)
+
+        const nObj = {deliveryTime: deliverySchedulerStart+" - "+deliverySchedulerEnd, orderCode: orderCode, customerName: customerName, customerPhone: customerPhone, customerEmail: customerEmail, orderDate: newOrderDate, deliveryDate:newDliveryDate }
      
         return nObj
     }
@@ -53,11 +56,6 @@ class OrderDao extends GenericDao {
                 if (err) {
                     reject(err)
                 } else {
-                    //const order = []
-                    //for (const centerDB of result) {
-                    //    order.push(this.mountObj(centerDB))
-                    //}
-                    //resolve(order)
 
                     resolve(result[0])
                 }

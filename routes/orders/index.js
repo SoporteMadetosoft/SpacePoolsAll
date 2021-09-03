@@ -1,7 +1,7 @@
 const express = require('express');
 
 const ControllerOrder = require('../../controllers/order/Order');
-const ControllerCustomerData = require('../../controllers/order/customerData');
+const ControllerCustomerData = require('../../controllers/order/CustomerData');
 const ControllerExtraItem = require('../../controllers/order/ExtraItem');
 
 const router = express.Router();

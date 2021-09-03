@@ -47,7 +47,7 @@ export const endPoints = {
     Orders: '/orders',
     Items: '/items/item',
     Family: '/items/productFamily',
-    Productions: '/productions',
+    Productions: '/production',
 
     ...globalEndpoints,
     ...setupEndpoints

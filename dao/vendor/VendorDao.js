@@ -6,7 +6,7 @@ const AddressDao = require("../vendor/AddressDao");
 const VendorType = require("../setup/vendors/TypeDao");
 const PaymentMethodDao = require("../setup/general/PaymentMethodDao");
 const StatusDao = require("../global/StatusDao");
-const PurchaseDao = require("../purchase/PurchaseDao");
+//const PurchaseDao = require("../purchase/PurchaseDao");
 
 class VendorDao extends GenericDao {
     constructor() {
@@ -16,7 +16,7 @@ class VendorDao extends GenericDao {
         this.VendorType = new VendorType()
         this.PaymentMethodDao = new PaymentMethodDao()
         this.StatusDao = new StatusDao()
-        this.PurchaseDao = new PurchaseDao()
+       // this.PurchaseDao = new PurchaseDao()
     }
 
     async mountObj(data) {
@@ -43,6 +43,21 @@ class VendorDao extends GenericDao {
         const nObj = { id: id, vendorCode: vendorCode, comercialName: comercialName, CIF: CIF, phone: phone, email: email, contactName: ContactName, contactPhone: ContactPhone }
         return nObj
     }
+
+    findVendorById(id) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT * FROM vendors WHERE Id = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+
+                    resolve(result[0])
+                }
+            })
+        })
+    }
+
+
 }
 
 module.exports = VendorDao

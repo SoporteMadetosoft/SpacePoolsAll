@@ -28,6 +28,19 @@ class PoolDao extends GenericDao {
         return nObj
     }
 
+    findPoolById(id) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT * FROM pool WHERE Id = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+
+                    resolve(result[0])
+                }
+            })
+        })
+    }
+
 }
 
 module.exports = PoolDao

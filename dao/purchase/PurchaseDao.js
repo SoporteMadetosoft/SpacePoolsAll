@@ -2,12 +2,14 @@ const Purchase = require("../../models/purchase/Purchase");
 const GenericDao = require("../GenericDao");
 
 const ItemDao = require("../purchase/ItemDao");
+const VendorDao = require("../vendor/VendorDao")
 
 class PurchaseDao extends GenericDao {
     ItemDao
     constructor() {
         super(Purchase);
         this.ItemDao = new ItemDao()
+        this.VendorDao = new VendorDao()
     }
 
     async mountObj(data) {
@@ -21,21 +23,24 @@ class PurchaseDao extends GenericDao {
 
     async mountList(data) {
         console.log(data)
+        const vendor = await this.VendorDao.findVendorById(data.vendorId)
         const list = {
             ...data,
-            items: await this.ItemDao.findByPurchaseId(data.id)
+            items: await this.ItemDao.findByPurchaseId(data.id),
+            vendorN: vendor != undefined ? vendor.comercialName : 'p'
 
         }
 
-        const {purchaseCode, items,  vendorId, purchaseDate, deliveryDate , observations } = list
+        const {purchaseCode, items,  vendorN, purchaseDate, deliveryDate , observations } = list
 
-        var sfin =""
-        for (var i in items) {
-            sfin+=items[i]+" "
-            console.log(sfin+"\n");
-        }        
 
-        const nObj = {purchaseCode:purchaseCode, items: sfin, vendorId: vendorId, purchaseDate: purchaseDate.getDay()+"-"+purchaseDate.getMonth()+"-"+purchaseDate.getFullYear() , observations: observations, deliveryDate:deliveryDate.getDay()+"-"+deliveryDate.getMonth()+"-"+deliveryDate.getFullYear() }   
+       
+
+
+        const newPurchaseDate = this.datetimeToEuropeDate(purchaseDate)
+        const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)
+
+        const nObj = {purchaseCode:purchaseCode, items: "", vendorId: vendorN, purchaseDate: newPurchaseDate , observations: observations, deliveryDate:newDeliveryDate }   
         return nObj
     }
 

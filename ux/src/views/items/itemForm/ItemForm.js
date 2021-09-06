@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
+import { handleChangeController } from '../../../redux/actions/normalForm'
 
 export const ItemForm = () => {
     const dispatch = useDispatch()

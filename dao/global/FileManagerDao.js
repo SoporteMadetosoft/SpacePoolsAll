@@ -41,12 +41,13 @@ class FileManagerDao {
                     let documents = [];
 
                     for (const filename of files) {
-                        const { mime: filetype } = await FileType.fromFile(`${__dirname}/../../public/${filePath}/${filename}`);
+                        // const all = await FileType.fromFile(`${__dirname}/../../public/${filePath}/${filename}`);
+                        // console.log(all)
                         const { size: filesize, mtime } = fs.statSync(`${__dirname}/../../public/${filePath}/${filename}`);
                         const doc = {
                             filename,
                             filesize,
-                            filetype,
+                            // filetype,
                             mtime,
                             url: `${__dirname}/../../public/${filePath}/${filename}`
                         }

@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const fileUpload = require('express-fileupload');
 
-dotenv.config({ path: './.envLocal' })
+dotenv.config({ path: './.env' })
 
 const app = express();
 const port = process.env.PORT || 4000;

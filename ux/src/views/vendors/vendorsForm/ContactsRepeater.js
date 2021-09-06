@@ -183,7 +183,7 @@ const ContactsForm = ({ position }) => {
                     name="department"
                     options={departmentOpt}
                     onChange={(value) => { handleSelectChange('department', value) }}
-                    defaultValue={SelectValue}
+                    value={SelectValue}
                 />
             </div>
         </div>

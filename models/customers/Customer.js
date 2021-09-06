@@ -7,7 +7,6 @@ class Customer {
         id,
         customerCode,
         comercialName,
-        comercialNum,
         CIF,
         socialReason,
         phone,
@@ -29,7 +28,6 @@ class Customer {
         this.id = id
         this.customerCode = customerCode
         this.comercialName = comercialName
-        this.comercialNum = comercialNum
         this.CIF = CIF
         this.socialReason = socialReason
         this.phone = phone

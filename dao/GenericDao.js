@@ -140,7 +140,7 @@ class GenericDao {
         }
     }
 
-    datetimeToEuropeDate(date){
+    datetimeToEuropeDate(date) {
         if (date !== null) {
             let month = date.getMonth() + 1
             let year = date.getFullYear()

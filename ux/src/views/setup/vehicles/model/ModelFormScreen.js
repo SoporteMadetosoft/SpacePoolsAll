@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { startAddSelectOptions } from '../../../../redux/actions/selects'
 import { save } from '../../../../utility/helpers/Axios/save'
 import { ModelForm } from './modelForm/ModelForm'
+import { exceptionController } from '../../../../utility/helpers/undefinedExceptionController'
 
 export const ModelFormScreen = () => {
 
@@ -20,7 +21,11 @@ export const ModelFormScreen = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        save('Model', id, form)
+        const prettyForm = {
+            ...form,
+            idBrand: exceptionController(form.idBrand)
+        }
+        save('Model', id, prettyForm)
         dispatch(startAddSelectOptions('/setup/vehicles/brandModel', 'modelOpt'))
         history.push('/setup/vehicles/model')
     }

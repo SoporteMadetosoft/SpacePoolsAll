@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import BreadCrumbs from '@components/breadcrumbs'
+import { AbilityContext } from '@src/utility/context/Can'
 
 import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 
@@ -21,6 +22,8 @@ export const CustomerFormScreen = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const form = useSelector(state => state.normalForm)
+
+    const ability = useContext(AbilityContext)
 
     useEffect(() => {
         if (id) {

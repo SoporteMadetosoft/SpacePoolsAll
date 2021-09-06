@@ -32,14 +32,11 @@ export const CustomersForm = () => {
                     <div className="col-md-2">
                         <Input name="CIF" placeholder="C.I.F." label="C.I.F." />
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-4">
                         <Input name="socialReason" placeholder="Razon social" label="Razon social" />
                     </div>
                     <div className="col-md-2">
                         <Input name="phone" placeholder="Teléfono" label="Teléfono" />
-                    </div>
-                    <div className="col-md-2">
-                        <Input name="comercialNum" placeholder="Número Comercial" label="Número Comercial" />
                     </div>
                     <div className="col-md-4">
                         <Input name="email" type="email" placeholder="E-mail" label="E-mail" />

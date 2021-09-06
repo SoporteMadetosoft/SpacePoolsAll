@@ -13,7 +13,7 @@ import OrdersRoutes from './orders/Orders'
 import ProductionsRoutes from './productions/Productions'
 
 // ** Document title
-const TemplateTitle = '%s - Vuexy React Admin Template'
+const TemplateTitle = '%s - SpacePools'
 
 // ** Default Route
 const DefaultRoute = '/customers'

@@ -2,3 +2,6 @@
 //  ? TIP:  It is recommended to use this file for overriding bootstrap variables.
 //  ================================================================================================
 $primary: #275b97;
+::placeholder, .css-1nxvan4-placeholder, .ant-select-selection-placeholder{
+    font-size: small;
+}

@@ -6,6 +6,15 @@ import { handleChangeController } from '../../../redux/actions/normalForm'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
+const placeholderStyles = {
+    placeholder: (defaultStyles) => {
+        return {
+            ...defaultStyles,
+            FontSize: '5px'
+        }
+    }
+}
+
 export const Select = ({ name, label, className, placeholder = label, isMulti = false, labelName = 'name', endpoint }) => {
 
     const dispatch = useDispatch()
@@ -33,6 +42,7 @@ export const Select = ({ name, label, className, placeholder = label, isMulti = 
                 value={value}
                 isMulti={isMulti}
                 onChange={handleSelectChange}
+                styles={placeholderStyles}
             />
         </>
     )

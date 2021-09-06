@@ -110,7 +110,7 @@ const AddressesForm = ({ position }) => {
                     name="addressType"
                     options={addresseTypesOpt}
                     onChange={(value) => { handleSelectChange('addressType', value) }}
-                    defaultValue={SelectValue}
+                    value={SelectValue}
                 />
             </div>
             <div className="col-md-2">

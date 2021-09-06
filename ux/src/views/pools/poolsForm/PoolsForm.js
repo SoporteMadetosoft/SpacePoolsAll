@@ -1,6 +1,8 @@
 import React from 'react'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
+import { PoolsItemsForm } from './PoolsItemsForm'
+import { PoolsRawForm } from './PoolsRawForm'
 
 export const PoolsForm = () => {
 
@@ -15,7 +17,7 @@ export const PoolsForm = () => {
                         <Input name="fabricationName" placeholder="Nombre  de fabricación" label="Nombre  de fabricación" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="simultaneousFabrications" placeholder="Nº máximo de fabriación" label="Nº máximo de fabriación" />
+                        <Input name="simultaneousFabrications" type="number" placeholder="Nº máximo de fabriación" label="Nº máximo de fabriación" />
                     </div>
                     <div className="col-md-3">
                         <Select name="idStatus" label="Estado" endpoint="Status" />
@@ -47,22 +49,15 @@ export const PoolsForm = () => {
                 <div className="col-md-6">
 
                     <div className="card">
-                        <div className=" card-body row pb-3 px-3">
-                            {/* TODO: Item list repeater
-                                - Select with all item list
-                                - Input for quantity
-                                + ONLY ITEMS
-                            */}
+                        <div className=" card-body row px-3">
+                            <PoolsItemsForm />
                         </div>
                     </div>
                 </div>
                 <div className="col-md-6">
                     <div className="card">
-                        <div className=" card-body row pb-3 px-3">
-                            {/* TODO: Raw material list repeater
-                                - Select with all item list
-                                - Input with quantity
-                                + ONLY RAW MATERIAL */}
+                        <div className=" card-body row px-3">
+                            <PoolsRawForm />
                         </div>
                     </div>
                 </div>

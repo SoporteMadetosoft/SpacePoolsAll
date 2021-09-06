@@ -38,28 +38,6 @@ export const CustomerFormScreen = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        let addressesPretty = ''
-
-        form.addresses.forEach(e => {
-            addressesPretty = [
-                {
-                    ...e,
-                    addressType: exceptionController(e.addressType)
-                }
-            ]
-        })
-
-        let contactPretty = ''
-
-        form.contacts.forEach(e => {
-            contactPretty = [
-                {
-                    ...e,
-                    department: exceptionController(e.department)
-                }
-            ]
-        })
-
         const prettyForm = {
             ...form,
             idPaymentMethod: exceptionController(form.idPaymentMethod),
@@ -71,9 +49,8 @@ export const CustomerFormScreen = () => {
             idMode: exceptionController(form.idMode),
             idStatus: exceptionController(form.idStatus),
             idLanguage: exceptionController(form.idLanguage),
-            addresses: [...addressesPretty],
-            contacts: [...contactPretty]
-
+            addresses: form.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType) })),
+            contacts: form.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department) }))
         }
         save('Customers', id, prettyForm)
         history.push('/customers')

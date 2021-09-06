@@ -19,4 +19,4 @@ class Address {
     }
 
 }
-module. exports = Address
+module.exports = Address

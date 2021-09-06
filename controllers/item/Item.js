@@ -21,6 +21,20 @@ exports.list = async (req, res) => {
     }
 }
 
+exports.listItems = async (req, res) => {
+    const itemType = req.headers.itemtype
+    try {
+        res.json({
+            ok: true,
+            data: await itemDao.findByItemType(itemType)
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
 

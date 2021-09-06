@@ -46,7 +46,16 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT POOL */
-        await poolDao.insert(req.body.form)
+        const pool = req.body.form
+        const { items, raws } = req.body.form
+
+        delete pool.items
+        delete pool.raws
+
+        const insert = await poolDao.insert(pool)
+        poolDao.multipleAccess(items, poolDao.PoolItemsDao, insert.insertId, 'idPool')
+        poolDao.multipleAccess(raws, poolDao.PoolRawsDao, insert.insertId, 'idPool')
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
@@ -58,9 +67,22 @@ exports.update = async (req, res) => {
 
     try {
         /** UPDATE POOL */
+        const pool = req.body.form
+        const { items, raws } = req.body.form
 
-        await poolDao.update(req.body.form)
+        delete pool.items
+        delete pool.raws
 
+        await poolDao.update(pool)
+
+        if (items.length > 0) {
+            console.log(items)
+            poolDao.multipleAccess(items, poolDao.PoolItemsDao, pool.id, 'idPool')
+        }
+        if (raws.length > 0) {
+            console.log(raws)
+            poolDao.multipleAccess(raws, poolDao.PoolRawsDao, pool.id, 'idPool')
+        }
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

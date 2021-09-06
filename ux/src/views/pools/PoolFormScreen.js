@@ -10,7 +10,10 @@ import { handleCleanUp } from '../../redux/actions/fileUpload'
 import { PoolsForm } from './poolsForm/PoolsForm'
 import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 
-const structureForm = {}
+const structureForm = {
+    items: [],
+    raws: []
+}
 
 export const PoolFormScreen = () => {
 
@@ -31,19 +34,22 @@ export const PoolFormScreen = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
         const prettyForm = {
             ...form,
-            idStatus: exceptionController(form.idStatus)
+            idStatus: exceptionController(form.idStatus),
+            items: form.items.map(item => ({ ...item, idItem: exceptionController(item.idItem) })),
+            raws: form.raws.map(raw => ({ ...raw, idItem: exceptionController(raw.idItem) }))
         }
-
+        console.log(prettyForm)
         save('Pools', id, prettyForm)
-        dispatch(handleCleanUp())
-        history.push('/pools')
+        // dispatch(handleCleanUp())
+        // history.push('/pools')
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <BreadCrumbs breadCrumbTitle={customerName} breadCrumbParent='Transportista' breadCrumbActive={titulo} />
+            <BreadCrumbs breadCrumbTitle={customerName} breadCrumbParent='Piscinas' breadCrumbActive={titulo} />
             <PoolsForm />
             <ActionButtons />
         </form>

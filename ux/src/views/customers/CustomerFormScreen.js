@@ -44,7 +44,7 @@ export const CustomerFormScreen = () => {
             addressesPretty = [
                 {
                     ...e,
-                    addressType: e.addressType.value
+                    addressType: exceptionController(e.addressType)
                 }
             ]
         })
@@ -55,7 +55,7 @@ export const CustomerFormScreen = () => {
             contactPretty = [
                 {
                     ...e,
-                    department: e.department.value
+                    department: exceptionController(e.department)
                 }
             ]
         })

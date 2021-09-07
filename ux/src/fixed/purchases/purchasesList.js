@@ -26,7 +26,6 @@ export const purchasesList = [
     {
         name: 'Productos',
         selector: 'items',
-        sortable: true,
         searchable: true,   
         minWidth: '200px'
     },

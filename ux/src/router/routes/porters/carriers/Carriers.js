@@ -1,5 +1,7 @@
 import { CarrierScreenList } from '@views/carriers/CarrierScreenList'
 import { CarrierFormScreen } from '@views/carriers/CarrierFormScreen'
+import Pdf from '../../../../fixed/vehicles/carriers/Pdf'
+ 
 
 
 const CarriersRoutes = [
@@ -17,6 +19,11 @@ const CarriersRoutes = [
     path: '/porters/carriers/edit/:id',
     exact: true,
     component: () => <CarrierFormScreen />
+  },
+  {
+    path: '/porters/carriers/Pdf',
+    exact: true,
+    component: () => <Pdf />
   }
 ]
 

@@ -70,19 +70,14 @@ exports.update = async (req, res) => {
         const pool = req.body.form
         const { items, raws } = req.body.form
 
+        const allItems = [...items, ...raws]
+
         delete pool.items
         delete pool.raws
 
         await poolDao.update(pool)
+        poolDao.multipleAccess(allItems, poolDao.PoolItemsDao, pool.id, 'idPool')
 
-        if (items.length > 0) {
-            console.log(items)
-            poolDao.multipleAccess(items, poolDao.PoolItemsDao, pool.id, 'idPool')
-        }
-        if (raws.length > 0) {
-            console.log(raws)
-            poolDao.multipleAccess(raws, poolDao.PoolRawsDao, pool.id, 'idPool')
-        }
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

@@ -1,45 +1,27 @@
-import { FileText, MoreVertical, Trash } from "react-feather"
-import { useDispatch } from "react-redux"
-import DropdownItem from "reactstrap/lib/DropdownItem"
-import DropdownMenu from "reactstrap/lib/DropdownMenu"
-import DropdownToggle from "reactstrap/lib/DropdownToggle"
-import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
-import { startDeleteRegister } from "@redux/actions/custom"
-import { Link } from "react-router-dom"
-import FileViewer from 'react-file-viewer'
+import React from 'react'
+import DocViewer from "react-doc-viewer"
+
+const docs = [
+  {
+    uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+  }
+]
+
+export const Pdf = () => {
+  return (
+    <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
 
 
-import React, { Component } from 'react'
 
-//class Pdf extends Component {
-//
-//    render() {
-//        return (
-//            <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-//                <object
-//                data={require('./pdf.pdf')}
-//                type="pdf"
-//                width="100%"
-//                height="100%"
-//                >
-//                </object>
-//            </div>
-//        )
-//    }
-//}
+      <DocViewer documents={docs} />
+      {/* <FileViewer fileType={type} filePath={file} /> */}
 
-class Pdf extends Component {
-    render() {
-        return (
-        <FileViewer
-          fileType="pdf"
-          filePath='./pdf.pdf'
-          //filePath='https://eqpro.es/wp-content/uploads/2018/11/Ejemplo.pdf'
-/>
-      )
-    }
 
+      {/* <FileViewer
+        fileType={type}
+        filePath={file}
+      // filePath='https://eqpro.es/wp-content/uploads/2018/11/Ejemplo.pdf'
+      /> */}
+    </div>
+  )
 }
-
-
-export default Pdf

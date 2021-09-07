@@ -50,8 +50,8 @@ export const carriersDocs = [
                         </DropdownToggle>
                         <DropdownMenu right>
                             <DropdownItem className='w-100'>
-                                <a href="./Pdf" target="_blank" rel="canonical">
-                                
+                                <a href={`${row.url}`} target="_blank" rel="canonical">
+
                                     <FileText size={15} />
                                     <span className='align-middle ml-50'>Detalles</span>
                                 </a>
@@ -68,7 +68,7 @@ export const carriersDocs = [
                     </UncontrolledDropdown>
 
 
-                    
+
                 </div>
             )
         }

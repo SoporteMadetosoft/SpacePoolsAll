@@ -49,7 +49,7 @@ class FileManagerDao {
                             filesize,
                             // filetype,
                             mtime,
-                            url: `${__dirname}/../../public/${filePath}/${filename}`
+                            url: `/public/${filePath}/${filename}`
                         }
                         documents.push(doc);
                     }

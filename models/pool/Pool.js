@@ -14,7 +14,9 @@ class Pool {
         cost,
         simultaneousFabrications,
         observations,
-        idStatus
+        idStatus,
+        items = [],
+        raws = []
     }) {
         this.id = id
         this.poolCode = poolCode
@@ -29,6 +31,8 @@ class Pool {
         this.simultaneousFabrications = simultaneousFabrications
         this.observations = observations
         this.idStatus = idStatus
+        this.items = items
+        this.raws = raws
     }
     get table() {
         return this.#table;

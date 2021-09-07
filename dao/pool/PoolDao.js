@@ -1,18 +1,23 @@
 const Pool = require("../../models/pool/Pool");
 const GenericDao = require("../GenericDao");
 
+const PoolItemsDao = require("./PoolItemsDao");
 const StatusDao = require("../global/StatusDao");
 
 class PoolDao extends GenericDao {
     constructor() {
         super(Pool);
         this.StatusDao = new StatusDao()
+        this.PoolItemsDao = new PoolItemsDao()
+        this.PoolRawsDao = new PoolItemsDao()
     }
 
     async mountObj(data) {
         const pool = {
             ...data,
-            idStatus: await this.StatusDao.findById(data.idStatus)
+            idStatus: await this.StatusDao.findById(data.idStatus),
+            items: await this.PoolItemsDao.getItemsByTypeAndPool(data.id, 2),
+            raws: await this.PoolRawsDao.getItemsByTypeAndPool(data.id, 1)
         }
         return new Pool(pool)
     }
@@ -34,7 +39,6 @@ class PoolDao extends GenericDao {
                 if (err) {
                     reject(err)
                 } else {
-
                     resolve(result[0])
                 }
             })

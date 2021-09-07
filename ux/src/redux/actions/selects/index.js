@@ -15,6 +15,17 @@ export const startAddSelectOptions = (endPoint, key, labelName = 'name') => {
     }
 }
 
+export const startAddSelectPoolItems = (endPoint, key, labelName = 'name', itemType) => {
+    return async (dispatch) => {
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/listItems`, {
+            headers: {
+                itemType
+            }
+        })
+        dispatch(addSelectOptions(key, data.map(option => ({ label: option[labelName], value: option.id }))))
+    }
+}
+
 export const startAddSelectOptionTree = (endPoint, key, idNode) => {
     return async (dispatch) => {
         const { data: { data } } = await axios.post(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/select`, { idNode })

@@ -35,35 +35,13 @@ export const VendorsFormScreen = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        let addressesPretty = ''
-
-        form.addresses.forEach(e => {
-            addressesPretty = [
-                {
-                    ...e,
-                    addressType: e.addressType.value
-                }
-            ]
-        })
-
-        let contactPretty = ''
-
-        form.contacts.forEach(e => {
-            contactPretty = [
-                {
-                    ...e,
-                    department: e.department.value
-                }
-            ]
-        })
-
         const prettyForm = {
             ...form,
             idPaymentMethod: exceptionController(form.idPaymentMethod),
             idVendorType: exceptionController(form.idVendorType),
             idStatus: exceptionController(form.idStatus),
-            addresses: [...addressesPretty],
-            contacts: [...contactPretty]
+            addresses: form.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType) })),
+            contacts: form.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department) }))
         }
         save('Vendors', id, prettyForm)
         history.push('/vendors')

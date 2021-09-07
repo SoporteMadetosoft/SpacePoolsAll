@@ -30,7 +30,6 @@ export const ItemForm = () => {
                     <div className="col-md-3">
                         <Select name="itemType" label="Tipo de artículo" endpoint="ItemType" />
                     </div>
-
                     <div className="col-md-3">
                         <Input type="number" name="priceVATout" placeholder="Precio sin IVA" label="Precio sin IVA" />
                     </div>
@@ -43,7 +42,6 @@ export const ItemForm = () => {
                     <div className="col-md-3">
                         <Input type="number" name="maximumCost" placeholder="Coste máximo" label="Coste máximo" />
                     </div>
-
                     <div className="col-md-3">
                         <Input type="number" name="minimumStock" placeholder="Stock mínimo" label="Stock mínimo" />
                     </div>

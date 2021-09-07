@@ -40,7 +40,7 @@ export const VechiclesForm = () => {
                         <Input name="vehicleCode" placeholder="Nº Vehículo" label="Nº Vehículo" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="plateNumber" placeholder="Matrícula" label="Matrícula" />
+                        <Input name="plate" placeholder="Matrícula" label="Matrícula" />
                     </div>
                     <div className="col-md-3">
                         <Input name="frameNumber" placeholder="Número de bastidor" label="Número de bastidor" />

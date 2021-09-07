@@ -59,6 +59,7 @@ class GenericDao {
 
     /**Delete from databse, returns the id on the success **/
     deleteById(id) {
+        // console.log(`DELETE FROM ${this.auxModel.table} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query(`DELETE FROM ?? WHERE id = ?`, [this.auxModel.table, id], async (err, result) => {
                 if (err) {
@@ -71,6 +72,7 @@ class GenericDao {
     }
 
     insert(params) {
+        // console.log(`INSERT INTO ${this.auxModel.table} (${Object.keys(params)}) VALUES  (${Object.values(params)})`)
         Object.keys(params).forEach((k) => { if (params[k] === '') { params[k] = null } })
         return new Promise((resolve, reject) => {
             this.db.query(`INSERT INTO ?? (??) VALUES  (?)`, [this.auxModel.table, Object.keys(params), Object.values(params)], async (err, result) => {
@@ -86,6 +88,7 @@ class GenericDao {
     }
 
     update(params) {
+        // console.log(`UPDATE ${this.auxModel.table} SET ${this.#formatUpdate(params)} WHERE id =  ${params.id} `)
         return new Promise((resolve, reject) => {
             this.db.query(`UPDATE ?? SET ${this.#formatUpdate(params)} WHERE id =  ? `, [this.auxModel.table, params.id], async (err, result) => {
                 if (err) {
@@ -102,7 +105,7 @@ class GenericDao {
         const idsForm = []
         const d = data
         d.forEach(element => {
-            const action = 'id' in element ? 'update' : 'insert'
+            const action = element.id ? 'update' : 'insert'
 
             if (action === 'insert') {
                 element[foreign] = id
@@ -112,8 +115,8 @@ class GenericDao {
 
             obj[action](element)
         })
-        const diff = idsDb.filter(x => !idsForm.includes(x))
 
+        const diff = idsDb.filter(x => !idsForm.includes(x))
         diff.forEach(id => {
             obj.deleteById(id)
         })

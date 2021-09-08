@@ -22,11 +22,13 @@ export const handleStartEditing = (endpoint, id) => {
 
 export const handleCalcuteTotalCost = () => {
     return (dispatch, getState) => {
+        console.log("estoy padando por qaui")
             let totalCost = 0, contin = true, k = 0, row = ""
             for (let i = 0; i < 2; i++) {
                 (i === 0) ? row = "items" : row = "raws"
                 while (contin) {
                     (getState().normalForm[row][k]) ? totalCost += getState().normalForm[row][k]["coste"] : contin = false
+                   
                     k++
                 }
                 contin = true

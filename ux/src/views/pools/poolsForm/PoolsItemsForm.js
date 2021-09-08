@@ -97,7 +97,6 @@ const ItemsForm = ({ position }) => {
             handleSearchCost('Items', el.id, position, 'items')
             )
     }
-    
     return (
 
 
@@ -126,7 +125,9 @@ const ItemsForm = ({ position }) => {
                     <X size={14} />
                 </Button.Ripple>
             </div>
-        </div>
+        </div > 
 
     )
+    
+
 }

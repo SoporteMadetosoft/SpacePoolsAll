@@ -45,6 +45,7 @@ export const PoolsRawForm = () => {
                         <Tag key={i} >
                             <ItemsForm position={i} />
                         </Tag>
+                        
                     )
                 }}
 
@@ -101,7 +102,6 @@ const ItemsForm = ({ position }) => {
             handleSearchCost('Items', el.id, position, 'raws')
             )
     }
-
     return (
 
         <div className="row border-bottom pb-1 mx-1">

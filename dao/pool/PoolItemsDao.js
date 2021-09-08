@@ -38,7 +38,7 @@ class PoolItemsDao extends GenericDao {
                 id: data.idItem
             },
             cantidad: data.cantidad,
-            cost: cost
+            coste: cost
         }
         return poolItems
     }

@@ -47,12 +47,11 @@ export const PoolsForm = () => {
                           />
                     </div>
                     <div className="col-md-3">
-                    <label className="control-label">Precio con IVA</label>
-                        <input   className={`form-control`}
+                        <Input   className={`form-control`}
                          name="priceVATin"
                          placeholder="Precio con IVA" 
-                         value={priceIVA} 
                          readOnly
+                         label = "Precio con IVA" 
                          />
                     </div>
                     <div className="col-md-3">

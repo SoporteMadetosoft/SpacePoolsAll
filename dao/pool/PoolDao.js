@@ -25,7 +25,7 @@ class PoolDao extends GenericDao {
     async mountList(data) {
         const status = await this.StatusDao.findById(data.idStatus)
         const list = {
-            ...data,
+            ...data,    
             idStatus: status != undefined ? status.name : ''
         }
         const { id, poolCode, fabricationName, cost, idStatus } = list

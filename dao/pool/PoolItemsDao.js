@@ -29,17 +29,20 @@ class PoolItemsDao extends GenericDao {
     }
 
     async mountObj(data) {
-        const { name } = await this.ItemDao.findById(data.idItem)
+        const { name, cost } = await this.ItemDao.findById(data.idItem)
+
         const poolItems = {
             id: data.id,
             idItem: {
                 name: name,
                 id: data.idItem
             },
-            cantidad: data.cantidad
+            cantidad: data.cantidad,
+            cost: cost
         }
         return poolItems
     }
+
 }
 
 module.exports = PoolItemsDao

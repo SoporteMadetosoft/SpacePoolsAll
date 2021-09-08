@@ -8,10 +8,13 @@ import Select from 'react-select'
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { startAddSelectOptions, startAddSelectPoolItems } from '../../../redux/actions/selects'
+import { handleAddCost, handleCalcuteTotalCost, handleSearchCost, handleSearchOutID } from '../../../redux/actions/pools'
+
 
 const formStructure = {
     idItem: '',
-    cantidad: ''
+    cantidad: '1',
+    coste: 0
 }
 
 export const PoolsRawForm = () => {
@@ -67,6 +70,8 @@ const ItemsForm = ({ position }) => {
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('raws', position))
+        dispatch(handleCalcuteTotalCost())
+
     }
 
     const handleInputChange = ({ target }) => {
@@ -77,6 +82,9 @@ const ItemsForm = ({ position }) => {
         }
 
         dispatch(editRepeaterRegister('raws', position, obj))
+        dispatch(
+            handleSearchOutID('Items', target.value, position, 'raws')
+            )
     }
 
     const handleSelectChange = (key, element) => {
@@ -89,6 +97,9 @@ const ItemsForm = ({ position }) => {
         dispatch(
             editRepeaterRegister('raws', position, obj)
         )
+        dispatch(
+            handleSearchCost('Items', el.id, position, 'raws')
+            )
     }
 
     return (
@@ -119,6 +130,6 @@ const ItemsForm = ({ position }) => {
                 </Button.Ripple>
             </div>
         </div>
-
+    
     )
 }

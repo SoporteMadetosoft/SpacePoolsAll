@@ -21,6 +21,7 @@ export const PoolFormScreen = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const form = useSelector(state => state.normalForm)
+    const {value: cost} = useSelector(state => state.poolsReducer)
 
     useEffect(() => {
         if (id) {
@@ -32,20 +33,24 @@ export const PoolFormScreen = () => {
     const titulo = (id) ? 'Editar Piscina' : 'Añadir Piscina'
     const customerName = (form.name) ? form.name : titulo
 
+
     const handleSubmit = async (e) => {
         e.preventDefault()
-
+        
         const prettyForm = {
             ...form,
             idStatus: exceptionController(form.idStatus),
             items: form.items.map(item => ({ ...item, idItem: exceptionController(item.idItem) })),
-            raws: form.raws.map(raw => ({ ...raw, idItem: exceptionController(raw.idItem) }))
+            raws: form.raws.map(raw => ({ ...raw, idItem: exceptionController(raw.idItem) })),
+            cost
         }
-        console.log(prettyForm)
-        save('Pools', id, prettyForm)
-        // dispatch(handleCleanUp())
-        // history.push('/pools')
+
+         save('Pools', id, prettyForm)
+         dispatch(handleCleanUp())
+         history.push('/pools')
+
     }
+
 
     return (
         <form onSubmit={handleSubmit}>

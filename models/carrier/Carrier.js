@@ -17,7 +17,8 @@ class Carrier {
         startSchedule,
         endShedule,
         idStatus,
-        filePath
+        filePath,
+        documents = []
     }) {
         this.id = id
         this.carrierCode = carrierCode
@@ -35,6 +36,7 @@ class Carrier {
         this.endShedule = endShedule
         this.idStatus = idStatus
         this.filePath = filePath
+        this.documents = documents
     }
     get table() {
         return this.#table;

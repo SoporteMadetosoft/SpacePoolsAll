@@ -1,8 +1,5 @@
 import { CarrierScreenList } from '@views/carriers/CarrierScreenList'
 import { CarrierFormScreen } from '@views/carriers/CarrierFormScreen'
-import { Pdf } from '../../../../fixed/vehicles/carriers/Pdf'
-
-
 
 const CarriersRoutes = [
   {

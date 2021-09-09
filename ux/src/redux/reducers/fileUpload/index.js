@@ -3,8 +3,7 @@ import { fileUploadTypes } from "../../types/fileUpload/types"
 // ** Initial State
 const initialState = {
     filePath: null,
-    upload: null,
-    documents: []
+    upload: null
 }
 
 const fileUpload = (state = initialState, action) => {
@@ -21,16 +20,15 @@ const fileUpload = (state = initialState, action) => {
                 upload: action.payload
             }
 
-        case fileUploadTypes.FillDocuments:
-            return {
-                ...state,
-                documents: action.payload
-            }
-
         case fileUploadTypes.CleanUp:
             return initialState
 
-
+        // case fileUploadTypes.DeleteFile:
+        //     const newState = state['documents'].filter((element, index) => (element.url !== action.payload))
+        //     return {
+        //         ...state,
+        //         ['documents']: [...newState]
+        //     }
 
         default:
             return state

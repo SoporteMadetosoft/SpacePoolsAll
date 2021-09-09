@@ -61,7 +61,6 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT PRODUCT FAMILY */
-        console.log(req.body.form)
         const insert = await productFamilyDao.insert(req.body.form)
 
 
@@ -76,7 +75,6 @@ exports.update = (req, res) => {
 
     try {
         /** UPDATE PRODUCT FAMILY */
-        console.log(req.body.form)
         const familia = req.body.form
         if (familia.id === familia.parent) {
             return res.status(500).send()

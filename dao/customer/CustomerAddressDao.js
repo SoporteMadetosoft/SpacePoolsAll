@@ -28,7 +28,6 @@ class CustomerAddressDao extends GenericDao {
         })
     }
 
-
     async mountObj(data) {
         const docs = {
             ...data,

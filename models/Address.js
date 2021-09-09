@@ -1,13 +1,4 @@
 class Address {
-
-    id
-    defaultAddress
-    addressType
-    address
-    population
-    province
-    postcode
-
     constructor({ id, defaultAddress, addressType, address, population, province, postcode }) {
         this.id = id
         this.defaultAddress = defaultAddress

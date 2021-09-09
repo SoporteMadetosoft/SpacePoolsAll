@@ -8,19 +8,28 @@ import { carriersDocs } from '../../../fixed/vehicles/carriers/carriersDocs'
 import { CustomMiniTable } from '../../../components/datatable/CustomMiniTable'
 import { FileContext } from './FileContext'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
+import { useParams } from 'react-router-dom'
+import { handleStartEditing } from '../../../redux/actions/normalForm'
 
 export const DocForm = () => {
 
+    const { id } = useParams()
+
     const { file, setFile } = useContext(FileContext)
     const dispatch = useDispatch()
-    const { upload, filePath, documents: data } = useSelector(state => state.fileUpload)
-    const { filePath: formFilePath } = useSelector(state => state.normalForm)
+    const { upload, filePath } = useSelector(state => state.fileUpload)
+    const { filePath: formFilePath, documents: data } = useSelector(state => state.normalForm)
 
-    const realFilePath = formFilePath ? formFilePath : filePath
+    let realFilePath = formFilePath ? formFilePath : filePath
 
     useEffect(() => {
-        dispatch(handleLoadDocuments(realFilePath))
-    }, [realFilePath])
+        if (!id) {
+            dispatch(handleLoadDocuments('FileManager', realFilePath))
+        } else {
+            console.log("entra")
+            dispatch(handleStartEditing('Carriers', id))
+        }
+    }, [upload])
 
     const handleFileInputChange = (e) => {
         setFile(e.target.files)
@@ -35,10 +44,10 @@ export const DocForm = () => {
     const uploadFileToCloud = async (e) => {
         e.preventDefault()
 
-        const filePath2 = await MkDir(realFilePath)
+        const filePath2 = await MkDir('Carrier', realFilePath)
+        realFilePath = filePath2 ? filePath2 : filePath
 
-        dispatch(await saveFiles('Carriers', filePath2, file))
-
+        dispatch(await saveFiles('FileManager', realFilePath, file))
     }
 
     return (

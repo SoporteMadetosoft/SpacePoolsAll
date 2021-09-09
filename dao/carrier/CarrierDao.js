@@ -1,18 +1,22 @@
 const Carrier = require("../../models/carrier/Carrier");
 const SetupDao = require("../setup/SetupDao");
 const StatusDao = require("../global/StatusDao");
+const FileManagerDao = require("../global/FileManagerDao");
+const CarrierDocumentsDao = require("./CarrierDocumentsDao");
 
 let status;
 class CarrierDao extends SetupDao {
     constructor() {
         super(Carrier);
         this.StatusDao = new StatusDao()
+        this.FileManagerDao = new FileManagerDao(CarrierDocumentsDao)
     }
 
     async mountObj(data) {
         const carrier = {
             ...data,
-            idStatus: await this.StatusDao.findById(data.idStatus)
+            idStatus: await this.StatusDao.findById(data.idStatus),
+            documents: await this.FileManagerDao.getDocumentsInfo(data.filePath)
         }
         return new Carrier(carrier)
     }

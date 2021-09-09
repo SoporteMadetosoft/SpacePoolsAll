@@ -13,6 +13,5 @@ router.post('/find', ControllerCarrier.listByID);
 router.post('/insert', ControllerCarrier.insert);
 router.put('/update', ControllerCarrier.update);
 router.delete('/delete/:id', ControllerCarrier.delete);
-router.post('/upload', ControllerCarrier.upload);
 
 module.exports = router;

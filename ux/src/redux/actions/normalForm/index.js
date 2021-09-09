@@ -42,3 +42,9 @@ export const handleStartEditing = (endpoint, id) => {
         dispatch(fillFormData(data))
     }
 }
+
+export const handleGetForm = () => {
+    return async (dispatch, getState) => {
+        return getState().normalForm
+    }
+}

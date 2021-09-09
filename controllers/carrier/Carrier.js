@@ -2,14 +2,14 @@
 const CarrierDao = require('../../dao/carrier/CarrierDao')
 const express = require('express');
 const fileUpload = require('express-fileupload');
-const FileManagerDao = require('../../dao/global/FileManagerDao');
+const CarrierDocumentsDao = require('../../dao/carrier/CarrierDocumentsDao');
 
 const app = express();
 
 app.use(fileUpload());
 
 const carrierDao = new CarrierDao()
-const fileManagerDao = new FileManagerDao()
+const carrierDocumentsDao = new CarrierDocumentsDao()
 
 exports.list = async (req, res) => {
     try {
@@ -26,7 +26,6 @@ exports.list = async (req, res) => {
 
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
-
     try {
         res.json({
             ok: true,
@@ -55,9 +54,13 @@ exports.insert = async (req, res) => {
     try {
         /** INSERT CARRIER */
         const carrier = req.body.form
+        const documents = req.body.form.documents
         delete carrier.documents
 
-        await carrierDao.insert(carrier)
+        const insert = await carrierDao.insert(carrier)
+
+        carrierDao.multipleAccess(documents, carrierDocumentsDao, insert.insertId, 'idCarrier')
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
@@ -69,27 +72,17 @@ exports.update = (req, res) => {
     try {
         /**UPDATE CARRIER */
         const carrier = req.body.form
+        const documents = req.body.form.documents
+
         delete carrier.documents
 
         carrierDao.update(carrier)
+
+        carrierDao.multipleAccess(documents, carrierDocumentsDao, carrier.id, 'idCarrier')
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)
-    }
-}
-
-exports.upload = async (req, res) => {
-
-    try {
-        const dateNow = req.body.filePath;
-        const files = [].concat(req.files.file);
-
-        await fileManagerDao.uploadFile(dateNow, files)
-
-        return res.json({ ok: true, filePath: dateNow })
-    } catch (error) {
-        console.log(error);
-        return res.status(500).send(error);
     }
 }

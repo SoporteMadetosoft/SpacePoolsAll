@@ -1,14 +1,4 @@
 class ContactPerson {
-    id
-    name
-    phone
-    email
-    charge
-    startSchedule
-    endSchedule
-    defaultContact
-    department = []
-
     constructor({ id, name, phone, email, charge, startSchedule, endSchedule, defaultContact, department }) {
         this.id = id
         this.name = name

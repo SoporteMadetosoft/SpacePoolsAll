@@ -74,7 +74,6 @@ const Router = () => {
       action = route.meta.action ? route.meta.action : null
       resource = route.meta.resource ? route.meta.resource : null
     }
-    console.log(route.meta)
     if (
       (!isUserLoggedIn() && route.meta === undefined) ||
       (!isUserLoggedIn() && route.meta && !route.meta.authRoute && !route.meta.publicRoute)

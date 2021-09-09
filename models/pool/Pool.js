@@ -9,8 +9,7 @@ class Pool {
         nameSociedad,
         nameHydrius,
         fabricationName,
-        priceVATout,
-        priceVATin,
+        price,
         cost,
         simultaneousFabrications,
         observations,
@@ -25,8 +24,7 @@ class Pool {
         this.nameSociedad = nameSociedad
         this.nameHydrius = nameHydrius
         this.fabricationName = fabricationName
-        this.priceVATout = priceVATout
-        this.priceVATin = priceVATin
+        this.price = price
         this.cost = cost
         this.simultaneousFabrications = simultaneousFabrications
         this.observations = observations

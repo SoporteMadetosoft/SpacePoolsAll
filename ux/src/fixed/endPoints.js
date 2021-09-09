@@ -1,6 +1,7 @@
 
 
 const globalEndpoints = {
+    FileManager: '/global/fileManager',
     ItemType: '/global/itemType',
     Language: '/global/language',
     Mode: '/global/mode',
@@ -12,7 +13,7 @@ const setupEndpoints = {
     PaymentMethods: '/setup/general/paymentMethod',
     Departments: '/setup/general/department',
     AddressesTypes: '/setup/general/addressesTypes',
-    
+
 
     CustomerType: '/setup/customers/type',
     CustomerCategory: '/setup/customers/category',
@@ -26,7 +27,7 @@ const setupEndpoints = {
 
     Place: '/setup/items/place'
 
-    
+
 }
 
 
@@ -41,7 +42,7 @@ export const endPoints = {
     Trailers: '/trailers',
 
     Purchases: '/purchases',
-    
+
     Pools: '/pools',
 
     Orders: '/orders',

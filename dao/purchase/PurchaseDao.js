@@ -22,7 +22,6 @@ class PurchaseDao extends GenericDao {
     }
 
     async mountList(data) {
-        console.log(data)
         const vendor = await this.VendorDao.findVendorById(data.vendorId)
         const list = {
             ...data,
@@ -31,16 +30,16 @@ class PurchaseDao extends GenericDao {
 
         }
 
-        const {purchaseCode, items,  vendorN, purchaseDate, deliveryDate , observations } = list
+        const { purchaseCode, items, vendorN, purchaseDate, deliveryDate, observations } = list
 
 
-       
+
 
 
         const newPurchaseDate = this.datetimeToEuropeDate(purchaseDate)
         const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)
 
-        const nObj = {purchaseCode:purchaseCode, items: "", vendorId: vendorN, purchaseDate: newPurchaseDate , observations: observations, deliveryDate:newDeliveryDate }   
+        const nObj = { purchaseCode: purchaseCode, items: "", vendorId: vendorN, purchaseDate: newPurchaseDate, observations: observations, deliveryDate: newDeliveryDate }
         return nObj
     }
 

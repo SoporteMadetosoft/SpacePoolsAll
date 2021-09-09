@@ -6,14 +6,18 @@ import BreadCrumbs from '@components/breadcrumbs'
 import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 import { save } from '../../utility/helpers/Axios/save'
 import { CarriersForm } from './carriersForm/CarriersForm'
-import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm'
+import { addRepeaterRegister, handleGetForm, handleStartEditing, initNormalForm } from '../../redux/actions/normalForm'
 import { FileContext } from './carriersForm/FileContext'
-import { handleCleanUp, handleLoadDocuments, saveFiles } from '../../redux/actions/fileUpload'
+import { handleChangeDestination, handleChangeUpload, handleCleanUp, saveFiles } from '../../redux/actions/fileUpload'
 import { MkDir } from '../../utility/helpers/Axios/MkDir'
-import { startAddSelectOptions } from '../../redux/actions/selects'
 import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
+import { SwalUploadAndSave } from '../../utility/helpers/SwalUploadAndSave'
+import { loadFiles } from '../../utility/helpers/Axios/loadFiles'
+import { uploadFile } from '../../utility/helpers/Axios/uploadFile'
 
-const structureForm = {}
+const structureForm = {
+    documents: []
+}
 
 export const CarrierFormScreen = () => {
 
@@ -35,23 +39,52 @@ export const CarrierFormScreen = () => {
     const titulo = (id) ? 'Editar Transportista' : 'Añadir Transportista'
     const customerName = (form.name) ? form.name : titulo
 
+    const preSubmit = (filePath2) => {
+        return new Promise(async (resolve, reject) => {
+            if (upload === 1) {
+                const swalResp = await SwalUploadAndSave()
+                if (swalResp === true) {
+                    const formData = new FormData()
+                    formData.append('filePath', filePath2)
+
+                    for (const element of file) {
+
+                        formData.append('file', element)
+                    }
+
+                    await uploadFile('FileManager', formData)
+
+                    dispatch(handleChangeDestination(filePath2))
+                    dispatch(handleChangeUpload(0))
+                    const data = await loadFiles('FileManager', filePath2)
+                    await data.map(
+                        document => (
+                            dispatch(addRepeaterRegister('documents', document))
+                        )
+                    )
+                }
+            }
+            resolve('')
+        })
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const filePath2 = await MkDir(realFilePath)
-        if (upload) {
-            dispatch(await saveFiles('Carriers', filePath2, file))
-        }
+        const filePath2 = MkDir('Carrier', realFilePath)
 
-        const prettyForm = {
-            ...form,
-            idStatus: exceptionController(form.idStatus),
-            filePath: filePath2
-        }
+        await preSubmit(filePath2)
 
-        save('Carriers', id, prettyForm)
-        dispatch(handleCleanUp())
-        dispatch(startAddSelectOptions('/carriers', 'carriersOpt'))
-        history.push('/porters/carriers')
+        const form2 = dispatch(handleGetForm())
+        form2.then(async (value) => {
+            const prettyForm = {
+                ...value,
+                idStatus: exceptionController(value.idStatus),
+                filePath: filePath2
+            }
+            await save('Carriers', id, prettyForm)
+            dispatch(handleCleanUp())
+            history.push('/porters/carriers')
+        })
     }
 
     return (

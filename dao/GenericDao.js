@@ -101,6 +101,7 @@ class GenericDao {
     }
 
     multipleAccess = async (data, obj, id, foreign) => {
+        console.log(id, foreign)
         const idsDb = await obj.findAllId(id, foreign)
         const idsForm = []
         const d = data

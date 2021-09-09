@@ -11,17 +11,17 @@ import { ProductionsList } from '@fixed/productions/ProductionsList'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 
-export const ProductionScreenList = ({titulo}) => { 
+export const ProductionScreenList = ({ titulo }) => {
     console.log("he llegado a productionscreenlist")
     const dispatch = useDispatch()
-    const {registros:data} = useSelector(state => state.registrosReducer)
+    const { registros: data } = useSelector(state => state.registrosReducer)
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('Productions'))   
+        dispatch(startLoadingTable('Productions'))
     }, [])
     return (
-        
+
         <CustomDataTable title={titulo} columns={ProductionsList} data={data} />
     )
 }

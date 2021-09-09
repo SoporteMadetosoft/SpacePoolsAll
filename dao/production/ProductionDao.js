@@ -21,24 +21,23 @@ class ProductionDao extends GenericDao {
     async mountList(data) {
         const order = await this.OrderDao.findOrderById(data.orderId);
         const pool = await this.PoolDao.findPoolById(order.poolId);
-        console.log(pool)
         const list = {
             ...data,
             orderCode: order != undefined ? order.orderCode : 'p',
-            orderDate : order != undefined ? order.orderDate : 'p',
-            deliveryDate: order != undefined ? order.deliveryDate : 'p' ,
-            deliverySchedulerStart: order != undefined ?order.deliverySchedulerStart : 'p',
+            orderDate: order != undefined ? order.orderDate : 'p',
+            deliveryDate: order != undefined ? order.deliveryDate : 'p',
+            deliverySchedulerStart: order != undefined ? order.deliverySchedulerStart : 'p',
             deliverySchedulerEnd: order != undefined ? order.deliverySchedulerEnd : 'p',
             observations: order != undefined ? order.observations : 'p',
             pools: pool != undefined ? pool.fabricationName : 'P'
 
         }
-        const { observations, orderId, productionCode, status, orderCode, pools, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd} = list
-        
-        const newOrderDate = this.datetimeToEuropeDate(orderDate)
-        const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)  
+        const { observations, orderId, productionCode, status, orderCode, pools, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd } = list
 
-        const nObj = { observations : observations, orderCode: orderId, productionCode: productionCode, status: status, orderCode : orderCode, pool: pools, orderDate : newOrderDate, deliveryDate : newDeliveryDate, deliveryTime : deliverySchedulerStart+" - "+deliverySchedulerEnd }
+        const newOrderDate = this.datetimeToEuropeDate(orderDate)
+        const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)
+
+        const nObj = { observations: observations, orderCode: orderId, productionCode: productionCode, status: status, orderCode: orderCode, pool: pools, orderDate: newOrderDate, deliveryDate: newDeliveryDate, deliveryTime: deliverySchedulerStart + " - " + deliverySchedulerEnd }
 
         return nObj
     }

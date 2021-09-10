@@ -1,8 +1,9 @@
 
 
-export const deconstructSelect = (obj) => {
+export const deconstructSelect = (obj, labelName = 'name') => {
+    console.log(obj)
     return {
-        label: obj.name,
+        label: obj[labelName],
         value: obj.id
     }
 }

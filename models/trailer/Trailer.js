@@ -1,5 +1,5 @@
 class Trailer {
-    repairs = []
+    // repairs = []
     #table = 'trailer'
 
     constructor({
@@ -14,8 +14,10 @@ class Trailer {
         insuranceDateLimit,
         maintenanceDate,
         observations,
+        filePath,
         idStatus,
-        repairs = []
+        // repairs = [],
+        documents = []
     }) {
         this.id = id
         this.brand = brand
@@ -29,7 +31,9 @@ class Trailer {
         this.maintenanceDate = maintenanceDate
         this.observations = observations
         this.idStatus = idStatus
-        this.repairs = repairs
+        // this.repairs = repairs
+        this.filePath = filePath
+        this.documents = documents
     }
     get table() {
         return this.#table;

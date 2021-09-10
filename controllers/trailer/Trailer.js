@@ -1,9 +1,11 @@
 
 const RepairDao = require('../../dao/trailer/RepairDao')
 const TrailerDao = require('../../dao/trailer/TrailerDao')
+const TrailerDocumentsDao = require('../../dao/trailer/TrailerDocumentsDao')
 
 const trailerDao = new TrailerDao()
 const repairDao = new RepairDao()
+const trailerDocumentsDao = new TrailerDocumentsDao()
 
 exports.list = async (req, res) => {
     try {
@@ -50,9 +52,14 @@ exports.insert = async (req, res) => {
 
         /** INSERT CARRIER */
         const trailer = req.body.form
+        const documents = req.body.form.documents
+
         delete trailer.documents
 
-        await trailerDao.insert(trailer)
+        const insert = await trailerDao.insert(trailer)
+
+        trailerDao.multipleAccess(documents, trailerDocumentsDao, insert.insertId, 'idTrailer')
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
@@ -66,9 +73,14 @@ exports.update = async (req, res) => {
 
         /** INSERT CARRIER */
         const trailer = req.body.form
+        const documents = req.body.form.documents
+
         delete trailer.documents
 
         await trailerDao.update(trailer)
+
+        trailerDao.multipleAccess(documents, trailerDocumentsDao, trailer.id, 'idTrailer')
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

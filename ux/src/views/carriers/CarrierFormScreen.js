@@ -7,13 +7,13 @@ import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 import { save } from '../../utility/helpers/Axios/save'
 import { CarriersForm } from './carriersForm/CarriersForm'
 import { addRepeaterRegister, handleGetForm, handleStartEditing, initNormalForm } from '../../redux/actions/normalForm'
-import { FileContext } from './carriersForm/FileContext'
-import { handleChangeDestination, handleChangeUpload, handleCleanUp, saveFiles } from '../../redux/actions/fileUpload'
+import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../redux/actions/fileUpload'
 import { MkDir } from '../../utility/helpers/Axios/MkDir'
 import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 import { SwalUploadAndSave } from '../../utility/helpers/SwalUploadAndSave'
 import { loadFiles } from '../../utility/helpers/Axios/loadFiles'
 import { uploadFile } from '../../utility/helpers/Axios/uploadFile'
+import { FileContext } from '../../utility/context/FileContext'
 
 const structureForm = {
     documents: []
@@ -70,7 +70,7 @@ export const CarrierFormScreen = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const filePath2 = MkDir('Carrier', realFilePath)
+        const filePath2 = MkDir('Carriers', realFilePath)
 
         await preSubmit(filePath2)
 

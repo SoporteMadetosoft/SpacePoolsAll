@@ -1,12 +1,6 @@
 
 const CarrierDao = require('../../dao/carrier/CarrierDao')
-const express = require('express');
-const fileUpload = require('express-fileupload');
 const CarrierDocumentsDao = require('../../dao/carrier/CarrierDocumentsDao');
-
-const app = express();
-
-app.use(fileUpload());
 
 const carrierDao = new CarrierDao()
 const carrierDocumentsDao = new CarrierDocumentsDao()

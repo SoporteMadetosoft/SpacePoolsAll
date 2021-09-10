@@ -15,6 +15,8 @@ const Language = require("../global/LanguageDao");
 
 const CustomerAddressDao = require("../customer/CustomerAddressDao");
 const CustomerContactPersonDao = require("./CustomerContactPersonDao");
+const CarrierDocumentsDao = require("./CustomerDocumentsDao");
+const FileManagerDao = require("../global/FileManagerDao");
 
 
 class CustomerDao extends GenericDao {
@@ -31,6 +33,7 @@ class CustomerDao extends GenericDao {
         this.Language = new Language()
         this.CustomerAddressDao = new CustomerAddressDao()
         this.CustomerContactPersonDao = new CustomerContactPersonDao()
+        this.FileManagerDao = new FileManagerDao(CarrierDocumentsDao)
     }
 
     async mountObj(data) {
@@ -46,7 +49,8 @@ class CustomerDao extends GenericDao {
             idCustomerActivity: await this.CustomerActivityDao.findById(data.idCustomerActivity),
             idCustomerOrigin: await this.CustomerOriginDao.findById(data.idCustomerOrigin),
             addresses: await this.CustomerAddressDao.findByCustomerId(data.id),
-            contacts: await this.CustomerContactPersonDao.findByCustomerId(data.id)
+            contacts: await this.CustomerContactPersonDao.findByCustomerId(data.id),
+            documents: await this.FileManagerDao.getDocumentsInfo(data.filePath)
         }
         return new Customer(customer)
     }
@@ -72,7 +76,7 @@ class CustomerDao extends GenericDao {
                 } else {
 
                     resolve(result[0])
-                    
+
                 }
             })
         })

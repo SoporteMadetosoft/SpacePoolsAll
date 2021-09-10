@@ -19,10 +19,6 @@ export const ModelForm = () => {
         }
     }, [])
 
-    const handleSelectChange = (key, value) => {
-        dispatch(handleChangeController(key, value))
-    }
-
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }

@@ -1,9 +1,11 @@
 
 const RepairDao = require('../../dao/vehicles/RepairDao')
 const VehicleDao = require('../../dao/vehicles/VehicleDao')
+const VehicleDocumentsDao = require('../../dao/vehicles/VehicleDocumentsDao')
 
 const vehicleDao = new VehicleDao()
 const repairDao = new RepairDao()
+const vehicleDocumentsDao = new VehicleDocumentsDao()
 
 exports.list = async (req, res) => {
     try {
@@ -48,13 +50,14 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT VEHICLE */
-        const insert = await vehicleDao.insert(req.body.form)
-        /**INSERT REPAIR */
-        req.body.repairs.forEach(element => {
-            element.idTrailer = insert.insertId
-            repairDao.insert(element)
-        });
+        const vehicle = req.body.form
+        const documents = req.body.form.documents
 
+        delete vehicle.documents
+
+        const insert = await vehicleDao.insert(vehicle)
+
+        vehicleDao.multipleAccess(documents, vehicleDocumentsDao, insert.insertId, 'idVehicle')
 
         res.json({ ok: true })
     } catch (error) {
@@ -67,11 +70,14 @@ exports.update = (req, res) => {
 
     try {
         /**UPDATE VEHICLE */
-        vehicleDao.update(req.body.form)
-        /**UPDATE REPAIR */
-        req.body.formData.repairs.forEach(element => {
-            repairDao.update(element)
-        })
+        const vehicle = req.body.form
+        const documents = req.body.form.documents
+
+        delete vehicle.documents
+
+        vehicleDao.update(vehicle)
+
+        vehicleDao.multipleAccess(documents, vehicleDocumentsDao, vehicle.id, 'idVehicle')
 
         res.json({ ok: true })
     } catch (error) {

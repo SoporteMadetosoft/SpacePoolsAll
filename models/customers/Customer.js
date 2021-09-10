@@ -13,6 +13,7 @@ class Customer {
         email,
         observations,
         accountNumber,
+        filePath,
         idPayDay,
         idStatus,
         idMode,
@@ -23,7 +24,8 @@ class Customer {
         idCustomerActivity,
         idCustomerOrigin,
         addresses = [],
-        contacts = []
+        contacts = [],
+        documents = []
     }) {
         this.id = id
         this.customerCode = customerCode
@@ -34,6 +36,7 @@ class Customer {
         this.email = email
         this.observations = observations
         this.accountNumber = accountNumber
+        this.filePath = filePath
         this.idPayDay = idPayDay
         this.idStatus = idStatus
         this.idMode = idMode
@@ -45,6 +48,7 @@ class Customer {
         this.idCustomerOrigin = idCustomerOrigin
         this.addresses = addresses
         this.contacts = contacts
+        this.documents = documents
     }
     get table() {
         return this.#table;

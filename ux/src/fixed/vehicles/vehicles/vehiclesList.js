@@ -24,7 +24,7 @@ export const vehiclesList = [
   },
   {
     name: 'Conductor',
-    selector: 'carrierId',
+    selector: 'idCarrier',
     sortable: true,
     searchable: true,
     width: '22%'

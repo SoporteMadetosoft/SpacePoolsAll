@@ -30,6 +30,10 @@ export const handleCleanForm = () => ({
     type: formTypes.cleanForm
 })
 
+export const handleCleanSection = (key) => ({
+    type: formTypes.cleanSectionForm,
+    payload: key
+})
 
 export const fillFormData = (data) => ({
     type: formTypes.fillFormData,

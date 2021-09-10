@@ -101,7 +101,6 @@ class GenericDao {
     }
 
     multipleAccess = async (data, obj, id, foreign) => {
-        console.log(id, foreign)
         const idsDb = await obj.findAllId(id, foreign)
         const idsForm = []
         const d = data
@@ -126,7 +125,7 @@ class GenericDao {
     #formatUpdate(params) {
         let update = ''
         Object.entries(params).forEach(element => {
-            if (element[0] != 'id') {
+            if (element[0] != 'id' && element[1] != 'null' && element[1] != null && element[1] != undefined) {
                 update = update.concat("`", element[0], "` = ", "'", element[1], "', ")
             }
         });

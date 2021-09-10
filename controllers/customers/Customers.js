@@ -1,5 +1,8 @@
 const CustomerDao = require('../../dao/customer/CustomerDao')
+const CarrierDocumentsDao = require('../../dao/customer/CustomerDocumentsDao')
+
 const customerDao = new CustomerDao()
+const carrierDocumentsDao = new CarrierDocumentsDao()
 
 exports.list = async (req, res) => {
     try {
@@ -50,15 +53,19 @@ exports.insert = async (req, res) => {
         const customer = req.body.form
         const addresses = req.body.form.addresses
         const contacts = req.body.form.contacts
-        
+        const documents = req.body.form.documents
+
         delete customer.addresses
         delete customer.contacts
+        delete customer.documents
+
         const insert = await customerDao.insert(customer)
-        /** INSERT ADDRESSES**/
-        
+
         customerDao.multipleAccess(addresses, customerDao.CustomerAddressDao, insert.insertId, 'idCustomer')
-        /** INSERT CONTACT PERSONS**/
+
         customerDao.multipleAccess(contacts, customerDao.CustomerContactPersonDao, insert.insertId, 'idCustomer')
+
+        customerDao.multipleAccess(documents, carrierDocumentsDao, insert.insertId, 'idCustomer')
 
         res.json({ ok: true })
     } catch (error) {
@@ -74,14 +81,19 @@ exports.update = async (req, res) => {
         const customer = req.body.form
         const addresses = req.body.form.addresses
         const contacts = req.body.form.contacts
+        const documents = req.body.form.documents
 
         delete customer.addresses
         delete customer.contacts
+        delete customer.documents
+
         customerDao.update(customer)
-        /** UPDATE ADDRESSES**/
+
         customerDao.multipleAccess(addresses, customerDao.CustomerAddressDao, customer.id, 'idCustomer')
-        /** UPDATE CONTACT PERSONS**/
+
         customerDao.multipleAccess(contacts, customerDao.CustomerContactPersonDao, customer.id, 'idCustomer')
+
+        customerDao.multipleAccess(documents, carrierDocumentsDao, customer.id, 'idCustomer')
 
         res.json({ ok: true })
     } catch (error) {

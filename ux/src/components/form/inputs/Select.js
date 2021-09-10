@@ -18,17 +18,19 @@ const placeholderStyles = {
 export const Select = ({ name, label, className, placeholder = label, isMulti = false, labelName = 'name', endpoint }) => {
 
     const dispatch = useDispatch()
-    const normalForm = useSelector(state => state.normalForm)
-    const { [endpoint]: options } = useSelector(state => state.selectReducer)
-    const value = normalForm[name] ? deconstructSelect(normalForm[name]) : null
-
-    const handleSelectChange = ({ value, label }) => {
-        dispatch(handleChangeController(name, { id: value, name: label }))
-    }
 
     useEffect(() => {
         dispatch(startAddSelectOptions(endpoint, endpoint, labelName))
     }, [])
+
+    const normalForm = useSelector(state => state.normalForm)
+    const { [endpoint]: options } = useSelector(state => state.selectReducer)
+    const value = normalForm[name] ? deconstructSelect(normalForm[name], labelName) : null
+
+    const handleSelectChange = ({ value, label }) => {
+        dispatch(handleChangeController(name, { id: value, [labelName]: label }))
+    }
+
 
 
     return (

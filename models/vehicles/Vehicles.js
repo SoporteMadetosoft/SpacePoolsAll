@@ -1,11 +1,11 @@
 class Vehicles {
-    repairs = []
+    // repairs = []
     #table = 'vehicles'
 
     constructor({
         id,
-        carrierId,
-        trailerId,
+        idCarrier,
+        idTrailer,
         model,
         vehicleCode,
         plate,
@@ -18,12 +18,14 @@ class Vehicles {
         maintenanceDate,
         tachograph,
         observations,
-        status,
-        repairs = []
+        idStatus,
+        filePath,
+        // repairs = [],
+        documents = []
     }) {
         this.id = id
-        this.carrierId = carrierId
-        this.trailerId = trailerId
+        this.idCarrier = idCarrier
+        this.idTrailer = idTrailer
         this.model = model
         this.vehicleCode = vehicleCode
         this.plate = plate
@@ -36,8 +38,10 @@ class Vehicles {
         this.maintenanceDate = maintenanceDate
         this.tachograph = tachograph
         this.observations = observations
-        this.status = status
-        this.repairs = repairs
+        this.idStatus = idStatus
+        // this.repairs = repairs
+        this.filePath = filePath
+        this.documents = documents
     }
     get table() {
         return this.#table;

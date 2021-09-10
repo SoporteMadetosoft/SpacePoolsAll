@@ -6,10 +6,8 @@ class CarrierDocumentsDao extends DocumentsDao {
         super(CarrierDocuments)
     }
 
-
     async mountObj(data) {
         return new CarrierDocuments(data)
     }
-
 }
 module.exports = CarrierDocumentsDao

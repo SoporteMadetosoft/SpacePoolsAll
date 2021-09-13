@@ -7,6 +7,7 @@ import { ItemsRepeater } from './ItemsRepeater'
 
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
+import { OrderCanvas } from './OrderCanvas'
 
 export const OrderForm = () => {
 
@@ -18,7 +19,7 @@ export const OrderForm = () => {
 
     const {
         idVendor
-         } = selectReducer
+    } = selectReducer
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
@@ -32,19 +33,19 @@ export const OrderForm = () => {
                         <Input name="orderCode" placeholder="Nº Pedido" label="Nº Pedido" />
                     </div>
                     <div className="col-md-4">
-                        <Select name="customerId" placeholder="Cliente" label="Cliente" endpoint="Customers"  labelName="comercialName"/>
+                        <Select name="customerId" placeholder="Cliente" label="Cliente" endpoint="Customers" labelName="comercialName" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="purchaseDate" placeholder="Dirección de entrega" label="Dirección"/>
+                        <Input name="purchaseDate" placeholder="Dirección de entrega" label="Dirección" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="phone" placeholder="Teléfono" label="Teléfono"/>
+                        <Input name="phone" placeholder="Teléfono" label="Teléfono" />
                     </div>
                     <div className="col-md-2">
                         <Input name="email" placeholder="Correo Electrónico" label="Correo Electrónico" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="pool" placeholder="Piscina" label="Piscina" endpoint="Pools" labelName="fabricationName"/>
+                        <Select name="pool" placeholder="Piscina" label="Piscina" endpoint="Pools" labelName="fabricationName" />
                     </div>
                     <div className="col-md-2">
                         <Input name="orderDate" type="date" placeholder="Fecha de Pedido" label="Fecha de Pedido" />
@@ -67,13 +68,18 @@ export const OrderForm = () => {
                             onChange={handleInputChange}
                         />
                     </div>
-   
-            
+
+
                 </div>
             </div>
             <div className="card">
                 <div className="card-body">
                     <ItemsRepeater />
+                </div>
+            </div>
+            <div className="card">
+                <div className="card-body">
+                    <OrderCanvas />
                 </div>
             </div>
         </>

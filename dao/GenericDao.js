@@ -78,7 +78,6 @@ class GenericDao {
             this.db.query(`INSERT INTO ?? (??) VALUES  (?)`, [this.auxModel.table, Object.keys(params), Object.values(params)], async (err, result) => {
                 if (err) {
                     reject(err)
-
                 } else {
                     resolve(result)
 

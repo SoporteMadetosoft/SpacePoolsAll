@@ -13,6 +13,7 @@ import selectReducer from './selects'
 
 import fileUpload from './fileUpload'
 import poolsReducer from './pools'
+import canvasReducer from './canvas'
 
 const rootReducer = combineReducers({
   auth,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   normalForm,
   selectReducer,
   fileUpload,
-  poolsReducer
+  poolsReducer,
+  canvasReducer
 })
 
 export default rootReducer

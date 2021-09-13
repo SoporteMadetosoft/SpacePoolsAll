@@ -1,18 +1,35 @@
-import React from 'react'
+
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 import { PoolsItemsForm } from './PoolsItemsForm'
 import { PoolsRawForm } from './PoolsRawForm'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleCalculatePriceIVA } from '../../../redux/actions/pools'
-
+import { handleCalculatePriceIVA, handleCalcuteTotalCost } from '../../../redux/actions/pools'
+import React, { useEffect } from 'react'
 
 export const PoolsForm = () => {
     const {value} = useSelector(state => state.poolsReducer)
 
+    const dispatch = useDispatch()
+   //useEffect(() => {
+   //   console.log("he cargado?")
+   //   dispatch(handleCalcuteTotalCost())
+   //})
+
+   function calculateAfterLoad() {
+        setTimeout(function() {
+            dispatch(handleCalcuteTotalCost())
+        },200)  
+   }
 
     return (
+        
         <>
+            <script>
+                window.addEventListener("load", function(event) {
+                    calculateAfterLoad()
+                })
+            </script>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">

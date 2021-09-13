@@ -21,6 +21,8 @@ const normalForm = (state = initialState, action) => {
             }
 
         case formTypes.addRepeaterRegister:
+            console.log("-----------")
+            console.log(action.payload)
             return {
                 ...state,
                 [action.payload.key]: [

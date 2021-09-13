@@ -3,16 +3,20 @@ import Repeater from '@components/repeater'
 import { X, Plus } from 'react-feather'
 import { Button } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import Select from 'react-select'
-import { startAddSelectOptions } from '../../../redux/actions/selects'
+import ReactSelect from 'react-select'
+import { Select } from '../../../components/form/inputs/Select'
+import { addSelectOptions, startAddSelectOptions } from '../../../redux/actions/selects'
 import React, { useEffect } from 'react'
+import axios from 'axios'
 
-
-import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, editRepeaterRegister, handleChangeController, removeRepeaterRegister } from '../../../redux/actions/normalForm'
+import { constructSelect } from '../../../utility/helpers/deconstructSelect'
+import { addSelectionOnNormalForm, handleSearchCost, handleSearchStock } from '../../../redux/actions/items'
 
 const formStructure = {
-    id: '',
-    quantity: ''
+    idItem: '',
+    name: '',
+    itemsOpt: {}
 }
 
 export const ItemsRepeater = () => {
@@ -29,7 +33,7 @@ export const ItemsRepeater = () => {
     }
 
     useEffect(() => {
-        dispatch(startAddSelectOptions('Items','idOpt'))
+        dispatch(startAddSelectOptions('ItemType','idOpt'))
     }, [])
 
 
@@ -56,63 +60,104 @@ export const ItemsRepeater = () => {
 }
 
 const ItemsForm = ({ position }) => {
+    //const {cost} = useSelector(state => state.itemsReducer)
+    //const {stock} = useSelector(state => state.itemsReducer)
 
+   
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
-    const { idOpt } = selectReducer
-    const {
-        id,
-        quantity } = normalForm.items[position]
+    const { idOpt  } = selectReducer
+    const {id, quantity } = normalForm
+    const { stock, cost, itemsOpt } = normalForm.items[position]
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('items', position))
     }
 
-    const handleInputChange = ({ target }) => {
 
+    const handleSelectChange = (key, element) => {
+        const el = constructSelect(element)
         const obj = {
-            name: target.name,
-            value: target.value
+            name: key,
+            value: el
         }
-
         dispatch(
             editRepeaterRegister('items', position, obj)
         )
     }
+    
 
-    const handleSelectChange = (key, element) => {
+    const handleLoadStockCost = (obj) => {
+        console.log("pspspspsp", obj)
+        console.log(position)
+       dispatch(handleSearchCost('Items', obj.value, position, 'items'))
+       dispatch(handleSearchStock('Items', obj.value, position, 'items'))
+       console.log(cost, stock)
+       
+    }
 
-        const obj = {
-            name: key,
-            value: element
-        }
 
-        dispatch(
-            editRepeaterRegister('items', position, obj)
-        )
+
+
+
+    const handleLoadItems = async (obj) => {
+       const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/item/listItems/${obj.value}`)
+       //dispatch(addSelectOptions('itemsOpt', data.map(option => ({ label: option.name, value: option.id }))))
+       dispatch(addSelectionOnNormalForm('itemsOpt', data.map(option => ({ label: option.name, value: option.id })),'items',position))
+       console.log(data)
+       console.log(position)
+       //dispatch(handleChangeController('item', ''))
     }
 
     return (
 
         <div className="row border-bottom pb-1 mt-1 mx-1">
             <div className="col-md-2">
-                <label className="control-label">Producto</label>
-                <Select  
-                    name="id"
-                    options={idOpt}
-                    onChange={(value) => { handleSelectChange('id', value) }}
-                    value={id}
-                    multiple
-                />
+                <label className="control-label">Tipo Producto</label>
+                    <ReactSelect  
+                        name="itemType"
+                        options={idOpt}
+                        onChange={
+                            (obj) => { 
+                                handleLoadItems(obj)
+                                handleSelectChange("idItem",obj)
+                            }
+                            }
+                        value={id}
+                    />
             </div>
+           
             <div className="col-md-2">
-                <label className="control-label">Cantidad</label>
-                <input
-                    type="text"
-                    name="quantity"
-                    className="form-control"
-                    onChange={handleInputChange}
-                    value={quantity} />
+                <label className="control-label">Producto</label>
+                    <ReactSelect 
+                    name="item" 
+                    options={ itemsOpt }
+                    onChange = {
+                        (obj) => { handleLoadStockCost(obj) }
+                    }
+                    />
+            </div>
+
+
+            <div className="col-md-2">
+                <label className="control-label">Precio</label>
+                    <input
+                        type="text"
+                        name="cost"
+                        className="form-control"
+                        value={cost}
+                        readOnly />
+            </div>
+
+            <div className="col-md-2">
+                <label className="control-label">Stock</label>
+                    <input
+                        type="text"
+                        name="stock"
+                        className="form-control"
+                        value={stock}
+                        readOnly
+                         />
             </div>
 
             <div className="col-md-1">

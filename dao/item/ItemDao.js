@@ -4,6 +4,8 @@ const GenericDao = require("../GenericDao");
 const ProductPlaceDao = require("../setup/item/PlaceDao");
 const ProductFamilyDao = require("../item/ProductFamilyDao");
 const ItemTypeDao = require("../global/ItemTypeDao");
+const OrderDao = require("../order/OrderDao");
+const ExtraItemDao = require("../order/ExtraItemDao");
 //const PurchaseItemsDao = require("../purchase/ItemDao");
 
 class ItemDao extends GenericDao {
@@ -69,10 +71,26 @@ class ItemDao extends GenericDao {
         const list = {
             ...data,
         }
+        let reserveStock = 0
+        let num
+        this.OrderDao = new OrderDao()
+        this.ExtraItemDao = new ExtraItemDao()
+        
+        let activates = await this.OrderDao.findActiveOrders()
+        
+        console.log(activates)
+
+        for(let i =0; i<activates.length; i++){
+            console.log(await this.ExtraItemDao.countItemById(data.id, activates[i]))
+        }
+    
+
         const { id, itemCode, name, description, stock } = list
         const nObj = { id: id, itemCode: itemCode, name: name, description: description, stock: stock }
         return nObj
     }
+       
+    
 }
 
 module.exports = ItemDao

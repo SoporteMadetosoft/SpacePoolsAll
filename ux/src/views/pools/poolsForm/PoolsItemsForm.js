@@ -112,6 +112,7 @@ const ItemsForm = ({ position }) => {
             </div>
             <div className="col-md-5">
                 <label className="control-label">Cantidad</label>
+
                 <input
                     type="number"
                     name="cantidad"
@@ -119,7 +120,6 @@ const ItemsForm = ({ position }) => {
                     onChange={handleInputChange}
                     value={cantidad} />
             </div>
-
             <div className="col-md-2 ">
                 <Button.Ripple className='btn-icon form-control mt-2 btn-sm' color='danger' outline onClick={decreaseCount}>
                     <X size={14} />

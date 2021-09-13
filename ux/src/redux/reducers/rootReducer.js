@@ -14,7 +14,6 @@ import selectReducer from './selects'
 import fileUpload from './fileUpload'
 import poolsReducer from './pools'
 
-
 const rootReducer = combineReducers({
   auth,
   navbar,

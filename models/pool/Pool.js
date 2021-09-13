@@ -1,4 +1,6 @@
 class Pool {
+    items = []
+    raws = []
     #table = 'pool'
 
     constructor({

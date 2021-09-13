@@ -27,6 +27,7 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.10",
     "path": "^0.12.7",
+    "react-big-calendar": "^0.35.0",
     "react-file-viewer": "^1.2.1",
     "react-router-dom": "^5.2.1"
   },

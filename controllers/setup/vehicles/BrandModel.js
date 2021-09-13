@@ -17,6 +17,7 @@ exports.list = async (req, res) => {
 
 exports.selectByIdBrand = async (req, res) => {
     const id = parseInt(req.params.id, 10)
+    console.log(req.params.id)
     try {
         res.json({
             ok: true,

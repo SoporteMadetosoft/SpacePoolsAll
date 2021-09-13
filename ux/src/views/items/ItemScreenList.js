@@ -12,7 +12,8 @@ export const ItemScreenList = ({ titulo }) => {
 
     const dispatch = useDispatch()
     const { registros: data } = useSelector(state => state.registrosReducer)
-
+    
+    console.log(data)
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Items'))

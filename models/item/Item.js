@@ -1,7 +1,7 @@
 
 class Item {
     #table = 'item'
-
+    
     constructor({
         id,
         family,

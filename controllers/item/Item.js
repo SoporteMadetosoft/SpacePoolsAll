@@ -6,6 +6,18 @@ const itemDao = new ItemDao()
 const productFamilyDao = new ProductFamilyDao()
 const productPlaceDao = new ProductPlaceDao()
 
+//exports.selectByIdType = async (req, res) =>{
+//    const id = parseInt(req.params.id, 10)
+//    try {
+//        res.json({
+//            ok: true,
+//            data: await itemDao.findByItemType(id)
+//        })
+//    } catch (error) {
+//        console.log(error)
+//        return res.status(500).send(error);
+//    }
+//}
 
 
 exports.list = async (req, res) => {
@@ -22,7 +34,7 @@ exports.list = async (req, res) => {
 }
 
 exports.listItems = async (req, res) => {
-    const itemType = req.headers.itemtype
+    const itemType = parseInt(req.params.itemtype, 10)
     try {
         res.json({
             ok: true,

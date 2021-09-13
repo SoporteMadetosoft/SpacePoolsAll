@@ -6,7 +6,7 @@ const ItemDao = require("../item/ItemDao");
 class ExtraItemDao extends GenericDao {
     constructor() {
         super(ExtraItem);
-        this.ItemDao = new ItemDao
+        //this.ItemDao = new ItemDao()
     }
 
     async mountObj(data) {
@@ -38,6 +38,18 @@ class ExtraItemDao extends GenericDao {
                     }
 
                     resolve(customerData)
+                }
+            })
+        })
+    }
+
+    countItemById(id, orderId){
+        return new Promise ((resolve, reject) => {
+            this.db.query('SELECT COUNT(itemId) FROM orders_extra_items WHERE itemId = ? and orderId = ?', [id, orderId], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(result[0])
                 }
             })
         })

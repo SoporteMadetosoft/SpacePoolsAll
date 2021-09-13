@@ -12,7 +12,7 @@ class OrderDao extends GenericDao {
     constructor() {
         super(Order);
         //this.ProductionDao = new ProductionDao()
-        this.PoolDao = new PoolDao()
+        //this.PoolDao = new PoolDao()
         this.CustomerDao = new CustomerDao()
         this.CustomerDataDao = new CustomerDataDao()
         this.ExtraItemDao = new ExtraItemDao()
@@ -25,7 +25,7 @@ class OrderDao extends GenericDao {
             //production: await this.ProductionDao.findByOrderId(data.id),
             customerData: await this.CustomerDataDao.findByOrderId(data.id),
             extraItems: await this.ExtraItemDao.findByOrderId(data.id),
-            poolId: await this.PoolDao.findById(data.poolid)
+            //poolId: await this.PoolDao.findById(data.poolid)
         }
         return new Order(order)
     }
@@ -58,6 +58,24 @@ class OrderDao extends GenericDao {
                 } else {
 
                     resolve(result[0])
+                }
+            })
+        })
+    }
+
+    findActiveOrders(){
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT id FROM orders WHERE state = 2', (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+
+                    let objList = []
+                    for (const res of result) {
+                        objList.push(res.id)
+                    }
+                   
+                    resolve(objList)
                 }
             })
         })

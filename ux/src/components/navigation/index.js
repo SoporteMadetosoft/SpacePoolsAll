@@ -14,7 +14,7 @@ import orders from './orders/settings'
 import productions from './production/settings'
 
 import administrator from './administrator/settings'
-
+import calendar from './calendar/settings'
 // ** Merge & Export
 
 export default [
@@ -27,6 +27,7 @@ export default [
     ...purchases, 
     ...orders, 
     ...productions,
+    ...calendar,
     ...headerAdmin,
-    ...administrator
+    ...administrator  
 ]

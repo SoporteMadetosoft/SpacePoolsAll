@@ -71,22 +71,20 @@ class ItemDao extends GenericDao {
         const list = {
             ...data,
         }
+
         let reserveStock = 0
-        let num
         this.OrderDao = new OrderDao()
         this.ExtraItemDao = new ExtraItemDao()
-        
         let activates = await this.OrderDao.findActiveOrders()
-        
         console.log(activates)
-
         for(let i =0; i<activates.length; i++){
-            console.log(await this.ExtraItemDao.countItemById(data.id, activates[i]))
+            if (await this.ExtraItemDao.countItemById(data.id, activates[i])!=undefined) reserveStock++
         }
-    
+        console.log(reserveStock)
 
         const { id, itemCode, name, description, stock } = list
-        const nObj = { id: id, itemCode: itemCode, name: name, description: description, stock: stock }
+        const nObj = { id: id, itemCode: itemCode, name: name, description: description, stock: stock, reserveStock: reserveStock, storeStock:data.stock - reserveStock
+        }
         return nObj
     }
        

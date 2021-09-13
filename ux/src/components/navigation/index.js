@@ -29,5 +29,5 @@ export default [
     ...productions,
     ...calendar,
     ...headerAdmin,
-    ...administrator  
+    ...administrator
 ]

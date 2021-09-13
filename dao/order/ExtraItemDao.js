@@ -45,7 +45,7 @@ class ExtraItemDao extends GenericDao {
 
     countItemById(id, orderId){
         return new Promise ((resolve, reject) => {
-            this.db.query('SELECT COUNT(itemId) FROM orders_extra_items WHERE itemId = ? and orderId = ?', [id, orderId], (err, result) => {
+            this.db.query('SELECT id FROM orders_extra_items WHERE itemId = ? and orderId = ?', [id, orderId], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

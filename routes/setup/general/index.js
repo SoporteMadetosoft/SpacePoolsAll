@@ -10,5 +10,6 @@ const router = express.Router();
 router.use('/addressesTypes', require('./addressesTypes'));
 router.use('/paymentMethod', require('./paymentMethod'));
 router.use('/department', require('./department'));
+router.use('/tax', require('./taxe'))
 
 module.exports = router;

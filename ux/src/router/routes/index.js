@@ -12,6 +12,7 @@ import ItemsRoutes from './items/Items'
 import OrdersRoutes from './orders/Orders'
 import ProductionsRoutes from './productions/Productions'
 import CalendarRoutes from './calendar/Calendar'
+import TaxesRoutes from './setup/taxes/TaxesRotes'
 
 // ** Document title
 const TemplateTitle = '%s - SpacePools'
@@ -34,8 +35,8 @@ const Routes = [
   ...PagesRoutes,
   ...sRoutes,
   ...ProductionsRoutes,
-  ...CalendarRoutes
-
+  ...CalendarRoutes,
+  ...TaxesRoutes
 ]
 
 export { DefaultRoute, TemplateTitle, Routes }

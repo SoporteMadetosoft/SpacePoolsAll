@@ -13,7 +13,7 @@ const setupEndpoints = {
     PaymentMethods: '/setup/general/paymentMethod',
     Departments: '/setup/general/department',
     AddressesTypes: '/setup/general/addressesTypes',
-
+    Taxes: '/setup/general/tax',
 
     CustomerType: '/setup/customers/type',
     CustomerCategory: '/setup/customers/category',

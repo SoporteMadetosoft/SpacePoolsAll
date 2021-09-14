@@ -56,6 +56,13 @@ export const ordersList = [
             minWidth: '200px'
         },
         {
+          name: 'precio',
+          selector: 'price',
+          sortable: true,
+          searchable: true,
+          minWidth: '200px'
+        },
+        {
             name: 'Acciones',
             width: '150px',
             cell: row => {
@@ -69,7 +76,7 @@ export const ordersList = [
                       <MoreVertical size={15} />
                     </DropdownToggle>
                     <DropdownMenu right>
-                    <Link to={`./purchase/edit/${row.id}`}>
+                    <Link to={`./orders/edit/${row.id}`}>
                       <DropdownItem tag='a' href='/' className='w-100'>
                         <FileText size={15} />
                         <span className='align-middle ml-50'>Detalles</span>

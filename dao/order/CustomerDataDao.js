@@ -27,7 +27,7 @@ class CustomerDataDao extends GenericDao {
 
     findByOrderId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM orders_customer_data WHERE orderId = ?', [id], (err, result) => {
+            this.db.query('SELECT * FROM orders_customer_data WHERE idOrder = ?', [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

@@ -57,17 +57,17 @@ exports.insert = async (req, res) => {
         const insert = await orderDao.insert(req.body.form)
         /** INSERT PODUCTION */
         req.body.production.forEach(element => {
-            element.orderId = insert.insertId
+            element.idOrder = insert.insertId
             productionDao.insert(element)
         });
         /** INSERT CUSTOMER DATA */
         req.body.extraItems.forEach(element => {
-            element.orderId = insert.insertId
+            element.idOrder = insert.insertId
             extraItemDao.insert(element)
         });
         /** INSERT EXTRA ITEMS */
         req.body.customerData.forEach(element => {
-            element.orderId = insert.insertId
+            element.idOrder = insert.insertId
             customerDataDao.insert(element)
         });
 

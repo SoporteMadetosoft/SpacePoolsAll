@@ -12,7 +12,7 @@ class ItemDao extends GenericDao {
     async mountObj(data) {
         const item = {
             ...data,
-            itemId: await this.RItemDao.findById(data.itemId)
+            idItem: await this.RItemDao.findById(data.idItem)
         }
         return new Item(item)
         
@@ -22,8 +22,8 @@ class ItemDao extends GenericDao {
         const list = {
             ...data,
         }
-        const { purchaseId, itemId, quantity } = list
-        const nObj = { purchaseId: purchaseId, itemId: itemId, quantity: quantity }
+        const { purchaseId, idItem, quantity } = list
+        const nObj = { purchaseId: purchaseId, idItem: idItem, quantity: quantity }
         return nObj
     }
 
@@ -46,7 +46,7 @@ class ItemDao extends GenericDao {
 
     findByItemId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM purchases_items WHERE itemId = ?', [id], (err, result) => {
+            this.db.query('SELECT * FROM purchases_items WHERE idItem = ?', [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

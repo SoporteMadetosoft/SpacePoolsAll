@@ -12,7 +12,8 @@ import normalForm from './normalForm'
 import selectReducer from './selects'
 
 import fileUpload from './fileUpload'
-import poolsReducer from './pools'
+import ordersReducer from './orders'
+
 
 const rootReducer = combineReducers({
   auth,
@@ -22,7 +23,7 @@ const rootReducer = combineReducers({
   normalForm,
   selectReducer,
   fileUpload,
-  poolsReducer
+  ordersReducer
 })
 
 export default rootReducer

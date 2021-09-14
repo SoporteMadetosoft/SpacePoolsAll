@@ -10,7 +10,8 @@ import { save } from '../../utility/helpers/Axios/save'
 import { OrderForm } from './orderForm/OrderForm'
 
 const structureForm = {
-    items: []
+    items: [],
+    extraItems: []
 }
 
 export const OrderFormScreen = () => {
@@ -44,13 +45,13 @@ export const OrderFormScreen = () => {
             ]
         })
 
-
+   
        
         const prettyForm = {
             ...form,
-            
             items: [...itemsPretty]
         }
+        console.log(prettyForm)
         save('Orders', id, prettyForm)
         history.push('/orders')
  

@@ -14,6 +14,7 @@ class Order {
         deliverySchedulerStart,
         deliverySchedulerEnd,
         observations,
+        price,
         extraItems = [],
         customerData = [],
         production = []
@@ -27,6 +28,7 @@ class Order {
         this.deliverySchedulerStart = deliverySchedulerStart
         this.deliverySchedulerEnd = deliverySchedulerEnd
         this.observations = observations
+        this.price = price
         this.extraItems = extraItems
         this.customerData = customerData
         this.production = production

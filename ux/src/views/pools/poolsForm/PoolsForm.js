@@ -4,21 +4,17 @@ import { Select } from '../../../components/form/inputs/Select'
 import { PoolsItemsForm } from './PoolsItemsForm'
 import { PoolsRawForm } from './PoolsRawForm'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleCalculatePriceIVA, handleCalcuteTotalCost } from '../../../redux/actions/pools'
 import React, { useEffect } from 'react'
+import { handleCalculateTotalCost } from '../../../redux/actions/orders'
 
 export const PoolsForm = () => {
-    const {value} = useSelector(state => state.poolsReducer)
+    const {price} = useSelector(state => state.ordersReducer)
 
     const dispatch = useDispatch()
-   //useEffect(() => {
-   //   console.log("he cargado?")
-   //   dispatch(handleCalcuteTotalCost())
-   //})
 
    function calculateAfterLoad() {
         setTimeout(function() {
-            dispatch(handleCalcuteTotalCost())
+            dispatch(handleCalculateTotalCost("items","raws"))
         },200)  
    }
 
@@ -68,7 +64,7 @@ export const PoolsForm = () => {
                     <input
                         className={`form-control`}
                         name="cost"
-                        value={value}
+                        value={price}
                         readOnly
                     />
                     </div>

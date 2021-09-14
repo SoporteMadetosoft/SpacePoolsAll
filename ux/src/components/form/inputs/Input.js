@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleChangeController } from '../../../redux/actions/normalForm'
 
-export const Input = ({ name, label, className, placeholder = label, type = "text" }) => {
+export const Input = ({ name, label, className, placeholder = label, type = "text" , readOnly}) => {
 
     const dispatch = useDispatch()
     const normalForm = useSelector(state => state.normalForm)
@@ -22,6 +22,7 @@ export const Input = ({ name, label, className, placeholder = label, type = "tex
                 placeholder={placeholder}
                 value={value}
                 onChange={handleInputChange}
+                readOnly={readOnly}
             />
         </>
     )

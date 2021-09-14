@@ -52,7 +52,7 @@ exports.insert = (req, res) => {
 }
 
 exports.update = (req, res) => {
-
+    console.log("1274621642642647264dbwqerwyertwrbdewybtrfwyertbwrtfwrb")
     try {
         taxDao.update(req.body.form)
         res.json({ ok: true })

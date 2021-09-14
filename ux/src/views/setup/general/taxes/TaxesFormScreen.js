@@ -20,9 +20,14 @@ export const TaxesFormScreen = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        save('Tax', id, form)
-        dispatch(startAddSelectOptions('/setup/general/tax', 'taxOpt'))
-        history.push('/setup/general/taxes')
+        const prettyForm = {
+            ...form,
+            value: form.name / 100
+        }
+        console.log(prettyForm)
+        save('Taxes', id, prettyForm)
+        //dispatch(startAddSelectOptions('/setup/taxes', 'taxOpt'))
+        history.push('/setup/taxes')
     }
     return (
         <form onSubmit={handleSubmit}>

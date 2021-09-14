@@ -35,7 +35,7 @@ export const TaxesList = [
                             <MoreVertical size={15} />
                         </DropdownToggle>
                         <DropdownMenu right>
-                            <Link to={`./items/edit/${row.id}`}>
+                            <Link to={`./taxes/edit/${row.id}`}>
                                 <DropdownItem tag='a' href='/' className='w-100'>
                                     <FileText size={15} />
                                     <span className='align-middle ml-50'>Detalles</span>

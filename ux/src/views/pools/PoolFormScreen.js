@@ -41,6 +41,7 @@ export const PoolFormScreen = () => {
             items: form.items.map(item => ({ ...item, idItem: exceptionController(item.idItem) })),
             raws: form.raws.map(raw => ({ ...raw, idItem: exceptionController(raw.idItem) }))
         }
+        console.log(prettyForm)
         save('Pools', id, prettyForm)
         dispatch(handleCleanUp())
         history.push('/pools')

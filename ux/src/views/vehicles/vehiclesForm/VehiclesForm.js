@@ -30,6 +30,8 @@ export const VechiclesForm = () => {
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'brandOpt'))
+        
+
     }, [])
 
     return (

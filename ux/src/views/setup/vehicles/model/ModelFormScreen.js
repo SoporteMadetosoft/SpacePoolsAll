@@ -1,39 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BreadCrumbs from '@components/breadcrumbs'
 
-import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
-import { useHistory, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { startAddSelectOptions } from '../../../../redux/actions/selects'
-import { save } from '../../../../utility/helpers/Axios/save'
+import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { ModelForm } from './modelForm/ModelForm'
-import { exceptionController } from '../../../../utility/helpers/undefinedExceptionController'
+import { handleStartEditing } from '../../../../redux/actions/normalForm'
 
 export const ModelFormScreen = () => {
 
     const { id } = useParams()
 
-    const titulo = (id) ? 'Editar modelo' : 'Añadir modelo'
-
-    const dispatch = useDispatch()
-    const history = useHistory()
     const form = useSelector(state => state.normalForm)
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const prettyForm = {
-            ...form,
-            idBrand: exceptionController(form.idBrand)
+    useEffect(() => {
+        if (id) {
+            dispatch(handleStartEditing('Model', id))
         }
-        save('Model', id, prettyForm)
-        dispatch(startAddSelectOptions('/setup/vehicles/brandModel', 'modelOpt'))
-        history.push('/setup/vehicles/model')
-    }
+    }, [])
+
+    const title = (id) ? 'Editar modelo' : 'Añadir modelo'
+    const customName = form.name ? form.name : title
+
     return (
-        <form onSubmit={handleSubmit}>
-            <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Modelos' breadCrumbActive={titulo} />
+        <>
+            <BreadCrumbs breadCrumbTitle={customName} breadCrumbParent='Modelos' breadCrumbActive={title} />
             <ModelForm />
-            <ActionButtons />
-        </form>
+        </>
     )
 }

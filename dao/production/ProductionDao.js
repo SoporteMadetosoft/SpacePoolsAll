@@ -20,7 +20,7 @@ class ProductionDao extends GenericDao {
 
     async mountList(data) {
         const order = await this.OrderDao.findOrderById(data.idOrder);
-        const pool = await this.PoolDao.findPoolById(order.poolId);
+        const pool = await this.PoolDao.findPoolById(order.idPool);
         const list = {
             ...data,
             orderCode: order != undefined ? order.orderCode : 'p',

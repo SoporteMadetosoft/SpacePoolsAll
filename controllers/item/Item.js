@@ -34,11 +34,17 @@ exports.list = async (req, res) => {
 }
 
 exports.listItems = async (req, res) => {
-    const itemType = parseInt(req.params.itemtype, 10)
+    const { itemType, idVendor } = req.body.nObj
+    let result
+    if (idVendor === null) {
+        result = await itemDao.findByItemType(itemType, idVendor)
+    } else {
+        result = await itemDao.findByItemTypeAndVendor(itemType, idVendor)
+    }
     try {
         res.json({
             ok: true,
-            data: await itemDao.findByItemType(itemType)
+            data: result
         })
 
     } catch (error) {

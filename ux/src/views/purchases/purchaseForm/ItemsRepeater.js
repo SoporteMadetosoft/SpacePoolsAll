@@ -33,7 +33,7 @@ export const ItemsRepeater = () => {
     }
 
     useEffect(() => {
-        dispatch(startAddSelectOptions('ItemType','idOpt'))
+        dispatch(startAddSelectOptions('ItemType', 'idOpt'))
     }, [])
 
 
@@ -60,20 +60,16 @@ export const ItemsRepeater = () => {
 }
 
 const ItemsForm = ({ position }) => {
-    //const {cost} = useSelector(state => state.itemsReducer)
-    //const {stock} = useSelector(state => state.itemsReducer)
 
-   
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
-    const { idOpt  } = selectReducer
-    const {id, quantity } = normalForm
+    const { idOpt } = selectReducer
+    const { id, idVendor } = normalForm
     const { stock, cost, itemsOpt } = normalForm.items[position]
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('items', position))
     }
-
 
     const handleSelectChange = (key, element) => {
         const el = constructSelect(element)
@@ -85,79 +81,70 @@ const ItemsForm = ({ position }) => {
             editRepeaterRegister('items', position, obj)
         )
     }
-    
 
     const handleLoadStockCost = (obj) => {
-        console.log("pspspspsp", obj)
-        console.log(position)
-       dispatch(handleSearchCost('Items', obj.value, position, 'items'))
-       dispatch(handleSearchStock('Items', obj.value, position, 'items'))
-       console.log(cost, stock)
-       
+        dispatch(handleSearchCost('Items', obj.value, position, 'items'))
+        dispatch(handleSearchStock('Items', obj.value, position, 'items'))
     }
 
-
-
-
-
     const handleLoadItems = async (obj) => {
-       const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/item/listItems/${obj.value}`)
-       //dispatch(addSelectOptions('itemsOpt', data.map(option => ({ label: option.name, value: option.id }))))
-       dispatch(addSelectionOnNormalForm('itemsOpt', data.map(option => ({ label: option.name, value: option.id })),'items',position))
-       console.log(data)
-       console.log(position)
-       //dispatch(handleChangeController('item', ''))
+        const nObj = {
+            itemType: obj.value,
+            idVendor: idVendor ? idVendor['id'] : null
+        }
+        const { data: { data } } = await axios.post(`${process.env.REACT_APP_HOST_URI}/items/item/listItems`, { nObj })
+        dispatch(addSelectionOnNormalForm('itemsOpt', data.map(option => ({ label: option.name, value: option.id })), 'items', position))
     }
 
     return (
 
         <div className="row border-bottom pb-1 mt-1 mx-1">
-            <div className="col-md-2">
+            <div className="col-md-3">
                 <label className="control-label">Tipo Producto</label>
-                    <ReactSelect  
-                        name="itemType"
-                        options={idOpt}
-                        onChange={
-                            (obj) => { 
-                                handleLoadItems(obj)
-                                handleSelectChange("idItem",obj)
-                            }
-                            }
-                        value={id}
-                    />
+                <ReactSelect
+                    name="itemType"
+                    options={idOpt}
+                    onChange={
+                        (obj) => {
+                            handleLoadItems(obj)
+                            handleSelectChange("idItem", obj)
+                        }
+                    }
+                    value={id}
+                />
             </div>
-           
-            <div className="col-md-2">
+
+            <div className="col-md-3">
                 <label className="control-label">Producto</label>
-                    <ReactSelect 
-                    name="item" 
-                    options={ itemsOpt }
-                    onChange = {
+                <ReactSelect
+                    name="item"
+                    options={itemsOpt}
+                    onChange={
                         (obj) => { handleLoadStockCost(obj) }
                     }
-                    />
+                />
             </div>
 
 
             <div className="col-md-2">
                 <label className="control-label">Precio</label>
-                    <input
-                        type="text"
-                        name="cost"
-                        className="form-control"
-                        value={cost}
-                        readOnly />
+                <input
+                    type="text"
+                    name="cost"
+                    className="form-control"
+                    value={cost}
+                    readOnly />
             </div>
 
             <div className="col-md-2">
                 <label className="control-label">Stock</label>
-                    <input
-                        type="text"
-                        name="stock"
-                        className="form-control"
-                        value={stock}
-                        readOnly
-                         />
+                <input
+                    type="text"
+                    name="stock"
+                    className="form-control"
+                    value={stock}
+                    readOnly
+                />
             </div>
 
             <div className="col-md-1">

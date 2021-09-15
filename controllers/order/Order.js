@@ -3,8 +3,6 @@ const ExtraItemDao = require('../../dao/order/ExtraItemDao')
 const CustomerDataDao = require('../../dao/order/CustomerDataDao')
 const ProductionDao = require('../../dao/production/ProductionDao')
 
-
-
 const orderDao = new OrderDao()
 const productionDao = new ProductionDao()
 const extraItemDao = new ExtraItemDao()

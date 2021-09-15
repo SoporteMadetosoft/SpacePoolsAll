@@ -1,22 +1,135 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useParams } from 'react-router'
+import { useForm } from 'react-hook-form'
+
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
+
+import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 
+import { FileContext } from '../../../utility/context/FileContext'
+
+import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
+import { addRepeaterRegister, handleGetForm } from '../../../redux/actions/normalForm'
+import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
+import { MkDir } from '../../../utility/helpers/Axios/MkDir'
+import { uploadFile } from '../../../utility/helpers/Axios/uploadFile'
+import { save } from '../../../utility/helpers/Axios/save'
+import { SwalUploadAndSave } from '../../../utility/helpers/SwalUploadAndSave'
+import { loadFiles } from '../../../utility/helpers/Axios/loadFiles'
+
+import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
+
 import { CarrierDocForm } from './CarrierDocForm'
 
+const ValidationSchema = yup.object().shape({
+    carrierCode: yup.number().required(),
+    NIF: yup.string().required()
+})
+
 export const CarriersForm = () => {
+
+    const { id } = useParams()
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const [file, setFile] = useState('')
+    const { upload, filePath } = useSelector(state => state.fileUpload)
+    const form = useSelector(state => state.normalForm)
+
+    const realFilePath = form.filePath ? form.filePath : filePath
+
+    const { normalForm } = useSelector(state => state)
+
+    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+
+    const handleInputChange = ({ target }) => {
+        dispatch(handleChangeController(target.name, target.value))
+    }
+
+    const preSubmit = (filePath2) => {
+        return new Promise(async (resolve, reject) => {
+            if (upload === 1) {
+                const swalResp = await SwalUploadAndSave()
+                if (swalResp === true) {
+                    const formData = new FormData()
+                    formData.append('filePath', filePath2)
+
+                    for (const element of file) {
+
+                        formData.append('file', element)
+                    }
+
+                    await uploadFile('FileManager', formData)
+
+                    dispatch(handleChangeDestination(filePath2))
+                    dispatch(handleChangeUpload(0))
+                    const data = await loadFiles('FileManager', filePath2)
+                    await data.map(
+                        document => (
+                            dispatch(addRepeaterRegister('documents', document))
+                        )
+                    )
+                }
+            }
+            resolve('')
+        })
+    }
+
+    const submit = async () => {
+        const filePath2 = MkDir('Carriers', realFilePath)
+
+        await preSubmit(filePath2)
+
+        const form2 = dispatch(handleGetForm())
+        form2.then(async (value) => {
+            const prettyForm = {
+                ...value,
+                idStatus: exceptionController(value.idStatus),
+                filePath: filePath2
+            }
+            await save('Carriers', id, prettyForm)
+            dispatch(handleCleanUp())
+            history.push('/porters/carriers')
+        })
+    }
+
     return (
-        <>
+        <Form onSubmit={handleSubmit(submit)}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <Input name="carrierCode" placeholder="Nº Transportista" label="Nº Transportista" />
+                        <label className="control-label">Nº Transportista</label>
+                        <InputValid
+                            id="carrierCode"
+                            name="carrierCode"
+                            type="number"
+                            value={normalForm['carrierCode']}
+                            placeholder="Nº Transportista"
+                            innerRef={register({ required: true })}
+                            invalid={errors.carrierCode && true}
+                            onChange={handleInputChange}
+                        />
+                        {errors && errors.carrierCode && <FormFeedback>Nº Transportista requerido</FormFeedback>}
                     </div>
                     <div className="col-md-4">
                         <Input name="name" placeholder="Nombre" label="Nombre" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="NIF" placeholder="N.I.F." label="N.I.F." />
+                        <label className="control-label">N.I.F.</label>
+                        <InputValid
+                            id="NIF"
+                            name="NIF"
+                            type="text"
+                            value={normalForm['NIF']}
+                            placeholder="N.I.F."
+                            innerRef={register({ required: true })}
+                            invalid={errors.NIF && true}
+                            onChange={handleInputChange}
+                        />
+                        {errors && errors.NIF && <FormFeedback>N.I.F. requerido</FormFeedback>}
                     </div>
                     <div className="col-md-3">
                         <Select name="idStatus" label="Estado" endpoint="Status" />
@@ -52,9 +165,13 @@ export const CarriersForm = () => {
             </div>
             <div className="card">
                 <div className="card-body">
-                    <CarrierDocForm />
+                    <FileContext.Provider value={{ file, setFile }}>
+                        <CarrierDocForm />
+                    </FileContext.Provider>
+
                 </div>
             </div>
-        </>
+            <ActionButtons />
+        </Form>
     )
 }

@@ -38,19 +38,19 @@ class OrderDao extends GenericDao {
             customerPhone: customer != undefined ? customer.phone : 'p',
             customerEmail: customer != undefined ? customer.email : 'p',
 
-        }        
+        }
 
         const { orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate } = list
-        
+
         const newOrderDate = this.datetimeToEuropeDate(orderDate)
         const newDliveryDate = this.datetimeToEuropeDate(deliveryDate)
 
-        const nObj = {deliveryTime: deliverySchedulerStart+" - "+deliverySchedulerEnd, orderCode: orderCode, customerName: customerName, customerPhone: customerPhone, customerEmail: customerEmail, orderDate: newOrderDate, deliveryDate:newDliveryDate }
-     
+        const nObj = { deliveryTime: deliverySchedulerStart + " - " + deliverySchedulerEnd, orderCode: orderCode, customerName: customerName, customerPhone: customerPhone, customerEmail: customerEmail, orderDate: newOrderDate, deliveryDate: newDliveryDate }
+
         return nObj
     }
 
-    findOrderById(id){
+    findOrderById(id) {
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM orders WHERE Id = ?', [id], (err, result) => {
                 if (err) {
@@ -63,7 +63,7 @@ class OrderDao extends GenericDao {
         })
     }
 
-    findActiveOrders(){
+    findActiveOrders() {
         return new Promise((resolve, reject) => {
             this.db.query('SELECT id FROM orders WHERE state = 2', (err, result) => {
                 if (err) {
@@ -74,7 +74,7 @@ class OrderDao extends GenericDao {
                     for (const res of result) {
                         objList.push(res.id)
                     }
-                   
+
                     resolve(objList)
                 }
             })

@@ -1,16 +1,34 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useParams } from 'react-router'
+import { useForm } from 'react-hook-form'
 import { handleChangeController } from '../../../redux/actions/normalForm'
+
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
+
+import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
 
 import { AddressesRepeater } from './AddressesRepeater'
 import { ContactsRepeater } from './ContactsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
+import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
+
+const ValidationSchema = yup.object().shape({
+    vendorCode: yup.number().required(),
+    CIF: yup.string().required()
+})
 
 export const VendorsForm = () => {
 
+    const { id } = useParams()
     const dispatch = useDispatch()
+    const history = useHistory()
+
     const { normalForm } = useSelector(state => state)
+
+    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { observations } = normalForm
 
@@ -18,18 +36,55 @@ export const VendorsForm = () => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
+    console.log(errors)
+
+    const submit = async () => {
+        // const prettyForm = {
+        //     ...form,
+        //     idPaymentMethod: exceptionController(form.idPaymentMethod),
+        //     idVendorType: exceptionController(form.idVendorType),
+        //     idStatus: exceptionController(form.idStatus),
+        //     addresses: form.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType) })),
+        //     contacts: form.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department) }))
+        // }
+        // save('Vendors', id, prettyForm)
+        // history.push('/vendors')
+    }
+
     return (
-        <>
+        <Form onSubmit={handleSubmit(submit)}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <Input name="vendorCode" placeholder="Nº Proveedor" label="Nº Proveedor" />
+                        <label className="control-label">Nº Proveedor</label>
+                        <InputValid
+                            id="vendorCode"
+                            name="vendorCode"
+                            type="number"
+                            value={normalForm['vendorCode']}
+                            placeholder="Nº Proveedor"
+                            innerRef={register({ required: true })}
+                            invalid={errors.vendorCode && true}
+                            onChange={handleInputChange}
+                        />
+                        {errors && errors.vendorCode && <FormFeedback>Nº Proveedor requerido</FormFeedback>}
                     </div>
                     <div className="col-md-4">
                         <Input name="comercialName" placeholder="Nombre Comercial" label="Nombre Comercial" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="CIF" placeholder="C.I.F." label="C.I.F." />
+                        <label className="control-label">C.I.F.</label>
+                        <InputValid
+                            id="CIF"
+                            name="CIF"
+                            type="text"
+                            value={normalForm['CIF']}
+                            placeholder="C.I.F."
+                            innerRef={register({ required: true })}
+                            invalid={errors.CIF && true}
+                            onChange={handleInputChange}
+                        />
+                        {errors && errors.CIF && <FormFeedback>C.I.F. requerido</FormFeedback>}
                     </div>
                     <div className="col-md-3">
                         <Input name="socialReason" placeholder="Razon social" label="Razon social" />
@@ -72,6 +127,7 @@ export const VendorsForm = () => {
                     <ContactsRepeater />
                 </div>
             </div>
-        </>
+            <ActionButtons />
+        </Form>
     )
 }

@@ -16,8 +16,13 @@ export const startAddSelectOptions = (endPoint, key, labelName = 'name') => {
 }
 
 export const startAddSelectPoolItems = (endPoint, key, labelName = 'name', itemType) => {
+    const nObj = {
+        idVendor: null,
+        itemType
+    }
     return async (dispatch) => {
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/listItems/${itemType}`, {
+        const { data: { data } } = await axios.post(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/listItems`, {
+            nObj,
             headers: {
                 itemType
             }

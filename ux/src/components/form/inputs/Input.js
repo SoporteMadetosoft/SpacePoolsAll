@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { handleChangeController } from '../../../redux/actions/normalForm'
 
@@ -16,11 +17,12 @@ export const Input = ({ name, label, className, placeholder = label, type = "tex
         <>
             <label className="control-label">{label}</label>
             <input
-                type={type}
                 className={`form-control ${className}`}
+                id={name}
                 name={name}
-                placeholder={placeholder}
+                type={type}
                 value={value}
+                placeholder={placeholder}
                 onChange={handleInputChange}
             />
         </>

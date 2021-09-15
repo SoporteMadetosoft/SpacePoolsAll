@@ -70,17 +70,16 @@ const ItemsForm = ({ position }) => {
     }
 
     const handleInputChange = ({ target }) => {
-        console.log(target.name) //cantidad (obj.name), items(key), position (position)
         const obj = {
             name: target.name,
             value: target.value
         }
         dispatch(
             editRepeaterRegister('items', position, obj)
-            )
+        )
         dispatch(
             handleSearchOutID('Items', target.value, position, 'items')
-            )
+        )
     }
 
 
@@ -95,7 +94,7 @@ const ItemsForm = ({ position }) => {
         )
         dispatch(
             handleSearchCost('Items', el.id, position, 'items')
-            )
+        )
     }
     return (
 
@@ -125,9 +124,9 @@ const ItemsForm = ({ position }) => {
                     <X size={14} />
                 </Button.Ripple>
             </div>
-        </div > 
+        </div >
 
     )
-    
+
 
 }

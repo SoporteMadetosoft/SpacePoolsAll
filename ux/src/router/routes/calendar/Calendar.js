@@ -1,12 +1,11 @@
-import { CalendarScreen } from '@views/calendar/CalendarScreen'
+import CalendarComponent from "../../../views/calendar"
 
 const CalendarRoutes = [
-    {
-      path: '/calendar',
-      exact: true,
-      component: () => <CalendarScreen titulo={'Calendario'} />
-    }
-  ]
-  
-  export default CalendarRoutes
-  
+  {
+    path: '/calendar',
+    exact: true,
+    component: () => <CalendarComponent titulo={'Calendario'} />
+  }
+]
+
+export default CalendarRoutes

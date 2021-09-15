@@ -45,7 +45,7 @@ export const PoolsRawForm = () => {
                         <Tag key={i} >
                             <ItemsForm position={i} />
                         </Tag>
-                        
+
                     )
                 }}
 
@@ -68,11 +68,9 @@ const ItemsForm = ({ position }) => {
 
     const SelectValue = idItem.name ? deconstructSelect(idItem) : null
 
-
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('raws', position))
         dispatch(handleCalcuteTotalCost())
-
     }
 
     const handleInputChange = ({ target }) => {
@@ -83,9 +81,7 @@ const ItemsForm = ({ position }) => {
         }
 
         dispatch(editRepeaterRegister('raws', position, obj))
-        dispatch(
-            handleSearchOutID('Items', target.value, position, 'raws')
-            )
+        dispatch(handleSearchOutID('Items', target.value, position, 'raws'))
     }
 
     const handleSelectChange = (key, element) => {
@@ -95,12 +91,8 @@ const ItemsForm = ({ position }) => {
             name: key,
             value: el
         }
-        dispatch(
-            editRepeaterRegister('raws', position, obj)
-        )
-        dispatch(
-            handleSearchCost('Items', el.id, position, 'raws')
-            )
+        dispatch(editRepeaterRegister('raws', position, obj))
+        dispatch(handleSearchCost('Items', el.id, position, 'raws'))
     }
     return (
 
@@ -129,8 +121,8 @@ const ItemsForm = ({ position }) => {
                     <X size={14} />
                 </Button.Ripple>
             </div>
-            
+
         </div>
-    
+
     )
 }

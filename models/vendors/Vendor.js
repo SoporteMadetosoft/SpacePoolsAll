@@ -1,7 +1,6 @@
 class Vendor {
     contacts = []
     addresses = []
-    purchase = []
     #table = 'vendors'
 
     constructor({
@@ -17,8 +16,7 @@ class Vendor {
         observations,
         idStatus,
         contacts = [],
-        addresses = [],
-        purchase = []
+        addresses = []
     }) {
         this.id = id
         this.idVendorType = idVendorType
@@ -33,7 +31,6 @@ class Vendor {
         this.idStatus = idStatus
         this.contacts = contacts
         this.addresses = addresses
-        this.purchase = purchase
     }
     get table() {
         return this.#table;

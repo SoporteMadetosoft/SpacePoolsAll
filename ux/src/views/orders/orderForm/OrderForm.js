@@ -21,7 +21,7 @@ export const OrderForm = () => {
 
     const { normalForm, selectReducer } = useSelector(state => state)
     const { poolsOpt, taxesOpt } = selectReducer
-    const { observations, poolId, iva } = normalForm
+    const { observations, idPool, iva } = normalForm
 
     const {
         idVendor
@@ -77,8 +77,8 @@ export const OrderForm = () => {
                         <label className="control-label">Piscina</label>
                         <ReactSelect
                             placeholder="Piscina"
-                            name="poolId"
-                            value={poolId}
+                            name="idPool"
+                            value={idPool}
                             options={poolsOpt}
                             onChange={(obj) => {
                                 setPoolInRedux(obj)

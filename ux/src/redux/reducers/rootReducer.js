@@ -12,6 +12,7 @@ import normalForm from './normalForm'
 import selectReducer from './selects'
 
 import fileUpload from './fileUpload'
+
 import canvasReducer from './canvas'
 import ordersReducer from './orders'
 

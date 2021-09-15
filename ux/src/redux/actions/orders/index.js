@@ -68,7 +68,7 @@ export const handleSearchOutID2 = (endpoint, position, arr) => {
 }
 
 
-export const createItemRepeatersByPool = (poolId) => {
+export const createItemRepeatersByPool = (idPool) => {
     return async (dispatch, getState) => {
         let num = 0
       let deletee = true
@@ -82,7 +82,7 @@ export const createItemRepeatersByPool = (poolId) => {
         
 
 
-       const pool = await getFormData("Pools", poolId)
+       const pool = await getFormData("Pools", idPool)
        let go = true
        num = 0
        while (go) {

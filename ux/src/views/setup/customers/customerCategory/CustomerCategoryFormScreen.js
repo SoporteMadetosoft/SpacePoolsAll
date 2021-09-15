@@ -1,35 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BreadCrumbs from '@components/breadcrumbs'
-
-import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
-import { useHistory, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { save } from '../../../../utility/helpers/Axios/save'
+import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { CustomerCategoryForm } from './customerCategoryForm/CustomerCategoryForm'
-import { startAddSelectOptions } from '../../../../redux/actions/selects'
 
 export const CustomerCategoryFormScreen = () => {
          
     const { id } = useParams()
-
-    const titulo = (id) ? 'Editar Categoria de cliente' : 'Añadir Categoria de cliente'
    
-    const dispatch = useDispatch()
-    const history = useHistory()
-
     const form = useSelector(state => state.normalForm)
+    
+    useEffect(() => {
+        if (id) {
+            dispatch(handleStartEditing('CustomerCategory', id))
+        }
+    }, [])
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        save('CustomerCategory', id, form)
-        dispatch(startAddSelectOptions('/setup/customers/category', 'customerCategoryOpt'))
-        history.push('/setup/customer/category')
-    }
+    const title = (id) ? 'Editar Categoria de cliente' : 'Añadir Categoria de cliente'
+    const customName = form.name ? form.name : title
+
     return (
-        <form onSubmit={handleSubmit}>
-            <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Categorias de cliente' breadCrumbActive={titulo} />
+        <>
+            <BreadCrumbs breadCrumbTitle={customName} breadCrumbParent='Categorias de cliente' breadCrumbActive={title} />
             <CustomerCategoryForm />
-            <ActionButtons />
-        </form>
+        </>
     )
 }

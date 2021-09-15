@@ -84,7 +84,7 @@ export const VechiclesForm = () => {
 
 
     const handleSelectChange = ({ value, label }) => {
-        dispatch(handleChangeController('idCarrier', { id: value, name: label }))
+        dispatch(handleChangeController('idBrand', { id: value, name: label }))
     }
 
 

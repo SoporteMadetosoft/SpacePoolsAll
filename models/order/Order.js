@@ -7,7 +7,7 @@ class Order {
     constructor({
         id,
         customerId,
-        poolId,
+        idPool,
         orderCode,
         orderDate,
         deliveryDate,
@@ -21,7 +21,7 @@ class Order {
     }) {
         this.id = id
         this.customerId = customerId
-        this.poolId = poolId
+        this.idPool = idPool
         this.orderCode = orderCode
         this.orderDate = orderDate
         this.deliveryDate = deliveryDate

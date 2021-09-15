@@ -10,31 +10,31 @@ import { constructSelect, deconstructSelect } from '../../../utility/helpers/dec
 import { startAddSelectOptions, startAddSelectPoolItems } from '../../../redux/actions/selects'
 import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/actions/orders'
 
-
 const formStructure = {
     idItem: '',
     cantidad: '1',
     coste: 0
 }
 
-export const PoolsRawForm = () => {
+export const ExtraItemsRepeater = () => {
 
     const dispatch = useDispatch()
     const formValues = useSelector(state => state.normalForm)
-    const { raws } = formValues
-    const count = raws ? raws.length : 0
+    const { extraItems } = formValues
+
+    const count = extraItems ? extraItems.length : 0
 
     const increaseCount = () => {
-        dispatch(addRepeaterRegister('raws', formStructure))
+        dispatch(addRepeaterRegister('extraItems', formStructure))
     }
 
     useEffect(() => {
-        dispatch(startAddSelectPoolItems('Items', 'Raws', 'name', 1))
+        dispatch(startAddSelectPoolItems('Items', 'Items', 'name', 2))
     }, [])
 
     return (
         <>
-            <h1 className="card-title">Materias primas</h1>
+            <h1 className="card-title">Productos Extras</h1>
 
             <Repeater count={count}>
 
@@ -44,7 +44,6 @@ export const PoolsRawForm = () => {
                         <Tag key={i} >
                             <ItemsForm position={i} />
                         </Tag>
-
                     )
                 }}
 
@@ -61,63 +60,59 @@ const ItemsForm = ({ position }) => {
     const dispatch = useDispatch()
 
     const { normalForm, selectReducer } = useSelector(state => state)
-    const { Raws } = selectReducer
-
-    const { idItem, cantidad } = normalForm.raws[position]
-
-    const SelectValue = idItem.name ? deconstructSelect(idItem) : null
+    const { Items } = selectReducer
+    const { idItem, cantidad } = normalForm.extraItems[position]
+    const SelectValue = idItem ? deconstructSelect(idItem) : null
 
     const decreaseCount = () => {
-        dispatch(removeRepeaterRegister('raws', position))
-        dispatch(handleCalculateTotalCost("items","raws"))
-
+        dispatch(removeRepeaterRegister('extraItems', position))
+        dispatch(handleCalculateTotalCost("extraItems",""))
     }
 
     const handleInputChange = ({ target }) => {
-
+        console.log(target.name) //cantidad (obj.name), items(key), position (position)
         const obj = {
             name: target.name,
             value: target.value
         }
-
-        dispatch(editRepeaterRegister('raws', position, obj))
-
         dispatch(
-            handleSearchOutID2('Items', position, 'raws')
+            editRepeaterRegister('extraItems', position, obj)
+            )
+        dispatch(
+            handleSearchOutID2('Items', position, 'extraItems')
             )
     }
-    
+
 
     const handleSelectChange = (key, element) => {
         const el = constructSelect(element)
-
         const obj = {
             name: key,
             value: el
         }
-
         dispatch(
-            editRepeaterRegister('raws', position, obj)
+            editRepeaterRegister('extraItems', position, obj)
         )
         dispatch(
-            handleSearchOutID2('Items', position, 'raws')
+            handleSearchOutID2('Items', position, 'extraItems')
             )
-
     }
     return (
 
+
         <div className="row border-bottom pb-1 mx-1">
             <div className="col-md-5">
-                <label className="control-label">Materia prima</label>
+                <label className="control-label">Artículo</label>
                 <Select
                     name="idItem"
-                    options={Raws}
+                    options={Items}
                     onChange={(value) => { handleSelectChange('idItem', value) }}
                     value={SelectValue}
                 />
             </div>
             <div className="col-md-5">
                 <label className="control-label">Cantidad</label>
+
                 <input
                     type="number"
                     name="cantidad"
@@ -125,14 +120,14 @@ const ItemsForm = ({ position }) => {
                     onChange={handleInputChange}
                     value={cantidad} />
             </div>
-
             <div className="col-md-2 ">
                 <Button.Ripple className='btn-icon form-control mt-2 btn-sm' color='danger' outline onClick={decreaseCount}>
                     <X size={14} />
                 </Button.Ripple>
             </div>
-
-        </div>
+        </div > 
 
     )
+    
+
 }

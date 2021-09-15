@@ -4,23 +4,21 @@ import { Select } from '../../../components/form/inputs/Select'
 import { PoolsItemsForm } from './PoolsItemsForm'
 import { PoolsRawForm } from './PoolsRawForm'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleCalculatePriceIVA, handleCalcuteTotalCost } from '../../../redux/actions/pools'
 import React, { useEffect } from 'react'
+import { handleCalculateTotalCost } from '../../../redux/actions/orders'
 
 export const PoolsForm = () => {
-    const { value } = useSelector(state => state.poolsReducer)
+
+    const {price} = useSelector(state => state.ordersReducer)
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(handleCalcuteTotalCost())
-    }, [value])
+   function calculateAfterLoad() {
+        setTimeout(function() {
+            dispatch(handleCalculateTotalCost("items","raws"))
+        },200)  
+   }
 
-    //    function calculateAfterLoad() {
-    //         setTimeout(function() {
-    //             dispatch(handleCalcuteTotalCost())
-    //         },200)  
-    //    }
 
     return (
 
@@ -64,13 +62,15 @@ export const PoolsForm = () => {
                         />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Cost</label>
-                        <input
-                            className={`form-control`}
-                            name="cost"
-                            value={value}
-                            readOnly
-                        />
+
+                    <label className="control-label">Cost</label>
+                    <input
+                        className={`form-control`}
+                        name="cost"
+                        value={price}
+                        readOnly
+                    />
+
                     </div>
                 </div>
             </div>

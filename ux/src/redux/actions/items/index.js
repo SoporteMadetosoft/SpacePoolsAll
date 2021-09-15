@@ -1,4 +1,3 @@
-import { formTypes } from "../../types/pools/types"
 import { getFormData } from "../../../utility/helpers/Axios/getFormData"
 import { editRepeaterRegister } from "../normalForm"
 import InputGroup from "reactstrap/lib/InputGroup"

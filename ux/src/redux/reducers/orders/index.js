@@ -1,21 +1,20 @@
-import { formTypes } from "../../types/pools/types"
+import { formTypes } from "../../types/orders/types"
 
 // ** Initial State
 const initialState = {
-    value: 0,
-    priceIVA: 0
+    price : 0
 }
 
-const poolsReducer = (state = initialState, action) => {
+const ordersReducer = (state = initialState, action) => {
     switch (action.type) {
         case formTypes.AddCost:
             return {
                 ...state,
-                value: action.payload
+                price: action.payload
             }
         default:
             return state
     }
 }
 
-export default poolsReducer
+export default ordersReducer

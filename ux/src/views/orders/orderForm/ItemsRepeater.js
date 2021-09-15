@@ -9,6 +9,7 @@ import React, { useEffect } from 'react'
 
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
+import { handleLessPrice } from '../../../redux/actions/orders'
 
 const formStructure = {
     id: '',
@@ -34,7 +35,7 @@ export const ItemsRepeater = () => {
 
     return (
         <>
-            <h1 className="card-title mb-2">Productos</h1>
+            <h1 className="card-title mb-2">Productos Por Defecto</h1>
             <Repeater count={count}>
 
                 {i => {
@@ -45,11 +46,7 @@ export const ItemsRepeater = () => {
                         </Tag>
                     )
                 }}
-
             </Repeater>
-            <Button.Ripple className='btn-icon form-control mt-1 btn-sm' color='primary' outline onClick={increaseCount}>
-                <Plus size={14} />
-            </Button.Ripple>
         </>
     )
 }
@@ -58,63 +55,36 @@ const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
-    const { idOpt } = selectReducer
-    const {
-        id,
-        quantity } = normalForm.items[position]
+    const {nombre, cantidad } = normalForm.items[position]
 
     const decreaseCount = () => {
+        dispatch(handleLessPrice(position))
         dispatch(removeRepeaterRegister('items', position))
-    }
-
-    const handleInputChange = ({ target }) => {
-
-        const obj = {
-            name: target.name,
-            value: target.value
-        }
-
-        dispatch(
-            editRepeaterRegister('items', position, obj)
-        )
-    }
-
-    const handleSelectChange = (key, element) => {
-
-        const obj = {
-            name: key,
-            value: element
-        }
-
-        dispatch(
-            editRepeaterRegister('items', position, obj)
-        )
     }
 
     return (
 
         <div className="row border-bottom pb-1 mt-1 mx-1">
-            <div className="col-md-2">
+            <div className="col-md-4">
                 <label className="control-label">Producto</label>
-                <Select  
-                    name="id"
-                    options={idOpt}
-                    onChange={(value) => { handleSelectChange('id', value) }}
-                    value={id}
-                    multiple
-                />
+                <input
+                    type="text"
+                    name="quantity"
+                    className="form-control"
+                    value={nombre}
+                    readOnly />
             </div>
-            <div className="col-md-2">
+            <div className="col-md-4">
                 <label className="control-label">Cantidad</label>
                 <input
                     type="text"
                     name="quantity"
                     className="form-control"
-                    onChange={handleInputChange}
-                    value={quantity} />
+                    value={cantidad}
+                    readOnly />
             </div>
 
-            <div className="col-md-1">
+            <div className="col-md-2">
                 <Button.Ripple className='btn-icon form-control mt-2 btn-sm' color='danger' outline onClick={decreaseCount}>
                     <X size={14} />
                 </Button.Ripple>

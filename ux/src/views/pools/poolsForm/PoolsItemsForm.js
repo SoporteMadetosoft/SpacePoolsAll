@@ -8,7 +8,7 @@ import Select from 'react-select'
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { startAddSelectOptions, startAddSelectPoolItems } from '../../../redux/actions/selects'
-import { handleAddCost, handleCalcuteTotalCost, handleSearchCost, handleSearchOutID } from '../../../redux/actions/pools'
+import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/actions/orders'
 
 const formStructure = {
     idItem: '',
@@ -66,7 +66,7 @@ const ItemsForm = ({ position }) => {
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('items', position))
-        dispatch(handleCalcuteTotalCost())
+        dispatch(handleCalculateTotalCost("items","raws"))
     }
 
     const handleInputChange = ({ target }) => {
@@ -78,8 +78,9 @@ const ItemsForm = ({ position }) => {
             editRepeaterRegister('items', position, obj)
         )
         dispatch(
-            handleSearchOutID('Items', target.value, position, 'items')
-        )
+
+            handleSearchOutID2('Items', position, 'items')
+            )
     }
 
 
@@ -93,8 +94,9 @@ const ItemsForm = ({ position }) => {
             editRepeaterRegister('items', position, obj)
         )
         dispatch(
-            handleSearchCost('Items', el.id, position, 'items')
-        )
+
+            handleSearchOutID2('Items', position, 'items')
+            )
     }
     return (
 

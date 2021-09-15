@@ -4,6 +4,8 @@ import { PaymentMethodsScreenList } from "@views/setup/general/paymentMethods/Pa
 import { AddressesTypesFormScreen } from "@views/setup/general/addressesTypes/AddressesTypesFormScreen"
 import { DepartmentsFormScreen } from "@views/setup/general/departments/DepartmentsFormScreen"
 import { PaymentMethodsFormScreen } from "@views/setup/general/paymentMethods/PaymentMethodsFormScreen"
+import { TaxesFormScreen } from "@views/setup/general/taxes/TaxesFormScreen"
+import { TaxesListScreen } from "@views/setup/general/taxes/TaxesListScreen"
 
 
 const generalRoutes = [
@@ -52,6 +54,21 @@ const generalRoutes = [
     exact: true,
     component: () => <AddressesTypesFormScreen />
   }
+  //{
+  //  path: '/setup/general/taxes',
+  //  exact: true,
+  //  component: () =>  <TaxesListScreen titulo="Impuestos" />
+  //},
+  //{
+  //  path: '/setup/general/taxes/add',
+  //  exact: true,
+  //  component: () => <TaxesFormScreen />
+  //},
+  //{
+  //  path: '/setup/general/Taxes/edit/:id',
+  //  exact: true,
+  //  component: () => <TaxesFormScreen />
+  //}
 ]
 
 export default generalRoutes

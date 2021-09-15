@@ -11,7 +11,8 @@ import { OrderForm } from './orderForm/OrderForm'
 import { handleCleanUp } from '../../redux/actions/fileUpload'
 
 const structureForm = {
-    items: []
+    items: [],
+    extraItems: []
 }
 
 export const OrderFormScreen = () => {
@@ -35,11 +36,13 @@ export const OrderFormScreen = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+
         const prettyForm = {
             ...form,
             items: form.items.map(item => ({ ...item, name: exceptionController(item.name.value) })),
             canvas: canvas.elements.map(el => ({ idElement: el.id, name: el.name, x: el.x, y: el.y }))
         }
+
 
         save('Orders', id, prettyForm)
         dispatch(handleCleanUp())

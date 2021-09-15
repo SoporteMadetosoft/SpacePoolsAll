@@ -1,12 +1,12 @@
 
 class Item {
     #table = 'item'
-    
+
     constructor({
         id,
-        family,
-        subfamily,
-        place,
+        idVendor,
+        idFamily,
+        idPlace,
         itemCode,
         name,
         priceVATout,
@@ -19,9 +19,9 @@ class Item {
         description
     }) {
         this.id = id
-        this.family = family
-        this.subfamily = subfamily
-        this.place = place
+        this.idVendor = idVendor
+        this.idFamily = idFamily
+        this.idPlace = idPlace
         this.itemCode = itemCode
         this.name = name
         this.priceVATout = priceVATout

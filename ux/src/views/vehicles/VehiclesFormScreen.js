@@ -42,66 +42,10 @@ export const VehiclesFormScreen = () => {
     const title = (id) ? 'Editar Vehículo' : 'Añadir Vehículo'
     const customName = (form.plateNumber) ? form.plateNumber : title
 
-
-    const preSubmit = (filePath2) => {
-        return new Promise(async (resolve, reject) => {
-            if (upload === 1) {
-                const swalResp = await SwalUploadAndSave()
-                if (swalResp === true) {
-                    const formData = new FormData()
-                    formData.append('filePath', filePath2)
-
-                    for (const element of file) {
-
-                        formData.append('file', element)
-                    }
-
-                    await uploadFile('FileManager', formData)
-
-                    dispatch(handleChangeDestination(filePath2))
-                    dispatch(handleChangeUpload(0))
-                    const data = await loadFiles('FileManager', filePath2)
-                    await data.map(
-                        document => (
-                            dispatch(addRepeaterRegister('documents', document))
-                        )
-                    )
-                }
-            }
-            resolve('')
-        })
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const filePath2 = MkDir('Vehicles', realFilePath)
-        await preSubmit(filePath2)
-
-        const form2 = dispatch(handleGetForm())
-        form2.then(async (value) => {
-            const prettyForm = {
-                ...value,
-                idStatus: exceptionController(value.idStatus),
-                model: exceptionController(value.model),
-                idCarrier: exceptionController(value.idCarrier),
-                idTrailer: exceptionController(value.idTrailer),
-                filePath: filePath2
-            }
-
-            save('Vehicles', id, prettyForm)
-            dispatch(handleCleanUp())
-            history.push('/porters/vehicles')
-        })
-
-    }
-
     return (
-        <form onSubmit={handleSubmit}>
+        <>
             <BreadCrumbs breadCrumbTitle={customName} breadCrumbParent='Vehículos' breadCrumbActive={title} />
-            <FileContext.Provider value={{ file, setFile }}>
-                <VechiclesForm />
-            </FileContext.Provider>
-            <ActionButtons />
-        </form>
+            <VechiclesForm />
+        </>
     )
 }

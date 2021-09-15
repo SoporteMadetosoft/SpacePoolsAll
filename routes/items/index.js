@@ -15,7 +15,7 @@ router.post('/productFamily/find', ControllerProductFamily.listByID);
 
 router.get('/item/list', ControllerItem.list);
 //router.get('/item/selectByIdType', ControllerItem.selectByIdType)
-router.get('/item/listItems/:itemtype', ControllerItem.listItems);
+router.post('/item/listItems', ControllerItem.listItems);
 router.post('/item/insert', ControllerItem.insert);
 router.put('/item/update', ControllerItem.update);
 router.delete('/item/delete/:id', ControllerItem.delete);

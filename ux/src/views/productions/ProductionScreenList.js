@@ -1,18 +1,15 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { CustomDataTable } from '@cc/datatable/CustomDataTable'
 import { startLoadingTable } from '@redux/actions/custom'
 import { handleCleanForm } from '@redux/actions/normalForm'
 import { ProductionsList } from '@fixed/productions/ProductionsList'
 
-
-
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { CustomMiniTable } from '../../components/datatable/CustomMiniTable'
 
 
 export const ProductionScreenList = ({ titulo }) => {
-    console.log("he llegado a productionscreenlist")
     const dispatch = useDispatch()
     const { registros: data } = useSelector(state => state.registrosReducer)
 
@@ -21,7 +18,6 @@ export const ProductionScreenList = ({ titulo }) => {
         dispatch(startLoadingTable('Productions'))
     }, [])
     return (
-
-        <CustomDataTable title={titulo} columns={ProductionsList} data={data} />
+        <CustomMiniTable title={titulo} columns={ProductionsList} data={data} />
     )
 }

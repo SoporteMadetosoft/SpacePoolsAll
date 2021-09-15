@@ -18,7 +18,7 @@ export const PurchaseForm = () => {
 
     const {
         idVendor
-         } = selectReducer
+    } = selectReducer
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
@@ -32,13 +32,13 @@ export const PurchaseForm = () => {
                         <Input name="purchaseCode" placeholder="Nº venta" label="Nº venta" />
                     </div>
                     <div className="col-md-4">
-                        <Select name="idVendor" placeholder="Proveedor" label="Proveedor" endpoint="Vendors" labelName="comercialName"/>
+                        <Select name="idVendor" placeholder="Proveedor" label="Proveedor" endpoint="Vendors" labelName="comercialName" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="purchaseDate" type="date" placeholder="Fecha de compra" label="Fecha de compra"/>
+                        <Input name="purchaseDate" type="date" placeholder="Fecha de compra" label="Fecha de compra" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="deliveryDate" type="date" placeholder="Fecha de entrega" label="Fecha de entrega"/>
+                        <Input name="deliveryDate" type="date" placeholder="Fecha de entrega" label="Fecha de entrega" />
                     </div>
                     <div className="col-md-2">
                         <Input name="phone" placeholder="Teléfono" label="Teléfono" />

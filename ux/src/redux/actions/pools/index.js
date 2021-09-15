@@ -23,7 +23,7 @@ export const handleStartEditing = (endpoint, id) => {
 
 export const handleCalcuteTotalCost = () => {
     return (dispatch, getState) => {
-        
+
         if (getState().normalForm["items"]) {
             let totalCost = 0, contin = true, k = 0, row = ""
             for (let i = 0; i < 2; i++) {
@@ -44,20 +44,20 @@ export const handleCalcuteTotalCost = () => {
 export const handleSearchCost = (endpoint, idItem, position, arr) => {
     return async (dispatch, getState) => {
         //Obtenemos data // find 
-        const {cost} = await getFormData(endpoint, idItem)
-        const {cantidad} = getState().normalForm[arr][position]
+        const { cost } = await getFormData(endpoint, idItem)
+        const { cantidad } = getState().normalForm[arr][position]
 
         const producto = cost * cantidad
-        
+
         //crear objeto he introducir el coste 
         const obj = {
             name: "coste",
             value: producto
-            }
-            dispatch(
-                editRepeaterRegister(arr, position, obj)
-                )
-        
+        }
+        dispatch(
+            editRepeaterRegister(arr, position, obj)
+        )
+
         //calcular e introducir coste total
         dispatch(handleCalcuteTotalCost())
     }
@@ -68,19 +68,19 @@ export const handleChangeOneCost = (key, position, obj) => ({
     payload: { key, position, obj }
 })
 
-export const handleSearchOutID = (endpoint,cantidad, position, arr) => {
+export const handleSearchOutID = (endpoint, cantidad, position, arr) => {
     return async (dispatch, getState) => {
-        const {idItem} = getState().normalForm[arr][position]
+        const { idItem } = getState().normalForm[arr][position]
         console.log(idItem.id)
         if (idItem !== undefined) {
-            const {cost} = await getFormData(endpoint, idItem.id)
-            
+            const { cost } = await getFormData(endpoint, idItem.id)
+
             const producto = cost * cantidad
-    
+
             //
             const obj = {
-            name: "coste",
-            value: producto
+                name: "coste",
+                value: producto
             }
             dispatch(editRepeaterRegister(arr, position, obj))
 

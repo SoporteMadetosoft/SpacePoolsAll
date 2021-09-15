@@ -1,34 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+
+import { handleStartEditing } from '../../../../redux/actions/normalForm'
 
 import BreadCrumbs from '@components/breadcrumbs'
-import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
-import { useHistory, useParams } from 'react-router-dom'
-import { save } from '../../../../utility/helpers/Axios/save'
 import { AddressesTypesForm } from './addressesTypesForm/AddressesTypesForm'
-import { startAddSelectOptions } from '../../../../redux/actions/selects'
 
 export const AddressesTypesFormScreen = () => {
- 
-    const { id } = useParams()
 
-    const titulo = (id) ? 'Editar tipo de dirección' : 'Añadir tipo de dirección'
-   
+    const { id } = useParams()
     const dispatch = useDispatch()
-    const history = useHistory()
+
     const form = useSelector(state => state.normalForm)
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        save('AddressesTypes', id, form)
-        dispatch(startAddSelectOptions('/setup/general/addressesTypes', 'addresseTypesOpt'))
-        history.push('/setup/general/addressesTypes')
-    }
+    useEffect(() => {
+        if (id) {
+            dispatch(handleStartEditing('AddressesTypes', id))
+        }
+    }, [])
+
+    const title = (id) ? 'Editar tipo de dirección' : 'Añadir tipo de dirección'
+    const customName = form.name ? form.name : title
+
     return (
-        <form onSubmit={handleSubmit}>
-            <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Tipos de dirección' breadCrumbActive={titulo} />
+        <>
+            <BreadCrumbs breadCrumbTitle={customName} breadCrumbParent='Tipos de dirección' breadCrumbActive={title} />
             <AddressesTypesForm />
-            <ActionButtons />
-        </form>
+        </>
     )
 }

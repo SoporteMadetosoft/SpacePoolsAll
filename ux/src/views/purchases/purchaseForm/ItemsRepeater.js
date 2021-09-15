@@ -16,6 +16,7 @@ import { addSelectionOnNormalForm, handleSearchCost, handleSearchStock } from '.
 const formStructure = {
     idItem: '',
     name: '',
+    quantity: '',
     itemsOpt: {}
 }
 
@@ -65,10 +66,19 @@ const ItemsForm = ({ position }) => {
     const { normalForm, selectReducer } = useSelector(state => state)
     const { idOpt } = selectReducer
     const { id, idVendor } = normalForm
-    const { stock, cost, itemsOpt } = normalForm.items[position]
+    const { stock, cost, itemsOpt, quantity } = normalForm.items[position]
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('items', position))
+    }
+
+    const handleInputChange = ({ target }) => {
+        const obj = {
+            name: target.name,
+            value: target.value
+        }
+
+        dispatch(editRepeaterRegister('items', position, obj))
     }
 
     const handleSelectChange = (key, element) => {
@@ -99,7 +109,7 @@ const ItemsForm = ({ position }) => {
     return (
 
         <div className="row border-bottom pb-1 mt-1 mx-1">
-            <div className="col-md-3">
+            <div className="col-md-2">
                 <label className="control-label">Tipo Producto</label>
                 <ReactSelect
                     name="itemType"
@@ -125,7 +135,16 @@ const ItemsForm = ({ position }) => {
                 />
             </div>
 
-
+            <div className="col-md-2">
+                <label className="control-label">Cantidad</label>
+                <input
+                    type="number"
+                    name="quantity"
+                    className="form-control"
+                    onChange={handleInputChange}
+                    value={quantity}
+                />
+            </div>
             <div className="col-md-2">
                 <label className="control-label">Precio</label>
                 <input

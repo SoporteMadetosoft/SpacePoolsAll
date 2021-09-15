@@ -3,14 +3,14 @@ class ExtraItem {
 
     constructor({
         id,
-        orderId,
-        itemId,
+        idOrder,
+        idItem,
         posX,
         posY
     }) {
         this.id = id
-        this.orderId = orderId
-        this.itemId = itemId
+        this.idOrder = idOrder
+        this.idItem = idItem
         this.posX = posX
         this.posY = posY
     }

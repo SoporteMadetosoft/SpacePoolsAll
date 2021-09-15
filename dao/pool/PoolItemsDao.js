@@ -18,9 +18,9 @@ class PoolItemsDao extends GenericDao {
                     let ItemList = []
                     for (const data of result) {
                         const item = await this.ItemDao.findByItemTypeAndId(data.idItem, itemType)
-                        if (item.length > 0) {
+                        
                             ItemList.push(await this.mountObj(data))
-                        }
+                        
                     }
                     resolve(ItemList)
                 }

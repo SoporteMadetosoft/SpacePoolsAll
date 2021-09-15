@@ -7,34 +7,19 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 
-export const itemList = [
+export const TaxesList = [
     {
         name: 'Nº',
-        selector: 'itemCode',
+        selector: 'id',
         sortable: true,
         minWidth: '50px',
         width: '8%'
     },
     {
-        name: 'Nombre',
+        name: 'IVA',
         selector: 'name',
         sortable: true,
-        searchable: true,
         width: '45%'
-    },
-    {
-        name: 'Stock reservado',
-        selector: 'reserveStock',
-        sortable: true,
-        searchable: true,
-        width: '20%'
-    },
-    {
-        name: 'Stock en almacén',
-        selector: 'storeStock',
-        sortable: true,
-        searchable: true,
-        width: '20%'
     },
     {
         name: '',
@@ -50,7 +35,7 @@ export const itemList = [
                             <MoreVertical size={15} />
                         </DropdownToggle>
                         <DropdownMenu right>
-                            <Link to={`./items/edit/${row.id}`}>
+                            <Link to={`./taxes/edit/${row.id}`}>
                                 <DropdownItem tag='a' href='/' className='w-100'>
                                     <FileText size={15} />
                                     <span className='align-middle ml-50'>Detalles</span>

@@ -1,21 +1,27 @@
-import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleChangeController } from '../../../redux/actions/normalForm'
-
-
+import React, { useEffect } from 'react'
+import ReactSelect from 'react-select'
 import { ItemsRepeater } from './ItemsRepeater'
-
+import { ExtraItemsRepeater } from './ExtraItemsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
+
 import { OrderCanvas } from './OrderCanvas'
 
-export const OrderForm = () => {
+import { startAddSelectOptions } from '../../../redux/actions/selects'
+import { createItemRepeatersByPool, handleCalculateTotalCost, handleCalcuteTotalPrice } from '../../../redux/actions/orders'
 
+
+
+export const OrderForm = () => {
+    const {price} = useSelector(state => state.ordersReducer)
+   
     const dispatch = useDispatch()
 
     const { normalForm, selectReducer } = useSelector(state => state)
-
-    const { observations } = normalForm
+    const { poolsOpt, taxesOpt } = selectReducer
+    const { observations, poolId, iva } = normalForm
 
     const {
         idVendor
@@ -23,6 +29,28 @@ export const OrderForm = () => {
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
+    }
+
+    useEffect(() => {
+        dispatch(startAddSelectOptions('Taxes','ivaOpt'))
+        dispatch(startAddSelectOptions('Pools', 'poolsOpt', 'fabricationName'))
+        dispatch(startAddSelectOptions('Taxes', 'taxesOpt'))
+    }, [])
+    
+    const preparePrice = (obj) => {
+        console.log(price)
+       dispatch(handleCalculateTotalCost("extraItems",""))
+    }
+
+    const setPoolInRedux = (obj) => {
+        dispatch(handleChangeController("Pool", { id: obj.value, name: obj.label }))
+        dispatch(createItemRepeatersByPool(obj.value))
+        preparePrice()
+    }
+
+    const setIvaInRedux = (obj) => {
+        dispatch(handleChangeController("Iva", { id: obj.value, name: obj.label }))
+        preparePrice()
     }
 
     return (
@@ -44,9 +72,44 @@ export const OrderForm = () => {
                     <div className="col-md-2">
                         <Input name="email" placeholder="Correo Electrónico" label="Correo Electrónico" />
                     </div>
-                    <div className="col-md-2">
-                        <Select name="pool" placeholder="Piscina" label="Piscina" endpoint="Pools" labelName="fabricationName" />
+
+                   <div className="col-md-2">
+                        <label className="control-label">Piscina</label>
+                        <ReactSelect
+                            placeholder="Piscina"
+                            name="poolId"
+                            value={poolId}
+                            options={poolsOpt}
+                            onChange={(obj) => {
+                                setPoolInRedux(obj)
+                            }} />
                     </div>
+
+
+                    <div className="col-md-2">
+
+                        <label className="control-label">IVA</label>
+                        <ReactSelect
+                            placeholder="iva"
+                            name="iva"
+                            value={iva}
+                            options={taxesOpt}
+                            onChange={(obj) => {
+                                setIvaInRedux(obj)
+                            }} />
+
+                    </div>
+
+                    <div className="col-md-2">
+                    <label className="control-label">Precio</label>
+                    <input
+                        className={`form-control`}
+                        name="price"
+                        value={price}
+                        readOnly
+                    />
+                    </div>
+
                     <div className="col-md-2">
                         <Input name="orderDate" type="date" placeholder="Fecha de Pedido" label="Fecha de Pedido" />
                     </div>
@@ -72,9 +135,21 @@ export const OrderForm = () => {
 
                 </div>
             </div>
-            <div className="card">
-                <div className="card-body">
-                    <ItemsRepeater />
+            <div className="row">
+                <div className="col-md-6">
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ItemsRepeater />
+                        </div>
+                    </div>
+
+                </div>
+                <div className="col-md-6">
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ExtraItemsRepeater/>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="card">

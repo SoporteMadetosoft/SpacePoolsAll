@@ -30,6 +30,12 @@ export default [
             title: 'Tipos de direcciones',
             icon: <Circle size={12} />,
             navLink: '/setup/general/addressesTypes'
+          },
+          {
+            id: 'taxes',
+            title: 'Impuestos',
+            icon: <Circle size={12} />,
+            navLink: '/setup/taxes'
           }
         ]
       },
@@ -109,6 +115,7 @@ export default [
           }
         ]
       }
+
 
 
     ]

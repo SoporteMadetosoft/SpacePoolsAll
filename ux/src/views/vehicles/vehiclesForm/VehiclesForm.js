@@ -78,9 +78,18 @@ export const VechiclesForm = () => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
+
     const handleSelectChange = ({ value, label }) => {
         dispatch(handleChangeController('idCarrier', { id: value, name: label }))
     }
+
+
+    useEffect(() => {
+        dispatch(startAddSelectOptions('Brand', 'brandOpt'))
+        
+
+    }, [])
+
 
 
     if (id && model) {
@@ -88,6 +97,7 @@ export const VechiclesForm = () => {
             brandValue = model && deconstructSelect(model.idBrand)
         }
     }
+
     const valueCarrier = normalForm['idCarrier'] ? deconstructSelect(normalForm['idCarrier']) : ''
 
 
@@ -141,6 +151,7 @@ export const VechiclesForm = () => {
         })
 
     }
+
     return (
         <Form onSubmit={handleSubmit(submit)}>
             <div className="card">

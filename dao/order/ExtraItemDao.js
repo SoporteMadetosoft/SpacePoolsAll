@@ -12,7 +12,7 @@ class ExtraItemDao extends GenericDao {
     async mountObj(data) {
         const extraItem = {
             ...data,
-            itemId: await this.ItemDao.findById(data.itemId),
+            idItem: await this.ItemDao.findById(data.idItem),
         }
         return new ExtraItem(extraItem)
     }
@@ -21,14 +21,14 @@ class ExtraItemDao extends GenericDao {
         const list = {
             ...data,
         }
-        const { orderId, itemId } = list
-        const nObj = { orderId: orderId, itemId: itemId }
+        const { idOrder, idItem } = list
+        const nObj = { idOrder: idOrder, idItem: idItem }
         return nObj
     }
 
     findByOrderId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM orders_extra_items WHERE orderId = ?', [id], (err, result) => {
+            this.db.query('SELECT * FROM orders_extra_items WHERE idOrder = ?', [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -43,9 +43,9 @@ class ExtraItemDao extends GenericDao {
         })
     }
 
-    countItemById(id, orderId){
+    countItemById(id, idOrder){
         return new Promise ((resolve, reject) => {
-            this.db.query('SELECT COUNT(itemId) FROM orders_extra_items WHERE itemId = ? and orderId = ?', [id, orderId], (err, result) => {
+            this.db.query('SELECT id FROM orders_extra_items WHERE idItem = ? and idOrder = ?', [id, idOrder], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

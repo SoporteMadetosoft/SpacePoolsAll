@@ -1,39 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 import BreadCrumbs from '@components/breadcrumbs'
-import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
-import { useHistory, useParams } from 'react-router-dom'
-import { startAddSelectOptions } from '../../../../redux/actions/selects'
 import { TaxesForm } from './taxesForm/TaxesForm'
-import { save } from '../../../../utility/helpers/Axios/save'
+import { handleStartEditing } from '../../../../redux/actions/normalForm'
 
 export const TaxesFormScreen = () => {
- 
-    const { id } = useParams()
 
-    const titulo = (id) ? 'Editar Impuesto' : 'Añadir Impuesto'
-   
+    const { id } = useParams()
     const dispatch = useDispatch()
-    const history = useHistory()
+
     const form = useSelector(state => state.normalForm)
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const prettyForm = {
-            ...form,
-            value: form.name / 100
+    useEffect(() => {
+        if (id) {
+            dispatch(handleStartEditing('Tax', id))
         }
-        console.log(prettyForm)
-        save('Taxes', id, prettyForm)
-        //dispatch(startAddSelectOptions('/setup/taxes', 'taxOpt'))
-        history.push('/setup/taxes')
-    }
+    }, [])
+
+    const title = (id) ? 'Editar Impuesto' : 'Añadir Impuesto'
+    const customName = form.name ? form.name : title
+
     return (
-        <form onSubmit={handleSubmit}>
-            <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Impuestos' breadCrumbActive={titulo} />
+        <>
+            <BreadCrumbs breadCrumbTitle={customName} breadCrumbParent='Impuestos' breadCrumbActive={title} />
             <TaxesForm />
-            <ActionButtons />
-        </form>
+        </>
     )
 }

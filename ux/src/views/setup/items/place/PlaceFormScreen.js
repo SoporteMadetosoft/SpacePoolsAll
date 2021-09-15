@@ -1,34 +1,32 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+
+import { handleStartEditing } from '../../../../redux/actions/normalForm'
+
 import BreadCrumbs from '@components/breadcrumbs'
-import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
-import { useHistory, useParams } from 'react-router-dom'
-import { save } from '../../../../utility/helpers/Axios/save'
 import { PlaceForm } from './placeForm/PlaceForm'
-import { startAddSelectOptions } from '../../../../redux/actions/selects'
 
 export const PlaceFormScreen = () => {
- 
-    const { id } = useParams()
 
-    const titulo = (id) ? 'Editar ubicación' : 'Añadir ubicación'
-   
+    const { id } = useParams()
     const dispatch = useDispatch()
-    const history = useHistory()
 
     const form = useSelector(state => state.normalForm)
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        save('Place', id, form)
-        dispatch(startAddSelectOptions('/setup/items/place', 'placeOpt'))
-        history.push('/setup/items/place')
-    }
+    useEffect(() => {
+        if (id) {
+            dispatch(handleStartEditing('Place', id))
+        }
+    }, [])
+
+    const title = (id) ? 'Editar ubicación' : 'Añadir ubicación'
+    const customName = form.name ? form.name : title
+
     return (
-        <form onSubmit={handleSubmit}>
-            <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Ubicaciones' breadCrumbActive={titulo} />
+        <>
+            <BreadCrumbs breadCrumbTitle={customName} breadCrumbParent='Ubicaciones' breadCrumbActive={title} />
             <PlaceForm />
-            <ActionButtons />
-        </form>
+        </>
     )
 }

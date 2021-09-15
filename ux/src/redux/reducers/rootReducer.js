@@ -14,10 +14,7 @@ import selectReducer from './selects'
 import fileUpload from './fileUpload'
 
 import canvasReducer from './canvas'
-
 import ordersReducer from './orders'
-
-
 
 const rootReducer = combineReducers({
   auth,
@@ -28,9 +25,7 @@ const rootReducer = combineReducers({
   selectReducer,
   fileUpload,
   canvasReducer,
-
   ordersReducer
-
 })
 
 export default rootReducer

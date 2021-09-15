@@ -8,19 +8,26 @@ import { addSelectOptions, startAddSelectOptions } from '../../../redux/actions/
 import '../styles/form.css'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
+import { VehicleDocForm } from './VehicleDocForm'
+import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+import { useParams } from 'react-router'
 
 export const VechiclesForm = () => {
 
     const dispatch = useDispatch()
-
+    const { id } = useParams()
     const { normalForm, selectReducer } = useSelector(state => state)
-    const { observations, brand } = normalForm
+    const { observations, model } = normalForm
+    const { Brand } = selectReducer
+    let value
 
-    const { brandOpt } = selectReducer
+    useEffect(() => {
+        dispatch(startAddSelectOptions('Brand', 'Brand'))
+    }, [])
 
     const handleLoadModels = async (obj) => {
         const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/brandModel/selectByIdBrand/${obj.value}`)
-        dispatch(addSelectOptions('brandModelOpt', data.map(option => ({ label: option.name, value: option.id }))))
+        dispatch(addSelectOptions('Model', data.map(option => ({ label: option.name, value: option.id }))))
         dispatch(handleChangeController('model', ''))
     }
 
@@ -28,11 +35,19 @@ export const VechiclesForm = () => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
+
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'brandOpt'))
         
 
     }, [])
+
+
+    if (id && model) {
+        if (model.idBrand !== undefined) {
+            value = model && deconstructSelect(model.idBrand)
+        }
+    }
 
     return (
         <>
@@ -54,13 +69,13 @@ export const VechiclesForm = () => {
                         <Input name="tachograph" placeholder="Tacografo del camión" label="Tacografo del camión" />
                     </div>
                     <div className="col-md-4">
-                        <Select name="carrierId" label="Transportista" endpoint="Carriers" />
+                        <Select name="idCarrier" label="Transportista" endpoint="Carriers" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="tara" placeholder="Tara" label="Tara" />
+                        <Input name="tare" placeholder="Tara" label="Tara" />
                     </div>
                     <div className="col-md-2 ">
-                        <Input name="MMA" placeholder="M.M.A." label="M.M.A." />
+                        <Input name="mma" placeholder="M.M.A." label="M.M.A." />
                     </div>
 
                     <div className="col-md-2">
@@ -68,26 +83,26 @@ export const VechiclesForm = () => {
                         <ReactSelect
                             placeholder="Marca"
                             name="brand"
-                            value={brand}
-                            options={brandOpt}
+                            value={value}
+                            options={Brand}
                             onChange={(obj) => {
                                 handleLoadModels(obj)
                             }} />
                     </div>
                     <div className="col-md-2">
-                        <Select name="model" label="Modelo" endpoint="brandModelOpt" />
+                        <Select name="model" label="Modelo" endpoint="Model" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="trailerId" label="Remolque" endpoint="Trailers" labelName="plate" />
+                        <Select name="idTrailer" label="Remolque" endpoint="Trailers" labelName="plate" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="itvDate" type="date" placeholder="Fecha ITV" label="Fecha ITV" />
+                        <Input name="ITVdate" type="date" placeholder="Fecha ITV" label="Fecha ITV" />
                     </div>
                     <div className="col-md-2">
                         <Input name="maintenanceDate" type="date" placeholder="Fecha de mantenimiento" label="Fecha de mantenimiento" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="insuranceDateLimit" type="date" placeholder="Fecha caducidad seguro" label="Fecha caducidad seguro" />
+                        <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-12">
                         <label className="control-label">Observaciones</label>
@@ -99,6 +114,11 @@ export const VechiclesForm = () => {
                             onChange={handleInputChange}
                         ></textarea>
                     </div>
+                </div>
+            </div>
+            <div className="card">
+                <div className="card-body">
+                    <VehicleDocForm />
                 </div>
             </div>
         </>

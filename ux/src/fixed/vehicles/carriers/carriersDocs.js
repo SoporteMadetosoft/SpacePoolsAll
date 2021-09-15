@@ -1,4 +1,4 @@
-import { FileText, MoreVertical, Trash } from "react-feather"
+import { Eye, MoreVertical, Trash } from "react-feather"
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
@@ -6,13 +6,15 @@ import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { Link } from "react-router-dom"
 import { editRepeaterRegister } from "../../../redux/actions/normalForm"
+import { startDeleteFile } from "../../../redux/actions/fileUpload"
 
 export const carriersDocs = [
     {
         name: 'Nombre',
         selector: 'name',
         sortable: true,
-        width: '19%',
+        searchable: true,
+        width: '23%',
         cell: (row, index) => {
 
             const dispatch = useDispatch()
@@ -46,33 +48,27 @@ export const carriersDocs = [
         name: 'Documento',
         selector: 'filename',
         sortable: true,
-        width: '19%'
+        searchable: true,
+        width: '23%'
     },
     {
         name: 'Tamaño',
         selector: 'filesize',
         sortable: true,
         searchable: true,
-        width: '19%'
+        width: '23%'
     },
     {
         name: 'Tipo de documento',
         selector: 'filetype',
         sortable: true,
         searchable: true,
-        width: '19%'
-    },
-    {
-        name: 'Fecha de subida',
-        selector: 'mtime',
-        sortable: true,
-        searchable: true,
-        width: '19%'
+        width: '23%'
     },
     {
         name: '',
         width: '5%',
-        cell: row => {
+        cell: (row, index) => {
 
             const dispatch = useDispatch()
 
@@ -85,12 +81,12 @@ export const carriersDocs = [
                         <DropdownMenu right>
                             <Link to={`${row.url}`} target="_blank">
                                 <DropdownItem className='w-100'>
-                                    <FileText size={15} />
-                                    <span className='align-middle ml-50'>Detalles</span>
+                                    <Eye size={15} />
+                                    <span className='align-middle ml-50'>Ver archivo</span>
                                 </DropdownItem>
                             </Link>
                             <Link onClick={(e) => {
-                                // dispatch(startDeleteFile(row.url))
+                                dispatch(startDeleteFile(index, row.url))
                             }}>
                                 <DropdownItem tag='a' href='/' className='w-100'>
                                     <Trash size={15} />
@@ -99,13 +95,8 @@ export const carriersDocs = [
                             </Link>
                         </DropdownMenu>
                     </UncontrolledDropdown>
-
-
-
                 </div>
             )
         }
     }
 ]
-
-//<a href={`file://\/${row.url}`} target="_blank" rel="canonical">

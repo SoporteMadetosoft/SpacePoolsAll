@@ -41,37 +41,39 @@ class FileManagerDao {
     getDocumentsInfo(filePath) {
         return new Promise((resolve, reject) => {
             try {
-                fs.readdir(`${__dirname}/../../public/${filePath}/`, async (err, files) => {
-                    if (err) {
-                        reject(err)
-                    }
-                    let documents = [];
-
-                    for (const filename of files) {
-                        let doc = []
-                        if (this.dao) {
-                            doc = await this.dao.findByFilePath(`/public/${filePath}/${filename}`)
+                if (filePath !== '') {
+                    fs.readdir(`${__dirname}/../../public/${filePath}/`, async (err, files) => {
+                        if (err) {
+                            reject(err)
                         }
+                        let documents = [];
 
-                        console.log(doc)
-
-                        if (doc.length === 0) {
-
-                            const { mime: filetype } = await FileType.fromFile(`${__dirname}/../../public/${filePath}/${filename}`);
-                            const { size: filesize, mtime } = await fs.statSync(`${__dirname}/../../public/${filePath}/${filename}`);
-                            doc = {
-                                filename,
-                                filesize: this.helperFileSize(filesize),
-                                filetype: this.helperMime(filetype),
-                                mtime,
-                                url: `/public/${filePath}/${filename}`
+                        for (const filename of files) {
+                            let doc = []
+                            if (this.dao) {
+                                doc = await this.dao.findByFilePath(`/public/${filePath}/${filename}`)
                             }
-                        }
-                        documents.push(doc);
 
-                    }
-                    resolve(documents)
-                });
+                            if (doc.length === 0) {
+
+                                const { mime: filetype } = await FileType.fromFile(`${__dirname}/../../public/${filePath}/${filename}`);
+                                const { size: filesize } = fs.statSync(`${__dirname}/../../public/${filePath}/${filename}`);
+                                doc = {
+                                    name: '',
+                                    filename,
+                                    filesize: this.helperFileSize(filesize),
+                                    filetype: this.helperMime(filetype),
+                                    url: `/public/${filePath}/${filename}`
+                                }
+                            }
+                            documents.push(doc);
+
+                        }
+                        resolve(documents)
+                    });
+                } else {
+                    resolve([])
+                }
             } catch (err) {
                 console.error(err);
                 reject(err)
@@ -83,17 +85,22 @@ class FileManagerDao {
         const extensions = {
             'application/pdf': 'PDF',
             'application/msword': 'DOC',
+            'application/vnd.ms-excel': 'XLS',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'XLSX',
+            'application/vnd.ms-powerpoint': 'PPT',
+            'application/xml': 'XML',
+            'application/zip': 'ZIP',
+            'application/x-compressed-zip': 'ZIP',
+            'application/x-rar-compressed': 'RAR',
+            'application/x-tar': 'TAR/TAR.GZ',
+            'application/x-bzip2': 'BZ2',
             'image/gif': 'GIF',
             'image/jpeg': 'JPEG',
             'image/png': 'PNG',
-            'application/zip': 'ZIP',
-            'application/x-compressed-zip': 'ZIP',
-            'application/x-bzip2': 'BZ2',
-            'application/vnd.ms-excel': 'XLS',
-            'text/plain': 'Texto',
-            'application/x-tar': 'TAR/TAR.GZ',
             'image/svg+xml': 'SVG',
-            'text/xml': 'XML'
+            'image/tiff': 'TIFF',
+            'text/csv': 'CSV',
+            'text/plain': 'Texto'
         }
         return extensions[filetype]
     }

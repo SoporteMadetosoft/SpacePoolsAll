@@ -6,6 +6,7 @@ import { AddressesRepeater } from './AddressesRepeater'
 import { ContactsRepeater } from './ContactsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
+import { CustomerDocForm } from './CustomerDocForm'
 
 export const CustomersForm = () => {
 
@@ -90,6 +91,11 @@ export const CustomersForm = () => {
             <div className="card">
                 <div className="card-body">
                     <ContactsRepeater />
+                </div>
+            </div>
+            <div className="card">
+                <div className="card-body">
+                    <CustomerDocForm />
                 </div>
             </div>
         </>

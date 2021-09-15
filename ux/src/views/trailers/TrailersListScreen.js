@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-
 import { trailersList } from '../../fixed/vehicles/trailers/trailersList'
 import { CustomDataTable } from '@cc/datatable/CustomDataTable'
 import { startLoadingTable } from '@redux/actions/custom'

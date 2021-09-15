@@ -16,7 +16,6 @@ exports.upload = async (req, res) => {
     try {
         const dateNow = req.body.filePath;
         const files = [].concat(req.files.file);
-        console.log(files)
         await fileManagerDao.uploadFile(dateNow, files)
         return res.json({ ok: true })
     } catch (error) {
@@ -26,7 +25,6 @@ exports.upload = async (req, res) => {
 }
 
 exports.load = async (req, res) => {
-    console.log("load")
     try {
         const documents = await fileManagerDao.getDocumentsInfo(req.body.filePath)
         res.json({ ok: true, data: documents })

@@ -23,13 +23,6 @@ const fileUpload = (state = initialState, action) => {
         case fileUploadTypes.CleanUp:
             return initialState
 
-        // case fileUploadTypes.DeleteFile:
-        //     const newState = state['documents'].filter((element, index) => (element.url !== action.payload))
-        //     return {
-        //         ...state,
-        //         ['documents']: [...newState]
-        //     }
-
         default:
             return state
     }

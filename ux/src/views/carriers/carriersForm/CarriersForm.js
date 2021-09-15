@@ -1,16 +1,10 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 
-import { DocForm } from './DocForm'
+import { CarrierDocForm } from './CarrierDocForm'
 
 export const CarriersForm = () => {
-
-    const { selectReducer } = useSelector(state => state)
-
-    const { statusOpt } = selectReducer
-
     return (
         <>
             <div className="card">
@@ -58,7 +52,7 @@ export const CarriersForm = () => {
             </div>
             <div className="card">
                 <div className="card-body">
-                    <DocForm />
+                    <CarrierDocForm />
                 </div>
             </div>
         </>

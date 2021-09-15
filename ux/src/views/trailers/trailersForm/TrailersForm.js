@@ -8,6 +8,7 @@ import { addSelectOptions, startAddSelectOptions } from '../../../redux/actions/
 import { useParams } from 'react-router-dom'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
+import { TrailerDocForm } from './TrailerDocForm'
 
 
 export const TrailersForm = () => {
@@ -93,6 +94,11 @@ export const TrailersForm = () => {
                             onChange={handleInputChange}
                         ></textarea>
                     </div>
+                </div>
+            </div>
+            <div className="card">
+                <div className="card-body">
+                    <TrailerDocForm />
                 </div>
             </div>
         </>

@@ -15,6 +15,12 @@ const normalForm = (state = initialState, action) => {
         case formTypes.cleanForm:
             return initialState
 
+        case formTypes.cleanSectionForm:
+            return {
+                ...state,
+                [action.payload]: []
+            }
+
         case formTypes.initForm:
             return {
                 ...action.payload

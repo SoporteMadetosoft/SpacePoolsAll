@@ -1,17 +1,17 @@
 import React, { useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
 
 import { handleChangeUpload, handleLoadDocuments, saveFiles } from '../../../redux/actions/fileUpload'
-import { carriersDocs } from '../../../fixed/vehicles/carriers/carriersDocs'
 import { CustomMiniTable } from '../../../components/datatable/CustomMiniTable'
-import { FileContext } from './FileContext'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
-import { useParams } from 'react-router-dom'
 import { handleStartEditing } from '../../../redux/actions/normalForm'
+import { FileContext } from '../../../utility/context/FileContext'
+import { trailersDocs } from '../../../fixed/vehicles/trailers/trailersDocs'
 
-export const DocForm = () => {
+export const TrailerDocForm = () => {
 
     const { id } = useParams()
 
@@ -23,11 +23,13 @@ export const DocForm = () => {
     let realFilePath = formFilePath ? formFilePath : filePath
 
     useEffect(() => {
-        if (!id) {
-            dispatch(handleLoadDocuments('FileManager', realFilePath))
-        } else {
-            console.log("entra")
-            dispatch(handleStartEditing('Carriers', id))
+        if (upload === 0) {
+
+            if (!id) {
+                dispatch(handleLoadDocuments('FileManager', realFilePath))
+            } else {
+                dispatch(handleStartEditing('Trailers', id))
+            }
         }
     }, [upload])
 
@@ -44,7 +46,7 @@ export const DocForm = () => {
     const uploadFileToCloud = async (e) => {
         e.preventDefault()
 
-        const filePath2 = await MkDir('Carrier', realFilePath)
+        const filePath2 = await MkDir('Trailers', realFilePath)
         realFilePath = filePath2 ? filePath2 : filePath
 
         dispatch(await saveFiles('FileManager', realFilePath, file))
@@ -61,6 +63,7 @@ export const DocForm = () => {
                         className="form-control"
                         type="file"
                         id="formFileMultiple"
+                        accept="application/msword, application/vnd.ms-Excel, application/vnd.ms-PowerPoint, text/plain, application/pdf, image/*"
                         multiple
                         onChange={handleFileInputChange}
                     />
@@ -76,7 +79,7 @@ export const DocForm = () => {
                 }
 
             </div>
-            <CustomMiniTable columns={carriersDocs} data={data} />
+            <CustomMiniTable columns={trailersDocs} data={data} />
         </div>
     )
 }

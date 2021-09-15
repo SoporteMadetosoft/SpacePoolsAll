@@ -46,24 +46,19 @@ export const CustomMiniTable = ({ columns, data }) => {
 
         if (value.length) {
             updatedData = data.filter(item => {
+
                 const schCols = searchableColumns()
 
-                let isFound
+                let returned
 
                 schCols.columnas.forEach(col => {
                     const startsWith = item[col].toLowerCase().startsWith(value.toLowerCase())
                     const includes = item[col].toLowerCase().includes(value.toLowerCase())
-
-                    if (startsWith) {
-                        isFound = true
-                    } else if (!startsWith && includes) {
-                        isFound = true
-                    } else {
-                        isFound = false
+                    if (startsWith || (!startsWith && includes)) {
+                        returned = item
                     }
                 })
-                return isFound
-
+                return returned
             })
             setFilteredData(updatedData)
             setSearchValue(value)
@@ -101,7 +96,6 @@ export const CustomMiniTable = ({ columns, data }) => {
             containerClassName='pagination react-paginate separated-pagination pagination-sm justify-content-end pr-1 mt-1'
         />
     )
-
     return (
         <Fragment>
             <Card>

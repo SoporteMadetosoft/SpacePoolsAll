@@ -73,8 +73,8 @@ export const createItemRepeatersByPool = (idPool) => {
         let num = 0
       let deletee = true
       while (deletee) {
-          if (getState().normalForm.items[0]) {
-              dispatch(removeRepeaterRegister('items', 0))
+          if (getState().normalForm.baseItems[0]) {
+              dispatch(removeRepeaterRegister('baseItems', 0))
           } else deletee = false
           num++
       }
@@ -87,6 +87,7 @@ export const createItemRepeatersByPool = (idPool) => {
        num = 0
        while (go) {
            if (pool.items[num]) {
+            console.log("wooooooooooooooooooooooooooooooooo")
                console.log(pool.items[num])
                const formStructure = {
                    idItem: pool.items[num].idItem.id,
@@ -94,7 +95,7 @@ export const createItemRepeatersByPool = (idPool) => {
                    coste: pool.items[num].coste,
                    nombre: pool.items[num].idItem.name
                }
-               dispatch(addRepeaterRegister('items', formStructure))
+               dispatch(addRepeaterRegister('baseItems', formStructure))
            } else go = false
            num++
        }

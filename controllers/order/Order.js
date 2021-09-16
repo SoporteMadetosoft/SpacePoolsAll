@@ -24,7 +24,6 @@ exports.list = async (req, res) => {
 
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
-
     try {
         res.json({
             ok: true,

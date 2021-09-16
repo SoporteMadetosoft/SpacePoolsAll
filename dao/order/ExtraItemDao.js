@@ -1,7 +1,7 @@
 const ExtraItem = require("../../models/order/ExtraItem");
 const GenericDao = require("../GenericDao");
 
-const ItemDao = require("../item/ItemDao");
+// const ItemDao = require("../item/ItemDao");
 
 class ExtraItemDao extends GenericDao {
     constructor() {
@@ -12,7 +12,7 @@ class ExtraItemDao extends GenericDao {
     async mountObj(data) {
         const extraItem = {
             ...data,
-            idItem: await this.ItemDao.findById(data.idItem),
+            // idItem: await this.ItemDao.findById(data.idItem),
         }
         return new ExtraItem(extraItem)
     }

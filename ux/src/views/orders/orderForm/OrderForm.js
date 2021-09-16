@@ -21,8 +21,10 @@ export const OrderForm = () => {
 
     const { normalForm, selectReducer } = useSelector(state => state)
     const { poolsOpt, taxesOpt } = selectReducer
-    const { observations, idPool, iva } = normalForm
-
+    const { observations, idPool, Iva } = normalForm
+    console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP")
+    console.log(idPool)
+    console.log(Iva)
     const {
         idVendor
     } = selectReducer
@@ -32,7 +34,7 @@ export const OrderForm = () => {
     }
 
     useEffect(() => {
-        dispatch(startAddSelectOptions('Taxes','ivaOpt'))
+        //dispatch(startAddSelectOptions('Taxes','ivaOpt'))
         dispatch(startAddSelectOptions('Pools', 'poolsOpt', 'fabricationName'))
         dispatch(startAddSelectOptions('Taxes', 'taxesOpt'))
     }, [])
@@ -43,7 +45,9 @@ export const OrderForm = () => {
     }
 
     const setPoolInRedux = (obj) => {
-        dispatch(handleChangeController("Pool", { id: obj.value, name: obj.label }))
+        console.log("-------------------")
+        console.log(obj.label)
+        dispatch(handleChangeController("idPool", { id: obj.value, name: obj.label }))
         dispatch(createItemRepeatersByPool(obj.value))
         preparePrice()
     }
@@ -78,7 +82,7 @@ export const OrderForm = () => {
                         <ReactSelect
                             placeholder="Piscina"
                             name="idPool"
-                            value={idPool}
+                    
                             options={poolsOpt}
                             onChange={(obj) => {
                                 setPoolInRedux(obj)
@@ -92,7 +96,7 @@ export const OrderForm = () => {
                         <ReactSelect
                             placeholder="iva"
                             name="iva"
-                            value={iva}
+                            
                             options={taxesOpt}
                             onChange={(obj) => {
                                 setIvaInRedux(obj)

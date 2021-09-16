@@ -21,13 +21,9 @@ export const ItemsRepeater = () => {
     const dispatch = useDispatch()
     const formValues = useSelector(state => state.normalForm)
 
-    const { items } = formValues
+    const { baseItems } = formValues
 
-    const count = items ? items.length : 0
-
-    const increaseCount = () => {
-        dispatch(addRepeaterRegister('items', formStructure))
-    }
+    const count = baseItems ? baseItems.length : 0
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Items','idOpt'))
@@ -55,11 +51,11 @@ const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
-    const {nombre, cantidad } = normalForm.items[position]
+    const {nombre, cantidad } = normalForm.baseItems[position]
 
     const decreaseCount = () => {
         dispatch(handleLessPrice(position))
-        dispatch(removeRepeaterRegister('items', position))
+        dispatch(removeRepeaterRegister('baseItems', position))
     }
 
     return (

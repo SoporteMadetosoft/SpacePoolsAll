@@ -2,11 +2,12 @@ const Order = require("../../models/order/Order");
 const GenericDao = require("../GenericDao");
 
 //const ProductionDao = require("../production/ProductionDao");
-const PoolDao = require("../pool/PoolDao");
+//const PoolDao = require("../pool/PoolDao");
 const CustomerDao = require("../customer/CustomerDao");
 const CustomerDataDao = require("../order/CustomerDataDao");
 const ExtraItemDao = require("../order/ExtraItemDao");
-
+const BaseItemDao = require("../order/BaseItemDao")
+const TaxesDao = require("../setup/general/TaxDao");
 
 class OrderDao extends GenericDao {
     constructor() {
@@ -16,17 +17,26 @@ class OrderDao extends GenericDao {
         this.CustomerDao = new CustomerDao()
         this.CustomerDataDao = new CustomerDataDao()
         this.ExtraItemDao = new ExtraItemDao()
+        this.BaseItemDao = new BaseItemDao()
+        this.TaxesDao = new TaxesDao()
+        
     }
 
     async mountObj(data) {
         //const customerId = await this.CustomerDao.findById(data.customerId)
+//     console.log(data)
         const order = {
             ...data,
             //production: await this.ProductionDao.findByOrderId(data.id),
             customerData: await this.CustomerDataDao.findByOrderId(data.id),
             extraItems: await this.ExtraItemDao.findByOrderId(data.id),
-            //poolId: await this.PoolDao.findById(data.poolid)
+            orderDate : this.datetimeToDate(data.orderDate),
+            deliveryDate : this.datetimeToDate(data.deliveryDate),
+            baseItems : await this.BaseItemDao.findByOrderId(data.is),
+            //idPool: await this.PoolDao.findById(data.idPool)
+            idTax : await this.TaxesDao.findById(data.idTax)
         }
+        console.log(order)
         return new Order(order)
     }
 
@@ -40,15 +50,15 @@ class OrderDao extends GenericDao {
 
         }        
 
-        const { orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate, price } = list
+        const { id, orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate, price } = list
         
         const newOrderDate = this.datetimeToEuropeDate(orderDate)
         const newDliveryDate = this.datetimeToEuropeDate(deliveryDate)
 
-        const nObj = {deliveryTime: deliverySchedulerStart+" - "+deliverySchedulerEnd, orderCode: orderCode, customerName: customerName, customerPhone: customerPhone, customerEmail: customerEmail, orderDate: newOrderDate, deliveryDate:newDliveryDate, price:price }
+        const nObj = {id:id, deliveryTime: deliverySchedulerStart+" - "+deliverySchedulerEnd, orderCode: orderCode, customerName: customerName, customerPhone: customerPhone, customerEmail: customerEmail, orderDate: newOrderDate, deliveryDate:newDliveryDate, price:price }
      
         return nObj
-    }
+    }  
 
     findOrderById(id){
         return new Promise((resolve, reject) => {

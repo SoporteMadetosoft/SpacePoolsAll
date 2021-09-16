@@ -2,6 +2,7 @@ class Order {
     extraItems = []
     customerData = []
     production = []
+    baseItems = []
     #table = 'orders'
 
     constructor({
@@ -15,9 +16,11 @@ class Order {
         deliverySchedulerEnd,
         observations,
         price,
+        idTax,
         extraItems = [],
         customerData = [],
-        production = []
+        production = [],
+        baseItems = []
     }) {
         this.id = id
         this.customerId = customerId
@@ -29,9 +32,11 @@ class Order {
         this.deliverySchedulerEnd = deliverySchedulerEnd
         this.observations = observations
         this.price = price
+        this.idTax = idTax 
         this.extraItems = extraItems
         this.customerData = customerData
         this.production = production
+        this.baseItems = baseItems
     }
     get table() {
         return this.#table;

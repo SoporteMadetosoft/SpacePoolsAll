@@ -1,45 +1,43 @@
 const Purchase = require("../../models/purchase/Purchase");
 const GenericDao = require("../GenericDao");
 
-const ItemDao = require("../purchase/ItemDao");
+const PurchaseItemDao = require("./PurchaseItemDao");
 const VendorDao = require("../vendor/VendorDao")
 
 class PurchaseDao extends GenericDao {
-    ItemDao
+
     constructor() {
         super(Purchase);
-        this.ItemDao = new ItemDao()
+        this.PurchaseItemDao = new PurchaseItemDao()
         this.VendorDao = new VendorDao()
     }
 
     async mountObj(data) {
-
+        const items = await this.PurchaseItemDao.findByPurchaseId(data.id)
+        console.log(items)
         const purchase = {
             ...data,
-            items: await this.ItemDao.findByPurchaseId(data.id)
+            idVendor: await this.VendorDao.findVendorById(data.idVendor),
+            purchaseDate: this.datetimeToDate(data.purchaseDate),
+            deliveryDate: this.datetimeToDate(data.deliveryDate)
         }
+
         return new Purchase(purchase)
     }
 
     async mountList(data) {
-        const vendor = await this.VendorDao.findVendorById(data.vendorId)
+        const vendor = await this.VendorDao.findVendorById(data.idVendor)
         const list = {
             ...data,
-            items: await this.ItemDao.findByPurchaseId(data.id),
-            vendorN: vendor != undefined ? vendor.comercialName : 'p'
-
+            idVendor: vendor != undefined ? vendor.comercialName : ''
         }
 
-        const { purchaseCode, items, vendorN, purchaseDate, deliveryDate, observations } = list
-
-
-
-
+        const { id, purchaseCode, idVendor, purchaseDate, deliveryDate, observations } = list
 
         const newPurchaseDate = this.datetimeToEuropeDate(purchaseDate)
         const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)
 
-        const nObj = { purchaseCode: purchaseCode, items: "", vendorId: vendorN, purchaseDate: newPurchaseDate, observations: observations, deliveryDate: newDeliveryDate }
+        const nObj = { id: id, idVendor: idVendor, purchaseCode: purchaseCode, purchaseDate: newPurchaseDate, observations: observations, deliveryDate: newDeliveryDate }
         return nObj
     }
 

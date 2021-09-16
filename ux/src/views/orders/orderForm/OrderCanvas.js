@@ -3,7 +3,7 @@ import { Stage, Layer, Image, Rect } from 'react-konva'
 import { useDispatch, useSelector } from 'react-redux'
 import { editDropedElement } from '../../../redux/actions/canvas'
 
-const INITIAL_ELEMENTS = 6
+const INITIAL_ELEMENTS = 29
 export const OrderCanvas = () => {
 
     const dispatch = useDispatch()
@@ -15,8 +15,6 @@ export const OrderCanvas = () => {
             const canvasElement =
             {
                 ...elem[i],
-                x: (window.innerWidth / 15),
-                y: ((window.innerHeight / 12) * i) + 100,
                 image: imageObj
             }
 
@@ -90,11 +88,6 @@ export const OrderCanvas = () => {
                             outerRadius={40}
                             opacity={0.8}
                             draggable
-                            shadowColor="black"
-                            shadowBlur={10}
-                            shadowOpacity={0.6}
-                            shadowOffsetX={el.isDragging ? 10 : 5}
-                            shadowOffsetY={el.isDragging ? 10 : 5}
                             scaleX={el.isDragging ? 1.2 : 1}
                             scaleY={el.isDragging ? 1.2 : 1}
                             onDragStart={handleDragStart}

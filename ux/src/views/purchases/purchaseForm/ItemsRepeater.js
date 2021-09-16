@@ -4,20 +4,17 @@ import { X, Plus } from 'react-feather'
 import { Button } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactSelect from 'react-select'
-import { Select } from '../../../components/form/inputs/Select'
-import { addSelectOptions, startAddSelectOptions } from '../../../redux/actions/selects'
+import { startAddSelectOptions } from '../../../redux/actions/selects'
 import React, { useEffect } from 'react'
 import axios from 'axios'
 
-import { addRepeaterRegister, editRepeaterRegister, handleChangeController, removeRepeaterRegister } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { constructSelect } from '../../../utility/helpers/deconstructSelect'
 import { addSelectionOnNormalForm, handleSearchCost, handleSearchStock } from '../../../redux/actions/items'
 
 const formStructure = {
     idItem: '',
-    name: '',
-    quantity: '',
-    itemsOpt: {}
+    quantity: 0
 }
 
 export const ItemsRepeater = () => {
@@ -34,7 +31,7 @@ export const ItemsRepeater = () => {
     }
 
     useEffect(() => {
-        dispatch(startAddSelectOptions('ItemType', 'idOpt'))
+        dispatch(startAddSelectOptions('ItemType', 'ItemType'))
     }, [])
 
 
@@ -64,7 +61,7 @@ const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
-    const { idOpt } = selectReducer
+    const { ItemType } = selectReducer
     const { id, idVendor } = normalForm
     const { stock, cost, itemsOpt, quantity } = normalForm.items[position]
 
@@ -113,7 +110,7 @@ const ItemsForm = ({ position }) => {
                 <label className="control-label">Tipo Producto</label>
                 <ReactSelect
                     name="itemType"
-                    options={idOpt}
+                    options={ItemType}
                     onChange={
                         (obj) => {
                             handleLoadItems(obj)

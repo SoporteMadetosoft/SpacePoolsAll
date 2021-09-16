@@ -41,7 +41,7 @@ export const PurchaseForm = () => {
         dispatch(handleChangeController('idVendor', { id: value, name: label }))
     }
 
-    const valueVendor = normalForm['idVendor'] ? deconstructSelect(normalForm['idVendor']) : ''
+    const valueVendor = normalForm['idVendor'] ? deconstructSelect(normalForm['idVendor'], 'comercialName') : ''
 
     return (
         <>
@@ -67,9 +67,6 @@ export const PurchaseForm = () => {
                     </div>
                     <div className="col-md-2">
                         <Input name="deliveryDate" type="date" placeholder="Fecha de entrega" label="Fecha de entrega" />
-                    </div>
-                    <div className="col-md-2">
-                        <Input name="phone" placeholder="Teléfono" label="Teléfono" />
                     </div>
 
                     <div className="col-md-12">

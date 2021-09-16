@@ -45,12 +45,14 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT PURCAHSE */
-        const insert = await purchaseDao.insert(req.body.form)
-        /** INSERT ITEM */
-        req.body.repairs.forEach(element => {
-            element.purchaseId = insert.insertId
-            itemDao.insert(element)
-        });
+        const purchase = req.body.form
+        const items = req.body.form.items
+
+        delete purchase.items
+
+        const insert = await purchaseDao.insert(purchase)
+
+        purchaseDao.multipleAccess(items, purchaseDao.PurchaseItemDao, insert.insertId, 'idPurchase')
 
         res.json({ ok: true })
     } catch (error) {
@@ -59,15 +61,17 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
-
+exports.update = async (req, res) => {
     try {
         /** UPDATE PURCHASE */
-        purchaseDao.update(req.body.form)
-        /** UPDATE ITEM */
-        req.body.formData.repairs.forEach(element => {
-            itemDao.update(element)
-        })
+        const purchase = req.body.form
+        const items = req.body.form.items
+
+        delete purchase.items
+
+        await purchaseDao.update(purchase)
+
+        purchaseDao.multipleAccess(items, purchaseDao.PurchaseItemDao, purchase.id, 'idPurchase')
 
         res.json({ ok: true })
     } catch (error) {

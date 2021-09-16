@@ -9,11 +9,16 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
-import { constructSelect } from '../../../utility/helpers/deconstructSelect'
+import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { addSelectionOnNormalForm, handleSearchCost, handleSearchStock } from '../../../redux/actions/items'
 
 const formStructure = {
-    idItem: '',
+    idItem: [
+        {
+        id: '',
+        name: ''
+    }
+],
     quantity: 0
 }
 
@@ -62,8 +67,27 @@ const ItemsForm = ({ position }) => {
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
     const { ItemType } = selectReducer
-    const { id, idVendor } = normalForm
-    const { stock, cost, itemsOpt, quantity } = normalForm.items[position]
+    const { idVendor } = normalForm
+    const { itemType, idItem, stock, cost, itemsOpt, quantity } = normalForm.items[position]
+
+    const idItemValue = idItem ? deconstructSelect(idItem) : null
+    const itemTypeValue = itemType ? deconstructSelect(itemType) : null
+
+    const handleLoadItems = async (obj) => {
+        console.log(obj)
+        const nObj = {
+            itemType: obj.value,
+            idVendor: idVendor ? idVendor['id'] : null
+        }
+        const { data: { data } } = await axios.post(`${process.env.REACT_APP_HOST_URI}/items/item/listItems`, { nObj })
+        dispatch(addSelectionOnNormalForm('itemsOpt', data.map(option => ({ label: option.name, value: option.id })), 'items', position))
+    }
+
+    useEffect(() => {
+        if (itemType) {
+            handleLoadItems({label: itemType.name, value: itemType.id})
+        }
+    }, [itemType])
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('items', position))
@@ -94,14 +118,7 @@ const ItemsForm = ({ position }) => {
         dispatch(handleSearchStock('Items', obj.value, position, 'items'))
     }
 
-    const handleLoadItems = async (obj) => {
-        const nObj = {
-            itemType: obj.value,
-            idVendor: idVendor ? idVendor['id'] : null
-        }
-        const { data: { data } } = await axios.post(`${process.env.REACT_APP_HOST_URI}/items/item/listItems`, { nObj })
-        dispatch(addSelectionOnNormalForm('itemsOpt', data.map(option => ({ label: option.name, value: option.id })), 'items', position))
-    }
+
 
     return (
 
@@ -114,10 +131,10 @@ const ItemsForm = ({ position }) => {
                     onChange={
                         (obj) => {
                             handleLoadItems(obj)
-                            handleSelectChange("idItem", obj)
+                            handleSelectChange("itemType", obj)
                         }
                     }
-                    value={id}
+                    value={itemTypeValue}
                 />
             </div>
 
@@ -127,8 +144,12 @@ const ItemsForm = ({ position }) => {
                     name="item"
                     options={itemsOpt}
                     onChange={
-                        (obj) => { handleLoadStockCost(obj) }
+                        (obj) => {
+                            handleLoadStockCost(obj)
+                            handleSelectChange('idItem', obj)
+                        }
                     }
+                    value={idItemValue}
                 />
             </div>
 

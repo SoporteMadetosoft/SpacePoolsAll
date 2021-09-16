@@ -37,8 +37,10 @@ export const PurchaseFormScreen = () => {
         const prettyForm = {
             ...form,
             idVendor: exceptionController(form.idVendor),
-            items: form.items.map(item => ({ idItem: exceptionController(item.idItem), quantity: item.quantity }))
+            idStatus: exceptionController(form.idStatus),
+            items: form.items.map(item => ( { idItem: exceptionController(item.idItem), quantity: item.quantity } ))
         }
+        
         save('Purchases', id, prettyForm)
         history.push('/purchases')
     }

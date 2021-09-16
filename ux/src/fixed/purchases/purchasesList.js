@@ -13,7 +13,6 @@ export const purchasesList = [
     selector: 'purchaseCode',
     sortable: true,
     searchable: true,
-    minWidth: '50px',
     width: '5%'
   },
   {
@@ -21,34 +20,28 @@ export const purchasesList = [
     selector: 'idVendor',
     sortable: true,
     searchable: true,
-    minWidth: '200px'
-  },
-  {
-    name: 'Productos',
-    selector: 'items',
-    searchable: true,
-    minWidth: '200px'
+    width: '23%'
   },
   {
     name: 'Fecha de compra',
     selector: 'purchaseDate',
     sortable: true,
-    minWidth: '200px'
+    width: '22%'
   },
   {
     name: 'Fecha de entrega',
     selector: 'deliveryDate',
     sortable: true,
-    minWidth: '200px'
+    width: '22%'
   },
   {
     name: 'Observaciones',
     selector: 'observations',
-    minWidth: '200px'
+    width: '24%'
   },
   {
     name: '',
-    width: '150px',
+    width: '5%',
     cell: row => {
 
       const dispatch = useDispatch()

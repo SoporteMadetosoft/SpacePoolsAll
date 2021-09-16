@@ -18,6 +18,21 @@ class PurchaseItemDao extends GenericDao {
 
     }
 
+    async mountItem(data){
+        const item = {
+            idItem: {
+                id: data.idItem.id,
+                name: data.idItem.name
+            },
+            itemType: data.idItem.itemType,
+            quantity: data.quantity,
+            cost: data.idItem.cost,
+            stock: data.idItem.stock
+        }
+        return item
+    }
+
+
     async mountList(data) {
         const list = {
             ...data,
@@ -29,15 +44,14 @@ class PurchaseItemDao extends GenericDao {
 
     findByPurchaseId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM purchases_items WHERE idPurchase = ?', [id], (err, result) => {
+            this.db.query('SELECT * FROM purchases_items WHERE idPurchase = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
                     const itemList = []
                     for (const item of result) {
-                        itemList.push(this.mountObj(item))
+                        itemList.push(await this.mountItem(await this.mountObj(item)))
                     }
-
                     resolve(itemList)
                 }
             })

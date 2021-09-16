@@ -2,7 +2,8 @@ const Purchase = require("../../models/purchase/Purchase");
 const GenericDao = require("../GenericDao");
 
 const PurchaseItemDao = require("./PurchaseItemDao");
-const VendorDao = require("../vendor/VendorDao")
+const VendorDao = require("../vendor/VendorDao");
+const StatusDao = require("../global/StatusDao");
 
 class PurchaseDao extends GenericDao {
 
@@ -10,18 +11,19 @@ class PurchaseDao extends GenericDao {
         super(Purchase);
         this.PurchaseItemDao = new PurchaseItemDao()
         this.VendorDao = new VendorDao()
+        // this.StatusDao = new StatusDao()
     }
 
-    async mountObj(data) {
-        const items = await this.PurchaseItemDao.findByPurchaseId(data.id)
-        console.log(items)
+    async mountObj(data) {        
+        console.log(data)
         const purchase = {
             ...data,
+            // idStatus: await this.StatusDao.findById(data.idStatus),
+            items: await this.PurchaseItemDao.findByPurchaseId(data.id),
             idVendor: await this.VendorDao.findVendorById(data.idVendor),
             purchaseDate: this.datetimeToDate(data.purchaseDate),
             deliveryDate: this.datetimeToDate(data.deliveryDate)
         }
-
         return new Purchase(purchase)
     }
 

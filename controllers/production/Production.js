@@ -2,9 +2,6 @@ const ProductionDao = require('../../dao/production/ProductionDao')
 
 const productionDao = new ProductionDao()
 
-
-
-
 exports.list = async (req, res) => {
     try {
         res.json({
@@ -33,6 +30,18 @@ exports.listByID = async (req, res) => {
     }
 }
 
+exports.switchStart = async (req, res) => {
+    const id = parseInt(req.params.id, 10)
+    try {
+        await productionDao.switchStart(id)
+        res.json({ ok: true })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+
+}
+
 exports.delete = async (req, res) => {
     const id = parseInt(req.params.id, 10)
     try {
@@ -43,19 +52,6 @@ exports.delete = async (req, res) => {
         return res.status(500).send(error);
     }
 
-}
-
-exports.insert = async (req, res) => {
-    try {
-        /** INSERT PRODUCTION */
-        const insert = await productionDao.insert(req.body.form)
-
-
-        res.json({ ok: true })
-    } catch (error) {
-        console.log(error)
-        return res.status(500).send(error)
-    }
 }
 
 exports.update = (req, res) => {

@@ -5,12 +5,14 @@ class Production {
         id,
         idOrder,
         productionCode,
-        status
+        idProductionStatus,
+        isStarted
     }) {
         this.id = id
         this.idOrder = idOrder
-        this.productionCode = productionCode
-        this.status = status
+        this.idProductionStatus = idProductionStatus
+        this.productionCode = productionCode,
+        this.isStarted = isStarted
     }
     get table() {
         return this.#table;

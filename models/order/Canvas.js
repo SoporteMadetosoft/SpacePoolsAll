@@ -8,7 +8,8 @@ class Canvas {
         x,
         y,
         idOrder,
-        imgUrl
+        width,
+        height
     }) {
         this.id = id
         this.idElemento = idElemento
@@ -16,7 +17,8 @@ class Canvas {
         this.x = x
         this.y = y
         this.idOrder = idOrder
-        this.imgUrl = imgUrl
+        this.width = width
+        this.height = height
     }
     get table() {
         return this.#table;

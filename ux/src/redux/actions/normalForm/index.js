@@ -55,11 +55,10 @@ export const handleGetForm = () => {
     }
 }
 
-export const setIdInOrderCode = (endPoint, name) => {
+export const setIdInXCode = (endPoint, name) => {
     return async (dispatch, getState) => {
         setTimeout(async function() {
             if (getState().normalForm.id) {
-                console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
                 const id = getState().normalForm.id
                 dispatch(handleChangeController(name, id ))
             } else {

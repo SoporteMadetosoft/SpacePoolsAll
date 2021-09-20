@@ -52,7 +52,6 @@ class CustomerDao extends GenericDao {
             contacts: await this.CustomerContactPersonDao.findByCustomerId(data.id),
             documents: await this.FileManagerDao.getDocumentsInfo(data.filePath)
         }
-        console.log(data)
         return new Customer(customer)
     }
 

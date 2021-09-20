@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
@@ -10,7 +10,7 @@ import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
 import { useForm } from 'react-hook-form'
-import { handleChangeController } from '../../../redux/actions/normalForm'
+import { handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
 
 const ValidationSchema = yup.object().shape({
     familyCode: yup.string().required(),
@@ -18,6 +18,8 @@ const ValidationSchema = yup.object().shape({
 })
 
 export const ItemsFamilyForm = () => {
+
+    let {familyCode} = useSelector(state =>  state.normalForm)
 
     const { id } = useParams()
     const history = useHistory()
@@ -30,6 +32,12 @@ export const ItemsFamilyForm = () => {
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
+
+    useEffect(() => {
+        if (normalForm.id === undefined) {
+            dispatch(setIdInXCode("Family","familyCode"))
+        } else familyCode = normalForm.id
+    }, [])
 
     const submit = async () => {
         const prettyForm = {
@@ -47,18 +55,14 @@ export const ItemsFamilyForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <label className="control-label">Nº Familia</label>
-                        <InputValid
-                            id="familyCode"
-                            name="familyCode"
-                            type="text"
-                            value={normalForm['familyCode']}
-                            placeholder="Nº Familia"
-                            innerRef={register({ required: true })}
-                            invalid={errors.familyCode && true}
-                            onChange={handleInputChange}
+
+                    <label className="control-label">Nº Familia</label>
+                        <input
+                        className={`form-control`}
+                        name="familyCode"
+                        value={familyCode}
+                        readOnly
                         />
-                        {errors && errors.familyCode && <FormFeedback>Nº Familia requerido</FormFeedback>}
                     </div>
                     <div className="col-md-5">
                         <label className="control-label">Nombre</label>

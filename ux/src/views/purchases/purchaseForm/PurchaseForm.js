@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleChangeController } from '../../../redux/actions/normalForm'
+import { handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
 
 
 import { ItemsRepeater } from './ItemsRepeater'
@@ -9,10 +9,18 @@ import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 
 export const PurchaseForm = () => {
+    let {purchaseCode} = useSelector(state =>  state.normalForm)
+
+
 
     const dispatch = useDispatch()
 
     const { normalForm, selectReducer } = useSelector(state => state)
+    useEffect(() => {
+        if (normalForm.id === undefined) {
+            dispatch(setIdInXCode("Purchases","purchaseCode"))
+        } else purchaseCode = normalForm.id
+    }, [])
 
     const { observations } = normalForm
 
@@ -29,7 +37,13 @@ export const PurchaseForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <Input name="purchaseCode" placeholder="Nº venta" label="Nº venta" />
+                    <label className="control-label">Nº Pedido</label>
+                        <input
+                        className={`form-control`}
+                        name="purchaseCode"
+                        value={purchaseCode}
+                        readOnly
+                    />
                     </div>
                     <div className="col-md-4">
                         <Select name="idVendor" placeholder="Proveedor" label="Proveedor" endpoint="Vendors" labelName="comercialName" />

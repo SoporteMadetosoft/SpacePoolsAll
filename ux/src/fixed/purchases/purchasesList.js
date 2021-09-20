@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 export const purchasesList = [
     {
         name: 'Nº',
-        selector: 'purchaseCode',
+        selector: 'id',
         sortable: true,
         searchable: true,
         minWidth: '50px',

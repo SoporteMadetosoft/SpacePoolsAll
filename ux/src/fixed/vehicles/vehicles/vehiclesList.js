@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 export const vehiclesList = [
   {
     name: 'Nº',
-    selector: 'vehicleCode',
+    selector: 'id',
     sortable: true,
     minWidth: '50px',
     width: '8%'

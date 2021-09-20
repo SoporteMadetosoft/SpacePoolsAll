@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 export const customerList = [
   {
     name: 'Nº',
-    selector: 'customerCode',
+    selector: 'id',
     sortable: true,
     searchable: true,
     width: '8%'

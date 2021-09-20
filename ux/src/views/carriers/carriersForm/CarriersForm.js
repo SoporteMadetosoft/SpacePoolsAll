@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { useForm } from 'react-hook-form'
@@ -13,7 +13,7 @@ import { Select } from '../../../components/form/inputs/Select'
 import { FileContext } from '../../../utility/context/FileContext'
 
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
-import { addRepeaterRegister, handleGetForm } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, handleGetForm, setIdInXCode } from '../../../redux/actions/normalForm'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
 import { uploadFile } from '../../../utility/helpers/Axios/uploadFile'
@@ -31,6 +31,7 @@ const ValidationSchema = yup.object().shape({
 })
 
 export const CarriersForm = () => {
+    let {carrierCode} = useSelector(state =>  state.normalForm)
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -48,6 +49,12 @@ export const CarriersForm = () => {
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
+
+    useEffect(() => {
+        if (normalForm.id === undefined) {
+            dispatch(setIdInXCode("Carriers","carrierCode"))
+        } else carrierCode = normalForm.id
+    }, [])
 
     const preSubmit = (filePath2) => {
         return new Promise(async (resolve, reject) => {
@@ -101,18 +108,13 @@ export const CarriersForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <label className="control-label">Nº Transportista</label>
-                        <InputValid
-                            id="carrierCode"
-                            name="carrierCode"
-                            type="number"
-                            value={normalForm['carrierCode']}
-                            placeholder="Nº Transportista"
-                            innerRef={register({ required: true })}
-                            invalid={errors.carrierCode && true}
-                            onChange={handleInputChange}
-                        />
-                        {errors && errors.carrierCode && <FormFeedback>Nº Transportista requerido</FormFeedback>}
+                    <label className="control-label">Nº Transportista</label>
+                        <input
+                        className={`form-control`}
+                        name="carrierCode"
+                        value={carrierCode}
+                        readOnly
+                    />
                     </div>
                     <div className="col-md-4">
                         <Input name="name" placeholder="Nombre" label="Nombre" />

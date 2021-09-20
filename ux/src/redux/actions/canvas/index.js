@@ -9,3 +9,7 @@ export const editDropedElement = (key, position, obj) => ({
     type: canvasTypes.DropElement,
     payload: { key, position, obj }
 })
+
+export const setNewCanvasPosition = () => ({
+    
+})

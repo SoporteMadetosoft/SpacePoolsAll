@@ -11,7 +11,7 @@ import { Link } from "react-router-dom"
 export const ProductionsList = [
     {
         name: 'Nº',
-        selector: 'productionCode',
+        selector: 'id',
         sortable: true,
         searchable: true,
         minWidth: '50px',

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { handleChangeController, setIdInOrderCode } from '../../../redux/actions/normalForm'
+import { handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
 import React, { useEffect } from 'react'
 import ReactSelect from 'react-select'
 import { ItemsRepeater } from './ItemsRepeater'
@@ -47,7 +47,7 @@ export const OrderForm = () => {
         dispatch(startAddSelectOptions('Taxes', 'taxesOpt'))
 
         if (normalForm.id === undefined) {
-            dispatch(setIdInOrderCode("Orders","orderCode"))
+            dispatch(setIdInXCode("Orders","orderCode"))
         } else orderCode = normalForm.id
 
         if (normalForm.price) {
@@ -88,7 +88,6 @@ export const OrderForm = () => {
                         value={orderCode}
                         readOnly
                     />
-
                     </div>
                     <div className="col-md-4">
                         <Select name="idCustomer" placeholder="Cliente" label="Cliente" endpoint="Customers" labelName="comercialName" />

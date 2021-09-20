@@ -31,6 +31,8 @@ export const OrderFormScreen = () => {
             dispatch(handleStartEditing('Orders', id))
         }
         dispatch(initNormalForm(structureForm))
+       // dispatch(setNewCanvasPosition())
+
     }, [initNormalForm])
 
 
@@ -74,9 +76,9 @@ export const OrderFormScreen = () => {
             production : productionObj,
         baseItems: form.baseItems.map(bI => ({ idItem: bI.idItem, quantity:bI.quantity})),
         extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity:eI.quantity})),
-        canvas: canvas.elements.map(el => ({ idElemento: el.id, name: el.name, x: el.x, y: el.y, imageUrl:el.imageUrl }))
+        canvas: canvas.elements.map(el => ({ idElemento: el.id, name: el.name, x: el.x, y: el.y, imageUrl:el.imageUrl, width:el.width, height:el.height }))
         }
-        console.log(prettyForm)
+        //console.log(prettyForm)
         save('Orders', id, prettyForm)
        // dispatch(handleCleanUp())
        // history.push('/orders')

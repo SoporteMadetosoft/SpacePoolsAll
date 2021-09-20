@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 export const itemList = [
     {
         name: 'Nº',
-        selector: 'itemCode',
+        selector: 'id',
         sortable: true,
         minWidth: '50px',
         width: '8%'

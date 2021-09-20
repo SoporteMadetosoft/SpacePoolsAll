@@ -41,7 +41,6 @@ class OrderDao extends GenericDao {
             idCustomer : {id:data.idCustomer, comercialName: (await this.CustomerDao.findCustomerNameBy(data.idCustomer))},
             canvasItems : await this.CanvasDao.findByOrderId(data.id),
         }
-        console.log(order)
         let order2 = new Order(order)
         order2 = {
             ...order2,

@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 export const trailersList = [
     {
         name: 'Nº',
-        selector: 'trailerCode',
+        selector: 'id',
         sortable: true,
         width: '8%'
     },

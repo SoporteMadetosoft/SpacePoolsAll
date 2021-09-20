@@ -23,16 +23,17 @@ export const handleCalculateTotalCost = (column1, column2) => {
                 k = 0
                 }
             }
-
-            if (getState().normalForm["Pool"]) {
-                const {id} = getState().normalForm["Pool"]
+            console.log("ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ")
+            console.log(totalCost)
+            if (getState().normalForm["idPool"]) {
+                const {id} = getState().normalForm["idPool"]
                 const {cost} = await getFormData("Pools", id)
                 totalCost += cost
             }
             
-            if (getState().normalForm["Iva"]) {
+            if (getState().normalForm["idTax"]) {
     
-                const {name} = getState().normalForm["Iva"]
+                const {name} = getState().normalForm["idTax"]
                 totalCost *= ((name / 100) + 1)
             
                 console.log(totalCost)
@@ -51,9 +52,8 @@ export const handleSearchOutID2 = (endpoint, position, arr) => {
         console.log(idItem.id)
         if (idItem !== undefined) {
             const {cost} = await getFormData(endpoint, idItem.id)
-            const {cantidad} = getState().normalForm[arr][position]
-            const producto = cost * cantidad
-            
+            const {quantity} = getState().normalForm[arr][position]
+            const producto = cost * parseInt(quantity)
             
             const obj = {
             name: "coste",
@@ -62,7 +62,7 @@ export const handleSearchOutID2 = (endpoint, position, arr) => {
           dispatch(editRepeaterRegister(arr, position, obj))
         
           //calcular e introducir coste total
-          dispatch(handleCalculateTotalCost("extraItems",""))
+          dispatch(handleCalculateTotalCost("extraItems","baseItems"))
         }
     }
 }
@@ -80,20 +80,17 @@ export const createItemRepeatersByPool = (idPool) => {
       }
 
         
-
-
        const pool = await getFormData("Pools", idPool)
        let go = true
        num = 0
        while (go) {
            if (pool.items[num]) {
-            console.log("wooooooooooooooooooooooooooooooooo")
-               console.log(pool.items[num])
+               //console.log(pool.items[num])
                const formStructure = {
                    idItem: pool.items[num].idItem.id,
                    cantidad:  pool.items[num].cantidad,
                    coste: pool.items[num].coste,
-                   nombre: pool.items[num].idItem.name
+                   quantity: pool.items[num].idItem.name
                }
                dispatch(addRepeaterRegister('baseItems', formStructure))
            } else go = false

@@ -5,10 +5,12 @@ import BreadCrumbs from '@components/breadcrumbs'
 
 import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 
-import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm/index.js'
+import { handleChangeController, handleStartEditing, initNormalForm } from '../../redux/actions/normalForm/index.js'
 import { save } from '../../utility/helpers/Axios/save'
 import { OrderForm } from './orderForm/OrderForm'
 import { handleCleanUp } from '../../redux/actions/fileUpload'
+import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
+import { fromFile } from 'file-type'
 
 const structureForm = {
     baseItems: [],
@@ -22,7 +24,8 @@ export const OrderFormScreen = () => {
     const dispatch = useDispatch()
     const form = useSelector(state => state.normalForm)
     const canvas = useSelector(state => state.canvasReducer)
-
+    const orders = useSelector(state => state.ordersReducer)
+   
     useEffect(() => {
         if (id) {
             dispatch(handleStartEditing('Orders', id))
@@ -30,21 +33,53 @@ export const OrderFormScreen = () => {
         dispatch(initNormalForm(structureForm))
     }, [initNormalForm])
 
+
+    
     const title = (id) ? 'Editar Pedido' : 'Añadir Pedido'
     const customerName = form.ordercod ? form.idOrder : title
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        let idCustomer = undefined
+        if (form.customerData !== undefined) {
+            idCustomer = form.customerData[0].id
+        }
+        const customerDataObj = {
+            id: idCustomer,
+            deliveryAddress : form.deliveryAddress,
+            phone : form.phone,
+            email : form.email
+        }
+        const productionObj = {
+            status : 1
+        }
+        
+        delete form.deliveryAddress
+        delete form.phone
+        delete form.email
+        delete form.status
+        delete form.canvasItems
+
+        console.log(form)
+        console.log(customerDataObj)
         const prettyForm = {
             ...form,
-            items: form.baseItems.map(baseItems => ({ ...baseItems, name: exceptionController(baseItems.name.value) })),
-            canvas: canvas.elements.map(el => ({ idElement: el.id, name: el.name, x: el.x, y: el.y }))
+            idTax : form.idTax.id,
+            idPool : form.idPool.id,
+            price : orders.price,
+            idCustomer : form.idCustomer.id,
+            canvas : canvas.elements,
+            customerData : customerDataObj,
+            production : productionObj,
+        baseItems: form.baseItems.map(bI => ({ idItem: bI.idItem, quantity:bI.quantity})),
+        extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity:eI.quantity})),
+        canvas: canvas.elements.map(el => ({ idElemento: el.id, name: el.name, x: el.x, y: el.y, imageUrl:el.imageUrl }))
         }
-
+        console.log(prettyForm)
         save('Orders', id, prettyForm)
-        dispatch(handleCleanUp())
-        history.push('/orders')
+       // dispatch(handleCleanUp())
+       // history.push('/orders')
 
     }
 

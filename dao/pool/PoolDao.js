@@ -2,6 +2,7 @@ const Pool = require("../../models/pool/Pool");
 const GenericDao = require("../GenericDao");
 
 const PoolItemsDao = require("./PoolItemsDao");
+//const PoolRawsDao = require("./PoolItemsDao")
 const StatusDao = require("../global/StatusDao");
 
 class PoolDao extends GenericDao {
@@ -9,7 +10,6 @@ class PoolDao extends GenericDao {
         super(Pool);
         this.StatusDao = new StatusDao()
         this.PoolItemsDao = new PoolItemsDao()
-        this.PoolRawsDao = new PoolItemsDao()
     }
 
     async mountObj(data) {
@@ -17,7 +17,7 @@ class PoolDao extends GenericDao {
             ...data,
             idStatus: await this.StatusDao.findById(data.idStatus),
             items: await this.PoolItemsDao.getItemsByTypeAndPool(data.id, 2),
-            raws: await this.PoolRawsDao.getItemsByTypeAndPool(data.id, 1)
+            raws: await this.PoolItemsDao.getItemsByTypeAndPool(data.id, 1)
         }
         return new Pool(pool)
     }
@@ -40,6 +40,19 @@ class PoolDao extends GenericDao {
                     reject(err)
                 } else {
                     resolve(result[0])
+                }
+            })
+        })
+    }
+
+    findPoolNameBy(id){
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT fabricationName FROM pool WHERE Id = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                            resolve(result[0].fabricationName)
+                  //  resolve(result[0])
                 }
             })
         })

@@ -51,7 +51,7 @@ const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
-    const {nombre, cantidad } = normalForm.baseItems[position]
+    const {nombre, quantity } = normalForm.baseItems[position]
 
     const decreaseCount = () => {
         dispatch(handleLessPrice(position))
@@ -76,7 +76,7 @@ const ItemsForm = ({ position }) => {
                     type="text"
                     name="quantity"
                     className="form-control"
-                    value={cantidad}
+                    value={quantity}
                     readOnly />
             </div>
 

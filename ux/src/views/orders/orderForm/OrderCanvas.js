@@ -7,10 +7,16 @@ const INITIAL_ELEMENTS = 6
 export const OrderCanvas = () => {
 
     const dispatch = useDispatch()
-    const { elements: elem } = useSelector(state => state.canvasReducer)
+    let { elements: elem } = useSelector(state => state.canvasReducer)
+    const { canvasItems: elem2 } = useSelector(state => state.normalForm)
     const generateShapes = () => {
         return [...Array(INITIAL_ELEMENTS)].map((_, i) => {
             const imageObj = new window.Image(50, 50)
+            if (elem2 !== undefined) {
+                console.log("estoy pasando por qaui pexado me diemrad inmesna joder")
+                elem = elem2
+            } 
+            console.log(elem)
             imageObj.src = elem[i].imgUrl
             const canvasElement =
             {

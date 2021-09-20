@@ -5,7 +5,7 @@ const ItemDao = require("../item/ItemDao");
 class PoolItemsDao extends ItemDao {
     constructor() {
         super(PoolItems);
-         this.ItemDao = new ItemDao()
+        this.ItemDao = new ItemDao()
     }
 
     async getItemsByTypeAndPool(idPool, itemType) {
@@ -29,7 +29,9 @@ class PoolItemsDao extends ItemDao {
     }
 
     async mountObj(data) {
-         const { name, cost } = await this.ItemDao.findById(data.idItem)
+
+
+        const { name, cost } = await this.ItemDao.findById(data.idItem)
 
         const poolItems = {
             id: data.id,
@@ -42,7 +44,6 @@ class PoolItemsDao extends ItemDao {
         }
         return poolItems
     }
-
 }
 
 module.exports = PoolItemsDao

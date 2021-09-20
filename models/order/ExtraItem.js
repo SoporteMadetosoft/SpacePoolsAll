@@ -5,14 +5,12 @@ class ExtraItem {
         id,
         idOrder,
         idItem,
-        posX,
-        posY
+        quantity
     }) {
         this.id = id
         this.idOrder = idOrder
         this.idItem = idItem
-        this.posX = posX
-        this.posY = posY
+        this.quantity = quantity
     }
     get table() {
         return this.#table;

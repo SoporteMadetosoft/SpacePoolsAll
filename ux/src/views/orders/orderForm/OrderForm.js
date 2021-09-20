@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { handleChangeController } from '../../../redux/actions/normalForm'
+import { handleChangeController, setIdInOrderCode } from '../../../redux/actions/normalForm'
 import React, { useEffect } from 'react'
 import ReactSelect from 'react-select'
 import { ItemsRepeater } from './ItemsRepeater'
@@ -10,65 +10,91 @@ import { Select } from '../../../components/form/inputs/Select'
 import { OrderCanvas } from './OrderCanvas'
 
 import { startAddSelectOptions } from '../../../redux/actions/selects'
-import { createItemRepeatersByPool, handleCalculateTotalCost, handleCalcuteTotalPrice } from '../../../redux/actions/orders'
+import { createItemRepeatersByPool, handleAddCost, handleCalculateTotalCost, handleCalcuteTotalPrice } from '../../../redux/actions/orders'
+import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
 
 
 export const OrderForm = () => {
-    const {price} = useSelector(state => state.ordersReducer)
-   
+    let {price} = useSelector(state => state.ordersReducer)
+ 
+    let {orderCode} = useSelector(state =>  state.normalForm)
+
     const dispatch = useDispatch()
 
     const { normalForm, selectReducer } = useSelector(state => state)
     const { poolsOpt, taxesOpt } = selectReducer
-    const { observations, idPool, Iva } = normalForm
-    console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP")
-    console.log(idPool)
-    console.log(Iva)
+    const { observations} = normalForm
+
+
+    const idTax = normalForm['idTax'] ? deconstructSelect(normalForm['idTax']) : ''
+    const idPool = normalForm['idPool'] ? deconstructSelect(normalForm['idPool']) : ''
+
+
     const {
         idVendor
     } = selectReducer
+    
+
 
     const handleInputChange = ({ target }) => {
+        console.log(target)
         dispatch(handleChangeController(target.name, target.value))
     }
 
     useEffect(() => {
-        //dispatch(startAddSelectOptions('Taxes','ivaOpt'))
         dispatch(startAddSelectOptions('Pools', 'poolsOpt', 'fabricationName'))
         dispatch(startAddSelectOptions('Taxes', 'taxesOpt'))
+
+        if (normalForm.id === undefined) {
+            dispatch(setIdInOrderCode("Orders","orderCode"))
+        } else orderCode = normalForm.id
+
+        if (normalForm.price) {
+            price = normalForm.price
+            dispatch(handleAddCost(price))
+        } else {
+            console.log("----------------------------------")
+            console.log(normalForm)
+            console.log("----------------------------------")
+        }
     }, [])
     
-    const preparePrice = (obj) => {
-        console.log(price)
+    const preparePrice = () => {
        dispatch(handleCalculateTotalCost("extraItems",""))
     }
 
     const setPoolInRedux = (obj) => {
-        console.log("-------------------")
-        console.log(obj.label)
         dispatch(handleChangeController("idPool", { id: obj.value, name: obj.label }))
         dispatch(createItemRepeatersByPool(obj.value))
         preparePrice()
     }
 
     const setIvaInRedux = (obj) => {
-        dispatch(handleChangeController("Iva", { id: obj.value, name: obj.label }))
+        dispatch(handleChangeController("idTax", { id: obj.value, name: obj.label }))
         preparePrice()
     }
+
 
     return (
         <>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <Input name="orderCode" placeholder="Nº Pedido" label="Nº Pedido" />
+                        <label className="control-label">Nº Pedido</label>
+                        <input
+                        className={`form-control`}
+                        name="orderCode"
+                        value={orderCode}
+                        readOnly
+                    />
+
                     </div>
                     <div className="col-md-4">
-                        <Select name="customerId" placeholder="Cliente" label="Cliente" endpoint="Customers" labelName="comercialName" />
+                        <Select name="idCustomer" placeholder="Cliente" label="Cliente" endpoint="Customers" labelName="comercialName" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="purchaseDate" placeholder="Dirección de entrega" label="Dirección" />
+                        <Input name="deliveryAddress" placeholder="Dirección de entrega" label="Dirección" />
                     </div>
                     <div className="col-md-2">
                         <Input name="phone" placeholder="Teléfono" label="Teléfono" />
@@ -82,7 +108,7 @@ export const OrderForm = () => {
                         <ReactSelect
                             placeholder="Piscina"
                             name="idPool"
-                    
+                            value = {idPool}
                             options={poolsOpt}
                             onChange={(obj) => {
                                 setPoolInRedux(obj)
@@ -95,8 +121,8 @@ export const OrderForm = () => {
                         <label className="control-label">IVA</label>
                         <ReactSelect
                             placeholder="iva"
-                            name="iva"
-                            
+                            name="idTax"
+                            value = {idTax}
                             options={taxesOpt}
                             onChange={(obj) => {
                                 setIvaInRedux(obj)

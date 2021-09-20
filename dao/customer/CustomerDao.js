@@ -52,6 +52,7 @@ class CustomerDao extends GenericDao {
             contacts: await this.CustomerContactPersonDao.findByCustomerId(data.id),
             documents: await this.FileManagerDao.getDocumentsInfo(data.filePath)
         }
+        console.log(data)
         return new Customer(customer)
     }
 
@@ -76,6 +77,20 @@ class CustomerDao extends GenericDao {
                 } else {
 
                     resolve(result[0])
+
+                }
+            })
+        })
+    }
+
+    findCustomerNameBy(id){
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT comercialName FROM customers WHERE id = ? ', [id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+
+                    resolve(result[0].comercialName)
 
                 }
             })

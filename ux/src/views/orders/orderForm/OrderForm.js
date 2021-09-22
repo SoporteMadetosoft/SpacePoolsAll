@@ -12,6 +12,7 @@ import { OrderCanvas } from './OrderCanvas'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { createItemRepeatersByPool, handleAddCost, handleAugmentIdTemporary, handleCalculateTotalCost, handleCalcuteTotalPrice } from '../../../redux/actions/orders'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+import { handleCleanCanvas } from '../../../redux/actions/canvas'
 
 
 
@@ -37,8 +38,7 @@ export const OrderForm = () => {
         idVendor
     } = selectReducer
 
-
-
+   
     const handleInputChange = ({ target }) => {
         console.log(target)
         dispatch(handleChangeController(target.name, target.value))

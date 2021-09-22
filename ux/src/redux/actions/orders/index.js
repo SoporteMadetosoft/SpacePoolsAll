@@ -28,6 +28,7 @@ export const handleCalculateTotalCost = (column1, column2) => {
                 k = 0
             }
         }
+
         if (getState().normalForm["idPool"]) {
             const { id } = getState().normalForm["idPool"]
             const { cost } = await getFormData("Pools", id)
@@ -43,7 +44,10 @@ export const handleCalculateTotalCost = (column1, column2) => {
 
         }
         totalCost = totalCost.toFixed(2)
-        dispatch(handleAddCost(totalCost))
+
+        if (totalCost === null || totalCost === undefined || totalCost === "NaN") {
+
+        } else dispatch(handleAddCost(totalCost))
 
     }
 }
@@ -51,7 +55,7 @@ export const handleCalculateTotalCost = (column1, column2) => {
 
 export const handleSearchOutID2 = (endpoint, position, arr) => {
     return async (dispatch, getState) => {
-        const {idItem, idCanvasItem} = getState().normalForm[arr][position]
+        const { idItem, idCanvasItem } = getState().normalForm[arr][position]
         //console.log(idItem.id)
 
         if (idItem !== undefined) {
@@ -64,8 +68,8 @@ export const handleSearchOutID2 = (endpoint, position, arr) => {
                 value: producto
             }
             dispatch(editRepeaterRegister(arr, position, obj))
-            
-          
+
+
 
             //calcular e introducir coste total
             dispatch(handleCalculateTotalCost("extraItems", "baseItems"))
@@ -110,17 +114,17 @@ export const createItemRepeatersByPool = (idPool, idTemporar) => {
                 }
                 dispatch(addRepeaterRegister('baseItems', formStructure))
 
-               // const item = await getFormData("Items", pool.items[num].idItem.id)
-               // console.log(item)
-               // const itemCanvasStructure = {
-               //     id: pool.items[num].idItem.id,
-               //     name: pool.items[num].idItem.name,
-               //     width: 50,
-               //     height: 50,
-               //     isDragging: false,
-               //     imgUrl: item.imgUrl
-               // }
-               // dispatch(addCanvasElement("elements", itemCanvasStructure))
+                // const item = await getFormData("Items", pool.items[num].idItem.id)
+                // console.log(item)
+                // const itemCanvasStructure = {
+                //     id: pool.items[num].idItem.id,
+                //     name: pool.items[num].idItem.name,
+                //     width: 50,
+                //     height: 50,
+                //     isDragging: false,
+                //     imgUrl: item.imgUrl
+                // }
+                // dispatch(addCanvasElement("elements", itemCanvasStructure))
             } else go = false
             num++
         }

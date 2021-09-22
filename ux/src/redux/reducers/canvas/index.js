@@ -8,50 +8,41 @@ const D = require(`@src/assets/images/custom/canvas/D.png`).default
 
 const initialState = {
     elements:
-        [
-            { id: null, idElement:1 ,name: 'Skimmer 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: null, idElement:1 ,name: 'Skimmer 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: null, idElement:1 ,name: 'Skimmer 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: null, idElement:1 ,name: 'Skimmer 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: null, idElement:1 ,name: 'Skimmer 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: null, idElement:1 ,name: 'Skimmer 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: null, idElement:1 ,name: 'Luz 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: null, idElement:1 ,name: 'Luz 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: null, idElement:1 ,name: 'Luz 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: null, idElement:1 ,name: 'Luz 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: null, idElement:2, name: 'Luz 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'Luz 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'Luz 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'Luz 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'Luz 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'Luz 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'Luz 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'Luz 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'NCC', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'NCC', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'NCC', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'NCC', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'NCC', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'NCC', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'Balneo 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'Balneo 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'Balneo 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'Balneo 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'Balneo 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: null, idElement:2, name: 'Balneo 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: D }
-        ]
+        []
 }
 
 const canvasReducer = (state = initialState, action) => {
     switch (action.type) {
         case canvasTypes.LoadElement:
+
+            const key1 = action.payload.key
+            const position1 = action.payload.position
+            const structure1 = action.payload.structure
+            
+            state[key1][position1] = {
+                ...state[key1][position1],
+                idOrder: structure1.idOrder,
+                id: structure1.id,
+                idElemento: structure1.idElemento,
+                name: structure1.name,
+                imgUrl: structure1.imgUrl,
+                x: structure1.x,
+                y: structure1.y,
+                pos: position1
+            }
+
             return {
                 ...state,
-                [action.payload.key]: [
-                    ...state[action.payload.key],
-                    { ...action.payload.structure }
-                ]
+                [key1]: [...state[key1]]
             }
+
+          // return {
+          //     ...state,
+          //     [action.payload.key]: [
+          //         ...state[action.payload.key],
+          //         { ...action.payload.structure }
+          //     ]
+          // }
         case canvasTypes.DropElement:
             const { key, position, obj } = action.payload
             state[key][position] = {

@@ -11,7 +11,7 @@ import { OrderForm } from './orderForm/OrderForm'
 import { handleCleanUp } from '../../redux/actions/fileUpload'
 import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 import { fromFile } from 'file-type'
-import { setNewCanvasPosition } from '../../redux/actions/canvas'
+import { handleCleanCanvas, setNewCanvasPosition } from '../../redux/actions/canvas'
 
 const structureForm = {
     baseItems: [],
@@ -34,15 +34,14 @@ export const OrderFormScreen = () => {
         }
         dispatch(initNormalForm(structureForm))
 
-
+       
     }, [initNormalForm])
 
 
-    useEffect(() => {
-        
-        dispatch(setNewCanvasPosition())
-
-    }, [form])
+   useEffect(() => {
+       dispatch(setNewCanvasPosition())
+      
+   }, [form])
 
     const title = (id) ? 'Editar Pedido' : 'Añadir Pedido'
     const customerName = form.ordercod ? form.idOrder : title

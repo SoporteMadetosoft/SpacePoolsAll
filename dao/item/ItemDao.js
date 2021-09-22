@@ -120,14 +120,7 @@ class ItemDao extends GenericDao {
                 if (err) {
                     reject(err)
                 } else {
-                   
-
-                        console.log('_-____----___-_--__-___-____---__-___-___-')
-                        console.log(field, id)
-                        console.log(result)
-                        resolve(result[0][field])
-
-                    
+                        resolve(result[0][field])   
                 }
             })
         })

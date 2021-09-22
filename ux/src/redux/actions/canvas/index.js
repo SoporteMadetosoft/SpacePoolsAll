@@ -3,9 +3,9 @@ import { editRepeaterRegister, handleCleanSection } from "../normalForm"
 import { getFormData } from "../../../utility/helpers/Axios/getFormData"
 import canvasReducer from "../../reducers/canvas"
 
-export const addCanvasElement = (key, structure) => ({
+export const addCanvasElement = (key, structure, position) => ({
     type: canvasTypes.LoadElement,
-    payload: { key, structure }
+    payload: { key, structure, position }
 })
 
 export const editDropedElement = (key, position, obj) => ({
@@ -56,11 +56,9 @@ export const setNewCanvasPosition = () => {
                 })
 
                 dispatch(handleCleanSection("canvasItems"))
-                dispatch(handleCleanCanvas())
-
           
-                items.forEach(element => {
-                    console.log(element)
+                items.forEach((element, index) => {
+                    console.log(index)
                     const structure = {
                         idOrder: element.idOrder,
                         id: element.id,
@@ -73,7 +71,7 @@ export const setNewCanvasPosition = () => {
                         x: element.x,
                         y: element.y
                     }
-                    dispatch(addCanvasElement("elements", structure))
+                    dispatch(addCanvasElement("elements", structure, index))
                 })
 
 

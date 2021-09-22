@@ -3,7 +3,7 @@ import { Stage, Layer, Image, Rect } from 'react-konva'
 import { useDispatch, useSelector } from 'react-redux'
 import { editDropedElement } from '../../../redux/actions/canvas'
 
-const INITIAL_ELEMENTS = 6
+const INITIAL_ELEMENTS = 29
 export const OrderCanvas = () => {
 
     const dispatch = useDispatch()

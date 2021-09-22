@@ -5,6 +5,7 @@ class Purchase {
     constructor({
         id,
         idVendor,
+        idStatus,
         purchaseCode,
         purchaseDate,
         deliveryDate,
@@ -13,6 +14,7 @@ class Purchase {
     }) {
         this.id = id
         this.idVendor = idVendor
+        this.idStatus = idStatus
         this.purchaseCode = purchaseCode
         this.purchaseDate = purchaseDate
         this.deliveryDate = deliveryDate

@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 
+import axios from 'axios'
+
 import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
 import ReactSelect from 'react-select'
 import { Input } from '../../../components/form/inputs/Input'
@@ -51,8 +53,10 @@ export const VechiclesForm = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
+
     const [file, setFile] = useState('')
     const { upload, filePath } = useSelector(state => state.fileUpload)
+
     const form = useSelector(state => state.normalForm)
     const realFilePath = form.filePath ? form.filePath : filePath
 
@@ -87,9 +91,11 @@ export const VechiclesForm = () => {
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'brandOpt'))
+
         if (normalForm.id === undefined) {
             dispatch(setIdInXCode("Vehicles","vehicleCode"))
         } else vehicleCode = normalForm.id
+
 
 
     }, [])

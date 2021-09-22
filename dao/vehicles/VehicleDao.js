@@ -28,7 +28,7 @@ class VehicleDao extends SetupDao {
             model: await this.ModelDao.findById(data.model),
             idStatus: await this.StatusDao.findById(data.idStatus),
             idCarrier: await this.CarrierDao.findById(data.idCarrier),
-            idTrailer: await this.TrailerDao.findById(data.idTrailer),
+            idTrailer: data.idTrailer !== null ? await this.TrailerDao.findById(data.idTrailer) : '',
             maintenanceDate: await this.datetimeToDate(data.maintenanceDate),
             ITVdate: await this.datetimeToDate(data.ITVdate),
             documents: await this.FileManagerDao.getDocumentsInfo(data.filePath)

@@ -3,13 +3,13 @@ class Item {
 
     constructor({
         id,
-        purchaseId,
-        itemId,
+        idPurchase,
+        idItem,
         quantity
     }) {
         this.id = id
-        this.purchaseId = purchaseId
-        this.itemId = itemId
+        this.idPurchase = idPurchase
+        this.idItem = idItem
         this.quantity = quantity
     }
     get table() {

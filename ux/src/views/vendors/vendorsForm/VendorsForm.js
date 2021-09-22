@@ -14,6 +14,8 @@ import { ContactsRepeater } from './ContactsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
+import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
+import { save } from '../../../utility/helpers/Axios/save'
 
 const ValidationSchema = yup.object().shape({
     vendorCode: yup.number().required(),
@@ -39,6 +41,7 @@ export const VendorsForm = () => {
     }
 
 
+
     useEffect(() => {
         if (normalForm.id === undefined) {
             dispatch(setIdInXCode("Vendors","vendorCode"))
@@ -49,16 +52,16 @@ export const VendorsForm = () => {
     console.log(errors)
 
     const submit = async () => {
-        // const prettyForm = {
-        //     ...form,
-        //     idPaymentMethod: exceptionController(form.idPaymentMethod),
-        //     idVendorType: exceptionController(form.idVendorType),
-        //     idStatus: exceptionController(form.idStatus),
-        //     addresses: form.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType) })),
-        //     contacts: form.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department) }))
-        // }
-        // save('Vendors', id, prettyForm)
-        // history.push('/vendors')
+        const prettyForm = {
+            ...normalForm,
+            idPaymentMethod: exceptionController(normalForm.idPaymentMethod),
+            idVendorType: exceptionController(normalForm.idVendorType),
+            idStatus: exceptionController(normalForm.idStatus),
+            addresses: normalForm.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType) })),
+            contacts: normalForm.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department) }))
+        }
+        save('Vendors', id, prettyForm)
+        history.push('/vendors')
     }
 
     return (

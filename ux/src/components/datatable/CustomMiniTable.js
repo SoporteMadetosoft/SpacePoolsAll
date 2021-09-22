@@ -121,7 +121,7 @@ export const CustomMiniTable = ({ columns, data }) => {
                     noDataComponent={<span>No hay registros para mostrar</span>}
                     columns={columns}
                     paginationPerPage={20}
-                    className='react-dataTable'
+                    className='react-dataTable pb-5'
                     sortIcon={<ChevronDown size={10} />}
                     paginationDefaultPage={currentPage + 1}
                     paginationComponent={CustomPagination}

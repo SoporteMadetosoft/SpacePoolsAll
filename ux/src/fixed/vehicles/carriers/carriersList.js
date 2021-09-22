@@ -1,4 +1,5 @@
-import { FileText, MoreVertical, Trash } from "react-feather"
+import { Check, FileText, MoreVertical, Trash, X } from "react-feather"
+import { Badge } from 'reactstrap'
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
@@ -52,9 +53,33 @@ export const carriersList = [
   },
   {
     name: 'Estado',
-    selector: 'idStatus',
     sortable: true,
-    width: '10%'
+    width: '10%',
+    cell: row => {
+      return (
+        <>
+        
+          {row.idStatus === 'Activo' ? 
+            (<Badge color='light-success'>
+              Activo
+            </Badge>)
+          :
+            (<Badge color='light-danger'>
+                Inactivo
+              </Badge>)
+          }
+          {row.idStatus === 'Inactivo' ? 
+            (<Badge color='light-success'>
+              <Check />
+            </Badge>)
+          :
+            (<Badge color='light-danger'>
+                <X />
+              </Badge>)
+          }
+      </>
+      )
+    }
   },
   {
     name: '',
@@ -64,6 +89,16 @@ export const carriersList = [
       const dispatch = useDispatch()
 
       return (
+        <>
+        {row.idStatus === 'Activo' ? 
+            (<Badge color='light-success'>
+              <Check />
+            </Badge>)
+          :
+            (<Badge color='light-danger'>
+                <X />
+              </Badge>)
+          }
         <div className='d-flex'>
           <UncontrolledDropdown>
             <DropdownToggle className='pr-1' tag='span'>
@@ -87,6 +122,7 @@ export const carriersList = [
             </DropdownMenu>
           </UncontrolledDropdown>
         </div>
+        </>
       )
     }
   }

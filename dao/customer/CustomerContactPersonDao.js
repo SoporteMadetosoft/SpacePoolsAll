@@ -1,11 +1,11 @@
 const CustomerContactPersons = require("../../models/customers/CustomerContactPerson");
 const GenericDao = require("../GenericDao");
-const CustomerDepartmentDao = require("../setup/customer/CustomerDepartmentDao");
+const DepartmentDao = require("../setup/general/DepartmentDao");
 
 class CustomerContactPersonDao extends GenericDao {
     constructor() {
         super(CustomerContactPersons)
-        this.CustomerDepartmentDao = new CustomerDepartmentDao()
+        this.DepartmentDao = new DepartmentDao()
     }
 
     findByCustomerId(id) {
@@ -39,7 +39,7 @@ class CustomerContactPersonDao extends GenericDao {
     async mountObj(data) {
         const docs = {
             ...data,
-            department: await this.CustomerDepartmentDao.findById(data.department)
+            department: await this.DepartmentDao.findById(data.department)
         }
 
         return new CustomerContactPersons(docs)

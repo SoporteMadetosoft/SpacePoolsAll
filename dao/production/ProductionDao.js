@@ -23,21 +23,30 @@ class ProductionDao extends GenericDao {
         const pool = await this.PoolDao.findPoolById(order.idPool);
         const list = {
             ...data,
-            orderCode: order != undefined ? order.orderCode : 'p',
-            orderDate: order != undefined ? order.orderDate : 'p',
-            deliveryDate: order != undefined ? order.deliveryDate : 'p',
-            deliverySchedulerStart: order != undefined ? order.deliverySchedulerStart : 'p',
-            deliverySchedulerEnd: order != undefined ? order.deliverySchedulerEnd : 'p',
-            observations: order != undefined ? order.observations : 'p',
-            pools: pool != undefined ? pool.fabricationName : 'P'
+            orderCode: order != undefined ? order.orderCode : '',
+            orderDate: order != undefined ? order.orderDate : '',
+            deliveryDate: order != undefined ? order.deliveryDate : '',
+            deliverySchedulerStart: order != undefined ? order.deliverySchedulerStart : '',
+            deliverySchedulerEnd: order != undefined ? order.deliverySchedulerEnd : '',
+            observations: order != undefined ? order.observations : '',
+            pools: pool != undefined ? pool.fabricationName : ''
 
         }
-        const { observations, idOrder, productionCode, status, orderCode, pools, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd } = list
+        const { id, orderCode, pools, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd, observations, isStarted} = list
 
         const newOrderDate = this.datetimeToEuropeDate(orderDate)
         const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)
 
-        const nObj = { observations: observations, orderCode: idOrder, productionCode: productionCode, status: status, orderCode: orderCode, pool: pools, orderDate: newOrderDate, deliveryDate: newDeliveryDate, deliveryTime: deliverySchedulerStart + " - " + deliverySchedulerEnd }
+        const nObj = { 
+            id: id,
+            orderCode: orderCode,
+            pool: pools,
+            orderDate: newOrderDate,
+            deliveryDate: newDeliveryDate,
+            deliveryTime: deliverySchedulerStart + " - " + deliverySchedulerEnd,
+            observations: observations,
+            isStarted: isStarted
+        }
 
         return nObj
     }
@@ -54,6 +63,18 @@ class ProductionDao extends GenericDao {
                     }
 
                     resolve(order)
+                }
+            })
+        })
+    }
+
+    switchStart(id) {
+        return new Promise((resolve, reject) => {
+            this.db.query('UPDATE production SET isStarted = (CASE isStarted WHEN 1 THEN 0 ELSE 1 END) WHERE id = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve('')
                 }
             })
         })

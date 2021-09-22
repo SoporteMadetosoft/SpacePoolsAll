@@ -37,6 +37,7 @@ export const BrandForm = () => {
         <Form onSubmit={handleSubmit(submit)}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
+                    <div className="col-md-4">
                         <InputValid
                             id="name"
                             name="name"
@@ -48,6 +49,7 @@ export const BrandForm = () => {
                             onChange={handleInputChange}
                         />
                         {errors && errors.name && <FormFeedback>Marca requerida</FormFeedback>}
+                    </div>
                 </div>
             </div>
             <ActionButtons />

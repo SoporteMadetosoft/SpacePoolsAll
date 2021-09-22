@@ -1,12 +1,25 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
+
+import { handleChangeController, handleCleanSection, setIdInXCode } from '../../../redux/actions/normalForm'
+import ReactSelect from 'react-select'
 
 
 import { ItemsRepeater } from './ItemsRepeater'
 
 import { Input } from '../../../components/form/inputs/Input'
+import { startAddSelectOptions } from '../../../redux/actions/selects'
+import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { Select } from '../../../components/form/inputs/Select'
+
+const placeholderStyles = {
+    placeholder: (defaultStyles) => {
+        return {
+            ...defaultStyles,
+            FontSize: '5px'
+        }
+    }
+}
 
 export const PurchaseForm = () => {
     let {purchaseCode} = useSelector(state =>  state.normalForm)
@@ -24,13 +37,22 @@ export const PurchaseForm = () => {
 
     const { observations } = normalForm
 
-    const {
-        idVendor
-    } = selectReducer
+    const { Vendors } = selectReducer
+
+    useEffect(() => {
+        dispatch(startAddSelectOptions('Vendors', 'Vendors', 'comercialName'))
+    }, [])
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
+
+    const handleSelectChange = ({ value, label }) => {
+        dispatch(handleCleanSection('items'))
+        dispatch(handleChangeController('idVendor', { id: value, comercialName: label }))
+    }
+
+    const valueVendor = normalForm['idVendor'] ? deconstructSelect(normalForm['idVendor'], 'comercialName') : ''
 
     return (
         <>
@@ -46,7 +68,16 @@ export const PurchaseForm = () => {
                     />
                     </div>
                     <div className="col-md-4">
-                        <Select name="idVendor" placeholder="Proveedor" label="Proveedor" endpoint="Vendors" labelName="comercialName" />
+                        <label className="control-label">Proveedor</label>
+                        <ReactSelect
+                            id="idVendor"
+                            name="idVendor"
+                            options={Vendors}
+                            value={valueVendor}
+                            styles={placeholderStyles}
+                            placeholder="Proveedor"
+                            onChange={handleSelectChange}
+                        />
                     </div>
                     <div className="col-md-2">
                         <Input name="purchaseDate" type="date" placeholder="Fecha de compra" label="Fecha de compra" />
@@ -55,7 +86,7 @@ export const PurchaseForm = () => {
                         <Input name="deliveryDate" type="date" placeholder="Fecha de entrega" label="Fecha de entrega" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="phone" placeholder="Teléfono" label="Teléfono" />
+                        <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
 
                     <div className="col-md-12">

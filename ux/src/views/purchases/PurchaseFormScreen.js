@@ -8,7 +8,7 @@ import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm/index.js'
 import { save } from '../../utility/helpers/Axios/save'
 import { PurchaseForm } from './purchaseForm/PurchaseForm'
-
+import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 
 const structureForm = {
     items: []
@@ -34,22 +34,13 @@ export const PurchaseFormScreen = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        let itemsPretty = ''
-
-        form.items.forEach(e => {
-            itemsPretty = [
-                {
-                    ...e,
-                    name: e.name.value
-                }
-            ]
-        })
-
         const prettyForm = {
             ...form,
-            items: [...itemsPretty]
-
+            idVendor: exceptionController(form.idVendor),
+            idStatus: exceptionController(form.idStatus),
+            items: form.items.map(item => ( { idItem: exceptionController(item.idItem), quantity: item.quantity } ))
         }
+        
         save('Purchases', id, prettyForm)
         history.push('/purchases')
     }

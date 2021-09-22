@@ -9,12 +9,12 @@ const D = require(`@src/assets/images/custom/canvas/D.png`).default
 const initialState = {
     elements:
         [
-            { id: 0, name: 'Skimmer 1', width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: 1, name: 'Skimmer 2', width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: 2, name: 'Luz 1', width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 3, name: 'Luz 2', width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 4, name: 'NCC', width: 50, height: 50, isDragging: false, imgUrl: C },
-            { id: 5, name: 'Balneo 1', width: 50, height: 50, isDragging: false, imgUrl: D }
+           { id: 0, name: 'Skimmer 1', width: 50, height: 50, isDragging: false, imgUrl: A },
+           { id: 1, name: 'Skimmer 2', width: 50, height: 50, isDragging: false, imgUrl: A },
+           { id: 2, name: 'Luz 1', width: 50, height: 50, isDragging: false, imgUrl: B },
+           { id: 3, name: 'Luz 2', width: 50, height: 50, isDragging: false, imgUrl: B },
+           { id: 4, name: 'NCC', width: 50, height: 50, isDragging: false, imgUrl: C },
+           { id: 5, name: 'Balneo 1', width: 50, height: 50, isDragging: false, imgUrl: D }
         ]
 }
 
@@ -42,6 +42,17 @@ const canvasReducer = (state = initialState, action) => {
             }
         case canvasTypes.SaveCanvas:
             return { initialState }
+
+        case canvasTypes.CleanCanvas:
+            return {
+                ...state,
+                elements: []
+            }
+        case canvasTypes.DeleteCanvasElement:
+            delete state[action.payload.key][action.payload.position]
+            return {
+                ...state
+            }
         default:
             return state
     }

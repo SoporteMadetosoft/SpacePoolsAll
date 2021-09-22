@@ -9,6 +9,7 @@ import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } fro
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { startAddSelectOptions, startAddSelectPoolItems } from '../../../redux/actions/selects'
 import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/actions/orders'
+import { deleteCanvasElement, prepareCanvasItemForm } from '../../../redux/actions/canvas'
 
 const formStructure = {
     idItem: '',
@@ -31,7 +32,7 @@ export const ExtraItemsRepeater = () => {
     useEffect(() => {
         dispatch(startAddSelectPoolItems('Items', 'Items', 'name', 2))
     }, [])
-
+    
     return (
         <>
             <h1 className="card-title">Productos Extras</h1>
@@ -64,8 +65,10 @@ const ItemsForm = ({ position }) => {
     const { idItem, quantity } = normalForm.extraItems[position]
     const SelectValue = idItem ? deconstructSelect(idItem) : null
     const decreaseCount = () => {
+        dispatch(deleteCanvasElement(position))
         dispatch(removeRepeaterRegister('extraItems', position))
         dispatch(handleCalculateTotalCost("extraItems",""))
+        
     }
 
     const handleInputChange = ({ target }) => {
@@ -80,6 +83,7 @@ const ItemsForm = ({ position }) => {
         dispatch(
             handleSearchOutID2('Items', position, 'extraItems')
             )
+       // dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
     }
 
 
@@ -95,6 +99,7 @@ const ItemsForm = ({ position }) => {
         dispatch(
             handleSearchOutID2('Items', position, 'extraItems')
             )
+      //  dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
     }
     return (
 

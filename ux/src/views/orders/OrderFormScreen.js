@@ -11,6 +11,7 @@ import { OrderForm } from './orderForm/OrderForm'
 import { handleCleanUp } from '../../redux/actions/fileUpload'
 import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 import { fromFile } from 'file-type'
+import { setNewCanvasPosition } from '../../redux/actions/canvas'
 
 const structureForm = {
     baseItems: [],
@@ -25,18 +26,23 @@ export const OrderFormScreen = () => {
     const form = useSelector(state => state.normalForm)
     const canvas = useSelector(state => state.canvasReducer)
     const orders = useSelector(state => state.ordersReducer)
-   
+    const canvasItems = useSelector(state => state.normalForm.canvasItems)
+
     useEffect(() => {
         if (id) {
             dispatch(handleStartEditing('Orders', id))
         }
         dispatch(initNormalForm(structureForm))
-       // dispatch(setNewCanvasPosition())
+
 
     }, [initNormalForm])
 
 
-    
+    useEffect(() => {
+        dispatch(setNewCanvasPosition())
+
+    }, [form])
+
     const title = (id) ? 'Editar Pedido' : 'Añadir Pedido'
     const customerName = form.ordercod ? form.idOrder : title
 
@@ -49,14 +55,14 @@ export const OrderFormScreen = () => {
         }
         const customerDataObj = {
             id: idCustomer,
-            deliveryAddress : form.deliveryAddress,
-            phone : form.phone,
-            email : form.email
+            deliveryAddress: form.deliveryAddress,
+            phone: form.phone,
+            email: form.email
         }
         const productionObj = {
-            status : 1
+            status: 1
         }
-        
+
         delete form.deliveryAddress
         delete form.phone
         delete form.email
@@ -67,21 +73,21 @@ export const OrderFormScreen = () => {
         console.log(customerDataObj)
         const prettyForm = {
             ...form,
-            idTax : form.idTax.id,
-            idPool : form.idPool.id,
-            price : orders.price,
-            idCustomer : form.idCustomer.id,
-            canvas : canvas.elements,
-            customerData : customerDataObj,
-            production : productionObj,
-        baseItems: form.baseItems.map(bI => ({ idItem: bI.idItem, quantity:bI.quantity})),
-        extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity:eI.quantity})),
-        canvas: canvas.elements.map(el => ({ idElemento: el.id, name: el.name, x: el.x, y: el.y, imageUrl:el.imageUrl, width:el.width, height:el.height }))
+            idTax: form.idTax.id,
+            idPool: form.idPool.id,
+            price: orders.price,
+            idCustomer: form.idCustomer.id,
+            canvas: canvas.elements,
+            customerData: customerDataObj,
+            production: productionObj,
+            baseItems: form.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity })),
+            extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity })),
+            canvas: canvas.elements.map(el => ({ idElemento: el.id, name: el.name, x: el.x, y: el.y, imageUrl: el.imageUrl, width: el.width, height: el.height }))
         }
         //console.log(prettyForm)
         save('Orders', id, prettyForm)
-       // dispatch(handleCleanUp())
-       // history.push('/orders')
+        // dispatch(handleCleanUp())
+        // history.push('/orders')
 
     }
 

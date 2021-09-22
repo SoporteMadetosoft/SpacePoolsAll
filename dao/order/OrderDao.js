@@ -49,7 +49,7 @@ class OrderDao extends GenericDao {
             email: await this.CustomerDataDao.findOneFieldById("email",data.id)
             
         }
-        
+        console.log(order2)
         return order2
     }
 

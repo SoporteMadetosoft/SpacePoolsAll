@@ -10,18 +10,12 @@ export const OrderCanvas = () => {
 
 
     const { elements: elem } = useSelector(state => state.canvasReducer)
-    
-    console.log(elem)
 
-    //const { canvasItems: elem2 } = useSelector(state => state.normalForm)
     const generateShapes = () => {
         return [...Array(INITIAL_ELEMENTS)].map((_, i) => {
             const imageObj = new window.Image(50, 50)
-          // if (elem2 !== undefined) {
-          //   
-          //     elem = elem2
-          // } 
-         
+         //  console.log(elem)
+         //  console.log(i)
             imageObj.src = elem[i].imgUrl
             const canvasElement =
             {
@@ -39,9 +33,17 @@ export const OrderCanvas = () => {
         })
     }
 
-    const initialState = generateShapes()
+    
 
+
+    const initialState = generateShapes()
+    console.log('_____________________________')
+    console.log(initialState)
+    console.log(useState(initialState))
     const [elements, setElements] = useState(initialState)
+    
+    const elements2 = generateShapes()
+
 
     const handleDragStart = (e) => {
         const id = e.target.id()
@@ -87,7 +89,7 @@ export const OrderCanvas = () => {
                         stroke={'black'}
                         strokeWidth={2}
                     />
-                    {elements.map((el) => (
+                    {elements2.map((el) => (
                         <Image
                             key={el.id}
                             id={el.id}

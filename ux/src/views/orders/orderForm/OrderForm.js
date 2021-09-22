@@ -10,21 +10,23 @@ import { Select } from '../../../components/form/inputs/Select'
 import { OrderCanvas } from './OrderCanvas'
 
 import { startAddSelectOptions } from '../../../redux/actions/selects'
-import { createItemRepeatersByPool, handleAddCost, handleCalculateTotalCost, handleCalcuteTotalPrice } from '../../../redux/actions/orders'
+import { createItemRepeatersByPool, handleAddCost, handleAugmentIdTemporary, handleCalculateTotalCost, handleCalcuteTotalPrice } from '../../../redux/actions/orders'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
 
 
 export const OrderForm = () => {
-    let {price} = useSelector(state => state.ordersReducer)
- 
-    let {orderCode} = useSelector(state =>  state.normalForm)
+
+    const { idTemporary } = useSelector(state => state.ordersReducer)
+    let { price } = useSelector(state => state.ordersReducer)
+
+    let { orderCode } = useSelector(state => state.normalForm)
 
     const dispatch = useDispatch()
 
     const { normalForm, selectReducer } = useSelector(state => state)
     const { poolsOpt, taxesOpt } = selectReducer
-    const { observations} = normalForm
+    const { observations } = normalForm
 
 
     const idTax = normalForm['idTax'] ? deconstructSelect(normalForm['idTax']) : ''
@@ -34,7 +36,7 @@ export const OrderForm = () => {
     const {
         idVendor
     } = selectReducer
-    
+
 
 
     const handleInputChange = ({ target }) => {
@@ -47,28 +49,26 @@ export const OrderForm = () => {
         dispatch(startAddSelectOptions('Taxes', 'taxesOpt'))
 
         if (normalForm.id === undefined) {
-            dispatch(setIdInXCode("Orders","orderCode"))
+            dispatch(setIdInXCode("Orders", "orderCode"))
         } else orderCode = normalForm.id
 
         if (normalForm.price) {
             price = normalForm.price
             dispatch(handleAddCost(price))
-        } else {
-            console.log("----------------------------------")
-            console.log(normalForm)
-            console.log("----------------------------------")
         }
     }, [])
-    
+
     const preparePrice = () => {
-       dispatch(handleCalculateTotalCost("extraItems",""))
+        dispatch(handleCalculateTotalCost("extraItems", ""))
     }
 
     const setPoolInRedux = (obj) => {
+         dispatch(createItemRepeatersByPool(obj.value, idTemporary))
         dispatch(handleChangeController("idPool", { id: obj.value, name: obj.label }))
-        dispatch(createItemRepeatersByPool(obj.value))
         preparePrice()
+
     }
+    
 
     const setIvaInRedux = (obj) => {
         dispatch(handleChangeController("idTax", { id: obj.value, name: obj.label }))
@@ -83,11 +83,11 @@ export const OrderForm = () => {
                     <div className="col-md-2">
                         <label className="control-label">Nº Pedido</label>
                         <input
-                        className={`form-control`}
-                        name="orderCode"
-                        value={orderCode}
-                        readOnly
-                    />
+                            className={`form-control`}
+                            name="orderCode"
+                            value={orderCode}
+                            readOnly
+                        />
                     </div>
                     <div className="col-md-4">
                         <Select name="idCustomer" placeholder="Cliente" label="Cliente" endpoint="Customers" labelName="comercialName" />
@@ -102,12 +102,12 @@ export const OrderForm = () => {
                         <Input name="email" placeholder="Correo Electrónico" label="Correo Electrónico" />
                     </div>
 
-                   <div className="col-md-2">
+                    <div className="col-md-2">
                         <label className="control-label">Piscina</label>
                         <ReactSelect
                             placeholder="Piscina"
                             name="idPool"
-                            value = {idPool}
+                            value={idPool}
                             options={poolsOpt}
                             onChange={(obj) => {
                                 setPoolInRedux(obj)
@@ -121,7 +121,7 @@ export const OrderForm = () => {
                         <ReactSelect
                             placeholder="iva"
                             name="idTax"
-                            value = {idTax}
+                            value={idTax}
                             options={taxesOpt}
                             onChange={(obj) => {
                                 setIvaInRedux(obj)
@@ -130,13 +130,13 @@ export const OrderForm = () => {
                     </div>
 
                     <div className="col-md-2">
-                    <label className="control-label">Precio</label>
-                    <input
-                        className={`form-control`}
-                        name="price"
-                        value={price}
-                        readOnly
-                    />
+                        <label className="control-label">Precio</label>
+                        <input
+                            className={`form-control`}
+                            name="price"
+                            value={price}
+                            readOnly
+                        />
                     </div>
 
                     <div className="col-md-2">
@@ -176,7 +176,7 @@ export const OrderForm = () => {
                 <div className="col-md-6">
                     <div className="card">
                         <div className=" card-body row px-3">
-                            <ExtraItemsRepeater/>
+                            <ExtraItemsRepeater />
                         </div>
                     </div>
                 </div>

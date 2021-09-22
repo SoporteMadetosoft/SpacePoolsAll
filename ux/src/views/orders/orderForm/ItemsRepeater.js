@@ -10,6 +10,7 @@ import React, { useEffect } from 'react'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { handleLessPrice } from '../../../redux/actions/orders'
+import { deleteCanvasElement } from '../../../redux/actions/canvas'
 
 const formStructure = {
     id: '',
@@ -51,11 +52,12 @@ const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
-    const {nombre, quantity } = normalForm.baseItems[position]
+    const {name, quantity } = normalForm.baseItems[position]
 
     const decreaseCount = () => {
         dispatch(handleLessPrice(position))
         dispatch(removeRepeaterRegister('baseItems', position))
+        console.log(position)
     }
 
     return (
@@ -65,9 +67,9 @@ const ItemsForm = ({ position }) => {
                 <label className="control-label">Producto</label>
                 <input
                     type="text"
-                    name="quantity"
+                    name="name"
                     className="form-control"
-                    value={nombre}
+                    value={name}
                     readOnly />
             </div>
             <div className="col-md-4">

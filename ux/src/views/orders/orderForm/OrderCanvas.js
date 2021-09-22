@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Stage, Layer, Image, Rect } from 'react-konva'
 import { useDispatch, useSelector } from 'react-redux'
 import { editDropedElement } from '../../../redux/actions/canvas'
+import { useParams } from 'react-router-dom'
 
 const INITIAL_ELEMENTS = 29
 export const OrderCanvas = () => {
@@ -14,13 +15,14 @@ export const OrderCanvas = () => {
     const generateShapes = () => {
         return [...Array(INITIAL_ELEMENTS)].map((_, i) => {
             const imageObj = new window.Image(50, 50)
-         //  console.log(elem)
-         //  console.log(i)
             imageObj.src = elem[i].imgUrl
             const canvasElement =
             {
                 ...elem[i],
-                image: imageObj
+                image: imageObj,
+                pos: i,
+                width: 50,
+                height: 50
             }
 
             useEffect(() => {
@@ -31,28 +33,39 @@ export const OrderCanvas = () => {
         })
     }
 
-    
+
 
 
     const initialState = generateShapes()
-    console.log('_____________________________')
-    console.log(initialState)
-    console.log(useState(initialState))
+    //console.log('_____________________________')
+    //console.log(initialState)
+    //console.log(useState(initialState))
+
+    const { id } = useParams()
+    let elements2 = {}
+    if (id) {
+        elements2 = generateShapes()
+    } else {
+        elements2 = useState(initialState)
+        elements2 = elements2[0]
+    }
+
+    console.log(id)
     const [elements, setElements] = useState(initialState)
-    
-    const elements2 = generateShapes()
+
+
 
 
     const handleDragStart = (e) => {
         const id = e.target.id()
-        setElements(
-            elements.map((el) => {
-                return {
-                    ...el,
-                    isDragging: el.id === id
-                }
-            })
-        )
+        // setElements(
+        //     elements.map((el) => {
+        //         return {
+        //             ...el,
+        //             isDragging: el.id === id
+        //         }
+        //     })
+        // )
     }
     const handleDragEnd = (e) => {
         const newEl = {
@@ -60,15 +73,16 @@ export const OrderCanvas = () => {
             x: e.target.attrs.x,
             y: e.target.attrs.y
         }
-        dispatch(editDropedElement('elements', e.target.attrs.id, newEl))
-        setElements(
-            elements.map((el) => {
-                return {
-                    ...el,
-                    isDragging: false
-                }
-            })
-        )
+        console.log(newEl)
+        dispatch(editDropedElement('elements', e.target.attrs.pos, newEl))
+        //  setElements(
+        //      elements.map((el) => {
+        //          return {
+        //              ...el,
+        //              isDragging: false
+        //          }
+        //      })
+        //  )
     }
 
 
@@ -90,6 +104,7 @@ export const OrderCanvas = () => {
                     {elements2.map((el) => (
                         <Image
                             key={el.id}
+                            pos={el.pos}
                             id={el.id}
                             x={el.x}
                             y={el.y}
@@ -105,6 +120,7 @@ export const OrderCanvas = () => {
                             scaleY={el.isDragging ? 1.2 : 1}
                             onDragStart={handleDragStart}
                             onDragEnd={handleDragEnd}
+                            imgUrl={el.imgUrl}
                         />
                     ))}
                 </Layer>

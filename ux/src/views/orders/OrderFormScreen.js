@@ -39,6 +39,7 @@ export const OrderFormScreen = () => {
 
 
     useEffect(() => {
+        
         dispatch(setNewCanvasPosition())
 
     }, [form])
@@ -62,12 +63,14 @@ export const OrderFormScreen = () => {
         const productionObj = {
             status: 1
         }
-
+       
         delete form.deliveryAddress
         delete form.phone
         delete form.email
         delete form.status
         delete form.canvasItems
+
+        //const insert = await orderDao.insert(customer)
 
         console.log(form)
         console.log(customerDataObj)
@@ -82,7 +85,8 @@ export const OrderFormScreen = () => {
             production: productionObj,
             baseItems: form.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity })),
             extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity })),
-            canvas: canvas.elements.map(el => ({ idElemento: el.id, name: el.name, x: el.x, y: el.y, imageUrl: el.imageUrl, width: el.width, height: el.height }))
+            canvas: canvas.elements.map(el => ({id:el.id, idElemento: el.idElement, name: el.name, x: el.x, y: el.y, imageUrl: el.imageUrl }))
+//            customerDao.multipleAccess(documents, carrierDocumentsDao, insert.insertId, 'idCustomer')
         }
         //console.log(prettyForm)
         save('Orders', id, prettyForm)

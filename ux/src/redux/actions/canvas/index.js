@@ -58,7 +58,9 @@ export const setNewCanvasPosition = () => {
                 dispatch(handleCleanSection("canvasItems"))
                 dispatch(handleCleanCanvas())
 
+          
                 items.forEach(element => {
+                    console.log(element)
                     const structure = {
                         idOrder: element.idOrder,
                         id: element.id,

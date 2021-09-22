@@ -53,24 +53,6 @@ exports.delete = async (req, res) => {
 
 exports.insert = async (req, res) => {
     try {
-        // /** INSERT ORDER */
-        // const insert = await orderDao.insert(req.body.form)
-        // /** INSERT PODUCTION */
-        // req.body.production.forEach(element => {
-        //     element.idOrder = insert.insertId
-        //     productionDao.insert(element)
-        // });
-        // /** INSERT EXTRA ITEMS */
-        // req.body.extraItems.forEach(element => {
-        //     element.idOrder = insert.insertId
-        //     extraItemDao.insert(element)
-        // });
-        // /** INSERT CUSTOMER DATA */
-        // req.body.customerData.forEach(element => {
-        //     element.idOrder = insert.insertId
-        //     customerDataDao.insert(element)
-        // });
-        // /** INSERT BASE ITEM */
         
      const order = req.body.form
      const production = req.body.form.production
@@ -111,21 +93,6 @@ exports.insert = async (req, res) => {
 exports.update = (req, res) => {
 
     try {
-      //  /** UPDATE ORDER */
-      //  orderDao.update(req.body.form)
-      //  /** UPDATE PRODUCTION*/
-      //  req.body.formData.production.forEach(element => {
-      //      productionDao.update(element)
-      //  })
-      //  /** UPDATE EXTRA ITEMS */
-      //  req.body.formData.extraItems.forEach(element => {
-      //      extraItemDao.update(element)
-      //  })
-      //  /** UPDATE CUSTOMER DATA */
-      //  req.body.formData.customerData.forEach(element => {
-      //      customerDataDao.update(element)
-      //  })
-      //  /** INSERT CANVAS */
 
       const order = req.body.form
       const production = req.body.form.production

@@ -73,47 +73,47 @@ export const setInitialCanvas = () => {
                 }
                 dispatch(addCanvasElement("elements", newItem, index))
         })
-        dispatch(handleCleanCanvas())
+        //dispatch(handleCleanCanvas())
     }
 }
 
-export const setNewCanvasPosition = () => {
-    return (dispatch, getState) => {
-        const canvasitems = getState().normalForm.canvasItems
-        if (canvasitems) {
-
-            if (canvasitems[0]) {
-                const items = []
-                let num = 0
-
-                canvasitems.forEach(element => {
-                    items[num] = element
-                    num++
-                })
-
-
-                dispatch(handleCleanSection("canvasItems"))
-
-                items.forEach((element, index) => {
-                    const structure = {
-                        idOrder: element.idOrder,
-                        id: element.id,
-                        idElemento: element.idElemento,
-                        name: element.name,
-                        isDragging: false,
-                        imgUrl: element.imgUrl,
-                        x: element.x,
-                        y: element.y
-                    }
-                    dispatch(addCanvasElement("elements", structure, index))
-                })
-
-
-            }
-        }
-
-    }
-}
+//export const setNewCanvasPosition = () => {
+//    return (dispatch, getState) => {
+//        const canvasitems = getState().normalForm.canvasItems
+//        if (canvasitems) {
+//
+//            if (canvasitems[0]) {
+//                const items = []
+//                let num = 0
+//
+//                canvasitems.forEach(element => {
+//                    items[num] = element
+//                    num++
+//                })
+//
+//
+//                dispatch(handleCleanSection("canvasItems"))
+//
+//                items.forEach((element, index) => {
+//                    const structure = {
+//                        idOrder: element.idOrder,
+//                        id: element.id,
+//                        idElemento: element.idElemento,
+//                        name: element.name,
+//                        isDragging: false,
+//                        imgUrl: element.imgUrl,
+//                        x: element.x,
+//                        y: element.y
+//                    }
+//                    dispatch(addCanvasElement("elements", structure, index))
+//                })
+//
+//
+//            }
+//        }
+//
+//    }
+//}
 
 export const prepareCanvasItemForm = (endpoint, position, arr) => {
     return async (dispatch, getState) => {

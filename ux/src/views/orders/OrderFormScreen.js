@@ -48,7 +48,7 @@ export const OrderFormScreen = () => {
             dispatch(setInitialCanvas())
         }
         dispatch(catchAndSetPrice())
-    }, [form])
+    }, [])
 
 
    // useEffect(() => {

@@ -90,11 +90,7 @@ export const VechiclesForm = () => {
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'brandOpt'))
-
-
     }, [])
-
-
 
     if (id && model) {
         if (model.idBrand !== undefined) {
@@ -155,7 +151,7 @@ export const VechiclesForm = () => {
         })
 
     }
-
+    console.log(errors)
     return (
         <Form onSubmit={handleSubmit(submit)}>
             <div className="card">

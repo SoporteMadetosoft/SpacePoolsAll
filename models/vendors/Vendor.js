@@ -7,6 +7,7 @@ class Vendor {
         id,
         idVendorType,
         idPaymentMethod,
+        idOrigin,
         vendorCode,
         comercialName,
         CIF,
@@ -21,6 +22,7 @@ class Vendor {
         this.id = id
         this.idVendorType = idVendorType
         this.idPaymentMethod = idPaymentMethod
+        this.idOrigin = idOrigin
         this.vendorCode = vendorCode
         this.comercialName = comercialName
         this.CIF = CIF

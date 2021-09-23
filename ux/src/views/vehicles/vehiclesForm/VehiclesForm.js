@@ -84,8 +84,8 @@ export const VechiclesForm = () => {
     }
 
 
-    const handleSelectChange = ({ value, label }) => {
-        dispatch(handleChangeController('idBrand', { id: value, name: label }))
+    const handleSelectChange = (name, { value, label }) => {
+        dispatch(handleChangeController(name, { id: value, name: label }))
     }
 
 
@@ -95,12 +95,8 @@ export const VechiclesForm = () => {
         if (normalForm.id === undefined) {
             dispatch(setIdInXCode("Vehicles","vehicleCode"))
         } else vehicleCode = normalForm.id
-
-
-
+      
     }, [])
-
-
 
     if (id && model) {
         if (model.idBrand !== undefined) {
@@ -109,7 +105,6 @@ export const VechiclesForm = () => {
     }
 
     const valueCarrier = normalForm['idCarrier'] ? deconstructSelect(normalForm['idCarrier']) : ''
-
 
     const preSubmit = (filePath2) => {
         return new Promise(async (resolve, reject) => {
@@ -161,7 +156,7 @@ export const VechiclesForm = () => {
         })
 
     }
-
+    console.log(errors)
     return (
         <Form onSubmit={handleSubmit(submit)}>
             <div className="card">
@@ -218,7 +213,9 @@ export const VechiclesForm = () => {
                             value={valueCarrier}
                             styles={placeholderStyles}
                             placeholder="Transportista"
-                            onChange={handleSelectChange}
+                            onChange={(obj) => {
+                                handleSelectChange('idCarrier', obj)
+                            }}
                         />
                         {errors && errors.valueCarrier && (
                             <>

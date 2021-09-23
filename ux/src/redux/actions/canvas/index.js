@@ -2,6 +2,8 @@ import { canvasTypes } from "../../types/canvas/types"
 import { editRepeaterRegister, handleCleanSection } from "../normalForm"
 import { getFormData } from "../../../utility/helpers/Axios/getFormData"
 import canvasReducer from "../../reducers/canvas"
+import { endPoints } from "@fixed/endPoints"
+import axios from "axios"
 
 export const addCanvasElement = (key, structure, position) => ({
     type: canvasTypes.LoadElement,
@@ -22,6 +24,19 @@ export const handleDeleteCanvasElement = (key, position) => ({
     payload: { key, position }
 })
 
+export const handleSetAllCanvas = (data) => ({
+    type: canvasTypes.setAllCanvas,
+    payload: { data }
+})
+
+export const getCItemsByOrderId = (endPoint, id) => {
+    return async (dispatch) => {
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/canvas/list/${id}`)
+        console.log(data)
+        dispatch(handleSetAllCanvas(data))
+    }
+}
+
 export const deleteCanvasElement = (position) => {
     return (dispatch, getState) => {
         const canvasitem = getState().normalForm.extraItems[position].idCanvasItem
@@ -41,11 +56,32 @@ export const deleteCanvasElement = (position) => {
     }
 }
 
+export const setInitialCanvas = () => {
+    return (dispatch, getState) => {
+        const canvasitems = getState().canvasReducer.elements
+        dispatch(handleCleanCanvas())
+        canvasitems.forEach((element, index) => {
+                const newItem = {
+                    idElemento : element.idElemento,
+                    pos: element.pos,
+                    imgUrl: element.imgUrl,
+                    name : element.name,
+                    isDragging : element.isDragging,
+                    id : null,
+                    x: (window.innerWidth) / 15,
+                    y: ((window.innerHeight) / 12) * element.idElemento
+                }
+                dispatch(addCanvasElement("elements", newItem, index))
+        })
+        dispatch(handleCleanCanvas())
+    }
+}
 
 export const setNewCanvasPosition = () => {
     return (dispatch, getState) => {
         const canvasitems = getState().normalForm.canvasItems
         if (canvasitems) {
+
             if (canvasitems[0]) {
                 const items = []
                 let num = 0
@@ -55,17 +91,15 @@ export const setNewCanvasPosition = () => {
                     num++
                 })
 
+
                 dispatch(handleCleanSection("canvasItems"))
-          
+
                 items.forEach((element, index) => {
-                    console.log(index)
                     const structure = {
                         idOrder: element.idOrder,
                         id: element.id,
-                        idElemento : element.idElemento,
+                        idElemento: element.idElemento,
                         name: element.name,
-                        width: element.width,
-                        height: element.height,
                         isDragging: false,
                         imgUrl: element.imgUrl,
                         x: element.x,
@@ -75,7 +109,6 @@ export const setNewCanvasPosition = () => {
                 })
 
 
-                console.log(items)
             }
         }
 
@@ -101,7 +134,7 @@ export const prepareCanvasItemForm = (endpoint, position, arr) => {
             }
             idcanvasItem++
         }
- 
+
 
 
         dispatch(deleteCanvasElement(position))

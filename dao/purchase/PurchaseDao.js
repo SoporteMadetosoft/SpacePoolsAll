@@ -15,7 +15,6 @@ class PurchaseDao extends GenericDao {
     }
 
     async mountObj(data) {        
-        console.log(data)
         const purchase = {
             ...data,
             // idStatus: await this.StatusDao.findById(data.idStatus),

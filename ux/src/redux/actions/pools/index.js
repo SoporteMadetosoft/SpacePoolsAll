@@ -71,7 +71,6 @@ export const handleChangeOneCost = (key, position, obj) => ({
 export const handleSearchOutID = (endpoint, cantidad, position, arr) => {
     return async (dispatch, getState) => {
         const { idItem } = getState().normalForm[arr][position]
-        console.log(idItem.id)
         if (idItem !== undefined) {
             const { cost } = await getFormData(endpoint, idItem.id)
 

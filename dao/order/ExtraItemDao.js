@@ -12,11 +12,10 @@ class ExtraItemDao extends GenericDao {
     async mountObj(data) {
         const extraItem = {
             ...data,
-             idItem: await this.ItemDao.findById(data.idItem),
-             coste : await this.ItemDao.findOneFieldById("cost",data.idItem)
+            idItem: await this.ItemDao.findById(data.idItem),
+            coste : await this.ItemDao.findOneFieldById("cost",data.idItem)
         }
-
-
+    
         return extraItem
     }
 

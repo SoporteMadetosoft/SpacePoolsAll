@@ -5,16 +5,50 @@ const B = require(`@src/assets/images/custom/canvas/B.png`).default
 const C = require(`@src/assets/images/custom/canvas/C.png`).default
 const D = require(`@src/assets/images/custom/canvas/D.png`).default
 
-
-const initialState = {
+const wWidth = window.innerWidth
+const wHeight = window.innerHeight
+const initialState2 = {
     elements:
-        []
+    [
+        {id:null, idElemento: 1, name: 'Skimmer 1', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
+        {id:null, idElemento: 1, name: 'Skimmer 2', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
+        {id:null, idElemento: 1, name: 'Skimmer 2', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
+        {id:null, idElemento: 1, name: 'Skimmer 2', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
+        {id:null, idElemento: 1, name: 'Skimmer 2', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
+        {id:null, idElemento: 1, name: 'Skimmer 2', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
+        {id:null, idElemento: 1, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 1, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 1, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 1, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" }
+    ]
 }
 
-const canvasReducer = (state = initialState, action) => {
+const initialState = { ...initialState2}
+
+const canvasReducer = (state = { ...initialState }, action) => {
     switch (action.type) {
         case canvasTypes.LoadElement:
-
+            console.log('LoadElement')
             const key1 = action.payload.key
             const position1 = action.payload.position
             const structure1 = action.payload.structure
@@ -35,38 +69,46 @@ const canvasReducer = (state = initialState, action) => {
                 ...state,
                 [key1]: [...state[key1]]
             }
-
-          // return {
-          //     ...state,
-          //     [action.payload.key]: [
-          //         ...state[action.payload.key],
-          //         { ...action.payload.structure }
-          //     ]
-          // }
         case canvasTypes.DropElement:
             const { key, position, obj } = action.payload
-            state[key][position] = {
-                ...state[key][position],
+
+            const newState = { ...state }
+
+            newState[key][position] = {
+                ...newState[key][position],
                 x: obj.x,
-                y: obj.y,
-                imgUrl: obj.imgUrl
+                y: obj.y
             }
+
+            console.log({
+                ...newState,
+                [key]: [...newState[key]]
+            })
             return {
-                ...state,
-                [key]: [...state[key]]
+                ...newState,
+                [key]: [...newState[key]]
             }
         case canvasTypes.SaveCanvas:
-            return { initialState }
+            console.log('SaveCanvas')
+            return {...initialState2}
 
         case canvasTypes.CleanCanvas:
-            return {
-                ...state,
-                elements: []
-            }
+            console.log('CleanCanvas')
+            return {...initialState2}
+
+            
         case canvasTypes.DeleteCanvasElement:
+            console.log('DeleteCanvasElement')
             delete state[action.payload.key][action.payload.position]
             return {
                 ...state
+            }
+        case canvasTypes.setAllCanvas:
+            const data =  action.payload.data
+            return {
+                ...state,
+                    elements : [...data]
+                
             }
         default:
             return state

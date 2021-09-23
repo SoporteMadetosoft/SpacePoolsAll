@@ -65,7 +65,6 @@ export const ItemForm = () => {
     }
 
     const submit = async () => {
-        console.log('Hola?')
         const prettyForm = {
             ...form,
             idVendor: exceptionController(form.idVendor),

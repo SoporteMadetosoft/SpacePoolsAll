@@ -8,10 +8,6 @@ const VendorDao = require("../vendor/VendorDao");
 //const PurchaseItemsDao = require("../purchase/ItemDao");
 
 class ItemDao extends GenericDao {
-    // ProductFamilyDao
-    // ProductPlaceDao
-    //PurchaseItemsDao
-
     constructor() {
         super(Item);
         this.ProductFamilyDao = new ProductFamilyDao()
@@ -120,7 +116,10 @@ class ItemDao extends GenericDao {
                 if (err) {
                     reject(err)
                 } else {
-                        resolve(result[0][field])   
+                    if(result !== undefined){
+                        resolve(result[0][field]) 
+                    }
+                        
                 }
             })
         })

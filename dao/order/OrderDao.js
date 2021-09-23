@@ -14,7 +14,6 @@ const CanvasDao = require("../order/CanvasDao")
 class OrderDao extends GenericDao {
     constructor() {
         super(Order);
-        //this.ProductionDao = new ProductionDao()
         this.ItemDao = new ItemDao
         this.PoolDao = new PoolDao()
         this.CustomerDao = new CustomerDao()
@@ -28,9 +27,9 @@ class OrderDao extends GenericDao {
 
     async mountObj(data) {
         //const customerId = await this.CustomerDao.findById(data.customerId)
+        
         const order = {
             ...data,
-            //production: await this.ProductionDao.findByOrderId(data.id),
             customerData: await this.CustomerDataDao.findByOrderId(data.id),
             extraItems: await this.ExtraItemDao.findByOrderId(data.id),
             baseItems : await this.BaseItemDao.findByOrderId(data.id),
@@ -39,7 +38,7 @@ class OrderDao extends GenericDao {
             idPool: {id:data.idPool, name:(await this.PoolDao.findPoolNameBy(data.idPool))} ,
             idTax : {id:data.idTax, name: (await this.TaxesDao.findTaxNameBy(data.idTax))},
             idCustomer : {id:data.idCustomer, comercialName: (await this.CustomerDao.findCustomerNameBy(data.idCustomer))},
-            canvasItems : await this.CanvasDao.findByOrderId(data.id),
+             canvasItems : await this.CanvasDao.findByOrderId(data.id),
         }
         let order2 = new Order(order)
         order2 = {
@@ -49,7 +48,6 @@ class OrderDao extends GenericDao {
             email: await this.CustomerDataDao.findOneFieldById("email",data.id)
             
         }
-        console.log(order2)
         return order2
     }
 

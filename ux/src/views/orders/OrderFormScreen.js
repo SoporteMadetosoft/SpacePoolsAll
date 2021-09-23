@@ -11,11 +11,13 @@ import { OrderForm } from './orderForm/OrderForm'
 import { handleCleanUp } from '../../redux/actions/fileUpload'
 import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 import { fromFile } from 'file-type'
-import { handleCleanCanvas, setNewCanvasPosition } from '../../redux/actions/canvas'
+import { getCItemsByOrderId, handleCleanCanvas, setInitialCanvas, setNewCanvasPosition } from '../../redux/actions/canvas'
+import { catchAndSetPrice } from '../../redux/actions/orders'
 
 const structureForm = {
     baseItems: [],
     extraItems: []
+
 }
 
 export const OrderFormScreen = () => {
@@ -28,20 +30,32 @@ export const OrderFormScreen = () => {
     const orders = useSelector(state => state.ordersReducer)
     const canvasItems = useSelector(state => state.normalForm.canvasItems)
 
+
     useEffect(() => {
+
         if (id) {
             dispatch(handleStartEditing('Orders', id))
+           
         }
         dispatch(initNormalForm(structureForm))
-
-       
     }, [initNormalForm])
 
+    useEffect(() => {
+        if (id) {
+           // dispatch(setNewCanvasPosition())
+           dispatch(getCItemsByOrderId('Orders', id))
+        } else {
+            dispatch(setInitialCanvas())
+        }
+        dispatch(catchAndSetPrice())
+    }, [form])
 
-   useEffect(() => {
-       dispatch(setNewCanvasPosition())
-      
-   }, [form])
+
+   // useEffect(() => {
+   //    
+   // }, [])
+
+
 
     const title = (id) ? 'Editar Pedido' : 'Añadir Pedido'
     const customerName = form.ordercod ? form.idOrder : title
@@ -62,7 +76,7 @@ export const OrderFormScreen = () => {
         const productionObj = {
             status: 1
         }
-       
+
         delete form.deliveryAddress
         delete form.phone
         delete form.email
@@ -71,8 +85,6 @@ export const OrderFormScreen = () => {
 
         //const insert = await orderDao.insert(customer)
 
-        console.log(form)
-        console.log(customerDataObj)
         const prettyForm = {
             ...form,
             idTax: form.idTax.id,
@@ -84,8 +96,8 @@ export const OrderFormScreen = () => {
             production: productionObj,
             baseItems: form.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity })),
             extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity })),
-            canvas: canvas.elements.map(el => ({id:el.id, idElemento: el.idElement, name: el.name, x: el.x, y: el.y, imageUrl: el.imageUrl }))
-//            customerDao.multipleAccess(documents, carrierDocumentsDao, insert.insertId, 'idCustomer')
+            canvas: canvas.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, imageUrl: el.imageUrl }))
+            //            customerDao.multipleAccess(documents, carrierDocumentsDao, insert.insertId, 'idCustomer')
         }
         //console.log(prettyForm)
         save('Orders', id, prettyForm)

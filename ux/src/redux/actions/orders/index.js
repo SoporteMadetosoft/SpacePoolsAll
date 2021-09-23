@@ -3,6 +3,7 @@ import { getFormData } from "../../../utility/helpers/Axios/getFormData"
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from "../normalForm"
 import { PresetColorTypes } from "antd/lib/_util/colors"
 import { addCanvasElement, prepareCanvasItemForm } from "../canvas"
+import { List } from "react-feather"
 
 export const handleAddCost = (cost) => ({
     type: formTypes.AddCost,
@@ -39,8 +40,6 @@ export const handleCalculateTotalCost = (column1, column2) => {
 
             const { name } = getState().normalForm["idTax"]
             totalCost *= ((name / 100) + 1)
-
-            console.log(totalCost)
 
         }
         totalCost = totalCost.toFixed(2)
@@ -99,7 +98,7 @@ export const createItemRepeatersByPool = (idPool, idTemporar) => {
 
 
         const pool = await getFormData("Pools", idPool)
-        console.log(pool)
+
         let go = true
         num = 0
         while (go) {
@@ -148,4 +147,15 @@ export const handleLessPrice = (position) => {
         totalCost = totalCost.toFixed(2)
         dispatch(handleAddCost(totalCost))
     }
+}
+
+
+export const catchAndSetPrice = () => {
+    return (dispatch, getState) => {
+        const list = getState().normalForm
+        if (list.price) {
+            dispatch(handleAddCost(list.price))
+        } else  dispatch(handleAddCost(0))
+    }
+
 }

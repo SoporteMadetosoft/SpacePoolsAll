@@ -24,4 +24,6 @@ router.put('/extraItems/update', ControllerExtraItem.update);
 router.delete('/extraItems/delete/:id', ControllerExtraItem.delete);
 router.post('/extraItems/find', ControllerExtraItem.listByID);
 
+router.get('/canvas/list/:id', ControllerOrder.listCItems);
+
 module.exports = router;

@@ -7,6 +7,7 @@ import { handleCleanForm } from '@redux/actions/normalForm'
 import { ordersList } from '@fixed/orders/ordersList'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { handleCleanCanvas } from '../../redux/actions/canvas'
 
 
 export const OrderScreenList = ({titulo}) => { 
@@ -15,6 +16,7 @@ export const OrderScreenList = ({titulo}) => {
     const {registros:data} = useSelector(state => state.registrosReducer)
 
     useEffect(() => {
+        dispatch(handleCleanCanvas())
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Orders'))   
     }, [])

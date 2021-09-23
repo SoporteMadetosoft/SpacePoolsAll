@@ -8,6 +8,7 @@ import { ItemsRepeater } from './ItemsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+import { Select } from '../../../components/form/inputs/Select'
 
 const placeholderStyles = {
     placeholder: (defaultStyles) => {
@@ -38,10 +39,10 @@ export const PurchaseForm = () => {
 
     const handleSelectChange = ({ value, label }) => {
         dispatch(handleCleanSection('items'))
-        dispatch(handleChangeController('idVendor', { id: value, name: label }))
+        dispatch(handleChangeController('idVendor', { id: value, comercialName: label }))
     }
 
-    const valueVendor = normalForm['idVendor'] ? deconstructSelect(normalForm['idVendor']) : ''
+    const valueVendor = normalForm['idVendor'] ? deconstructSelect(normalForm['idVendor'], 'comercialName') : ''
 
     return (
         <>
@@ -69,7 +70,7 @@ export const PurchaseForm = () => {
                         <Input name="deliveryDate" type="date" placeholder="Fecha de entrega" label="Fecha de entrega" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="phone" placeholder="Teléfono" label="Teléfono" />
+                        <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
 
                     <div className="col-md-12">

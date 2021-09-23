@@ -6,6 +6,7 @@ const AddressDao = require("../vendor/AddressDao");
 const VendorType = require("../setup/vendors/TypeDao");
 const PaymentMethodDao = require("../setup/general/PaymentMethodDao");
 const StatusDao = require("../global/StatusDao");
+const OriginDao = require("../setup/general/OriginDao");
 //const PurchaseDao = require("../purchase/PurchaseDao");
 
 class VendorDao extends GenericDao {
@@ -16,7 +17,8 @@ class VendorDao extends GenericDao {
         this.VendorType = new VendorType()
         this.PaymentMethodDao = new PaymentMethodDao()
         this.StatusDao = new StatusDao()
-       // this.PurchaseDao = new PurchaseDao()
+        this.OriginDao = new OriginDao()
+        // this.PurchaseDao = new PurchaseDao()
     }
 
     async mountObj(data) {
@@ -26,7 +28,8 @@ class VendorDao extends GenericDao {
             addresses: await this.AddressDao.findByVendorId(data.id),
             idVendorType: await this.VendorType.findById(data.idVendorType),
             idPaymentMethod: await this.PaymentMethodDao.findById(data.idPaymentMethod),
-            idStatus: await this.StatusDao.findById(data.idStatus)
+            idStatus: await this.StatusDao.findById(data.idStatus),
+            idOrigin: await this.OriginDao.findById(data.idOrigin)
 
         }
         return new Vendor(vendor)

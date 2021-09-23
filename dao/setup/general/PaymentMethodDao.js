@@ -6,13 +6,5 @@ class PaymentMethodDao extends SetupDao {
         super(PaymentMethod)
 
     }
-
-    mountObj(data) {
-        const docs = {
-            ...data
-        }
-        docs.isVendor = !!docs.isVendor
-        return new PaymentMethod(docs)
-    }
 }
 module.exports = PaymentMethodDao

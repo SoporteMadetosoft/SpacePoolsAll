@@ -41,7 +41,7 @@ export const ModelForm = () => {
     const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { normalForm, selectReducer } = useSelector(state => state)
-    const { name, idBrand } = normalForm
+
     const { Brand } = selectReducer
 
     const handleInputChange = ({ target }) => {
@@ -54,26 +54,23 @@ export const ModelForm = () => {
 
 
     const submit = async () => {
-
-        console.log("pasando")
-       const prettyForm = {
-           ...normalForm,
-           idBrand: exceptionController(normalForm.idBrand)
-       }
-       save('Model', id, prettyForm)
-       history.push('/setup/vehicles/model')
+        const prettyForm = {
+            ...normalForm,
+            idBrand: exceptionController(normalForm.idBrand)
+        }
+        save('Model', id, prettyForm)
+        history.push('/setup/vehicles/model')
     }
 
 
     const valueBrand = normalForm['idBrand'] ? deconstructSelect(normalForm['idBrand']) : ''
 
-    console.log(errors)
     return (
         <Form onSubmit={handleSubmit(submit)}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-4">
-                
+
                         <label className="control-label">Marca</label>
                         <ReactSelect
                             id="idBrand"
@@ -100,13 +97,10 @@ export const ModelForm = () => {
                                 <FormFeedback>Marca requerida</FormFeedback>
                             </>
                         )}
-                    
-                    
-                    
                     </div>
                     <div className="col-md-4">
                         <label className="control-label">Modelo</label>
-                            <InputValid
+                        <InputValid
                             id="name"
                             name="name"
                             type="text"

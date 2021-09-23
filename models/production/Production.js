@@ -3,14 +3,16 @@ class Production {
 
     constructor({
         id,
-        orderId,
+        idOrder,
         productionCode,
-        status
+        idProductionStatus,
+        isStarted
     }) {
         this.id = id
-        this.orderId = orderId
-        this.productionCode = productionCode
-        this.status = status
+        this.idOrder = idOrder
+        this.idProductionStatus = idProductionStatus
+        this.productionCode = productionCode,
+        this.isStarted = isStarted
     }
     get table() {
         return this.#table;

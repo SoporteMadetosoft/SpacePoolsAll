@@ -1,11 +1,11 @@
 const Carrier = require("../../models/carrier/Carrier");
-const SetupDao = require("../setup/SetupDao");
+const GenericDao = require("../GenericDao");
 const StatusDao = require("../global/StatusDao");
 const FileManagerDao = require("../global/FileManagerDao");
 const CarrierDocumentsDao = require("./CarrierDocumentsDao");
 
 let status;
-class CarrierDao extends SetupDao {
+class CarrierDao extends GenericDao {
     constructor() {
         super(Carrier);
         this.StatusDao = new StatusDao()

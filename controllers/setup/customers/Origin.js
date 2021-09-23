@@ -1,5 +1,5 @@
-const OriginDao = require('../../../dao/setup/customer/CustomerOriginDao')
-const Origin = require('../../../models/setup/customer/CustomerOrigin')
+const OriginDao = require('../../../dao/setup/general/OriginDao')
+const Origin = require('../../../models/setup/general/Origin')
 
 const origin = new OriginDao(Origin)
 exports.list = async (req, res) => {

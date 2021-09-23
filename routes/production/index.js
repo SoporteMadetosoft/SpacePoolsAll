@@ -5,8 +5,8 @@ const ControllerProduction = require('../../controllers/production/Production');
 const router = express.Router();
 
 router.get('/list', ControllerProduction.list);
-router.post('/insert', ControllerProduction.insert);
 router.put('/update', ControllerProduction.update);
+router.post('/switchStart/:id', ControllerProduction.switchStart);
 router.delete('/delete/:id', ControllerProduction.delete);
 router.post('/find', ControllerProduction.listByID);
 

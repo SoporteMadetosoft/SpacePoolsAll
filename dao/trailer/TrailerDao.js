@@ -38,13 +38,14 @@ class TrailerDao extends SetupDao {
         const brand = await this.BrandDao.findById(model.idBrand.value)
         const list = {
             ...data,
+            ITVdate: this.datetimeToEuropeDate(data.ITVdate),
             mod: model != undefined ? model.name : '',
             br: brand != undefined ? brand.name : '',
 
         }
 
         const { id, trailerCode, plate, br, mod, ITVdate } = list
-        const nObj = { id: id, trailerCode: trailerCode, plate: plate, brand: br, model: mod, ITVdate: this.datetimeToDate(ITVdate) }
+        const nObj = { id: id, trailerCode: trailerCode, plate: plate, brand: br, model: mod, ITVdate: ITVdate }
         return nObj
     }
 

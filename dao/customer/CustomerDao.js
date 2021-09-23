@@ -6,7 +6,7 @@ const PaymentMethodDao = require("../setup/general/PaymentMethodDao");
 const CustomerTypeDao = require("../setup/customer/CustomerTypeDao");
 const CustomerCategoryDao = require("../setup/customer/CustomerCategoryDao");
 const CustomerActivityDao = require("../setup/customer/CustomerActivityDao");
-const CustomerOriginDao = require("../setup/customer/CustomerOriginDao");
+const OriginDao = require("../setup/general/OriginDao");
 
 const ModeDao = require("../global/ModeDao");
 const StatusDao = require("../global/StatusDao");
@@ -26,7 +26,7 @@ class CustomerDao extends GenericDao {
         this.CustomerTypeDao = new CustomerTypeDao()
         this.CustomerCategoryDao = new CustomerCategoryDao()
         this.CustomerActivityDao = new CustomerActivityDao()
-        this.CustomerOriginDao = new CustomerOriginDao()
+        this.OriginDao = new OriginDao()
         this.ModeDao = new ModeDao()
         this.StatusDao = new StatusDao()
         this.PayDayDao = new PayDayDao()
@@ -47,7 +47,7 @@ class CustomerDao extends GenericDao {
             idCustomerType: await this.CustomerTypeDao.findById(data.idCustomerType),
             idCustomerCategory: await this.CustomerCategoryDao.findById(data.idCustomerCategory),
             idCustomerActivity: await this.CustomerActivityDao.findById(data.idCustomerActivity),
-            idCustomerOrigin: await this.CustomerOriginDao.findById(data.idCustomerOrigin),
+            idCustomerOrigin: await this.OriginDao.findById(data.idCustomerOrigin),
             addresses: await this.CustomerAddressDao.findByCustomerId(data.id),
             contacts: await this.CustomerContactPersonDao.findByCustomerId(data.id),
             documents: await this.FileManagerDao.getDocumentsInfo(data.filePath)

@@ -142,6 +142,8 @@ export const TrailersForm = () => {
         })
     }
 
+    console.log(valueModel)
+
     return (
         <Form onSubmit={handleSubmit(submit)}>
             <div className="card">
@@ -175,10 +177,10 @@ export const TrailersForm = () => {
                         {errors && errors.plate && <FormFeedback>Matrícula del remolque requerida</FormFeedback>}
                     </div>
                     <div className="col-md-3">
-                        <Input name="policyNumber" placeholder="Número de poliza" label="Número de poliza" />
+                        <Input name="frame" label="Número de bastidor" />
                     </div>
                     <div className="col-md-3">
-                        <Select name="idStatus" label="Estado" endpoint="Status" />
+                        <Input name="policyNumber" label="Número de poliza" />
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">Marca</label>
@@ -202,7 +204,7 @@ export const TrailersForm = () => {
                             placeholder="Modelo"
                             onChange={handleSelectChange}
                         />
-                        {errors && errors.model && (
+                        {errors && errors.valueModel && (
                             <>
                                 <InputValid
                                     id="valueModel"
@@ -221,16 +223,22 @@ export const TrailersForm = () => {
                     </div>
 
                     <div className="col-md-3">
-                        <Input name="ITVdate" type="date" placeholder="Fecha ITV" label="Fecha ITV" />
+                        <Input name="mma" type="number" label="MMA" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="maintenanceDate" type="date" placeholder="Fecha de mantenimiento" label="Fecha de mantenimiento" />
+                        <Input name="ITVdate" type="date" label="Fecha ITV" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="insuranceNumber" placeholder="Número de seguro" label="Número de seguro" />
+                        <Input name="maintenanceDate" type="date" label="Fecha de mantenimiento" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="insuranceDateLimit" type="date" placeholder="Fecha caducidad seguro" label="Fecha caducidad seguro" />
+                        <Input name="insuranceNumber" label="Número de seguro" />
+                    </div>
+                    <div className="col-md-3">
+                        <Input name="insuranceDateLimit" type="date" label="Fecha caducidad seguro" />
+                    </div>
+                    <div className="col-md-3">
+                        <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-12">
                         <label className="control-label">Observaciones</label>

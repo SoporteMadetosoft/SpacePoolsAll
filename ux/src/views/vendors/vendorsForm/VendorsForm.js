@@ -95,13 +95,16 @@ export const VendorsForm = () => {
                     <div className="col-md-3">
                         <Input name="email" type="email" placeholder="Correo electrónico" label="Correo electrónico" />
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                         <Select name="idPaymentMethod" label="Forma de pago" endpoint="PaymentMethods" />
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                         <Select name="idVendorType" label="Tipo de proveedor" endpoint="VendorType" />
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
+                        <Select name="idOrigin" label="Origen" endpoint="Origin" />
+                    </div>
+                    <div className="col-md-3">
                         <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-12">

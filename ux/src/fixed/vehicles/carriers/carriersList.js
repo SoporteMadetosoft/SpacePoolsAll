@@ -1,4 +1,4 @@
-import { Check, FileText, MoreVertical, Trash, X } from "react-feather"
+import { FileText, MoreVertical, Trash } from "react-feather"
 import { Badge } from 'reactstrap'
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
@@ -58,26 +58,17 @@ export const carriersList = [
     cell: row => {
       return (
         <>
-        
-          {row.idStatus === 'Activo' ? 
+
+          {row.idStatus === 'Activo' ?
             (<Badge color='light-success'>
               Activo
             </Badge>)
-          :
+            :
             (<Badge color='light-danger'>
-                Inactivo
-              </Badge>)
-          }
-          {row.idStatus === 'Inactivo' ? 
-            (<Badge color='light-success'>
-              <Check />
+              Inactivo
             </Badge>)
-          :
-            (<Badge color='light-danger'>
-                <X />
-              </Badge>)
           }
-      </>
+        </>
       )
     }
   },
@@ -90,38 +81,29 @@ export const carriersList = [
 
       return (
         <>
-        {row.idStatus === 'Activo' ? 
-            (<Badge color='light-success'>
-              <Check />
-            </Badge>)
-          :
-            (<Badge color='light-danger'>
-                <X />
-              </Badge>)
-          }
-        <div className='d-flex'>
-          <UncontrolledDropdown>
-            <DropdownToggle className='pr-1' tag='span'>
-              <MoreVertical size={15} />
-            </DropdownToggle>
-            <DropdownMenu right>
-              <Link to={`./carriers/edit/${row.id}`}>
-                <DropdownItem tag='a' href='/' className='w-100'>
-                  <FileText size={15} />
-                  <span className='align-middle ml-50'>Detalles</span>
-                </DropdownItem>
-              </Link>
-              <Link onClick={(e) => {
-                dispatch(startDeleteRegister(row.id))
-              }}>
-                <DropdownItem tag='a' href='/' className='w-100'>
-                  <Trash size={15} />
-                  <span className='align-middle ml-50'>Eliminar</span>
-                </DropdownItem>
-              </Link>
-            </DropdownMenu>
-          </UncontrolledDropdown>
-        </div>
+          <div className='d-flex'>
+            <UncontrolledDropdown>
+              <DropdownToggle className='pr-1' tag='span'>
+                <MoreVertical size={15} />
+              </DropdownToggle>
+              <DropdownMenu right>
+                <Link to={`./carriers/edit/${row.id}`}>
+                  <DropdownItem tag='a' href='/' className='w-100'>
+                    <FileText size={15} />
+                    <span className='align-middle ml-50'>Detalles</span>
+                  </DropdownItem>
+                </Link>
+                <Link onClick={(e) => {
+                  dispatch(startDeleteRegister(row.id))
+                }}>
+                  <DropdownItem tag='a' href='/' className='w-100'>
+                    <Trash size={15} />
+                    <span className='align-middle ml-50'>Eliminar</span>
+                  </DropdownItem>
+                </Link>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </div>
         </>
       )
     }

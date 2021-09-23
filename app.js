@@ -62,6 +62,9 @@ app.use('/production', require('./routes/production'));
 //Users Routes
 app.use('/users', require('./routes/users'));
 //-------------------------------------------------------
+//Calendar Routes
+app.use('/calendar', require('./routes/calendar'));
+//-------------------------------------------------------
 //Roles Routes
 //app.use('/roles', require('./routes/role'));  
 //-------------------------------------------------------

@@ -10,9 +10,12 @@ import { save } from '../../utility/helpers/Axios/save'
 import { OrderForm } from './orderForm/OrderForm'
 import { handleCleanUp } from '../../redux/actions/fileUpload'
 import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
+
+
 import { fromFile } from 'file-type'
 import { getCItemsByOrderId, handleCleanCanvas, setInitialCanvas, setNewCanvasPosition } from '../../redux/actions/canvas'
 import { catchAndSetPrice } from '../../redux/actions/orders'
+
 
 const structureForm = {
     baseItems: [],

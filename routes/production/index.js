@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/list', ControllerProduction.list);
 router.put('/update', ControllerProduction.update);
-router.delete('/switchStart/:id', ControllerProduction.switchStart);
+router.post('/switchStart/:id', ControllerProduction.switchStart);
 router.delete('/delete/:id', ControllerProduction.delete);
 router.post('/find', ControllerProduction.listByID);
 

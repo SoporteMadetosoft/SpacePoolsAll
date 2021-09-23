@@ -4,7 +4,7 @@ const CalendarRoutes = [
   {
     path: '/calendar',
     exact: true,
-    component: () => <CalendarComponent titulo={'Calendario'} />
+    component: () => <CalendarComponent />
   }
 ]
 

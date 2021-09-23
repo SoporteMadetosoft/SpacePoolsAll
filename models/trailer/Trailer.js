@@ -8,6 +8,8 @@ class Trailer {
         model,
         trailerCode,
         plate,
+        frame,
+        mma,
         ITVdate,
         policyNumber,
         insuranceNumber,
@@ -24,6 +26,8 @@ class Trailer {
         this.model = model
         this.trailerCode = trailerCode
         this.plate = plate
+        this.frame = frame
+        this.mma = mma
         this.ITVdate = ITVdate
         this.policyNumber = policyNumber
         this.insuranceNumber = insuranceNumber

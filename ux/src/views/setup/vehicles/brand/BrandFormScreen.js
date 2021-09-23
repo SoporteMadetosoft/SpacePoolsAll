@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import BreadCrumbs from '@components/breadcrumbs'
 
-import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BrandForm } from './brandForm/BrandForm'
 import { handleStartEditing } from '../../../../redux/actions/normalForm'
 
 export const BrandFormScreen = () => {
-                 
+
     const { id } = useParams()
+    const dispatch = useDispatch()
 
     const form = useSelector(state => state.normalForm)
 

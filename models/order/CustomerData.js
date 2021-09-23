@@ -3,13 +3,13 @@ class CustomerData {
 
     constructor({
         id,
-        orderId,
+        idOrder,
         deliveryAddress,
         phone,
         email
     }) {
         this.id = id
-        this.orderId = orderId
+        this.idOrder = idOrder
         this.deliveryAddress = deliveryAddress
         this.phone = phone
         this.email = email

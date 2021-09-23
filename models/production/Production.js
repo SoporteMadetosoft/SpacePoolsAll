@@ -10,6 +10,8 @@ class Production {
     }) {
         this.id = id
         this.idOrder = idOrder
+       // this.productionCode = productionCode
+       // this.status = status
         this.idProductionStatus = idProductionStatus
         this.productionCode = productionCode,
         this.isStarted = isStarted

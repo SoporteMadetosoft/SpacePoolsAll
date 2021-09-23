@@ -16,7 +16,8 @@ class Item {
         minimumStock,
         stock,
         itemType,
-        description
+        description,
+        imgUrl
     }) {
         this.id = id
         this.idVendor = idVendor
@@ -32,6 +33,7 @@ class Item {
         this.stock = stock
         this.itemType = itemType
         this.description = description
+        this.imgUrl = imgUrl
     }
     get table() {
         return this.#table;

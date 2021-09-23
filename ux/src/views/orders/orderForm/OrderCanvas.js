@@ -1,45 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Stage, Layer, Image, Rect } from 'react-konva'
 import { useDispatch, useSelector } from 'react-redux'
-import { editDropedElement } from '../../../redux/actions/canvas'
+import { useParams } from 'react-router'
+import { editDropedElement, setInitialCanvas, setNewCanvasPosition } from '../../../redux/actions/canvas'
 
-const INITIAL_ELEMENTS = 29
+
 export const OrderCanvas = () => {
-
     const dispatch = useDispatch()
+
+    const { id } = useParams()
+
+    // useEffect(() => {
+    //     dispatch(setNewCanvasPosition())
+    //     
+    // }, [])
+  
     const { elements: elem } = useSelector(state => state.canvasReducer)
-    const generateShapes = () => {
-        return [...Array(INITIAL_ELEMENTS)].map((_, i) => {
-            const imageObj = new window.Image(50, 50)
-            imageObj.src = elem[i].imgUrl
-            const canvasElement =
-            {
-                ...elem[i],
-                image: imageObj
-            }
-
-            useEffect(() => {
-                dispatch(editDropedElement('elements', i, canvasElement))
-            }, [])
-
-            return canvasElement
-        })
-    }
-
-    const initialState = generateShapes()
-
-    const [elements, setElements] = useState(initialState)
 
     const handleDragStart = (e) => {
         const id = e.target.id()
-        setElements(
-            elements.map((el) => {
-                return {
-                    ...el,
-                    isDragging: el.id === id
-                }
-            })
-        )
+        // setElements(
+        //     elements.map((el) => {
+        //         return {
+        //             ...el,
+        //             isDragging: el.id === id
+        //         }
+        //     })
+        // )
     }
     const handleDragEnd = (e) => {
         const newEl = {
@@ -47,15 +34,16 @@ export const OrderCanvas = () => {
             x: e.target.attrs.x,
             y: e.target.attrs.y
         }
-        dispatch(editDropedElement('elements', e.target.attrs.id, newEl))
-        setElements(
-            elements.map((el) => {
-                return {
-                    ...el,
-                    isDragging: false
-                }
-            })
-        )
+
+        dispatch(editDropedElement('elements', e.target.attrs.pos, newEl))
+        //  setElements(
+        //      elements.map((el) => {
+        //          return {
+        //              ...el,
+        //              isDragging: false
+        //          }
+        //      })
+        //  )
     }
 
 
@@ -74,26 +62,35 @@ export const OrderCanvas = () => {
                         stroke={'black'}
                         strokeWidth={2}
                     />
-                    {elements.map((el) => (
-                        <Image
-                            key={el.id}
-                            id={el.id}
-                            x={el.x}
-                            y={el.y}
-                            width={el.width}
-                            height={el.height}
-                            image={el.image}
-                            numPoints={5}
-                            innerRadius={20}
-                            outerRadius={40}
-                            opacity={0.8}
-                            draggable
-                            scaleX={el.isDragging ? 1.2 : 1}
-                            scaleY={el.isDragging ? 1.2 : 1}
-                            onDragStart={handleDragStart}
-                            onDragEnd={handleDragEnd}
-                        />
-                    ))}
+                    {elem.map((el, index) => {
+                        if ((id && elem[29].id) || !id) {
+                            const imageObj = new window.Image(50, 50)
+                            imageObj.src = el.imgUrl
+                            return (<Image
+                                key={el.id}
+                                pos={index}
+                                id={el.id}
+                                x={el.x}
+                                y={el.y}
+                                width={50}
+                                height={50}
+                                image={imageObj}
+                                numPoints={5}
+                                innerRadius={20}
+                                outerRadius={40}
+                                opacity={0.8}
+                                draggable
+                                scaleX={el.isDragging ? 1.2 : 1}
+                                scaleY={el.isDragging ? 1.2 : 1}
+                                onDragStart={handleDragStart}
+                                onDragEnd={handleDragEnd}
+                                imgUrl={el.imgUrl}
+                            />
+                            )
+                        }
+                    }
+                    )
+                    }
                 </Layer>
             </Stage>
         </>

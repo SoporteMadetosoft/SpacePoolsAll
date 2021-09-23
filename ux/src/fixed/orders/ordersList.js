@@ -11,7 +11,7 @@ import { Link } from "react-router-dom"
 export const ordersList = [
         {
             name: 'Nº',
-            selector: 'orderCode',
+            selector: 'id',
             sortable: true,
             searchable: true,
             minWidth: '50px',

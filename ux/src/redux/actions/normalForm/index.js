@@ -1,5 +1,7 @@
 import { formTypes } from "../../types/normalForm/types"
 import { getFormData } from "../../../utility/helpers/Axios/getFormData"
+import axios from "axios"
+import { endPoints } from "@fixed/endPoints"
 
 export const handleChangeController = (name, value) => ({
     type: formTypes.inputChange,
@@ -44,11 +46,36 @@ export const handleStartEditing = (endpoint, id) => {
     return async (dispatch) => {
         const data = await getFormData(endpoint, id)
         dispatch(fillFormData(data))
+        
     }
 }
 
 export const handleGetForm = () => {
     return async (dispatch, getState) => {
         return getState().normalForm
+    }
+}
+
+export const setIdInXCode = (endPoint, name) => {
+    return async (dispatch, getState) => {
+        setTimeout(async function() {
+            if (getState().normalForm.id) {
+                const id = getState().normalForm.id
+                dispatch(handleChangeController(name, id ))
+            } else {
+                const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/list`)
+                let i = 0
+                let next = true
+                let id = 0
+                while (next) {
+                    if (data[i]) {
+                        id = data[i].id
+                    } else next = false
+                    i++
+                }
+                id++
+                dispatch(handleChangeController(name, id))
+            }
+        },200)
     }
 }

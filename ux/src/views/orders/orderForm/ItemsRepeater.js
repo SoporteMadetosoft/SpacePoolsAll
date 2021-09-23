@@ -10,6 +10,7 @@ import React, { useEffect } from 'react'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { handleLessPrice } from '../../../redux/actions/orders'
+import { deleteCanvasElement } from '../../../redux/actions/canvas'
 
 const formStructure = {
     id: '',
@@ -21,13 +22,9 @@ export const ItemsRepeater = () => {
     const dispatch = useDispatch()
     const formValues = useSelector(state => state.normalForm)
 
-    const { items } = formValues
+    const { baseItems } = formValues
 
-    const count = items ? items.length : 0
-
-    const increaseCount = () => {
-        dispatch(addRepeaterRegister('items', formStructure))
-    }
+    const count = baseItems ? baseItems.length : 0
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Items','idOpt'))
@@ -55,11 +52,12 @@ const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
-    const {nombre, cantidad } = normalForm.items[position]
+    const {name, quantity } = normalForm.baseItems[position]
 
     const decreaseCount = () => {
         dispatch(handleLessPrice(position))
-        dispatch(removeRepeaterRegister('items', position))
+        dispatch(removeRepeaterRegister('baseItems', position))
+        console.log(position)
     }
 
     return (
@@ -69,9 +67,9 @@ const ItemsForm = ({ position }) => {
                 <label className="control-label">Producto</label>
                 <input
                     type="text"
-                    name="quantity"
+                    name="name"
                     className="form-control"
-                    value={nombre}
+                    value={name}
                     readOnly />
             </div>
             <div className="col-md-4">
@@ -80,7 +78,7 @@ const ItemsForm = ({ position }) => {
                     type="text"
                     name="quantity"
                     className="form-control"
-                    value={cantidad}
+                    value={quantity}
                     readOnly />
             </div>
 

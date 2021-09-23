@@ -13,7 +13,7 @@ import { handleLoadID, handleStartEditing } from "../../redux/actions/form"
 export const vendorList = [
   {
     name: 'Nº',
-    selector: 'vendorCode',
+    selector: 'id',
     sortable: true,
     width: '8%'
   },

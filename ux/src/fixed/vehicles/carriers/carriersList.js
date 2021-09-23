@@ -11,7 +11,7 @@ import { Link } from "react-router-dom"
 export const carriersList = [
   {
     name: 'Nº',
-    selector: 'carrierCode',
+    selector: 'id',
     sortable: true,
     searchable: true,
     width: '8%'

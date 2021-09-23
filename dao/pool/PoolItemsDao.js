@@ -2,7 +2,7 @@ const PoolItems = require("../../models/pool/PoolItems");
 const GenericDao = require("../GenericDao");
 const ItemDao = require("../item/ItemDao");
 
-class PoolItemsDao extends GenericDao {
+class PoolItemsDao extends ItemDao {
     constructor() {
         super(PoolItems);
         this.ItemDao = new ItemDao()
@@ -17,7 +17,7 @@ class PoolItemsDao extends GenericDao {
 
                     let ItemList = []
                     for (const data of result) {
-                        const item = await this.ItemDao.findByItemTypeAndId(data.idItem, itemType)
+                        // const item = await this.ItemDao.findByItemTypeAndId(data.idItem, itemType)
                         
                             ItemList.push(await this.mountObj(data))
                         
@@ -29,6 +29,8 @@ class PoolItemsDao extends GenericDao {
     }
 
     async mountObj(data) {
+
+
         const { name, cost } = await this.ItemDao.findById(data.idItem)
 
         const poolItems = {
@@ -42,7 +44,6 @@ class PoolItemsDao extends GenericDao {
         }
         return poolItems
     }
-
 }
 
 module.exports = PoolItemsDao

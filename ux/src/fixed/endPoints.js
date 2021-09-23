@@ -1,5 +1,3 @@
-
-
 const globalEndpoints = {
     FileManager: '/global/fileManager',
     ItemType: '/global/itemType',

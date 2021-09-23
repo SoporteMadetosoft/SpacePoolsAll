@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleChangeController, handleCleanSection } from '../../../redux/actions/normalForm'
+
+import { handleChangeController, handleCleanSection, setIdInXCode } from '../../../redux/actions/normalForm'
 import ReactSelect from 'react-select'
+
 
 import { ItemsRepeater } from './ItemsRepeater'
 
@@ -20,10 +22,18 @@ const placeholderStyles = {
 }
 
 export const PurchaseForm = () => {
+    let {purchaseCode} = useSelector(state =>  state.normalForm)
+
+
 
     const dispatch = useDispatch()
 
     const { normalForm, selectReducer } = useSelector(state => state)
+    useEffect(() => {
+        if (normalForm.id === undefined) {
+            dispatch(setIdInXCode("Purchases","purchaseCode"))
+        } else purchaseCode = normalForm.id
+    }, [])
 
     const { observations } = normalForm
 
@@ -49,7 +59,13 @@ export const PurchaseForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <Input name="purchaseCode" placeholder="Nº venta" label="Nº venta" />
+                    <label className="control-label">Nº Pedido</label>
+                        <input
+                        className={`form-control`}
+                        name="purchaseCode"
+                        value={purchaseCode}
+                        readOnly
+                    />
                     </div>
                     <div className="col-md-4">
                         <label className="control-label">Proveedor</label>

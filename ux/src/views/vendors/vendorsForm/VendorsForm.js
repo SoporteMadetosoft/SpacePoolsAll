@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { useForm } from 'react-hook-form'
-import { handleChangeController } from '../../../redux/actions/normalForm'
+import { handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
 
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -28,6 +28,8 @@ export const VendorsForm = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
+    let {vendorCode} = useSelector(state =>  state.normalForm)
+
     const { normalForm } = useSelector(state => state)
 
     const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
@@ -37,6 +39,17 @@ export const VendorsForm = () => {
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
+
+
+
+    useEffect(() => {
+        if (normalForm.id === undefined) {
+            dispatch(setIdInXCode("Vendors","vendorCode"))
+        } else vendorCode = normalForm.id
+
+    }, [])
+
+    console.log(errors)
 
     const submit = async () => {
         const prettyForm = {
@@ -56,18 +69,13 @@ export const VendorsForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <label className="control-label">Nº Proveedor</label>
-                        <InputValid
-                            id="vendorCode"
-                            name="vendorCode"
-                            type="number"
-                            value={normalForm['vendorCode']}
-                            placeholder="Nº Proveedor"
-                            innerRef={register({ required: true })}
-                            invalid={errors.vendorCode && true}
-                            onChange={handleInputChange}
-                        />
-                        {errors && errors.vendorCode && <FormFeedback>Nº Proveedor requerido</FormFeedback>}
+                    <label className="control-label">Nº Proveedor</label>
+                        <input
+                        className={`form-control`}
+                        name="vendorCode"
+                        value={vendorCode}
+                        readOnly
+                    />
                     </div>
                     <div className="col-md-4">
                         <Input name="comercialName" placeholder="Nombre Comercial" label="Nombre Comercial" />

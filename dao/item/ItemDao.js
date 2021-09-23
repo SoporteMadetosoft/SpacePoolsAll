@@ -4,16 +4,10 @@ const GenericDao = require("../GenericDao");
 const ProductPlaceDao = require("../setup/item/PlaceDao");
 const ProductFamilyDao = require("../item/ProductFamilyDao");
 const ItemTypeDao = require("../global/ItemTypeDao");
-const OrderDao = require("../order/OrderDao");
-const ExtraItemDao = require("../order/ExtraItemDao");
 const VendorDao = require("../vendor/VendorDao");
 //const PurchaseItemsDao = require("../purchase/ItemDao");
 
 class ItemDao extends GenericDao {
-    ProductFamilyDao
-    ProductPlaceDao
-    //PurchaseItemsDao
-
     constructor() {
         super(Item);
         this.ProductFamilyDao = new ProductFamilyDao()
@@ -89,18 +83,46 @@ class ItemDao extends GenericDao {
         const list = {
             ...data,
         }
-        this.OrderDao = new OrderDao()
-        this.ExtraItemDao = new ExtraItemDao()
+      // this.OrderDao = new OrderDao()
+      // this.ExtraItemDao = new ExtraItemDao()
 
-        let activates = await this.OrderDao.findActiveOrders()
+      // let activates = await this.OrderDao.findActiveOrders()
 
-        for (let i = 0; i < activates.length; i++) {
-            console.log(await this.ExtraItemDao.countItemById(data.id, activates[i]))
-        }
+      // for (let i = 0; i < activates.length; i++) {
+      //     console.log(await this.ExtraItemDao.countItemById(data.id, activates[i]))
+      // }
 
         const { id, itemCode, name, description, stock } = list
         const nObj = { id: id, itemCode: itemCode, name: name, description: description, stock: stock }
         return nObj
+    }
+
+    findNameById(id){
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT name FROM item WHERE id = ?', [id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    
+                    resolve(result[0].name)
+                }
+            });
+        })
+    }
+
+    findOneFieldById(field,id){
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT ?? FROM item WHERE id = ?', [field,id], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    if(result !== undefined){
+                        resolve(result[0][field]) 
+                    }
+                        
+                }
+            })
+        })
     }
 
 

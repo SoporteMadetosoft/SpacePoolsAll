@@ -1,5 +1,5 @@
-class ExtraItem {
-    #table = 'orders_extra_items'
+class BaseItem {
+    #table = 'orders_base_items'
 
     constructor({
         id,
@@ -16,4 +16,4 @@ class ExtraItem {
         return this.#table;
     }
 }
-module.exports = ExtraItem
+module.exports = BaseItem

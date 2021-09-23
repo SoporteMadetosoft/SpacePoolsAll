@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { useForm } from 'react-hook-form'
@@ -14,7 +14,7 @@ import { Select } from '../../../components/form/inputs/Select'
 import { FileContext } from '../../../utility/context/FileContext'
 
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
-import { addRepeaterRegister, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, handleChangeController, handleGetForm, setIdInXCode } from '../../../redux/actions/normalForm'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
 import { uploadFile } from '../../../utility/helpers/Axios/uploadFile'
@@ -33,6 +33,7 @@ const ValidationSchema = yup.object().shape({
 })
 
 export const CustomersForm = () => {
+    let {customerCode} = useSelector(state =>  state.normalForm)
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -52,6 +53,13 @@ export const CustomersForm = () => {
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
+
+    useEffect(() => {
+        if (normalForm.id === undefined) {
+            dispatch(setIdInXCode("Customers","customerCode"))
+        } else customerCode = normalForm.id
+
+    }, [])
 
     const preSubmit = (filePath2) => {
         return new Promise(async (resolve, reject) => {
@@ -115,17 +123,13 @@ export const CustomersForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <label className="control-label">Nº Cliente</label>
-                        <InputValid
-                            id="customerCode"
-                            name="customerCode"
-                            type="number"
-                            value={normalForm['customerCode']}
-                            placeholder="Nº Cliente"
-                            innerRef={register({ required: true })}
-                            invalid={errors.customerCode && true}
-                            onChange={handleInputChange}
-                        />
+                    <label className="control-label">Nº Cliente</label>
+                        <input
+                        className={`form-control`}
+                        name="customerCode"
+                        value={customerCode}
+                        readOnly
+                    />
                         {errors && errors.customerCode && <FormFeedback>Nº Cliente requerido</FormFeedback>}
                     </div>
                     <div className="col-md-4">

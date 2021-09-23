@@ -5,7 +5,7 @@ import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 import { handleCleanUp } from '../../../redux/actions/fileUpload'
-import { handleChangeController } from '../../../redux/actions/normalForm'
+import { handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
 import { save } from '../../../utility/helpers/Axios/save'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
@@ -32,6 +32,8 @@ const placeholderStyles = {
 
 export const ItemForm = () => {
 
+    let {itemCode} = useSelector(state =>  state.normalForm)
+
     const { id } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
@@ -53,6 +55,9 @@ export const ItemForm = () => {
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
+        if (normalForm.id === undefined) {
+            dispatch(setIdInXCode("Items","itemCode"))
+        } else itemCode = normalForm.id
     }
 
     const handleSelectChange = ({ value, label }) => {
@@ -60,7 +65,6 @@ export const ItemForm = () => {
     }
 
     const submit = async () => {
-        console.log('Hola?')
         const prettyForm = {
             ...form,
             idVendor: exceptionController(form.idVendor),
@@ -79,18 +83,13 @@ export const ItemForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <label className="control-label">Nº Artículo</label>
-                        <InputValid
-                            id="itemCode"
-                            name="itemCode"
-                            type="number"
-                            value={normalForm['itemCode']}
-                            placeholder="Nº Artículo"
-                            innerRef={register({ required: true })}
-                            invalid={errors.itemCode && true}
-                            onChange={handleInputChange}
-                        />
-                        {errors && errors.itemCode && <FormFeedback>Nº Artículo requerido</FormFeedback>}
+                    <label className="control-label">Nº Artículo</label>
+                        <input
+                        className={`form-control`}
+                        name="itemCode"
+                        value={itemCode}
+                        readOnly
+                    />
                     </div>
                     <div className="col-md-4">
                         <Input name="name" label="Nombre" />

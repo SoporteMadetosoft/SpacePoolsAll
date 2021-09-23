@@ -9,6 +9,7 @@ import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } fro
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { startAddSelectOptions, startAddSelectPoolItems } from '../../../redux/actions/selects'
 import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/actions/orders'
+import { deleteCanvasElement, prepareCanvasItemForm } from '../../../redux/actions/canvas'
 
 const formStructure = {
     idItem: '',
@@ -31,7 +32,7 @@ export const ExtraItemsRepeater = () => {
     useEffect(() => {
         dispatch(startAddSelectPoolItems('Items', 'Items', 'name', 2))
     }, [])
-
+    
     return (
         <>
             <h1 className="card-title">Productos Extras</h1>
@@ -61,12 +62,13 @@ const ItemsForm = ({ position }) => {
 
     const { normalForm, selectReducer } = useSelector(state => state)
     const { Items } = selectReducer
-    const { idItem, cantidad } = normalForm.extraItems[position]
+    const { idItem, quantity } = normalForm.extraItems[position]
     const SelectValue = idItem ? deconstructSelect(idItem) : null
-
     const decreaseCount = () => {
+        dispatch(deleteCanvasElement(position))
         dispatch(removeRepeaterRegister('extraItems', position))
         dispatch(handleCalculateTotalCost("extraItems",""))
+        
     }
 
     const handleInputChange = ({ target }) => {
@@ -81,6 +83,7 @@ const ItemsForm = ({ position }) => {
         dispatch(
             handleSearchOutID2('Items', position, 'extraItems')
             )
+       // dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
     }
 
 
@@ -96,6 +99,7 @@ const ItemsForm = ({ position }) => {
         dispatch(
             handleSearchOutID2('Items', position, 'extraItems')
             )
+      //  dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
     }
     return (
 
@@ -115,10 +119,10 @@ const ItemsForm = ({ position }) => {
 
                 <input
                     type="number"
-                    name="cantidad"
+                    name="quantity"
                     className="form-control"
                     onChange={handleInputChange}
-                    value={cantidad} />
+                    value={quantity} />
             </div>
             <div className="col-md-2 ">
                 <Button.Ripple className='btn-icon form-control mt-2 btn-sm' color='danger' outline onClick={decreaseCount}>

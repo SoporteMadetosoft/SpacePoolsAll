@@ -5,67 +5,111 @@ const B = require(`@src/assets/images/custom/canvas/B.png`).default
 const C = require(`@src/assets/images/custom/canvas/C.png`).default
 const D = require(`@src/assets/images/custom/canvas/D.png`).default
 
-
-const initialState = {
+const wWidth = window.innerWidth
+const wHeight = window.innerHeight
+const initialState2 = {
     elements:
-        [
-            { id: 0, name: 'Skimmer 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: 1, name: 'Skimmer 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: 2, name: 'Skimmer 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: 3, name: 'Skimmer 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: 4, name: 'Skimmer 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: 5, name: 'Skimmer 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: A },
-            { id: 6, name: 'Luz 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 7, name: 'Luz 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 8, name: 'Luz 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 9, name: 'Luz 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 10, name: 'Luz 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 11, name: 'Luz 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 12, name: 'Luz 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 13, name: 'Luz 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 14, name: 'Luz 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 15, name: 'Luz 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 16, name: 'Luz 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 17, name: 'Luz 2', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: B },
-            { id: 18, name: 'NCC', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: C },
-            { id: 19, name: 'NCC', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: C },
-            { id: 20, name: 'NCC', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: C },
-            { id: 21, name: 'NCC', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: C },
-            { id: 22, name: 'NCC', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: C },
-            { id: 23, name: 'NCC', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: C },
-            { id: 24, name: 'Balneo 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: 25, name: 'Balneo 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: 26, name: 'Balneo 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: 27, name: 'Balneo 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: 28, name: 'Balneo 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: D },
-            { id: 29, name: 'Balneo 1', x: (window.innerWidth / 15), y: ((window.innerHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: D }
-        ]
+    [
+        {id:null, idElemento: 1, name: 'Skimmer 1', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
+        {id:null, idElemento: 1, name: 'Skimmer 2', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
+        {id:null, idElemento: 1, name: 'Skimmer 2', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
+        {id:null, idElemento: 1, name: 'Skimmer 2', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
+        {id:null, idElemento: 1, name: 'Skimmer 2', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
+        {id:null, idElemento: 1, name: 'Skimmer 2', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
+        {id:null, idElemento: 1, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 1, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 1, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 1, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" }
+    ]
 }
 
-const canvasReducer = (state = initialState, action) => {
+const initialState = { ...initialState2}
+
+const canvasReducer = (state = { ...initialState }, action) => {
     switch (action.type) {
         case canvasTypes.LoadElement:
+            console.log('LoadElement')
+            const key1 = action.payload.key
+            const position1 = action.payload.position
+            const structure1 = action.payload.structure
+            
+            state[key1][position1] = {
+                ...state[key1][position1],
+                idOrder: structure1.idOrder,
+                id: structure1.id,
+                idElemento: structure1.idElemento,
+                name: structure1.name,
+                imgUrl: structure1.imgUrl,
+                x: structure1.x,
+                y: structure1.y,
+                pos: position1
+            }
+
             return {
                 ...state,
-                [action.payload.key]: [
-                    ...state[action.payload.key],
-                    { ...action.payload.structure }
-                ]
+                [key1]: [...state[key1]]
             }
         case canvasTypes.DropElement:
             const { key, position, obj } = action.payload
-            state[key][position] = {
-                ...state[key][position],
+
+            const newState = { ...state }
+
+            newState[key][position] = {
+                ...newState[key][position],
                 x: obj.x,
-                y: obj.y,
-                imgUrl: obj.imgUrl
+                y: obj.y
             }
+
+            console.log({
+                ...newState,
+                [key]: [...newState[key]]
+            })
             return {
-                ...state,
-                [key]: [...state[key]]
+                ...newState,
+                [key]: [...newState[key]]
             }
         case canvasTypes.SaveCanvas:
-            return { initialState }
+            console.log('SaveCanvas')
+            return {...initialState2}
+
+        case canvasTypes.CleanCanvas:
+            console.log('CleanCanvas')
+            return {...initialState2}
+
+            
+        case canvasTypes.DeleteCanvasElement:
+            console.log('DeleteCanvasElement')
+            delete state[action.payload.key][action.payload.position]
+            return {
+                ...state
+            }
+        case canvasTypes.setAllCanvas:
+            const data =  action.payload.data
+            return {
+                ...state,
+                    elements : [...data]
+                
+            }
         default:
             return state
     }

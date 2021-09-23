@@ -16,7 +16,7 @@ import { Select } from '../../../components/form/inputs/Select'
 import { FileContext } from '../../../utility/context/FileContext'
 
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
-import { addRepeaterRegister, handleChangeController, handleGetForm, handleStartEditing } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, handleChangeController, handleGetForm, handleStartEditing, setIdInXCode } from '../../../redux/actions/normalForm'
 import { addSelectOptions, startAddSelectOptions } from '../../../redux/actions/selects'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
@@ -45,6 +45,8 @@ const placeholderStyles = {
 }
 
 export const TrailersForm = () => {
+
+    let {trailerCode} = useSelector(state =>  state.normalForm)
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -77,6 +79,9 @@ export const TrailersForm = () => {
         }
         dispatch(startAddSelectOptions('Brand', 'Brand'))
         dispatch(startAddSelectOptions('Model', 'Model'))
+        if (normalForm.id === undefined) {
+            dispatch(setIdInXCode("Trailers","trailerCode"))
+        } else trailerCode = normalForm.id
     }, [])
 
 
@@ -149,18 +154,13 @@ export const TrailersForm = () => {
             <div className="card">
                 <div className="row card-body">
                     <div className="col-md-3">
-                        <label className="control-label">Nº Remolque</label>
-                        <InputValid
-                            id="trailerCode"
-                            name="trailerCode"
-                            type="number"
-                            value={normalForm['trailerCode']}
-                            placeholder="Nº Remolque"
-                            innerRef={register({ required: true })}
-                            invalid={errors.trailerCode && true}
-                            onChange={handleInputChange}
-                        />
-                        {errors && errors.trailerCode && <FormFeedback>Nº Remolque requerido</FormFeedback>}
+                    <label className="control-label">Nº Remolque</label>
+                        <input
+                        className={`form-control`}
+                        name="trailerCode"
+                        value={trailerCode}
+                        readOnly
+                    />
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">Matrícula del remolque</label>

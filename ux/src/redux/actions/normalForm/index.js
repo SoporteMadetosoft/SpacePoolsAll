@@ -58,31 +58,33 @@ export const handleGetForm = () => {
 
 export const setIdInXCode = (endPoint, name) => {
     return async (dispatch, getState) => {
-        setTimeout(async function() {
-            if (getState().normalForm.id) {
-                const id = getState().normalForm.id
-                dispatch(handleChangeController(name, id ))
-            } else {
-                const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/list`)
-                let i = 0
-                let next = true
-                let id = 0
-                while (next) {
-                    if (data[i]) {
-                        id = data[i].id
-                    } else next = false
-                    i++
-                }
-                id++
-                dispatch(handleChangeController(name, id))
-            }
-        },200)
+      //  setTimeout(async function() {
+      //      if (getState().normalForm.id) {
+      //          const id = getState().normalForm.id
+      //          dispatch(handleChangeController(name, id ))
+      //      } else {
+      //          const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/list`)
+      //          let i = 0
+      //          let next = true
+      //          let id = 0
+      //          while (next) {
+      //              if (data[i]) {
+      //                  id = data[i].id
+      //              } else next = false
+      //              i++
+      //          }
+      //          id++
+      //          dispatch(handleChangeController(name, id))
+      //      }
+      //  },200)
     }
 }
 
-//export const GetSetNextId = (tableName) => {
-//    return async () => {
-//        const { data: { data } } = await axios.get(`SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "alphasfp" AND TABLE_NAME = ${tableName};`)
-//        console.log(data)
-//    }
-//}
+export const GetSetNextId = (endPoint, name) => {
+    return async (dispatch) => {
+       //console.log('__-----------------__________----------_--____--_')
+       //console.log(process.env.REACT_APP_HOST_URI)
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/findnid`)
+        dispatch(handleChangeController(name, data[0].AUTO_INCREMENT))
+    }
+}

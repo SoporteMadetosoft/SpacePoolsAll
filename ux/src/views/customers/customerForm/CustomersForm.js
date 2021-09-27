@@ -56,8 +56,8 @@ export const CustomersForm = () => {
 
     useEffect(() => {
         if (normalForm.id === undefined) {
-            dispatch(setIdInXCode("Customers","customerCode"))
-          //  dispatch(GetSetNextId("customers"))
+            //dispatch(setIdInXCode("Customers","customerCode"))
+            dispatch(GetSetNextId("Customers", 'customerCode'))
         } else customerCode = normalForm.id
 
     }, [])

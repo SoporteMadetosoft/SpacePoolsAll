@@ -86,7 +86,7 @@ exports.update = async (req, res) => {
         delete customer.addresses
         delete customer.contacts
         delete customer.documents
-
+        
         customerDao.update(customer)
 
         customerDao.multipleAccess(addresses, customerDao.CustomerAddressDao, customer.id, 'idCustomer')
@@ -96,6 +96,19 @@ exports.update = async (req, res) => {
         customerDao.multipleAccess(documents, carrierDocumentsDao, customer.id, 'idCustomer')
 
         res.json({ ok: true })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}
+
+exports.findNId= async (req, res) => {
+    try {
+       
+        res.json({ 
+            ok: true,
+            data: await  customerDao.findAutoincrementID()
+         })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

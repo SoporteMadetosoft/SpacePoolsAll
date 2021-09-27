@@ -9,6 +9,7 @@ router.post('/insert', ControllerTrailer.insert);
 router.put('/update', ControllerTrailer.update);
 router.delete('/delete/:id', ControllerTrailer.delete);
 router.post('/find', ControllerTrailer.listByID);
+router.get('/findnid', ControllerTrailer.findNId)
 
 router.get('/repair/list', ControllerRepair.list);
 router.post('/repair/insert', ControllerRepair.insert);

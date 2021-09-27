@@ -9,5 +9,6 @@ router.post('/insert', ControllerPool.insert);
 router.put('/update', ControllerPool.update);
 router.delete('/delete/:id', ControllerPool.delete);
 router.post('/find', ControllerPool.listByID);
+router.get('/findnid', ControllerPool.findNId)
 
 module.exports = router;

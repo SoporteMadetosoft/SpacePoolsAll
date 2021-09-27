@@ -10,7 +10,7 @@ import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
 import { useForm } from 'react-hook-form'
-import { handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
 
 const ValidationSchema = yup.object().shape({
     familyCode: yup.string().required(),
@@ -35,7 +35,7 @@ export const ItemsFamilyForm = () => {
 
     useEffect(() => {
         if (normalForm.id === undefined) {
-            dispatch(setIdInXCode("Family","familyCode"))
+            dispatch(GetSetNextId("Family",'familyCode'))
         } else familyCode = normalForm.id
     }, [])
 

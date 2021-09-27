@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { useForm } from 'react-hook-form'
-import { handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
+import { handleChangeController, GetSetNextId } from '../../../redux/actions/normalForm'
 
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -44,7 +44,8 @@ export const VendorsForm = () => {
 
     useEffect(() => {
         if (normalForm.id === undefined) {
-            dispatch(setIdInXCode("Vendors","vendorCode"))
+            dispatch(GetSetNextId("Vendors","vendorCode"))
+            
         } else vendorCode = normalForm.id
 
     }, [])

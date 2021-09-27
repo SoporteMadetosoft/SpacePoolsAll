@@ -79,3 +79,10 @@ export const setIdInXCode = (endPoint, name) => {
         },200)
     }
 }
+
+export const GetSetNextId = (tableName) => {
+    return async () => {
+        const { data: { data } } = await axios.get(`SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "alphasfp" AND TABLE_NAME = ${tableName};`)
+        console.log(data)
+    }
+}

@@ -14,7 +14,7 @@ import { Select } from '../../../components/form/inputs/Select'
 import { FileContext } from '../../../utility/context/FileContext'
 
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
-import { addRepeaterRegister, handleChangeController, handleGetForm, setIdInXCode } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm, setIdInXCode } from '../../../redux/actions/normalForm'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
 import { uploadFile } from '../../../utility/helpers/Axios/uploadFile'
@@ -57,6 +57,7 @@ export const CustomersForm = () => {
     useEffect(() => {
         if (normalForm.id === undefined) {
             dispatch(setIdInXCode("Customers","customerCode"))
+            dispatch(GetSetNextId("customers"))
         } else customerCode = normalForm.id
 
     }, [])

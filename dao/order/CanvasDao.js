@@ -12,7 +12,7 @@ class CanvasDao extends GenericDao{
     async mountObj(data){
         const canvas = {
             ...data,
-            imgUrl: await this.ItemDao.findOneFieldById("imgUrl", data.idElemento)
+            //imgUrl: await this.ItemDao.findOneFieldById("imgUrl", data.idElemento)
 
         }
         return canvas

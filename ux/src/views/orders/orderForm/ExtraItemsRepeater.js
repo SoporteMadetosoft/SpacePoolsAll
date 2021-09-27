@@ -72,7 +72,7 @@ const ItemsForm = ({ position }) => {
     }
 
     const handleInputChange = ({ target }) => {
-        console.log(target.name) //cantidad (obj.name), items(key), position (position)
+         //cantidad (obj.name), items(key), position (position)
         const obj = {
             name: target.name,
             value: target.value

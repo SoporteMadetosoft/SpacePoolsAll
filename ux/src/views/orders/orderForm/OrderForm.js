@@ -40,7 +40,6 @@ export const OrderForm = () => {
 
    
     const handleInputChange = ({ target }) => {
-        console.log(target)
         dispatch(handleChangeController(target.name, target.value))
     }
 

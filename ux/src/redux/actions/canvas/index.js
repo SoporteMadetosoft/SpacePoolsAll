@@ -1,7 +1,4 @@
 import { canvasTypes } from "../../types/canvas/types"
-import { editRepeaterRegister, handleCleanSection } from "../normalForm"
-import { getFormData } from "../../../utility/helpers/Axios/getFormData"
-import canvasReducer from "../../reducers/canvas"
 import { endPoints } from "@fixed/endPoints"
 import axios from "axios"
 
@@ -30,10 +27,22 @@ export const handleSetAllCanvas = (data) => ({
 })
 
 export const getCItemsByOrderId = (endPoint, id) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/canvas/list/${id}`)
-        console.log(data)
-        dispatch(handleSetAllCanvas(data))
+
+        const newItemsList = []
+        data.forEach((element, index) => {
+            const imageUrl = getState().canvasReducer.elements[index].imgUrl
+         //   console.log(imageUrl)
+            const newItem = {
+                ...element,
+                imgUrl: imageUrl
+            }
+            
+            newItemsList[index] = newItem
+        })
+    // console.log(newItemsList)
+        dispatch(handleSetAllCanvas(newItemsList))
     }
 }
 
@@ -60,105 +69,22 @@ export const setInitialCanvas = () => {
     return (dispatch, getState) => {
         const canvasitems = getState().canvasReducer.elements
         dispatch(handleCleanCanvas())
+
         canvasitems.forEach((element, index) => {
-                const newItem = {
-                    idElemento : element.idElemento,
-                    pos: element.pos,
-                    imgUrl: element.imgUrl,
-                    name : element.name,
-                    isDragging : element.isDragging,
-                    id : null,
-                    x: (window.innerWidth) / 15,
-                    y: ((window.innerHeight) / 12) * element.idElemento
-                }
-                dispatch(addCanvasElement("elements", newItem, index))
+
+            const newItem = {
+                idElemento: element.idElemento,
+                pos: element.pos,
+                imgUrl: element.imgUrl,
+                name: element.name,
+                isDragging: element.isDragging,
+                id: null,
+                x: (window.innerWidth) / 15,
+                y: ((window.innerHeight) / 12) * element.idElemento
+            }
+        //    console.log(newItem)
+            dispatch(addCanvasElement("elements", newItem, index))
         })
         //dispatch(handleCleanCanvas())
-    }
-}
-
-//export const setNewCanvasPosition = () => {
-//    return (dispatch, getState) => {
-//        const canvasitems = getState().normalForm.canvasItems
-//        if (canvasitems) {
-//
-//            if (canvasitems[0]) {
-//                const items = []
-//                let num = 0
-//
-//                canvasitems.forEach(element => {
-//                    items[num] = element
-//                    num++
-//                })
-//
-//
-//                dispatch(handleCleanSection("canvasItems"))
-//
-//                items.forEach((element, index) => {
-//                    const structure = {
-//                        idOrder: element.idOrder,
-//                        id: element.id,
-//                        idElemento: element.idElemento,
-//                        name: element.name,
-//                        isDragging: false,
-//                        imgUrl: element.imgUrl,
-//                        x: element.x,
-//                        y: element.y
-//                    }
-//                    dispatch(addCanvasElement("elements", structure, index))
-//                })
-//
-//
-//            }
-//        }
-//
-//    }
-//}
-
-export const prepareCanvasItemForm = (endpoint, position, arr) => {
-    return async (dispatch, getState) => {
-
-        //  const allItems = getState().normalForm[arr]
-        let idcanvasItem = 0
-        //if (allItems.length !== 1) {
-        //    idcanvasItem = allItems[allItems.length - 2].idCanvasItem
-        //    console.log(idcanvasItem)
-        //    idcanvasItem++
-        //}
-
-        const allCanvasItems = getState().canvasReducer.elements
-        if (allCanvasItems.length !== 1) {
-            idcanvasItem = allCanvasItems[allCanvasItems.length - 1].idCanvasItem
-            if (idcanvasItem === null || idcanvasItem === undefined) {
-                idcanvasItem = 0
-            }
-            idcanvasItem++
-        }
-
-
-
-        dispatch(deleteCanvasElement(position))
-
-        const obj = {
-            name: "idCanvasItem",
-            value: idcanvasItem
-        }
-        dispatch(editRepeaterRegister(arr, position, obj))
-
-
-        const { idItem } = getState().normalForm[arr][position]
-        const item = await getFormData(endpoint, idItem.id)
-
-        const itemCanvasStructure = {
-            idCanvasItem: idcanvasItem,
-            id: item.id,
-            name: item.name,
-            width: 50,
-            height: 50,
-            isDragging: false,
-            imgUrl: item.imgUrl
-        }
-        dispatch(addCanvasElement("elements", itemCanvasStructure))
-
     }
 }

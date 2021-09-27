@@ -51,7 +51,7 @@ export const OrderFormScreen = () => {
             dispatch(setInitialCanvas())
         }
         dispatch(catchAndSetPrice())
-    }, [])
+    }, [form])
 
 
    // useEffect(() => {
@@ -77,7 +77,7 @@ export const OrderFormScreen = () => {
             email: form.email
         }
         const productionObj = {
-            status: 1
+            isStarted: 0
         }
 
         delete form.deliveryAddress

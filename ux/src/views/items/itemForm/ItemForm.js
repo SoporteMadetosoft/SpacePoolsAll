@@ -5,7 +5,7 @@ import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 import { handleCleanUp } from '../../../redux/actions/fileUpload'
-import { handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
 import { save } from '../../../utility/helpers/Axios/save'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
@@ -17,7 +17,6 @@ import ReactSelect from 'react-select'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
 const ValidationSchema = yup.object().shape({
-    itemCode: yup.number().required(),
     valueType: yup.string().required()
 })
 
@@ -32,7 +31,7 @@ const placeholderStyles = {
 
 export const ItemForm = () => {
 
-    let {itemCode} = useSelector(state =>  state.normalForm)
+    let { itemCode } = useSelector(state => state.normalForm)
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -43,7 +42,7 @@ export const ItemForm = () => {
     const { normalForm, selectReducer } = useSelector(state => state)
 
     const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
-
+    console.log(errors)
     const { description } = normalForm
     const { ItemType } = selectReducer
 
@@ -51,26 +50,31 @@ export const ItemForm = () => {
 
     useEffect(() => {
         dispatch(startAddSelectOptions('ItemType', 'ItemType'))
+        if (normalForm.id === undefined) {
+            dispatch(GetSetNextId("Items", 'itemCode'))
+        } else itemCode = normalForm.id
     }, [])
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
-        if (normalForm.id === undefined) {
-            dispatch(setIdInXCode("Items","itemCode"))
-        } else itemCode = normalForm.id
+
     }
 
     const handleSelectChange = ({ value, label }) => {
         dispatch(handleChangeController('itemType', { id: value, name: label }))
+        //  dispatch(handleChangeController('valueType', value))
+
     }
 
     const submit = async () => {
+        console.log('--------------------------________________________')
         const prettyForm = {
             ...form,
             idVendor: exceptionController(form.idVendor),
             itemType: exceptionController(form.itemType),
             idFamily: exceptionController(form.idFamily),
             idPlace: exceptionController(form.idPlace)
+
         }
 
         save('Items', id, prettyForm)
@@ -78,18 +82,20 @@ export const ItemForm = () => {
         history.push('/items')
     }
 
+    console.log(valueType)
+
     return (
         <Form onSubmit={handleSubmit(submit)}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                    <label className="control-label">Nº Artículo</label>
+                        <label className="control-label">Nº Artículo</label>
                         <input
-                        className={`form-control`}
-                        name="itemCode"
-                        value={itemCode}
-                        readOnly
-                    />
+                            className={`form-control`}
+                            name="itemCode"
+                            value={itemCode}
+                            readOnly
+                        />
                     </div>
                     <div className="col-md-4">
                         <Input name="name" label="Nombre" />
@@ -108,19 +114,19 @@ export const ItemForm = () => {
                             placeholder="Tipo de artículo"
                             onChange={handleSelectChange}
                         />
+                        <InputValid
+                            id="valueType"
+                            name="valueType"
+                            tabIndex={-1}
+                            autoComplete="off"
+                            value={valueType}
+                            innerRef={register({ required: true })}
+                            invalid={errors.valueType && true}
+                            style={{ opacity: 0, height: 0, position: 'absolute' }}
+                            onChange={handleInputChange}
+                        />
                         {errors && errors.valueType && (
                             <>
-                                <InputValid
-                                    id="valueType"
-                                    name="valueType"
-                                    tabIndex={-1}
-                                    autoComplete="off"
-                                    value={valueType}
-                                    innerRef={register({ required: true })}
-                                    invalid={errors.itemCode && true}
-                                    style={{ opacity: 0, height: 0, position: 'absolute' }}
-                                    onChange={handleInputChange}
-                                />
                                 <FormFeedback>Tipo de artículo requerido</FormFeedback>
                             </>
                         )}

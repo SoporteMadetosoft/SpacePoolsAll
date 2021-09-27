@@ -16,7 +16,7 @@ import { Select } from '../../../components/form/inputs/Select'
 import { FileContext } from '../../../utility/context/FileContext'
 
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
-import { addRepeaterRegister, handleChangeController, handleGetForm, handleStartEditing, setIdInXCode } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm, handleStartEditing, setIdInXCode } from '../../../redux/actions/normalForm'
 import { addSelectOptions, startAddSelectOptions } from '../../../redux/actions/selects'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
@@ -80,7 +80,7 @@ export const TrailersForm = () => {
         dispatch(startAddSelectOptions('Brand', 'Brand'))
         dispatch(startAddSelectOptions('Model', 'Model'))
         if (normalForm.id === undefined) {
-            dispatch(setIdInXCode("Trailers","trailerCode"))
+            dispatch(GetSetNextId("Trailers",'trailerCode'))
         } else trailerCode = normalForm.id
     }, [])
 

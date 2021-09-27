@@ -14,7 +14,7 @@ import { FileContext } from '../../../utility/context/FileContext'
 
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
 
-import { addRepeaterRegister, handleChangeController, handleGetForm, setIdInXCode } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm, setIdInXCode } from '../../../redux/actions/normalForm'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
 import { uploadFile } from '../../../utility/helpers/Axios/uploadFile'
@@ -53,7 +53,7 @@ export const CarriersForm = () => {
 
     useEffect(() => {
         if (normalForm.id === undefined) {
-            dispatch(setIdInXCode("Carriers","carrierCode"))
+            dispatch(GetSetNextId("Carriers", 'carrierCode'))
         } else carrierCode = normalForm.id
     }, [])
 

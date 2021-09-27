@@ -16,7 +16,7 @@ import { Select } from '../../../components/form/inputs/Select'
 import { FileContext } from '../../../utility/context/FileContext'
 
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
-import { addRepeaterRegister, handleChangeController, handleGetForm, setIdInXCode } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm, setIdInXCode } from '../../../redux/actions/normalForm'
 import { addSelectOptions, startAddSelectOptions } from '../../../redux/actions/selects'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
@@ -91,9 +91,8 @@ export const VechiclesForm = () => {
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'brandOpt'))
-
         if (normalForm.id === undefined) {
-            dispatch(setIdInXCode("Vehicles","vehicleCode"))
+            dispatch(GetSetNextId("Vehicles", 'vehicleCode'))
         } else vehicleCode = normalForm.id
       
     }, [])

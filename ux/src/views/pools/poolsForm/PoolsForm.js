@@ -6,8 +6,11 @@ import { PoolsRawForm } from './PoolsRawForm'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect } from 'react'
 import { handleCalculateTotalCost } from '../../../redux/actions/orders'
+import { GetSetNextId } from '../../../redux/actions/normalForm'
 
 export const PoolsForm = () => {
+    let {poolCode} = useSelector(state =>  state.normalForm)
+    const { normalForm } = useSelector(state => state)
 
     const {price} = useSelector(state => state.ordersReducer)
 
@@ -19,6 +22,12 @@ export const PoolsForm = () => {
         },200)  
    }
 
+   useEffect(() => {
+    if (normalForm.id === undefined) {
+        dispatch(GetSetNextId("Pools", 'poolCode'))
+    } else poolCode = normalForm.id
+
+}, [])
 
     return (
 
@@ -31,7 +40,13 @@ export const PoolsForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <Input name="poolCode" placeholder="Nº Piscina" label="Nº Piscina" />
+                    <label className="control-label">Nº Piscina</label>
+                        <input
+                        className={`form-control`}
+                        name="poolCode"
+                        value={poolCode}
+                        readOnly
+                    />
                     </div>
                     <div className="col-md-4">
                         <Input name="fabricationName" placeholder="Nombre  de fabricación" label="Nombre  de fabricación" />

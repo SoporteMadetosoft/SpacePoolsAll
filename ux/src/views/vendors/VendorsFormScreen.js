@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import BreadCrumbs from '@components/breadcrumbs'
 
-import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm'
+import { GetSetNextId, handleStartEditing, initNormalForm } from '../../redux/actions/normalForm'
 import { VendorsForm } from './vendorsForm/VendorsForm'
 
 const structureForm = {

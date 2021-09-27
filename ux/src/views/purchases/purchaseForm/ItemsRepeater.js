@@ -74,7 +74,6 @@ const ItemsForm = ({ position }) => {
     const itemTypeValue = itemType ? deconstructSelect(itemType) : null
 
     const handleLoadItems = async (obj) => {
-        console.log(obj)
         const nObj = {
             itemType: obj.value,
             idVendor: idVendor ? idVendor['id'] : null

@@ -18,7 +18,6 @@ import { exceptionController } from '../../../utility/helpers/undefinedException
 import { save } from '../../../utility/helpers/Axios/save'
 
 const ValidationSchema = yup.object().shape({
-    vendorCode: yup.number().required(),
     CIF: yup.string().required()
 })
 
@@ -102,7 +101,7 @@ export const VendorsForm = () => {
                         <Input name="phone" placeholder="Teléfono" label="Teléfono" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="email" type="email" placeholder="Correo electrónico" label="Correo electrónico" />
+                        <Input name="email" placeholder="Correo electrónico" label="Correo electrónico" />
                     </div>
                     <div className="col-md-3">
                         <Select name="idPaymentMethod" label="Forma de pago" endpoint="PaymentMethods" />

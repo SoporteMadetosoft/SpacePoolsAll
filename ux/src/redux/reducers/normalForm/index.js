@@ -56,7 +56,6 @@ const normalForm = (state = initialState, action) => {
             return {
                 ...action.payload
             }
-
         default:
             return state
     }

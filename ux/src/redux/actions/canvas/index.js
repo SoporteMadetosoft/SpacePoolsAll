@@ -33,7 +33,6 @@ export const getCItemsByOrderId = (endPoint, id) => {
         const newItemsList = []
         data.forEach((element, index) => {
             const imageUrl = getState().canvasReducer.elements[index].imgUrl
-         //   console.log(imageUrl)
             const newItem = {
                 ...element,
                 imgUrl: imageUrl
@@ -41,7 +40,6 @@ export const getCItemsByOrderId = (endPoint, id) => {
             
             newItemsList[index] = newItem
         })
-    // console.log(newItemsList)
         dispatch(handleSetAllCanvas(newItemsList))
     }
 }

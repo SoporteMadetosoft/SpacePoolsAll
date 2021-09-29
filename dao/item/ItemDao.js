@@ -58,9 +58,8 @@ class ItemDao extends GenericDao {
                 } else {
                     let objList = []
                     for (const res of result) {
-                        objList.push(await this.mountList(res))
+                        objList.push(await this.mountObj(res))
                     }
-
                     resolve(objList)
                 }
             });
@@ -71,7 +70,7 @@ class ItemDao extends GenericDao {
     async mountObj(data) {
         const item = {
             ...data,
-            // idVendor: await this.VendorDao.findById(data.idVendor),
+            idVendor: await this.VendorDao.findById(data.idVendor),
             itemType: await this.ItemTypeDao.findById(data.itemType),
             idFamily: await this.ProductFamilyDao.findById(data.idFamily),
             idPlace: await this.ProductPlaceDao.findById(data.idPlace)

@@ -65,7 +65,7 @@ const ItemsForm = ({ position }) => {
     const { idItem, quantity } = normalForm.extraItems[position]
     const SelectValue = idItem ? deconstructSelect(idItem) : null
     const decreaseCount = () => {
-        dispatch(deleteCanvasElement(position))
+      //  dispatch(deleteCanvasElement(position))
         dispatch(removeRepeaterRegister('extraItems', position))
         dispatch(handleCalculateTotalCost("extraItems",""))
         
@@ -77,12 +77,8 @@ const ItemsForm = ({ position }) => {
             name: target.name,
             value: target.value
         }
-        dispatch(
-            editRepeaterRegister('extraItems', position, obj)
-            )
-        dispatch(
-            handleSearchOutID2('Items', position, 'extraItems')
-            )
+        dispatch(editRepeaterRegister('extraItems', position, obj))
+        dispatch(handleSearchOutID2('Items', position, 'extraItems',"extraItems"))
        // dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
     }
 
@@ -97,7 +93,7 @@ const ItemsForm = ({ position }) => {
             editRepeaterRegister('extraItems', position, obj)
         )
         dispatch(
-            handleSearchOutID2('Items', position, 'extraItems')
+            handleSearchOutID2('Items', position, 'extraItems',"extraItems")
             )
       //  dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
     }

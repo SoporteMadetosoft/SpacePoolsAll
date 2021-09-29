@@ -79,3 +79,16 @@ exports.update = async (req, res) => {
         return res.status(500).send(error)
     }
 }
+
+exports.findNId= async (req, res) => {
+    try {
+       
+        res.json({ 
+            ok: true,
+            data: await  purchaseDao.findAutoincrementID()
+         })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}

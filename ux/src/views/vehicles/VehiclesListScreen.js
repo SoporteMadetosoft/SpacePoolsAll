@@ -11,8 +11,9 @@ import '@styles/react/libs/tables/react-dataTable-component.scss'
 export const VehiclesListScreen = ({ titulo }) => {
 
     const dispatch = useDispatch()
+    console.log('hola')
     const { registros: data } = useSelector(state => state.registrosReducer)
-
+    console.log(data)
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Vehicles'))

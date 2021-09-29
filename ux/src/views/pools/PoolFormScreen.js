@@ -21,12 +21,13 @@ export const PoolFormScreen = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const form = useSelector(state => state.normalForm)
-
+    const {price} = useSelector(state => state.ordersReducer)
     useEffect(() => {
         if (id) {
             dispatch(handleStartEditing('Pools', id))
         }
         dispatch(initNormalForm(structureForm))
+        console.log(form)
     }, [initNormalForm])
 
     const titulo = (id) ? 'Editar Piscina' : 'Añadir Piscina'
@@ -37,6 +38,7 @@ export const PoolFormScreen = () => {
 
         const prettyForm = {
             ...form,
+            cost: price,
             idStatus: exceptionController(form.idStatus),
             items: form.items.map(item => ({ ...item, idItem: exceptionController(item.idItem) })),
             raws: form.raws.map(raw => ({ ...raw, idItem: exceptionController(raw.idItem) }))

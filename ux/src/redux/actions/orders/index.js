@@ -1,6 +1,6 @@
 import { formTypes } from "../../types/orders/types"
 import { getFormData } from "../../../utility/helpers/Axios/getFormData"
-import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from "../normalForm"
+import { addRepeaterRegister, editRepeaterRegister, handleChangeController, removeRepeaterRegister } from "../normalForm"
 import { PresetColorTypes } from "antd/lib/_util/colors"
 import { addCanvasElement, prepareCanvasItemForm } from "../canvas"
 import { List } from "react-feather"
@@ -14,20 +14,36 @@ export const handleAugmentIdTemporary = () => ({
     type: formTypes.AugmentIdTemporary
 })
 
-export const handleCalculateTotalCost = (column1, column2) => {
+export const handleCalculateTotalCost = (column1, column2, isPool) => {
     return async (dispatch, getState) => {
-
         let totalCost = 0, contin = true, k = 0, row = ""
         for (let i = 0; i < 2; i++) {
             (i === 0) ? row = column1 : row = column2
             if (getState().normalForm[row]) {
                 while (contin) {
-                    (getState().normalForm[row][k]) ? totalCost += getState().normalForm[row][k]["coste"] : contin = false
+
+                    if (getState().normalForm[row][k]) {
+                        if (isNaN(getState().normalForm[row][k]["coste"])) {
+                            totalCost += 0
+                        } else {
+                            totalCost += getState().normalForm[row][k]["coste"]
+                        }
+                    } else contin = false
+
+
+                    // (getState().normalForm[row][k]) ? totalCost += getState().normalForm[row][k]["coste"] : contin = false
                     k++
                 }
                 contin = true
                 k = 0
             }
+        }
+
+
+
+        if (isPool === 1 && getState().normalForm["price"]) {
+            const price = parseFloat(getState().normalForm.price)
+            totalCost += price
         }
 
         if (getState().normalForm["idPool"]) {
@@ -37,25 +53,24 @@ export const handleCalculateTotalCost = (column1, column2) => {
         }
 
         if (getState().normalForm["idTax"]) {
-
             const { name } = getState().normalForm["idTax"]
             totalCost *= ((name / 100) + 1)
-
         }
         totalCost = totalCost.toFixed(2)
-
         if (totalCost === null || totalCost === undefined || totalCost === "NaN") {
 
-        } else dispatch(handleAddCost(totalCost))
+        } else {
+            dispatch(handleAddCost(totalCost))
+            if (isPool !== 1) dispatch(handleChangeController('price', totalCost))
+        }
 
     }
 }
 
 
-export const handleSearchOutID2 = (endpoint, position, arr) => {
+export const handleSearchOutID2 = (endpoint, position, arr, arrCalcu1, arrCalcu2) => {
     return async (dispatch, getState) => {
         const { idItem, idCanvasItem } = getState().normalForm[arr][position]
-        //console.log(idItem.id)
 
         if (idItem !== undefined) {
             const { cost } = await getFormData(endpoint, idItem.id)
@@ -71,21 +86,18 @@ export const handleSearchOutID2 = (endpoint, position, arr) => {
 
 
             //calcular e introducir coste total
-            dispatch(handleCalculateTotalCost("extraItems", "baseItems"))
+            let isPool = 0
+            if (arrCalcu1 === 'raws' && arrCalcu2 === 'items') {
+                isPool = 1
+            }
+            dispatch(handleCalculateTotalCost(arrCalcu1, arrCalcu2, isPool))
         }
     }
 }
 
 
-export const createItemRepeatersByPool = (idPool, idTemporar) => {
+export const createItemRepeatersByPool = (idPool) => {
     return async (dispatch, getState) => {
-        // dispatch(handleAugmentIdTemporary())
-        // const actualitemsarray = getState().normalForm.baseItems
-        // const lastItem = 
-        // console.log('_______________________________________')
-        // console.log(actualitemsarray)
-        // console.log(actualitemsarray.length-1)
-
 
         let num = 0
         let deletee = true
@@ -98,32 +110,17 @@ export const createItemRepeatersByPool = (idPool, idTemporar) => {
 
 
         const pool = await getFormData("Pools", idPool)
-
         let go = true
         num = 0
         while (go) {
-            if (pool.items[num]) {
-                //console.log(pool.items[num])
+            if (pool.allItems[num]) {
                 const formStructure = {
-                    idItem: pool.items[num].idItem.id,
-                    quantity: pool.items[num].cantidad,
-                    coste: pool.items[num].coste,
-                    name: pool.items[num].idItem.name
-                    //     idCanvasItem : idTemporar
+                    idItem: pool.allItems[num].idItem.id,
+                    quantity: pool.allItems[num].quantity,
+                    coste: pool.allItems[num].coste,
+                    name: pool.allItems[num].idItem.name
                 }
                 dispatch(addRepeaterRegister('baseItems', formStructure))
-
-                // const item = await getFormData("Items", pool.items[num].idItem.id)
-                // console.log(item)
-                // const itemCanvasStructure = {
-                //     id: pool.items[num].idItem.id,
-                //     name: pool.items[num].idItem.name,
-                //     width: 50,
-                //     height: 50,
-                //     isDragging: false,
-                //     imgUrl: item.imgUrl
-                // }
-                // dispatch(addCanvasElement("elements", itemCanvasStructure))
             } else go = false
             num++
         }
@@ -146,16 +143,23 @@ export const handleLessPrice = (position) => {
         let totalCost = price - resta
         totalCost = totalCost.toFixed(2)
         dispatch(handleAddCost(totalCost))
+        dispatch(handleChangeController('price', totalCost))
     }
 }
 
 
-export const catchAndSetPrice = () => {
+export const catchAndSetPrice = (numE) => {
     return (dispatch, getState) => {
-        const list = getState().normalForm
-        if (list.price) {
-            dispatch(handleAddCost(list.price))
-        } else  dispatch(handleAddCost(0))
+        if (numE === 0) {
+            dispatch(handleAddCost(0))
+        } else {
+            const list = getState().normalForm
+            if (list.price) {
+                dispatch(handleAddCost(list.price))
+            } //else dispatch(handleAddCost(0))
+        }
+
     }
 
 }
+

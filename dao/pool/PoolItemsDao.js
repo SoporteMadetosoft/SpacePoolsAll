@@ -17,10 +17,29 @@ class PoolItemsDao extends ItemDao {
 
                     let ItemList = []
                     for (const data of result) {
-                        // const item = await this.ItemDao.findByItemTypeAndId(data.idItem, itemType)
-                        
+                        const item = await this.ItemDao.findByItemTypeAndId(data.idItem, itemType)
+                        if(item[0]){
+                           if(item[0]['itemType'].id === itemType){
                             ItemList.push(await this.mountObj(data))
-                        
+                           }
+                        }
+                        //ItemList.push(await this.mountObj(data))
+                    }
+                    resolve(ItemList)
+                }
+            });
+        })
+    }
+
+    async getItemsByIdPool(idPool){
+        return new Promise((resolve, reject) => {
+            this.db.query(`SELECT * FROM pool_items WHERE idPool = ?`, [idPool], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    let ItemList = []
+                    for (const data of result) {
+                        ItemList.push(await this.mountObj(data))
                     }
                     resolve(ItemList)
                 }
@@ -29,8 +48,6 @@ class PoolItemsDao extends ItemDao {
     }
 
     async mountObj(data) {
-
-
         const { name, cost } = await this.ItemDao.findById(data.idItem)
 
         const poolItems = {
@@ -39,9 +56,10 @@ class PoolItemsDao extends ItemDao {
                 name: name,
                 id: data.idItem
             },
-            cantidad: data.cantidad,
+            quantity: data.cantidad,
             coste: cost
         }
+        console.log(poolItems)
         return poolItems
     }
 }

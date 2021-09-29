@@ -16,7 +16,7 @@ import { Select } from '../../../components/form/inputs/Select'
 import { FileContext } from '../../../utility/context/FileContext'
 
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
-import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm, handleStartEditing, setIdInXCode } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm, handleStartEditing } from '../../../redux/actions/normalForm'
 import { addSelectOptions, startAddSelectOptions } from '../../../redux/actions/selects'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
@@ -30,7 +30,6 @@ import { TrailerDocForm } from './TrailerDocForm'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
 const ValidationSchema = yup.object().shape({
-    trailerCode: yup.number().required(),
     plate: yup.string().required(),
     valueModel: yup.string().required()
 })
@@ -204,19 +203,19 @@ export const TrailersForm = () => {
                             placeholder="Modelo"
                             onChange={handleSelectChange}
                         />
-                        {errors && errors.valueModel && (
-                            <>
-                                <InputValid
+                         <InputValid
                                     id="valueModel"
                                     name="valueModel"
                                     tabIndex={-1}
                                     autoComplete="off"
                                     value={valueModel}
                                     innerRef={register({ required: true })}
-                                    invalid={errors.model && true}
+                                    invalid={errors.valueModel && true}
                                     style={{ opacity: 0, height: 0, position: 'absolute' }}
                                     onChange={handleInputChange}
                                 />
+                        {errors && errors.valueModel && (
+                            <>
                                 <FormFeedback>Modelo requerido</FormFeedback>
                             </>
                         )}

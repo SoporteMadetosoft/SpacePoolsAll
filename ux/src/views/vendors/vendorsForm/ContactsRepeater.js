@@ -130,7 +130,7 @@ const ContactsForm = ({ position }) => {
             <div className="col-md-3">
                 <label className="control-label">Correo Electrónico</label>
                 <input
-                    type="text"
+                    type="email"
                     name="email"
                     className="form-control"
                     onChange={handleInputChange}

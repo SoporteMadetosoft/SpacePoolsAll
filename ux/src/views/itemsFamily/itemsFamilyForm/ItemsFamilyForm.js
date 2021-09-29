@@ -10,10 +10,9 @@ import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
 import { useForm } from 'react-hook-form'
-import { GetSetNextId, handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController } from '../../../redux/actions/normalForm'
 
 const ValidationSchema = yup.object().shape({
-    familyCode: yup.string().required(),
     name: yup.string().required()
 })
 

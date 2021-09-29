@@ -14,7 +14,7 @@ import { Select } from '../../../components/form/inputs/Select'
 import { FileContext } from '../../../utility/context/FileContext'
 
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
-import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm, setIdInXCode } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
 import { uploadFile } from '../../../utility/helpers/Axios/uploadFile'
@@ -28,7 +28,6 @@ import { ContactsRepeater } from './ContactsRepeater'
 import { CustomerDocForm } from './CustomerDocForm'
 
 const ValidationSchema = yup.object().shape({
-    customerCode: yup.number().required(),
     CIF: yup.string().required()
 })
 
@@ -53,10 +52,8 @@ export const CustomersForm = () => {
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
-
     useEffect(() => {
         if (normalForm.id === undefined) {
-            //dispatch(setIdInXCode("Customers","customerCode"))
             dispatch(GetSetNextId("Customers", 'customerCode'))
         } else customerCode = normalForm.id
 
@@ -64,6 +61,7 @@ export const CustomersForm = () => {
 
     const preSubmit = (filePath2) => {
         return new Promise(async (resolve, reject) => {
+            console.log('------------------------------------------------')
             if (upload === 1) {
                 const swalResp = await SwalUploadAndSave()
                 if (swalResp === true) {

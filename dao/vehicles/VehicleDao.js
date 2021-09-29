@@ -13,11 +13,11 @@ class VehicleDao extends SetupDao {
     constructor() {
         super(Vehicle);
         // this.RepairDao = new RepairDao()
-        this.StatusDao = new StatusDao()
-        this.ModelDao = new BrandModelDao()
-        this.CarrierDao = new CarrierDao()
-        this.TrailerDao = new TrailerDao()
-        this.FileManagerDao = new FileManagerDao(VehicleDocumentsDao)
+       this.StatusDao = new StatusDao()
+       this.ModelDao = new BrandModelDao()
+       this.CarrierDao = new CarrierDao()
+       this.TrailerDao = new TrailerDao()
+       this.FileManagerDao = new FileManagerDao(VehicleDocumentsDao)
     }
 
     async mountObj(data) {
@@ -29,8 +29,8 @@ class VehicleDao extends SetupDao {
             idStatus: await this.StatusDao.findById(data.idStatus),
             idCarrier: await this.CarrierDao.findById(data.idCarrier),
             idTrailer: data.idTrailer !== null ? await this.TrailerDao.findById(data.idTrailer) : '',
-            maintenanceDate: await this.datetimeToDate(data.maintenanceDate),
-            ITVdate: await this.datetimeToDate(data.ITVdate),
+            maintenanceDate: this.datetimeToDate(data.maintenanceDate),
+            ITVdate: this.datetimeToDate(data.ITVdate),
             documents: await this.FileManagerDao.getDocumentsInfo(data.filePath)
         }
         return new Vehicle(vehicle)
@@ -44,6 +44,7 @@ class VehicleDao extends SetupDao {
             ITVdate: this.datetimeToEuropeDate(data.ITVdate)
 
         }
+        
         const { id, vehicleCode, plate, idCarrier, frameNumber, ITVdate } = list
         const nObj = { id, vehicleCode, plate, idCarrier, frameNumber, ITVdate }
         return nObj

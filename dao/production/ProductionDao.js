@@ -15,6 +15,7 @@ class ProductionDao extends GenericDao {
             ...data,
 
         }
+        console.log(production)
         return new Production(production)
     }
 
@@ -47,7 +48,6 @@ class ProductionDao extends GenericDao {
             observations: observations,
             isStarted: isStarted
         }
-
         return nObj
     }
 

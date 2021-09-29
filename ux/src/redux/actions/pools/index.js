@@ -35,7 +35,7 @@ export const handleCalcuteTotalCost = () => {
                 contin = true
                 k = 0
             }
-            dispatch(handleAddCost(totalCost))
+           // dispatch(handleAddCost(totalCost))
         }
     }
 }
@@ -88,3 +88,4 @@ export const handleSearchOutID = (endpoint, cantidad, position, arr) => {
         }
     }
 }
+

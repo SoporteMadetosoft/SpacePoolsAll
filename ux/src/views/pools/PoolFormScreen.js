@@ -27,7 +27,6 @@ export const PoolFormScreen = () => {
             dispatch(handleStartEditing('Pools', id))
         }
         dispatch(initNormalForm(structureForm))
-        console.log(form)
     }, [initNormalForm])
 
     const titulo = (id) ? 'Editar Piscina' : 'Añadir Piscina'
@@ -43,7 +42,6 @@ export const PoolFormScreen = () => {
             items: form.items.map(item => ({ ...item, idItem: exceptionController(item.idItem) })),
             raws: form.raws.map(raw => ({ ...raw, idItem: exceptionController(raw.idItem) }))
         }
-        console.log(prettyForm)
         save('Pools', id, prettyForm)
         dispatch(handleCleanUp())
         history.push('/pools')

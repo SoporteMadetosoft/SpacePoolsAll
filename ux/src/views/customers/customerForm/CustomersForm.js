@@ -61,7 +61,6 @@ export const CustomersForm = () => {
 
     const preSubmit = (filePath2) => {
         return new Promise(async (resolve, reject) => {
-            console.log('------------------------------------------------')
             if (upload === 1) {
                 const swalResp = await SwalUploadAndSave()
                 if (swalResp === true) {

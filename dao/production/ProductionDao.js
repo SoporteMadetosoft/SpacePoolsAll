@@ -13,10 +13,10 @@ class ProductionDao extends GenericDao {
     async mountObj(data) {
         const production = {
             ...data,
+            orderData : await this.OrderDao.mountObj(await this.OrderDao.findOrderById(data.idOrder)),
 
         }
-        console.log(production)
-        return new Production(production)
+        return production
     }
 
     async mountList(data) {

@@ -45,7 +45,6 @@ exports.delete = async (req, res) => {
 
 exports.insert = async (req, res) => {
     try {
-        //console.log(req.body.form)
         /** INSERT POOL */
         const pool = req.body.form
         const items = req.body.form.items

@@ -80,9 +80,6 @@ export const OrderFormScreen = () => {
         delete form.email
         delete form.status
         delete form.canvasItems
-
-        //const insert = await orderDao.insert(customer)
-        console.log(form)
         const prettyForm = {
             ...form,
             idTax: form.idTax.id,
@@ -96,11 +93,9 @@ export const OrderFormScreen = () => {
             extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity })),
             canvas: canvas.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, imageUrl: el.imageUrl }))
         }
-        console.log(prettyForm)
-        //console.log(prettyForm)
         save('Orders', id, prettyForm)
-        // dispatch(handleCleanUp())
-        // history.push('/orders')
+        dispatch(handleCleanUp())
+        history.push('/orders')
 
     }
 

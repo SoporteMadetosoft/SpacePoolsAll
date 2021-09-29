@@ -28,7 +28,6 @@ export const PoolsForm = () => {
 
     useEffect(() => {
         dispatch(handleCalculateTotalCost('raws','items',1))
-        console.log('nooooo')
     }, [normalForm])
 
 

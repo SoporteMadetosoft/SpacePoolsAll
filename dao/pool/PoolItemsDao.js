@@ -59,7 +59,6 @@ class PoolItemsDao extends ItemDao {
             quantity: data.cantidad,
             coste: cost
         }
-        console.log(poolItems)
         return poolItems
     }
 }

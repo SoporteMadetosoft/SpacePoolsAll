@@ -9,7 +9,7 @@ import { handleChangeController, handleStartEditing, initNormalForm } from '../.
 import { save } from '../../utility/helpers/Axios/save'
 import { OrderForm } from './orderForm/OrderForm'
 import { handleCleanUp } from '../../redux/actions/fileUpload'
-import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
+import { exceptionController, inputExceptionController } from '../../utility/helpers/undefinedExceptionController'
 
 
 import { fromFile } from 'file-type'
@@ -82,13 +82,13 @@ export const OrderFormScreen = () => {
         delete form.canvasItems
         const prettyForm = {
             ...form,
-            idTax: form.idTax.id,
-            idPool: form.idPool.id,
-            price: orders.price,
-            idCustomer: form.idCustomer.id,
+            idTax:  form.idTax !== undefined ? form.idTax.id : 1,            
+            idPool: exceptionController(form.idPool),
+            idCustomer: exceptionController(form.idCustomer),
+            price: inputExceptionController(orders.price) ,
             canvas: canvas.elements,
-            customerData: customerDataObj,
-            production: productionObj,
+            customerData: inputExceptionController(customerDataObj),
+            production: inputExceptionController(productionObj),
             baseItems: form.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity })),
             extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity })),
             canvas: canvas.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, imageUrl: el.imageUrl }))

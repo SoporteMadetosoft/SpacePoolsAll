@@ -5,27 +5,12 @@ import { useParams } from 'react-router'
 import { editDropedElement, setInitialCanvas, setNewCanvasPosition } from '../../../redux/actions/canvas'
 
 
-export const OrderCanvas = () => {
+export const ProductionCanvas = () => {
     const dispatch = useDispatch()
 
     const { id } = useParams()
   
     const { elements: elem } = useSelector(state => state.canvasReducer)
-
-    const handleDragStart = (e) => {
-        const id = e.target.id()
-    }
-    const handleDragEnd = (e) => {
-        const newEl = {
-            ...e.target.attrs,
-            x: e.target.attrs.x,
-            y: e.target.attrs.y
-        }
-
-        dispatch(editDropedElement('elements', e.target.attrs.pos, newEl))
-    }
-
-
 
     return (
         <>
@@ -58,11 +43,9 @@ export const OrderCanvas = () => {
                                 innerRadius={20}
                                 outerRadius={40}
                                 opacity={0.8}
-                                draggable
+                                draggable = {false}
                                 scaleX={el.isDragging ? 1.2 : 1}
                                 scaleY={el.isDragging ? 1.2 : 1}
-                                onDragStart={handleDragStart}
-                                onDragEnd={handleDragEnd}
                                 imgUrl={el.imgUrl}
                             />
                             )

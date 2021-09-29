@@ -13,10 +13,17 @@ import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { createItemRepeatersByPool, handleAddCost, handleCalculateTotalCost } from '../../../redux/actions/orders'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { handleCleanCanvas } from '../../../redux/actions/canvas'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from "yup"
 
-
+//const ValidationSchema = yup.object().shape({
+//    idPool: yup.string().required()
+//})
 
 export const OrderForm = () => {
+    //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+
     const { price } = useSelector(state => state.ordersReducer)
 
     let { orderCode } = useSelector(state => state.normalForm)

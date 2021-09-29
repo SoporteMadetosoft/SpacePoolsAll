@@ -7,7 +7,7 @@ import { ExtraItemsRepeater } from './ExtraItemsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 
-import { OrderCanvas } from './OrderCanvas'
+import { ProductionCanvas } from './ProductionCanvas'
 
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { createItemRepeatersByPool, handleAddCost, handleCalculateTotalCost } from '../../../redux/actions/orders'
@@ -127,7 +127,7 @@ export const ProductionForm = () => {
             </div>
             <div className="card">
                 <div className="card-body">
-                    <OrderCanvas />
+                    <ProductionCanvas />
                 </div>
             </div>
         </>

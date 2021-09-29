@@ -33,11 +33,11 @@ export const ProductionFormScreen = () => {
     const orders = useSelector(state => state.ordersReducer)
     const canvasItems = useSelector(state => state.normalForm.canvasItems)
 
+    const idOrder = form['orderData'] ? form['orderData'].id : ''
     
     useEffect(() => {
 
         if (id) {
-          //  dispatch(handleStartEditing('Orders', id))
             dispatch(handleStartEditing('Productions', id))
         } else {
             dispatch(catchAndSetPrice(0))
@@ -47,8 +47,9 @@ export const ProductionFormScreen = () => {
 
     useEffect(() => {
         if (id) {
-            // dispatch(setNewCanvasPosition())
-            dispatch(getCItemsByOrderId('Orders', id))
+            ////// el id debe de ser con el idOrder en vez de con el id de la producion
+            ////// cambiado eso debería de funcionar el canvas correctamente
+            dispatch(getCItemsByOrderId('Orders', idOrder))
         } else {
             dispatch(setInitialCanvas())
         }

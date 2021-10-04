@@ -14,7 +14,7 @@ import { FileContext } from '../../../utility/context/FileContext'
 
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
 
-import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm, setIdInXCode } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
 import { uploadFile } from '../../../utility/helpers/Axios/uploadFile'
@@ -27,7 +27,6 @@ import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { CarrierDocForm } from './CarrierDocForm'
 
 const ValidationSchema = yup.object().shape({
-    carrierCode: yup.number().required(),
     NIF: yup.string().required()
 })
 

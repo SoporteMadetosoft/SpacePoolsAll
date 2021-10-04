@@ -16,7 +16,7 @@ import { Select } from '../../../components/form/inputs/Select'
 import { FileContext } from '../../../utility/context/FileContext'
 
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
-import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm, setIdInXCode } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
 import { addSelectOptions, startAddSelectOptions } from '../../../redux/actions/selects'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
@@ -32,7 +32,6 @@ import { VehicleDocForm } from './VehicleDocForm'
 import '../styles/form.css'
 
 const ValidationSchema = yup.object().shape({
-    vehicleCode: yup.number().required(),
     plate: yup.string().required(),
     frameNumber: yup.string().required(),
     valueCarrier: yup.string().required()

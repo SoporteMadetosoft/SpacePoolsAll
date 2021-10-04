@@ -48,7 +48,6 @@ const initialState = { ...initialState2}
 const canvasReducer = (state = { ...initialState }, action) => {
     switch (action.type) {
         case canvasTypes.LoadElement:
-            console.log('LoadElement')
             const key1 = action.payload.key
             const position1 = action.payload.position
             const structure1 = action.payload.structure

@@ -66,7 +66,7 @@ class OrderDao extends GenericDao {
         const newDliveryDate = this.datetimeToEuropeDate(deliveryDate)
 
         const nObj = {id:id, deliveryTime: deliverySchedulerStart+" - "+deliverySchedulerEnd, orderCode: orderCode, customerName: customerName, customerPhone: customerPhone, customerEmail: customerEmail, orderDate: newOrderDate, deliveryDate:newDliveryDate, price:price }
-     
+    
         return nObj
     }  
 

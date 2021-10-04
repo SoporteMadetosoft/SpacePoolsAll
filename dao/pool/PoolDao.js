@@ -17,9 +17,10 @@ class PoolDao extends GenericDao {
             ...data,
             idStatus: await this.StatusDao.findById(data.idStatus),
             items: await this.PoolItemsDao.getItemsByTypeAndPool(data.id, 2),
-            raws: await this.PoolItemsDao.getItemsByTypeAndPool(data.id, 1)
+            raws: await this.PoolItemsDao.getItemsByTypeAndPool(data.id, 1),
+            allItems :  await this.PoolItemsDao.getItemsByIdPool(data.id)
         }
-        return new Pool(pool)
+        return pool
     }
 
     async mountList(data) {

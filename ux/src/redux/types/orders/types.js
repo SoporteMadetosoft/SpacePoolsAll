@@ -1,4 +1,3 @@
 export const formTypes = {
-    AddCost: '[Pools] Add cost',
-    AugmentIdTemporary: '[Orders] Aument id' 
-}
+    AddCost: '[Orders] Add cost',
+    AugmentIdTemporary: '[Orders] Aument id'}

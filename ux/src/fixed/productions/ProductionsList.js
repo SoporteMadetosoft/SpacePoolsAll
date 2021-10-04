@@ -15,7 +15,7 @@ export const ProductionsList = [
         selector: 'id',
         sortable: true,
         searchable: true,
-        width: '5%'
+        width: '6%'
     },
     {
         name: 'Nº Pedido',

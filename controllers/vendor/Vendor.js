@@ -52,7 +52,11 @@ exports.insert = async (req, res) => {
 
         delete vendor.addresses
         delete vendor.contacts
-        const insert = await vendorDao.insert(vendor)
+        const newVendor = {
+            ...vendor,
+            idOrigin: vendor.idOrigin.id
+        }
+        const insert = await vendorDao.insert(newVendor)
         /** INSERT ADDRESSES**/
 
         vendorDao.multipleAccess(addresses, vendorDao.AddressDao, insert.insertId, 'idVendor')
@@ -76,7 +80,11 @@ exports.update = async (req, res) => {
 
         delete vendor.addresses
         delete vendor.contacts
-        vendorDao.update(vendor)
+        const newVendor = {
+            ...vendor,
+            idOrigin: vendor.idOrigin.id
+        }
+        vendorDao.update(newVendor)
         /** UPDATE ADDRESSES**/
         vendorDao.multipleAccess(addresses, vendorDao.AddressDao, vendor.id, 'idVendor')
         /** UPDATE CONTACT PERSONS**/

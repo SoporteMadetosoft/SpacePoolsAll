@@ -30,7 +30,6 @@ class CanvasDao extends GenericDao{
 
                         customerData.push(await this.mountObj(canvasItem))
                     }
-                    console.log(customerData)
                     resolve(customerData)
                 }
             })

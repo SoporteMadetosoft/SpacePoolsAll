@@ -5,7 +5,7 @@ import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 import { handleCleanUp } from '../../../redux/actions/fileUpload'
-import { GetSetNextId, handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController } from '../../../redux/actions/normalForm'
 import { save } from '../../../utility/helpers/Axios/save'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
@@ -67,7 +67,6 @@ export const ItemForm = () => {
     }
 
     const submit = async () => {
-        console.log('--------------------------________________________')
         const prettyForm = {
             ...form,
             idVendor: exceptionController(form.idVendor),

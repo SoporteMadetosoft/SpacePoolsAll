@@ -85,3 +85,16 @@ exports.update = (req, res) => {
         return res.status(500).send(error)
     }
 }
+
+exports.findNId= async (req, res) => {
+    try {
+       
+        res.json({ 
+            ok: true,
+            data: await  vehicleDao.findAutoincrementID()
+         })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}

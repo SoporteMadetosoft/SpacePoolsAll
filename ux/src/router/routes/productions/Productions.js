@@ -1,4 +1,5 @@
 import { OrderFormScreen } from '../../../views/orders/OrderFormScreen'
+import { ProductionFormScreen } from '../../../views/productions/ProductionFormScreen'
 import { ProductionScreenList } from '../../../views/productions/ProductionScreenList'
  
 const ProductionRoutes = [
@@ -10,12 +11,12 @@ const ProductionRoutes = [
   {
     path: '/production/add',
     exact: true,
-    component: () => <OrderFormScreen />
+    component: () => <ProductionFormScreen />
   },
   {
     path: '/production/edit/:id',
     exact: true,
-    component: () => <OrderFormScreen />
+    component: () => <ProductionFormScreen />
   }
 ]
 

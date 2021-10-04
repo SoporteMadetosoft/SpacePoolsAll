@@ -57,7 +57,6 @@ const ItemsForm = ({ position }) => {
     const decreaseCount = () => {
         dispatch(handleLessPrice(position))
         dispatch(removeRepeaterRegister('baseItems', position))
-        console.log(position)
     }
 
     return (

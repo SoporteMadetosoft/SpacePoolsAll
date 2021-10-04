@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { handleChangeController, handleCleanSection, setIdInXCode } from '../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController, handleCleanSection } from '../../../redux/actions/normalForm'
 import ReactSelect from 'react-select'
 
 
@@ -31,7 +31,7 @@ export const PurchaseForm = () => {
     const { normalForm, selectReducer } = useSelector(state => state)
     useEffect(() => {
         if (normalForm.id === undefined) {
-            dispatch(setIdInXCode("Purchases","purchaseCode"))
+            dispatch(GetSetNextId("Purchases", 'purchaseCode'))
         } else purchaseCode = normalForm.id
     }, [])
 

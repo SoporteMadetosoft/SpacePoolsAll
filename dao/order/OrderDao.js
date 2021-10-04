@@ -27,7 +27,6 @@ class OrderDao extends GenericDao {
 
     async mountObj(data) {
         //const customerId = await this.CustomerDao.findById(data.customerId)
-        
         const order = {
             ...data,
             customerData: await this.CustomerDataDao.findByOrderId(data.id),
@@ -67,7 +66,7 @@ class OrderDao extends GenericDao {
         const newDliveryDate = this.datetimeToEuropeDate(deliveryDate)
 
         const nObj = {id:id, deliveryTime: deliverySchedulerStart+" - "+deliverySchedulerEnd, orderCode: orderCode, customerName: customerName, customerPhone: customerPhone, customerEmail: customerEmail, orderDate: newOrderDate, deliveryDate:newDliveryDate, price:price }
-     
+    
         return nObj
     }  
 

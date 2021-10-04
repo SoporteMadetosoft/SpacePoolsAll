@@ -16,10 +16,10 @@ const initialState2 = {
         {id:null, idElemento: 1, name: 'Skimmer 2', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
         {id:null, idElemento: 1, name: 'Skimmer 2', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
         {id:null, idElemento: 1, name: 'Skimmer 2', x: (wWidth / 15), y: ((wHeight / 12) * 1), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/A.b56ce9d9.png" },
-        {id:null, idElemento: 1, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 1, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 1, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 1, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 2, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
         {id:null, idElemento: 2, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
         {id:null, idElemento: 2, name: 'Luz 1', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
         {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
@@ -28,18 +28,18 @@ const initialState2 = {
         {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
         {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
         {id:null, idElemento: 2, name: 'Luz 2', x: (wWidth / 15), y: ((wHeight / 12) * 2), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 2, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
-        {id:null, idElemento: 2, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" }
+        {id:null, idElemento: 3, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 3, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 3, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 3, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 3, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 3, name: 'NCC', x: (wWidth / 15), y: ((wHeight / 12) * 3), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 4, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 4, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 4, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 4, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 4, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" },
+        {id:null, idElemento: 4, name: 'Balneo 1', x: (wWidth / 15), y: ((wHeight / 12) * 4), width: 50, height: 50, isDragging: false, imgUrl: "/static/media/D.6c8a846f.png" }
     ]
 }
 
@@ -48,7 +48,6 @@ const initialState = { ...initialState2}
 const canvasReducer = (state = { ...initialState }, action) => {
     switch (action.type) {
         case canvasTypes.LoadElement:
-            console.log('LoadElement')
             const key1 = action.payload.key
             const position1 = action.payload.position
             const structure1 = action.payload.structure
@@ -80,10 +79,10 @@ const canvasReducer = (state = { ...initialState }, action) => {
                 y: obj.y
             }
 
-            console.log({
-                ...newState,
-                [key]: [...newState[key]]
-            })
+           // console.log({
+           //     ...newState,
+           //     [key]: [...newState[key]]
+           // })
             return {
                 ...newState,
                 [key]: [...newState[key]]

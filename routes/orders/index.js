@@ -11,6 +11,7 @@ router.post('/insert', ControllerOrder.insert);
 router.put('/update', ControllerOrder.update);
 router.delete('/delete/:id', ControllerOrder.delete);
 router.post('/find', ControllerOrder.listByID);
+router.get('/findnid', ControllerOrder.findNId)
 
 router.get('/customerData/list', ControllerCustomerData.list);
 router.post('/customerData/insert', ControllerCustomerData.insert);

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { useForm } from 'react-hook-form'
-import { handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
+import { handleChangeController, GetSetNextId } from '../../../redux/actions/normalForm'
 
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -18,7 +18,6 @@ import { exceptionController } from '../../../utility/helpers/undefinedException
 import { save } from '../../../utility/helpers/Axios/save'
 
 const ValidationSchema = yup.object().shape({
-    vendorCode: yup.number().required(),
     CIF: yup.string().required()
 })
 
@@ -44,7 +43,8 @@ export const VendorsForm = () => {
 
     useEffect(() => {
         if (normalForm.id === undefined) {
-            dispatch(setIdInXCode("Vendors","vendorCode"))
+            dispatch(GetSetNextId("Vendors","vendorCode"))
+            
         } else vendorCode = normalForm.id
 
     }, [])
@@ -101,7 +101,7 @@ export const VendorsForm = () => {
                         <Input name="phone" placeholder="Teléfono" label="Teléfono" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="email" type="email" placeholder="Correo electrónico" label="Correo electrónico" />
+                        <Input name="email" placeholder="Correo electrónico" label="Correo electrónico" />
                     </div>
                     <div className="col-md-3">
                         <Select name="idPaymentMethod" label="Forma de pago" endpoint="PaymentMethods" />

@@ -77,7 +77,7 @@ const AddressesForm = ({ position }) => {
     }
 
     const handleInputChange = ({ target }) => {
-
+        console.log(target)
         const obj = {
             name: target.name,
             value: target.value

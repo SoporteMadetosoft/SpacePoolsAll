@@ -12,7 +12,7 @@ import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/act
 
 const formStructure = {
     idItem: '',
-    cantidad: '1',
+    quantity: '1',
     coste: 0
 }
 
@@ -61,7 +61,7 @@ const ItemsForm = ({ position }) => {
 
     const { normalForm, selectReducer } = useSelector(state => state)
     const { Items } = selectReducer
-    const { idItem, cantidad } = normalForm.items[position]
+    const { idItem, quantity } = normalForm.items[position]
     const SelectValue = idItem.name ? deconstructSelect(idItem) : null
 
     const decreaseCount = () => {
@@ -74,13 +74,8 @@ const ItemsForm = ({ position }) => {
             name: target.name,
             value: target.value
         }
-        dispatch(
-            editRepeaterRegister('items', position, obj)
-        )
-        dispatch(
-
-            handleSearchOutID2('Items', position, 'items')
-            )
+        dispatch(editRepeaterRegister('items', position, obj))
+        dispatch(handleSearchOutID2('Items', position, 'items','raws','items'))
     }
 
 
@@ -90,13 +85,8 @@ const ItemsForm = ({ position }) => {
             name: key,
             value: el
         }
-        dispatch(
-            editRepeaterRegister('items', position, obj)
-        )
-        dispatch(
-
-            handleSearchOutID2('Items', position, 'items')
-            )
+        dispatch(editRepeaterRegister('items', position, obj))
+        dispatch(handleSearchOutID2('Items', position, 'items','raws','items'))
     }
     return (
 
@@ -116,10 +106,10 @@ const ItemsForm = ({ position }) => {
 
                 <input
                     type="number"
-                    name="cantidad"
+                    name="quantity"
                     className="form-control"
                     onChange={handleInputChange}
-                    value={cantidad} />
+                    value={quantity} />
             </div>
             <div className="col-md-2 ">
                 <Button.Ripple className='btn-icon form-control mt-2 btn-sm' color='danger' outline onClick={decreaseCount}>

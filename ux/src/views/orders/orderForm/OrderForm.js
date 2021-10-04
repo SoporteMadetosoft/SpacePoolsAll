@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { handleChangeController, setIdInXCode } from '../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController } from '../../../redux/actions/normalForm'
 import React, { useEffect } from 'react'
 import ReactSelect from 'react-select'
 import { ItemsRepeater } from './ItemsRepeater'
@@ -10,16 +10,21 @@ import { Select } from '../../../components/form/inputs/Select'
 import { OrderCanvas } from './OrderCanvas'
 
 import { startAddSelectOptions } from '../../../redux/actions/selects'
-import { createItemRepeatersByPool, handleAddCost, handleAugmentIdTemporary, handleCalculateTotalCost, handleCalcuteTotalPrice } from '../../../redux/actions/orders'
+import { createItemRepeatersByPool, handleAddCost, handleCalculateTotalCost } from '../../../redux/actions/orders'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { handleCleanCanvas } from '../../../redux/actions/canvas'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from "yup"
 
-
+//const ValidationSchema = yup.object().shape({
+//    idPool: yup.string().required()
+//})
 
 export const OrderForm = () => {
+    //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
-    const { idTemporary } = useSelector(state => state.ordersReducer)
-    let { price } = useSelector(state => state.ordersReducer)
+    const { price } = useSelector(state => state.ordersReducer)
 
     let { orderCode } = useSelector(state => state.normalForm)
 
@@ -40,7 +45,6 @@ export const OrderForm = () => {
 
    
     const handleInputChange = ({ target }) => {
-        console.log(target)
         dispatch(handleChangeController(target.name, target.value))
     }
 
@@ -49,12 +53,12 @@ export const OrderForm = () => {
         dispatch(startAddSelectOptions('Taxes', 'taxesOpt'))
 
         if (normalForm.id === undefined) {
-            dispatch(setIdInXCode("Orders", "orderCode"))
+            dispatch(GetSetNextId("Orders", 'orderCode'))
         } else orderCode = normalForm.id
 
         if (normalForm.price) {
-            price = normalForm.price
-            dispatch(handleAddCost(price))
+          //  price = normalForm.price
+          //  dispatch(handleAddCost(price))
         }
     }, [])
 
@@ -63,7 +67,8 @@ export const OrderForm = () => {
     }
 
     const setPoolInRedux = (obj) => {
-         dispatch(createItemRepeatersByPool(obj.value, idTemporary))
+        console.log("setpoolinreduxcon id ", obj.value)
+        dispatch(createItemRepeatersByPool(obj.value))
         dispatch(handleChangeController("idPool", { id: obj.value, name: obj.label }))
         preparePrice()
 

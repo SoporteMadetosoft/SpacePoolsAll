@@ -4,6 +4,7 @@ const globalEndpoints = {
     Language: '/global/language',
     Mode: '/global/mode',
     Status: '/global/status',
+    ProductionStatus: '/global/productionStatus',
     PayDay: '/global/payday'
 }
 

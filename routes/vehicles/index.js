@@ -11,6 +11,7 @@ router.post('/insert', ControllerVehicle.insert);
 router.put('/update', ControllerVehicle.update);
 router.delete('/delete/:id', ControllerVehicle.delete);
 router.post('/find', ControllerVehicle.listByID);
+router.get('/findnid', ControllerVehicle.findNId)
 
 router.get('/repair/list', ControllerRepair.list);
 router.post('/repair/insert', ControllerRepair.insert);

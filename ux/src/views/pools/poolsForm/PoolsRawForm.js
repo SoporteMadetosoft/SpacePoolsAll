@@ -13,7 +13,7 @@ import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/act
 
 const formStructure = {
     idItem: '',
-    cantidad: '1',
+    quantity: '1',
     coste: 0
 }
 
@@ -63,7 +63,7 @@ const ItemsForm = ({ position }) => {
     const { normalForm, selectReducer } = useSelector(state => state)
     const { Raws } = selectReducer
 
-    const { idItem, cantidad } = normalForm.raws[position]
+    const { idItem, quantity } = normalForm.raws[position]
 
     const SelectValue = idItem.name ? deconstructSelect(idItem) : null
 
@@ -74,34 +74,24 @@ const ItemsForm = ({ position }) => {
     }
 
     const handleInputChange = ({ target }) => {
-
         const obj = {
             name: target.name,
             value: target.value
         }
-
         dispatch(editRepeaterRegister('raws', position, obj))
-
-        dispatch(
-            handleSearchOutID2('Items', position, 'raws')
-            )
+        dispatch(handleSearchOutID2('Items', position, 'raws','raws','items'))
+       // dispatch(handleCalculateTotalCost("items", "raws",1))
     }
     
 
     const handleSelectChange = (key, element) => {
         const el = constructSelect(element)
-
         const obj = {
             name: key,
             value: el
         }
-
-        dispatch(
-            editRepeaterRegister('raws', position, obj)
-        )
-        dispatch(
-            handleSearchOutID2('Items', position, 'raws')
-            )
+        dispatch(editRepeaterRegister('raws', position, obj))
+        dispatch(handleSearchOutID2('Items', position, 'raws', 'raws','items'))
 
     }
     return (
@@ -120,10 +110,10 @@ const ItemsForm = ({ position }) => {
                 <label className="control-label">Cantidad</label>
                 <input
                     type="number"
-                    name="cantidad"
+                    name="quantity"
                     className="form-control"
                     onChange={handleInputChange}
-                    value={cantidad} />
+                    value={quantity} />
             </div>
 
             <div className="col-md-2 ">

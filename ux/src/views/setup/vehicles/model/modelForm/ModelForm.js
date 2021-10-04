@@ -81,9 +81,7 @@ export const ModelForm = () => {
                             placeholder="Marca"
                             onChange={handleSelectChange}
                         />
-                        {errors && errors.valueBrand && (
-                            <>
-                                <InputValid
+                         <InputValid
                                     id="valueBrand"
                                     name="valueBrand"
                                     tabIndex={-1}
@@ -94,6 +92,9 @@ export const ModelForm = () => {
                                     style={{ opacity: 0, height: 0, position: 'absolute' }}
                                     onChange={handleInputChange}
                                 />
+                        {errors && errors.valueBrand && (
+                            <>
+                           
                                 <FormFeedback>Marca requerida</FormFeedback>
                             </>
                         )}

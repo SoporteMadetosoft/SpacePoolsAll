@@ -13,9 +13,10 @@ class ProductionDao extends GenericDao {
     async mountObj(data) {
         const production = {
             ...data,
+            orderData : await this.OrderDao.mountObj(await this.OrderDao.findOrderById(data.idOrder)),
 
         }
-        return new Production(production)
+        return production
     }
 
     async mountList(data) {
@@ -47,7 +48,6 @@ class ProductionDao extends GenericDao {
             observations: observations,
             isStarted: isStarted
         }
-
         return nObj
     }
 

@@ -13,7 +13,7 @@ class ProductionDao extends GenericDao {
     async mountObj(data) {
         const production = {
             ...data,
-            orderData : await this.OrderDao.mountObj(await this.OrderDao.findOrderById(data.idOrder)),
+            orderData: await this.OrderDao.mountObj(await this.OrderDao.findOrderById(data.idOrder)),
 
         }
         return production
@@ -33,12 +33,12 @@ class ProductionDao extends GenericDao {
             pools: pool != undefined ? pool.fabricationName : ''
 
         }
-        const { id, orderCode, pools, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd, observations, isStarted} = list
+        const { id, orderCode, pools, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd, observations, isStarted } = list
 
         const newOrderDate = this.datetimeToEuropeDate(orderDate)
         const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)
 
-        const nObj = { 
+        const nObj = {
             id: id,
             orderCode: orderCode,
             pool: pools,

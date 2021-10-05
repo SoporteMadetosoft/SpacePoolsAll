@@ -1,5 +1,5 @@
 class Trailer {
-    // repairs = []
+    repairs = []
     #table = 'trailer'
 
     constructor({
@@ -18,7 +18,7 @@ class Trailer {
         observations,
         filePath,
         idStatus,
-        // repairs = [],
+        repairs = [],
         documents = []
     }) {
         this.id = id
@@ -35,7 +35,7 @@ class Trailer {
         this.maintenanceDate = maintenanceDate
         this.observations = observations
         this.idStatus = idStatus
-        // this.repairs = repairs
+        this.repairs = repairs
         this.filePath = filePath
         this.documents = documents
     }

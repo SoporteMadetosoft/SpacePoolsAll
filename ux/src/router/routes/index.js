@@ -13,6 +13,8 @@ import OrdersRoutes from './orders/Orders'
 import ProductionsRoutes from './productions/Productions'
 import CalendarRoutes from './calendar/Calendar'
 import TaxesRoutes from './setup/taxes/TaxesRotes'
+import TrailerReparationRoutes from './porters/trailers/tReparation'
+import VehicleReparationRoutes from './porters/vehicles/vReparation'
 
 // ** Document title
 const TemplateTitle = '%s - SpacePools'
@@ -24,7 +26,9 @@ const sRoutes = setupRoutes()
 // ** Merge Routes
 const Routes = [
   ...TrailersRoutes,
+  ...TrailerReparationRoutes,
   ...VehiclesRoutes,
+  ...VehicleReparationRoutes,
   ...VendorsRoutes,
   ...CustomersRoutes,
   ...CarriersRoutes,

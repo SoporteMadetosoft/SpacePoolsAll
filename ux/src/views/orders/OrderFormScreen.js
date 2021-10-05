@@ -82,10 +82,10 @@ export const OrderFormScreen = () => {
         delete form.canvasItems
         const prettyForm = {
             ...form,
-            idTax:  form.idTax !== undefined ? form.idTax.id : 1,            
+            idTax: form.idTax !== undefined ? form.idTax.id : 1,
             idPool: exceptionController(form.idPool),
             idCustomer: exceptionController(form.idCustomer),
-            price: inputExceptionController(orders.price) ,
+            price: inputExceptionController(orders.price),
             canvas: canvas.elements,
             customerData: inputExceptionController(customerDataObj),
             production: inputExceptionController(productionObj),
@@ -93,6 +93,7 @@ export const OrderFormScreen = () => {
             extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity })),
             canvas: canvas.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, imageUrl: el.imageUrl }))
         }
+        console.log(prettyForm)
         save('Orders', id, prettyForm)
         dispatch(handleCleanUp())
         history.push('/orders')

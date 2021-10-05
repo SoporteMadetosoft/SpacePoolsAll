@@ -12,12 +12,12 @@ const TrailerDao = require("../trailer/TrailerDao");
 class VehicleDao extends SetupDao {
     constructor() {
         super(Vehicle);
-        // this.RepairDao = new RepairDao()
-       this.StatusDao = new StatusDao()
-       this.ModelDao = new BrandModelDao()
-       this.CarrierDao = new CarrierDao()
-       this.TrailerDao = new TrailerDao()
-       this.FileManagerDao = new FileManagerDao(VehicleDocumentsDao)
+        this.RepairDao = new RepairDao()
+        this.StatusDao = new StatusDao()
+        this.ModelDao = new BrandModelDao()
+        this.CarrierDao = new CarrierDao()
+        this.TrailerDao = new TrailerDao()
+        this.FileManagerDao = new FileManagerDao(VehicleDocumentsDao)
     }
 
     async mountObj(data) {
@@ -41,12 +41,13 @@ class VehicleDao extends SetupDao {
         const list = {
             ...data,
             idCarrier: name,
-            ITVdate: this.datetimeToEuropeDate(data.ITVdate)
+            ITVdate: this.datetimeToEuropeDate(data.ITVdate),
+            repairs: await this.RepairDao.findByVehicleId(data.id)
 
         }
-        
-        const { id, vehicleCode, plate, idCarrier, frameNumber, ITVdate } = list
-        const nObj = { id, vehicleCode, plate, idCarrier, frameNumber, ITVdate }
+
+        const { id, vehicleCode, plate, idCarrier, frameNumber, ITVdate, repairs } = list
+        const nObj = { id, vehicleCode, plate, idCarrier, frameNumber, ITVdate, repairs }
         return nObj
     }
 }

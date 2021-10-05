@@ -1,13 +1,16 @@
-import { FileText, MoreVertical, Tool, Trash } from "react-feather"
+import { FileText, MoreVertical, Trash } from "react-feather"
 import { useDispatch } from "react-redux"
+import { useParams } from 'react-router'
+
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
 import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
-import { startDeleteRegister } from "@redux/actions/custom"
+import { startDeleteRepairRegister } from "../../../redux/actions/custom"
+
 import { Link } from "react-router-dom"
 
-export const trailersList = [
+export const vRepairList = [
     {
         name: 'Nº',
         selector: 'id',
@@ -15,29 +18,29 @@ export const trailersList = [
         width: '8%'
     },
     {
-        name: 'Matrícula del remolque',
-        selector: 'plate',
+        name: 'Fecha',
+        selector: 'date',
         sortable: true,
         searchable: true,
         width: '22%'
     },
     {
-        name: 'Marca',
-        selector: 'brand',
+        name: 'Descripción',
+        selector: 'description',
         sortable: true,
         searchable: true,
         width: '22%'
     },
     {
-        name: 'Modelo',
-        selector: 'model',
+        name: 'Taller',
+        selector: 'garage',
         sortable: true,
         searchable: true,
         width: '22%'
     },
     {
-        name: 'Fecha de ITV',
-        selector: 'ITVdate',
+        name: 'Coste',
+        selector: 'cost',
         sortable: true,
         searchable: true,
         width: '22%'
@@ -45,9 +48,10 @@ export const trailersList = [
     {
         name: '',
         width: '5%',
-        cell: (row, index) => {
+        cell: row => {
 
             const dispatch = useDispatch()
+            const { id } = useParams()
 
             return (
                 <div className='d-flex'>
@@ -56,20 +60,15 @@ export const trailersList = [
                             <MoreVertical size={15} />
                         </DropdownToggle>
                         <DropdownMenu right>
-                            <Link to={`./trailers/edit/${row.id}`}>
+                            <Link to={`./${id}/edit/${row.id}`}>
                                 <DropdownItem tag='a' href='/' className='w-100'>
                                     <FileText size={15} />
                                     <span className='align-middle ml-50'>Detalles</span>
                                 </DropdownItem>
                             </Link>
-                            <Link to={`./trailers/tReparation/${index}`}>
-                                <DropdownItem tag='a' href='/' className='w-100'>
-                                    <Tool size={15} />
-                                    <span className='align-middle ml-50'>Reparaciones</span>
-                                </DropdownItem>
-                            </Link>
+
                             <Link onClick={(e) => {
-                                dispatch(startDeleteRegister(row.id))
+                                dispatch(startDeleteRepairRegister(row.id, id, 'VRepair'))
                             }}>
                                 <DropdownItem tag='a' href='/' className='w-100'>
                                     <Trash size={15} />

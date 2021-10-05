@@ -27,6 +27,10 @@ export const AddressesTypesList = [
     width: '5%',
     cell: row => {
 
+      if (row.id === 1) {
+        return
+      }
+
       const dispatch = useDispatch()
 
       return (

@@ -54,6 +54,7 @@ exports.insert = async (req, res) => {
         delete pool.raws
 
         const insert = await poolDao.insert(pool)
+
         poolDao.multipleAccess(items, poolDao.PoolItemsDao, insert.insertId, 'idPool')
         poolDao.multipleAccess(raws, poolDao.PoolItemsDao, insert.insertId, 'idPool')
 
@@ -86,13 +87,13 @@ exports.update = async (req, res) => {
     }
 }
 
-exports.findNId= async (req, res) => {
+exports.findNId = async (req, res) => {
     try {
-       
-        res.json({ 
+
+        res.json({
             ok: true,
-            data: await  poolDao.findAutoincrementID()
-         })
+            data: await poolDao.findAutoincrementID()
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

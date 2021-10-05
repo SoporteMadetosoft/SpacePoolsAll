@@ -38,7 +38,9 @@ export const endPoints = {
 
     Carriers: '/carriers',
     Vehicles: '/vehicles',
+    VRepair: '/vehicles/repair',
     Trailers: '/trailers',
+    TRepair: '/trailers/repair',
 
     Purchases: '/purchases',
 

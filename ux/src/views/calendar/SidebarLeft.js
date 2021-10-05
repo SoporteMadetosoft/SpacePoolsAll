@@ -7,7 +7,7 @@ import { CardBody, Button, CustomInput } from 'reactstrap'
 
 // ** Filters Checkbox Array
 const filters = [
-  { label: 'Producción', color: 'primary', className: 'custom-control-primary mb-1' },
+  { label: 'Producción', color: 'info', className: 'custom-control-info mb-1' },
   { label: 'Entrega', color: 'success', className: 'custom-control-success mb-1' }
 ]
 

@@ -16,5 +16,6 @@ router.post('/repair/insert', ControllerRepair.insert);
 router.put('/repair/update', ControllerRepair.update);
 router.delete('/repair/delete/:id', ControllerRepair.delete);
 router.post('/repair/find', ControllerRepair.listByID);
+router.get('/repair/findnid', ControllerRepair.findNId);
 
 module.exports = router;

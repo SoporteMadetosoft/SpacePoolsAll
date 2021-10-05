@@ -66,3 +66,17 @@ exports.update = (req, res) => {
         return res.status(500).send(error)
     }
 }
+
+exports.findNId = async (req, res) => {
+    console.log('A')
+    try {
+
+        res.json({
+            ok: true,
+            data: await repairDao.findAutoincrementID()
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}

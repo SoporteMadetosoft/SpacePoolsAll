@@ -1,4 +1,4 @@
-import { FileText, MoreVertical, Trash } from "react-feather"
+import { FileText, MoreVertical, Tool, Trash } from "react-feather"
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
@@ -46,7 +46,7 @@ export const vehiclesList = [
   {
     name: '',
     width: '5%',
-    cell: row => {
+    cell: (row, index) => {
 
       const dispatch = useDispatch()
 
@@ -61,6 +61,12 @@ export const vehiclesList = [
                 <DropdownItem tag='a' href='/' className='w-100'>
                   <FileText size={15} />
                   <span className='align-middle ml-50'>Detalles</span>
+                </DropdownItem>
+              </Link>
+              <Link to={`./vehicles/vReparation/${index}`}>
+                <DropdownItem tag='a' href='/' className='w-100'>
+                  <Tool size={15} />
+                  <span className='align-middle ml-50'>Reparaciones</span>
                 </DropdownItem>
               </Link>
               <Link onClick={(e) => {

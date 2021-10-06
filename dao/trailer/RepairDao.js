@@ -5,12 +5,11 @@ class RepairDao extends GenericDao {
 
     constructor() {
         super(Repair);
-
     }
 
     findByTrailerId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM trailer_repair WHERE trailerId = ?', [id], async (err, result) => {
+            this.db.query('SELECT * FROM trailer_repair WHERE idTrailer = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -28,20 +27,12 @@ class RepairDao extends GenericDao {
     }
 
     async mountObj(data) {
+
         const repair = {
-            ...data
+            ...data,
+            date: this.datetimeToDate(data.date)
         }
         return new Repair(repair)
-    }
-
-    async mountList(data) {
-        const list = {
-            ...data,
-        }
-
-        const { date, description, garage } = list
-        const nObj = { date: date, description: description, garage: garage }
-        return nObj
     }
 }
 module.exports = RepairDao

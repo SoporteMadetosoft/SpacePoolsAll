@@ -3,14 +3,14 @@ class Repair {
 
     constructor({
         id,
-        vehicleId,
+        idVehicle,
         date,
         description,
         garage,
         cost
     }) {
         this.id = id
-        this.vehicleId = vehicleId
+        this.idVehicle = idVehicle
         this.date = date
         this.description = description
         this.garage = garage

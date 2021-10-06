@@ -34,7 +34,7 @@ export const ProductionFormScreen = () => {
     const canvasItems = useSelector(state => state.normalForm.canvasItems)
 
     const idOrder = form['orderData'] ? form['orderData'].id : ''
-    
+
     useEffect(() => {
 
         if (id) {
@@ -47,8 +47,6 @@ export const ProductionFormScreen = () => {
 
     useEffect(() => {
         if (id) {
-            ////// el id debe de ser con el idOrder en vez de con el id de la producion
-            ////// cambiado eso debería de funcionar el canvas correctamente
             dispatch(getCItemsByOrderId('Orders', idOrder))
         } else {
             dispatch(setInitialCanvas())
@@ -57,7 +55,7 @@ export const ProductionFormScreen = () => {
     }, [form])
 
 
-    const title = (id) ? 'Editar Pedido' : 'Añadir Pedido'
+    const title = (id) ? 'Ver Producción' : ''
     const customerName = form.ordercod ? form.idOrder : title
 
     const handleSubmit = async (e) => {

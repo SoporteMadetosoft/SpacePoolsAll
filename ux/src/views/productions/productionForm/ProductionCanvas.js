@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Stage, Layer, Image, Rect } from 'react-konva'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import { editDropedElement, setInitialCanvas, setNewCanvasPosition } from '../../../redux/actions/canvas'
 
 
 export const ProductionCanvas = () => {
-    const dispatch = useDispatch()
 
     const { id } = useParams()
-  
+
     const { elements: elem } = useSelector(state => state.canvasReducer)
 
     return (
@@ -43,7 +41,7 @@ export const ProductionCanvas = () => {
                                 innerRadius={20}
                                 outerRadius={40}
                                 opacity={0.8}
-                                draggable = {false}
+                                draggable={false}
                                 scaleX={el.isDragging ? 1.2 : 1}
                                 scaleY={el.isDragging ? 1.2 : 1}
                                 imgUrl={el.imgUrl}

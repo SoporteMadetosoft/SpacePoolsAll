@@ -59,7 +59,7 @@ export const carriersList = [
       return (
         <>
 
-          {row.idStatus === 'Activo' ?
+          {row.idStatus === 2 ?
             (<Badge color='light-success'>
               Activo
             </Badge>)

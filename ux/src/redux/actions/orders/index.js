@@ -163,3 +163,19 @@ export const catchAndSetPrice = (numE) => {
 
 }
 
+export const handleFillCustomerData = (idCustomer) => {
+    return async (dispatch, getState) => {
+        const customerData = await getFormData("Customers", idCustomer)
+        // console.log(customerData)
+        customerData['addresses'].map(
+            elements => {
+                if (elements.addressType.id === 1) {
+                    dispatch(handleChangeController('deliveryAddress', elements.address))
+                }
+            }
+        )
+        dispatch(handleChangeController('phone', customerData['phone']))
+        dispatch(handleChangeController('email', customerData['email']))
+
+    }
+}

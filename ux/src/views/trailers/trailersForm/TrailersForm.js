@@ -45,7 +45,7 @@ const placeholderStyles = {
 
 export const TrailersForm = () => {
 
-    let {trailerCode} = useSelector(state =>  state.normalForm)
+    let { trailerCode } = useSelector(state => state.normalForm)
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -73,13 +73,10 @@ export const TrailersForm = () => {
         }
     }
     useEffect(() => {
-        if (id) {
-            dispatch(handleStartEditing('Trailers', id))
-        }
         dispatch(startAddSelectOptions('Brand', 'Brand'))
         dispatch(startAddSelectOptions('Model', 'Model'))
         if (normalForm.id === undefined) {
-            dispatch(GetSetNextId("Trailers",'trailerCode'))
+            dispatch(GetSetNextId("Trailers", 'trailerCode'))
         } else trailerCode = normalForm.id
     }, [])
 
@@ -153,13 +150,13 @@ export const TrailersForm = () => {
             <div className="card">
                 <div className="row card-body">
                     <div className="col-md-3">
-                    <label className="control-label">Nº Remolque</label>
+                        <label className="control-label">Nº Remolque</label>
                         <input
-                        className={`form-control`}
-                        name="trailerCode"
-                        value={trailerCode}
-                        readOnly
-                    />
+                            className={`form-control`}
+                            name="trailerCode"
+                            value={trailerCode}
+                            readOnly
+                        />
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">Matrícula del remolque</label>
@@ -203,17 +200,17 @@ export const TrailersForm = () => {
                             placeholder="Modelo"
                             onChange={handleSelectChange}
                         />
-                         <InputValid
-                                    id="valueModel"
-                                    name="valueModel"
-                                    tabIndex={-1}
-                                    autoComplete="off"
-                                    value={valueModel}
-                                    innerRef={register({ required: true })}
-                                    invalid={errors.valueModel && true}
-                                    style={{ opacity: 0, height: 0, position: 'absolute' }}
-                                    onChange={handleInputChange}
-                                />
+                        <InputValid
+                            id="valueModel"
+                            name="valueModel"
+                            tabIndex={-1}
+                            autoComplete="off"
+                            value={valueModel}
+                            innerRef={register({ required: true })}
+                            invalid={errors.valueModel && true}
+                            style={{ opacity: 0, height: 0, position: 'absolute' }}
+                            onChange={handleInputChange}
+                        />
                         {errors && errors.valueModel && (
                             <>
                                 <FormFeedback>Modelo requerido</FormFeedback>

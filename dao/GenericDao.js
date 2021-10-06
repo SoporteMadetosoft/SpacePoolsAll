@@ -153,9 +153,9 @@ class GenericDao {
         }
     }
 
-    findAutoincrementID(){
+    findAutoincrementID() {
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "alphasfp" AND TABLE_NAME = ?`, [this.auxModel.table], async (err, result) => {
+            this.db.query(`SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?`, [process.env.DB_NAME, this.auxModel.table], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

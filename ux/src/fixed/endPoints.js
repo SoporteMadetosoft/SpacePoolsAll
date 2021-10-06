@@ -5,6 +5,7 @@ const globalEndpoints = {
     Mode: '/global/mode',
     Status: '/global/status',
     ProductionStatus: '/global/productionStatus',
+    PurchaseStatus: '/global/purchaseStatus',
     PayDay: '/global/payday'
 }
 
@@ -38,7 +39,9 @@ export const endPoints = {
 
     Carriers: '/carriers',
     Vehicles: '/vehicles',
+    VRepair: '/vehicles/repair',
     Trailers: '/trailers',
+    TRepair: '/trailers/repair',
 
     Purchases: '/purchases',
 

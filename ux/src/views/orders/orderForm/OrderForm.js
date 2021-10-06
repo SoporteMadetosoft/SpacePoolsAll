@@ -10,7 +10,7 @@ import { Select } from '../../../components/form/inputs/Select'
 import { OrderCanvas } from './OrderCanvas'
 
 import { startAddSelectOptions } from '../../../redux/actions/selects'
-import { createItemRepeatersByPool, handleAddCost, handleCalculateTotalCost } from '../../../redux/actions/orders'
+import { createItemRepeatersByPool, handleAddCost, handleCalculateTotalCost, handleFillCustomerData } from '../../../redux/actions/orders'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { handleCleanCanvas } from '../../../redux/actions/canvas'
 import { useForm } from 'react-hook-form'
@@ -31,34 +31,35 @@ export const OrderForm = () => {
     const dispatch = useDispatch()
 
     const { normalForm, selectReducer } = useSelector(state => state)
-    const { poolsOpt, taxesOpt } = selectReducer
+    const { poolsOpt, taxesOpt, Customers } = selectReducer
     const { observations } = normalForm
 
 
     const idTax = normalForm['idTax'] ? deconstructSelect(normalForm['idTax']) : ''
     const idPool = normalForm['idPool'] ? deconstructSelect(normalForm['idPool']) : ''
+    const idCustomer = normalForm['idCustomer'] ? deconstructSelect(normalForm['idCustomer']) : ''
 
-
-    const {
-        idVendor
-    } = selectReducer
-
-   
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
+    }
+
+    const handleSelectChange = (name, { value, label }) => {
+        dispatch(handleChangeController(name, { id: value, name: label }))
+        dispatch(handleFillCustomerData(value))
     }
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Pools', 'poolsOpt', 'fabricationName'))
         dispatch(startAddSelectOptions('Taxes', 'taxesOpt'))
+        dispatch(startAddSelectOptions('Customers', 'Customers', 'comercialName'))
 
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Orders", 'orderCode'))
         } else orderCode = normalForm.id
 
         if (normalForm.price) {
-          //  price = normalForm.price
-          //  dispatch(handleAddCost(price))
+            //  price = normalForm.price
+            //  dispatch(handleAddCost(price))
         }
     }, [])
 
@@ -73,7 +74,7 @@ export const OrderForm = () => {
         preparePrice()
 
     }
-    
+
 
     const setIvaInRedux = (obj) => {
         dispatch(handleChangeController("idTax", { id: obj.value, name: obj.label }))
@@ -95,7 +96,15 @@ export const OrderForm = () => {
                         />
                     </div>
                     <div className="col-md-4">
-                        <Select name="idCustomer" placeholder="Cliente" label="Cliente" endpoint="Customers" labelName="comercialName" />
+                        <label className="control-label">Cliente</label>
+                        <ReactSelect
+                            placeholder="Cliente"
+                            name="idCustomer"
+                            value={idCustomer}
+                            options={Customers}
+                            onChange={(obj) => {
+                                handleSelectChange('idCustomer', obj)
+                            }} />
                     </div>
                     <div className="col-md-2">
                         <Input name="deliveryAddress" placeholder="Dirección de entrega" label="Dirección" />
@@ -124,7 +133,7 @@ export const OrderForm = () => {
 
                         <label className="control-label">IVA</label>
                         <ReactSelect
-                            placeholder="iva"
+                            placeholder="IVA"
                             name="idTax"
                             value={idTax}
                             options={taxesOpt}

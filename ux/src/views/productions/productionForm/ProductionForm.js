@@ -1,28 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { GetSetNextId, handleChangeController } from '../../../redux/actions/normalForm'
 import React, { useEffect } from 'react'
-import ReactSelect from 'react-select'
 import { ItemsRepeater } from './ItemsRepeater'
 import { ExtraItemsRepeater } from './ExtraItemsRepeater'
-import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 
 import { ProductionCanvas } from './ProductionCanvas'
-
 import { startAddSelectOptions } from '../../../redux/actions/selects'
-import { createItemRepeatersByPool, handleAddCost, handleCalculateTotalCost } from '../../../redux/actions/orders'
-import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
-import { handleCleanCanvas } from '../../../redux/actions/canvas'
-import { conditionallyUpdateScrollbar } from 'reactstrap/lib/utils'
-
-
 
 export const ProductionForm = () => {
     const dispatch = useDispatch()
 
-    const { normalForm, selectReducer } = useSelector(state => state)
-    const { poolsOpt, taxesOpt } = selectReducer
-
+    const { normalForm } = useSelector(state => state)
 
     const comercialName = normalForm['orderData'] ? normalForm['orderData']['idCustomer'].comercialName : ''
     const idOrder = normalForm['orderData'] ? normalForm['orderData'].id : ''
@@ -43,18 +31,16 @@ export const ProductionForm = () => {
         dispatch(startAddSelectOptions('Taxes', 'taxesOpt'))
     }, [])
 
-
-
     return (
         <>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                    <label className="control-label">Nº Pedido</label>
+                        <label className="control-label">Nº Pedido</label>
                         <h6> {idOrder} </h6>
                     </div>
-                    <div className="col-md-2">
-                    <label className="control-label">Cliente</label>
+                    <div className="col-md-4">
+                        <label className="control-label">Cliente</label>
                         <h6> {comercialName} </h6>
                     </div>
                     <div className="col-md-2">
@@ -65,7 +51,7 @@ export const ProductionForm = () => {
                         <label className="control-label">Teléfono</label>
                         <h6> {phone} </h6>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                         <label className="control-label">Correo Electrónico</label>
                         <h6> {email} </h6>
                     </div>
@@ -98,7 +84,7 @@ export const ProductionForm = () => {
                         <label className="control-label">Fin de Horario de entrega</label>
                         <h6> {deliverySchedulerEnd} </h6>
                     </div>
-                    <div className="col-md-10">
+                    <div className="col-md-12">
                         <label className="control-label">Observaciones</label>
                         <h6> {observations} </h6>
                     </div>

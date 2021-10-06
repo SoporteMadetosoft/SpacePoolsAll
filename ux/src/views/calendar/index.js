@@ -26,7 +26,7 @@ import '@styles/react/apps/app-calendar.scss'
 
 // ** CalendarColors
 const calendarsColor = {
-  Producción: 'primary',
+  Producción: 'info',
   Entrega: 'success'
 }
 

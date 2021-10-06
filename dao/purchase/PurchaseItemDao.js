@@ -18,7 +18,7 @@ class PurchaseItemDao extends GenericDao {
 
     }
 
-    async mountItem(data){
+    async mountItem(data) {
         const item = {
             idItem: {
                 id: data.idItem.id,
@@ -26,6 +26,7 @@ class PurchaseItemDao extends GenericDao {
             },
             itemType: data.idItem.itemType,
             quantity: data.quantity,
+            recived: data.recived,
             cost: data.idItem.cost,
             stock: data.idItem.stock
         }

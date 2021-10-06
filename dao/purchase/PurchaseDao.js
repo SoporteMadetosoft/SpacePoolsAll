@@ -3,7 +3,7 @@ const GenericDao = require("../GenericDao");
 
 const PurchaseItemDao = require("./PurchaseItemDao");
 const VendorDao = require("../vendor/VendorDao");
-const StatusDao = require("../global/StatusDao");
+const PurchaseStatusDao = require("../global/PurchaseStatusDao");
 
 class PurchaseDao extends GenericDao {
 
@@ -11,13 +11,13 @@ class PurchaseDao extends GenericDao {
         super(Purchase);
         this.PurchaseItemDao = new PurchaseItemDao()
         this.VendorDao = new VendorDao()
-        // this.StatusDao = new StatusDao()
+        this.StatusDao = new PurchaseStatusDao()
     }
 
-    async mountObj(data) {       
+    async mountObj(data) {
         const purchase = {
             ...data,
-            // idStatus: await this.StatusDao.findById(data.idStatus),
+            idStatus: await this.StatusDao.findById(data.idStatus),
             items: await this.PurchaseItemDao.findByPurchaseId(data.id),
             idVendor: await this.VendorDao.findVendorById(data.idVendor),
             purchaseDate: this.datetimeToDate(data.purchaseDate),
@@ -33,12 +33,12 @@ class PurchaseDao extends GenericDao {
             idVendor: vendor != undefined ? vendor.comercialName : ''
         }
 
-        const { id, purchaseCode, idVendor, purchaseDate, deliveryDate, observations } = list
+        const { id, idStatus, purchaseCode, idVendor, purchaseDate, deliveryDate, observations } = list
 
         const newPurchaseDate = this.datetimeToEuropeDate(purchaseDate)
         const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)
 
-        const nObj = { id: id, idVendor: idVendor, purchaseCode: purchaseCode, purchaseDate: newPurchaseDate, observations: observations, deliveryDate: newDeliveryDate }
+        const nObj = { id: id, idStatus: idStatus, idVendor: idVendor, purchaseCode: purchaseCode, purchaseDate: newPurchaseDate, observations: observations, deliveryDate: newDeliveryDate }
         return nObj
     }
 

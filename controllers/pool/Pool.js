@@ -76,6 +76,7 @@ exports.update = async (req, res) => {
 
         delete pool.items
         delete pool.raws
+        delete pool.allItems
 
         await poolDao.update(pool)
         poolDao.multipleAccess(allItems, poolDao.PoolItemsDao, pool.id, 'idPool')

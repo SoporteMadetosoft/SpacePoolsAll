@@ -5,7 +5,7 @@ import { faCube } from '@fortawesome/free-solid-svg-icons'
 export default [
   {
     id: 'stock',
-    title: 'Articulos',
+    title: 'Artículos',
     icon: <FontAwesomeIcon icon={faCube} />,
     children: [
       {

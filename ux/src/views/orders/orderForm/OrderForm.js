@@ -67,7 +67,7 @@ export const OrderForm = () => {
 
     const idTax = normalForm['idTax'] ? deconstructSelect(normalForm['idTax']) : ''
     const idPool = normalForm['idPool'] ? deconstructSelect(normalForm['idPool']) : ''
-    const idCustomer = normalForm['idCustomer'] ? deconstructSelect(normalForm['idCustomer']) : ''
+    const idCustomer = normalForm['idCustomer'] ? deconstructSelect(normalForm['idCustomer'],'comercialName') : ''
     const orderDate2 = normalForm['orderDate'] ? normalForm['orderDate'] : strDate
     const deliveryDate = normalForm['deliveryDate'] ? normalForm['deliveryDate'] : dateNotSelect
 
@@ -245,7 +245,7 @@ export const OrderForm = () => {
             </div>
             <div className="card">
                 <div className="card-body">
-                    {/* <OrderCanvas /> */}
+                    <OrderCanvas />
                 </div>
             </div>
         </>

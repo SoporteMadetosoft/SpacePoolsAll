@@ -6,10 +6,9 @@ import BreadCrumbs from '@components/breadcrumbs'
 import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 
 import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm/index.js'
-import { save } from '../../utility/helpers/Axios/save'
-import { PurchaseForm } from './purchaseForm/PurchaseForm'
 import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
 import { VerifyForm } from './purchaseForm/VerifyForm'
+import { verify } from '../../utility/helpers/Axios/Verify'
 
 const structureForm = {
     items: []
@@ -37,12 +36,19 @@ export const PurchaseVerificationFormScreen = () => {
 
         const prettyForm = {
             ...form,
-            idVendor: exceptionController(form.idVendor),
-            idStatus: exceptionController(form.idStatus),
-            items: form.items.map(item => ({ idItem: exceptionController(item.idItem), quantity: item.quantity }))
+            items: form.items.map(item => {
+                const cantRecived = item.recived2 ? item.recived2 : 0
+
+                return {
+                    id: item.id,
+                    idItem: exceptionController(item.idItem),
+                    quantity: item.quantity - cantRecived,
+                    recived: cantRecived
+                }
+            })
         }
 
-        save('Purchases', id, prettyForm)
+        await verify('Purchases', id, prettyForm)
         history.push('/purchases')
     }
 

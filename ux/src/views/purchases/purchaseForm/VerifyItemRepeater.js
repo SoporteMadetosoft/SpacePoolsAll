@@ -8,6 +8,7 @@ import axios from 'axios'
 
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { addSelectionOnNormalForm } from '../../../redux/actions/items'
+import { editRepeaterRegister } from '../../../redux/actions/normalForm'
 
 
 export const VerifyItemsRepeater = () => {
@@ -49,7 +50,9 @@ const ItemsForm = ({ position }) => {
     const { normalForm } = useSelector(state => state)
 
     const { idVendor } = normalForm
-    const { itemType, idItem, recived, pending, quantity } = normalForm.items[position]
+    const { itemType, idItem, recived, quantity } = normalForm.items[position]
+
+    const cantRecibida = recived ? parseInt(recived) : 0
 
     const idItemValue = idItem ? deconstructSelect(idItem) : null
     const itemTypeValue = itemType ? deconstructSelect(itemType) : null
@@ -61,6 +64,15 @@ const ItemsForm = ({ position }) => {
         }
         const { data: { data } } = await axios.post(`${process.env.REACT_APP_HOST_URI}/items/item/listItems`, { nObj })
         dispatch(addSelectionOnNormalForm('itemsOpt', data.map(option => ({ label: option.name, value: option.id })), 'items', position))
+    }
+
+    const handleInputChange = ({ target }) => {
+        const obj = {
+            name: target.name,
+            value: target.value
+        }
+
+        dispatch(editRepeaterRegister('items', position, obj))
     }
 
     useEffect(() => {
@@ -84,7 +96,7 @@ const ItemsForm = ({ position }) => {
 
             <div className="col-md-2">
                 <label className="control-label">Cantidad pedida</label>
-                <h6>{quantity + recived}</h6>
+                <h6>{quantity + cantRecibida}</h6>
             </div>
             <div className="col-md-2">
                 <label className="control-label">Cantidad pendiente</label>
@@ -94,15 +106,18 @@ const ItemsForm = ({ position }) => {
                 <label className="control-label">Cantidad recibida</label>
                 <input
                     type="number"
-                    name="recived"
+                    name="recived2"
                     className="form-control"
-                    placeholder={recived}
+                    max={quantity}
+                    readonly={
+                        (quantity === 0) ?
+                            ('readonly') :
+                            null
+                    }
+                    placeholder={cantRecibida}
+                    onChange={handleInputChange}
                 />
             </div>
-
-
-
         </div>
-
     )
 }

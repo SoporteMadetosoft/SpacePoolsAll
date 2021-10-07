@@ -79,18 +79,34 @@ export const purchasesList = [
               <MoreVertical size={15} />
             </DropdownToggle>
             <DropdownMenu right>
-              <Link to={`./purchases/edit/${row.id}`}>
-                <DropdownItem tag='a' href='/' className='w-100'>
-                  <FileText size={15} />
-                  <span className='align-middle ml-50'>Detalles</span>
-                </DropdownItem>
-              </Link>
-              <Link to={`./purchases/verify/${row.id}`}>
-                <DropdownItem tag='a' href='/' className='w-100'>
-                  <Check size={15} />
-                  <span className='align-middle ml-50'>Verificar</span>
-                </DropdownItem>
-              </Link>
+              {row.idStatus !== 3 ? (
+                <>
+                  <Link to={`./purchases/edit/${row.id}`}>
+                    <DropdownItem tag='a' href='/' className='w-100'>
+                      <FileText size={15} />
+                      <span className='align-middle ml-50'>Detalles</span>
+                    </DropdownItem>
+                  </Link>
+
+
+                  <Link to={`./purchases/verify/${row.id}`}>
+                    <DropdownItem tag='a' href='/' className='w-100'>
+                      <Check size={15} />
+                      <span className='align-middle ml-50'>Verificar</span>
+                    </DropdownItem>
+                  </Link>
+                </>
+              ) : row.idStatus === 3 ? (
+                <Link to={`./purchases/view/${row.id}`}>
+                  <DropdownItem tag='a' href='/' className='w-100'>
+                    <FileText size={15} />
+                    <span className='align-middle ml-50'>Detalles</span>
+                  </DropdownItem>
+                </Link>
+              )
+                : null
+              }
+
               <Link onClick={(e) => {
                 dispatch(startDeleteRegister(row.id))
               }}>

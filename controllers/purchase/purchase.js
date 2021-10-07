@@ -1,5 +1,7 @@
 const PurchaseDao = require('../../dao/purchase/PurchaseDao')
+const PurchaseItemDao = require('../../dao/purchase/PurchaseItemDao')
 const purchaseDao = new PurchaseDao()
+const purchaseItemDao = new PurchaseItemDao()
 
 
 exports.list = async (req, res) => {
@@ -80,13 +82,36 @@ exports.update = async (req, res) => {
     }
 }
 
-exports.findNId= async (req, res) => {
+exports.verify = async (req, res) => {
     try {
-       
-        res.json({ 
+        /** INSERT PURCAHSE */
+        const purchase = req.body.form
+        const items = req.body.form.items
+
+        delete purchase.items
+
+        items.forEach(async i => {
+            await purchaseItemDao.sumRecived(i.id, i.recived)
+        })
+        // await purchaseDao.multipleAccess(items, purchaseDao.PurchaseItemDao, purchase.id, 'idPurchase')
+
+        await purchaseDao.verify(purchase.id)
+
+
+        res.json({ ok: true })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}
+
+exports.findNId = async (req, res) => {
+    try {
+
+        res.json({
             ok: true,
-            data: await  purchaseDao.findAutoincrementID()
-         })
+            data: await purchaseDao.findAutoincrementID()
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

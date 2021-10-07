@@ -59,6 +59,9 @@ app.use('/orders', require('./routes/orders'));
 //Production Routes
 app.use('/production', require('./routes/production'));
 //-------------------------------------------------------
+//Delivery Routes
+app.use('/delivery', require('./routes/delivery'));
+//-------------------------------------------------------
 //Users Routes
 app.use('/users', require('./routes/users'));
 //-------------------------------------------------------

@@ -1,5 +1,4 @@
 class Vehicles {
-    repairs = []
     #table = 'vehicles'
 
     constructor({
@@ -20,7 +19,7 @@ class Vehicles {
         observations,
         idStatus,
         filePath,
-        repairs = [],
+
         documents = []
     }) {
         this.id = id
@@ -39,7 +38,7 @@ class Vehicles {
         this.tachograph = tachograph
         this.observations = observations
         this.idStatus = idStatus
-        this.repairs = repairs
+
         this.filePath = filePath
         this.documents = documents
     }

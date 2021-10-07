@@ -20,7 +20,7 @@ export const poolsList = [
         selector: 'fabricationName',
         sortable: true,
         searchable: true,
-        width: '87%'
+        width: '88%'
     },
     {
         name: '',

@@ -20,6 +20,7 @@ class PurchaseItemDao extends GenericDao {
 
     async mountItem(data) {
         const item = {
+            id: data.id,
             idItem: {
                 id: data.idItem.id,
                 name: data.idItem.name
@@ -71,6 +72,19 @@ class PurchaseItemDao extends GenericDao {
                     }
 
                     resolve(itemsList)
+                }
+            })
+        })
+    }
+
+    sumRecived(id, recived) {
+        // console.log(`UPDATE purchases_items SET quantity = quantity - ${recived}, recived = recived + ${recived} WHERE id = ${id}`)
+        return new Promise((resolve, reject) => {
+            this.db.query(`UPDATE purchases_items SET quantity = quantity - ${recived}, recived = recived + ${recived} WHERE id = ?`, [id], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve('')
                 }
             })
         })

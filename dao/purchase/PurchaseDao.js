@@ -61,6 +61,25 @@ class PurchaseDao extends GenericDao {
         })
     }
 
+    verify(id) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT SUM(quantity) as PENDING FROM `purchases_items` WHERE idPurchase = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    let objStatus = { id: id }
+                    if (result[0].PENDING === 0 || result[0].PENDING === '0') {
+                        objStatus.idStatus = 3
+                        this.PurchaseItemDao.equalize('quantity', 'recived', 'idPurchase', id)
+                    } else {
+                        objStatus.idStatus = 2
+                    }
+
+                    resolve(this.update(objStatus))
+                }
+            })
+        })
+    }
 }
 
 module.exports = PurchaseDao

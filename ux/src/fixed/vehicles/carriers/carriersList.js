@@ -35,21 +35,21 @@ export const carriersList = [
     selector: 'email',
     sortable: true,
     searchable: true,
-    width: '19%'
+    width: '18%'
   },
   {
     name: 'Teléfono',
     selector: 'phone',
     sortable: true,
     searchable: true,
-    width: '14%'
+    width: '15%'
   },
   {
     name: 'Móvil',
     selector: 'phone2',
     sortable: true,
     searchable: true,
-    width: '14%'
+    width: '15%'
   },
   {
     name: 'Estado',

@@ -15,6 +15,7 @@ import CalendarRoutes from './calendar/Calendar'
 import TaxesRoutes from './setup/taxes/TaxesRotes'
 import TrailerReparationRoutes from './porters/trailers/tReparation'
 import VehicleReparationRoutes from './porters/vehicles/vReparation'
+import DeliveryRoutes from './delivery/Delivery'
 
 // ** Document title
 const TemplateTitle = '%s - SpacePools'
@@ -36,6 +37,7 @@ const Routes = [
   ...PurchasesRoutes,
   ...ItemsRoutes,
   ...OrdersRoutes,
+  ...DeliveryRoutes,
   ...PagesRoutes,
   ...sRoutes,
   ...ProductionsRoutes,

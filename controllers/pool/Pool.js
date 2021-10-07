@@ -50,13 +50,15 @@ exports.insert = async (req, res) => {
         const items = req.body.form.items
         const raws = req.body.form.raws
 
+        const allItems = [...items, ...raws]
+
         delete pool.items
         delete pool.raws
 
-        const insert = await poolDao.insert(pool)
+        console.log(pool)
 
-        poolDao.multipleAccess(items, poolDao.PoolItemsDao, insert.insertId, 'idPool')
-        poolDao.multipleAccess(raws, poolDao.PoolItemsDao, insert.insertId, 'idPool')
+        const insert = await poolDao.insert(pool)
+        poolDao.multipleAccess(allItems, poolDao.PoolItemsDao, insert.insertId, 'idPool')
 
         res.json({ ok: true })
     } catch (error) {

@@ -94,7 +94,20 @@ class GenericDao {
                 if (err) {
                     reject(err)
                 } else {
-                    resolve(result)
+                    resolve('')
+                }
+            });
+        })
+    }
+
+    equalize(param1, param2, controlParam, id) {
+        // console.log(`UPDATE ${this.auxModel.table} SET ${param1} = ${param2} WHERE ${controlParam} =  ${id} `)
+        return new Promise((resolve, reject) => {
+            this.db.query(`UPDATE ?? SET ?? = ?? WHERE ?? =  ? `, [this.auxModel.table, param1, param2, controlParam, id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve('')
                 }
             });
         })

@@ -170,7 +170,7 @@ export const handleFillCustomerData = (idCustomer) => {
         customerData['addresses'].map(
             elements => {
                 if (elements.addressType.id === 1) {
-                    dispatch(handleChangeController('deliveryAddress', elements.address))
+                    dispatch(handleChangeController('deliveryAddress', `${elements.address}, ${elements.population}`))
                 }
             }
         )

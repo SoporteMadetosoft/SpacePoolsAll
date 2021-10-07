@@ -82,7 +82,7 @@ class CustomerDao extends GenericDao {
         })
     }
 
-    findCustomerNameBy(id){
+    findCustomerNameBy(id) {
         return new Promise((resolve, reject) => {
             this.db.query('SELECT comercialName FROM customers WHERE id = ? ', [id], async (err, result) => {
                 if (err) {

@@ -70,7 +70,7 @@ const AddressesForm = ({ position }) => {
         postcode,
         defaultAddress } = normalForm.addresses[position]
 
-    const SelectValue = addressType.name ? deconstructSelect(addressType) : null
+    const SelectValue = addressType ? deconstructSelect(addressType) : null
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('addresses', position))

@@ -19,7 +19,6 @@ class Vehicles {
         observations,
         idStatus,
         filePath,
-
         documents = []
     }) {
         this.id = id
@@ -38,7 +37,6 @@ class Vehicles {
         this.tachograph = tachograph
         this.observations = observations
         this.idStatus = idStatus
-
         this.filePath = filePath
         this.documents = documents
     }

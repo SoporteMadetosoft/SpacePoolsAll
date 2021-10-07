@@ -6,6 +6,7 @@ import { ItemsRepeater } from './ItemsRepeater'
 import { ExtraItemsRepeater } from './ExtraItemsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
+import moment from 'moment'
 
 import { OrderCanvas } from './OrderCanvas'
 
@@ -20,27 +21,59 @@ import * as yup from "yup"
 //const ValidationSchema = yup.object().shape({
 //    idPool: yup.string().required()
 //})
-
 export const OrderForm = () => {
     //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { price } = useSelector(state => state.ordersReducer)
 
     let { orderCode } = useSelector(state => state.normalForm)
-
+    const { orderDate } = useSelector(state => state.normalForm)
+         
     const dispatch = useDispatch()
 
     const { normalForm, selectReducer } = useSelector(state => state)
     const { poolsOpt, taxesOpt, Customers } = selectReducer
     const { observations } = normalForm
 
+    const date = orderDate ? orderDate : new Date()
+    // const year = date.getFullYear()
+    // const month = date.getMonth(2)
+    // const dt = date.getDate()
+
+    // if (dt < 10) {
+    //     dt = `0dt`;
+    //   }
+    //   if (month < 10) {
+    //     month = `0month`;
+    //   }
+
+    //const strDate =  `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`
+    //const dateNotSelect = `${date.getFullYear()}-${(date.getMonth() + 4).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`
+
+    const momentDate = moment(date, "YYYY-MM-DD")
+    console.log(momentDate)
+    const momentDate2 = momentDate.clone().add(1, "months")
+    
+
+    const day = momentDate.format('DD')
+    const month = momentDate.format('MM')
+    const year = momentDate.format('YYYY')
+    const day2 = momentDate2.format('DD')
+    const month2 = momentDate2.format('MM')
+    const year2 = momentDate2.format('YYYY')
+
+    const strDate = `${year}-${month}-${day}`
+    const dateNotSelect = `${year2}-${month2}-${day2}`
 
     const idTax = normalForm['idTax'] ? deconstructSelect(normalForm['idTax']) : ''
     const idPool = normalForm['idPool'] ? deconstructSelect(normalForm['idPool']) : ''
-    const idCustomer = normalForm['idCustomer'] ? deconstructSelect(normalForm['idCustomer']) : ''
+    const idCustomer = normalForm['idCustomer'] ? deconstructSelect(normalForm['idCustomer'],'comercialName') : ''
+    const orderDate2 = normalForm['orderDate'] ? normalForm['orderDate'] : strDate
+    const deliveryDate = normalForm['deliveryDate'] ? normalForm['deliveryDate'] : dateNotSelect
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
+        
     }
 
     const handleSelectChange = (name, { value, label }) => {
@@ -154,10 +187,25 @@ export const OrderForm = () => {
                     </div>
 
                     <div className="col-md-2">
-                        <Input name="orderDate" type="date" placeholder="Fecha de Pedido" label="Fecha de Pedido" />
+                        <label className="control-label">Fecha de pedido</label>
+                        <input
+                            className="form-control"
+                            type="date"
+                            name="orderDate"
+                            value={orderDate2}
+                            onChange={handleInputChange}
+                        />
+                        
                     </div>
                     <div className="col-md-2">
-                        <Input name="deliveryDate" type="date" placeholder="Fecha de Entrega" label="Fecha de Entrega" />
+                        <label className="control-label">Fecha de entrega</label>
+                        <input
+                            className="form-control"
+                            type="date"
+                            name="deliveryDate"
+                            value={deliveryDate}
+                            onChange={handleInputChange}
+                        />
                     </div>
                     <div className="col-md-2">
                         <Input name="deliverySchedulerStart" type="time" placeholder="" label="Inicio de Horario de entrega" />

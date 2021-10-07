@@ -32,8 +32,8 @@ class OrderDao extends GenericDao {
             customerData: await this.CustomerDataDao.findByOrderId(data.id),
             extraItems: await this.ExtraItemDao.findByOrderId(data.id),
             baseItems: await this.BaseItemDao.findByOrderId(data.id),
-            orderDate: this.datetimeToEuropeDate(data.orderDate),
-            deliveryDate: this.datetimeToEuropeDate(data.deliveryDate),
+            orderDate: this.datetimeToDate(data.orderDate),
+            deliveryDate: this.datetimeToDate(data.deliveryDate),
             idPool: { id: data.idPool, name: (await this.PoolDao.findPoolNameBy(data.idPool)) },
             idTax: { id: data.idTax, name: (await this.TaxesDao.findTaxNameBy(data.idTax)) },
             idCustomer: { id: data.idCustomer, comercialName: (await this.CustomerDao.findCustomerNameBy(data.idCustomer)) },
@@ -47,6 +47,7 @@ class OrderDao extends GenericDao {
             email: await this.CustomerDataDao.findOneFieldById("email", data.id)
 
         }
+       
         return order2
     }
 

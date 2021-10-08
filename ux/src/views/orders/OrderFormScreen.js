@@ -93,7 +93,7 @@ export const OrderFormScreen = () => {
             extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity })),
             canvas: canvas.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, imageUrl: el.imageUrl }))
         }
-        console.log(prettyForm)
+
         save('Orders', id, prettyForm)
         dispatch(handleCleanUp())
         history.push('/orders')

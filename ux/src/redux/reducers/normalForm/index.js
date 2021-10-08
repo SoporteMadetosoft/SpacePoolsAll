@@ -7,6 +7,7 @@ const normalForm = (state = initialState, action) => {
     switch (action.type) {
 
         case formTypes.inputChange:
+            console.log(action.payload)
             return {
                 ...state,
                 [action.payload.name]: action.payload.value

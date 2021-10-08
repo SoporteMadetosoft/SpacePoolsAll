@@ -53,9 +53,6 @@ class DeliveryDao extends GenericDao {
             idCustomer: customer !== undefined ? customer.id : '',
             idStatus: idStatus !== undefined ? idStatus.id : ''
         }
-
-        // const { name, login, group, status } = list
-        // const nObj = { name: name, login: login, group: group, status: status }
         return list
     }
 

@@ -39,11 +39,11 @@ class VendorDao extends GenericDao {
         const contact = await this.ContactDao.findMainContactById(data.id)
         const list = {
             ...data,
-            ContactName: contact != undefined ? contact.name : '',
-            ContactPhone: contact != undefined ? contact.phone : '',
+            contactName: contact != undefined ? contact.name : '',
+            contactPhone: contact != undefined ? contact.phone : '',
         }
-        const { id, vendorCode, comercialName, CIF, phone, email, ContactName, ContactPhone } = list
-        const nObj = { id: id, vendorCode: vendorCode, comercialName: comercialName, CIF: CIF, phone: phone, email: email, contactName: ContactName, contactPhone: ContactPhone }
+        const { id, vendorCode, comercialName, CIF, phone, email, contactName, contactPhone, idMode, idStatus } = list
+        const nObj = { id, vendorCode, comercialName, CIF, phone, email, contactName, contactPhone, idMode, idStatus }
         return nObj
     }
 

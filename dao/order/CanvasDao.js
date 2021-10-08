@@ -3,13 +3,13 @@ const GenericDao = require("../GenericDao");
 const ItemDao = require("../item/ItemDao");
 
 
-class CanvasDao extends GenericDao{
-    constructor(){
+class CanvasDao extends GenericDao {
+    constructor() {
         super(Canvas)
         this.ItemDao = new ItemDao
     }
 
-    async mountObj(data){
+    async mountObj(data) {
         const canvas = {
             ...data,
             //imgUrl: await this.ItemDao.findOneFieldById("imgUrl", data.idElemento)
@@ -18,7 +18,8 @@ class CanvasDao extends GenericDao{
         return canvas
     }
 
-    findByOrderId(id){
+    findByOrderId(id) {
+        // console.log(`SELECT * FROM orders_canvas WHERE idOrder = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM orders_canvas WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {
@@ -27,7 +28,6 @@ class CanvasDao extends GenericDao{
 
                     const customerData = []
                     for (const canvasItem of result) {
-
                         customerData.push(await this.mountObj(canvasItem))
                     }
                     resolve(customerData)

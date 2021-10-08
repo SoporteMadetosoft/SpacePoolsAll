@@ -6,6 +6,7 @@ import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
+import Badge from "reactstrap/lib/Badge"
 
 export const trailersList = [
     {
@@ -15,32 +16,53 @@ export const trailersList = [
         width: '8%'
     },
     {
-        name: 'Matrícula del remolque',
+        name: 'Matrícula',
         selector: 'plate',
         sortable: true,
         searchable: true,
-        width: '22%'
+        width: '18%'
     },
     {
         name: 'Marca',
         selector: 'brand',
         sortable: true,
         searchable: true,
-        width: '22%'
+        width: '20%'
     },
     {
         name: 'Modelo',
         selector: 'model',
         sortable: true,
         searchable: true,
-        width: '22%'
+        width: '20%'
     },
     {
         name: 'Fecha de ITV',
         selector: 'ITVdate',
         sortable: true,
         searchable: true,
-        width: '22%'
+        width: '20%'
+    },
+    {
+        name: 'Estado',
+        sortable: true,
+        width: '10%',
+        cell: row => {
+            return (
+                <>
+
+                    {row.idStatus === 2 ?
+                        (<Badge color='light-success'>
+                            Activo
+                        </Badge>)
+                        :
+                        (<Badge color='light-danger'>
+                            Inactivo
+                        </Badge>)
+                    }
+                </>
+            )
+        }
     },
     {
         name: '',

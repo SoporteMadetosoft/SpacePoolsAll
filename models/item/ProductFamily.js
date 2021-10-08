@@ -4,12 +4,10 @@ class ProductFamily {
     constructor({
         id,
         parent,
-        familyCode,
         name
     }) {
         this.id = id
         this.parent = parent
-        this.familyCode = familyCode
         this.name = name
     }
     get table() {

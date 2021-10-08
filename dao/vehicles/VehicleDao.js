@@ -46,9 +46,7 @@ class VehicleDao extends SetupDao {
 
         }
 
-        const { id, vehicleCode, plate, idCarrier, frameNumber, ITVdate, repairs } = list
-        const nObj = { id, vehicleCode, plate, idCarrier, frameNumber, ITVdate, repairs }
-        return nObj
+        return new Vehicle(list)
     }
 }
 module.exports = VehicleDao

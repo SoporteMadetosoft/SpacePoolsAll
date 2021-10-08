@@ -17,6 +17,7 @@ import { handleCleanCanvas } from '../../../redux/actions/canvas'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
+import { useParams } from 'react-router'
 
 //const ValidationSchema = yup.object().shape({
 //    idPool: yup.string().required()
@@ -28,7 +29,7 @@ export const OrderForm = () => {
 
     let { orderCode } = useSelector(state => state.normalForm)
     const { orderDate } = useSelector(state => state.normalForm)
-         
+
     const dispatch = useDispatch()
 
     const { normalForm, selectReducer } = useSelector(state => state)
@@ -50,34 +51,34 @@ export const OrderForm = () => {
     //const strDate =  `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`
     //const dateNotSelect = `${date.getFullYear()}-${(date.getMonth() + 4).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`
 
-    const momentDate = moment(date, "YYYY-MM-DD")
-    console.log(momentDate)
-    const momentDate2 = momentDate.clone().add(1, "months")
-    
+    // const momentDate = moment(date, "YYYY-MM-DD")
 
-    const day = momentDate.format('DD')
-    const month = momentDate.format('MM')
-    const year = momentDate.format('YYYY')
-    const day2 = momentDate2.format('DD')
-    const month2 = momentDate2.format('MM')
-    const year2 = momentDate2.format('YYYY')
+    // const momentDate2 = momentDate.clone().add(1, "months")
 
-    const strDate = `${year}-${month}-${day}`
-    const dateNotSelect = `${year2}-${month2}-${day2}`
+
+    // const day = momentDate.format('DD')
+    // const month = momentDate.format('MM')
+    // const year = momentDate.format('YYYY')
+    // const day2 = momentDate2.format('DD')
+    // const month2 = momentDate2.format('MM')
+    // const year2 = momentDate2.format('YYYY')
+
+    // const strDate = `${year}-${month}-${day}`
+    // const dateNotSelect = `${year2}-${month2}-${day2}`
 
     const idTax = normalForm['idTax'] ? deconstructSelect(normalForm['idTax']) : ''
     const idPool = normalForm['idPool'] ? deconstructSelect(normalForm['idPool']) : ''
-    const idCustomer = normalForm['idCustomer'] ? deconstructSelect(normalForm['idCustomer'],'comercialName') : ''
-    const orderDate2 = normalForm['orderDate'] ? normalForm['orderDate'] : strDate
-    const deliveryDate = normalForm['deliveryDate'] ? normalForm['deliveryDate'] : dateNotSelect
+    const idCustomer = normalForm['idCustomer'] ? deconstructSelect(normalForm['idCustomer'], 'comercialName') : ''
+    const orderDate2 = normalForm['orderDate'] ? normalForm['orderDate'] : ''
+    const deliveryDate = normalForm['deliveryDate'] ? normalForm['deliveryDate'] : ''
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
-        
+
     }
 
     const handleSelectChange = (name, { value, label }) => {
-        dispatch(handleChangeController(name, { id: value, name: label }))
+        dispatch(handleChangeController(name, { id: value, comercialName: label }))
         dispatch(handleFillCustomerData(value))
     }
 
@@ -88,6 +89,8 @@ export const OrderForm = () => {
 
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Orders", 'orderCode'))
+            // dispatch(handleChangeController('orderDate', orderDate2))
+            // dispatch(handleChangeController('deliveryDate', deliveryDate))
         } else orderCode = normalForm.id
 
         if (normalForm.price) {
@@ -101,7 +104,6 @@ export const OrderForm = () => {
     }
 
     const setPoolInRedux = (obj) => {
-        console.log("setpoolinreduxcon id ", obj.value)
         dispatch(createItemRepeatersByPool(obj.value))
         dispatch(handleChangeController("idPool", { id: obj.value, name: obj.label }))
         preparePrice()
@@ -195,7 +197,7 @@ export const OrderForm = () => {
                             value={orderDate2}
                             onChange={handleInputChange}
                         />
-                        
+
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">Fecha de entrega</label>

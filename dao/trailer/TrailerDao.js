@@ -35,20 +35,17 @@ class TrailerDao extends SetupDao {
 
     async mountList(data) {
         const model = await this.ModelDao.findById(data.model)
-        const brand = await this.BrandDao.findById(model.idBrand.value)
+        const brand = await this.BrandDao.findById(model.idBrand.id)
 
         const list = {
             ...data,
             ITVdate: this.datetimeToEuropeDate(data.ITVdate),
             repairs: await this.RepairDao.findByTrailerId(data.id),
-            mod: model != undefined ? model.name : '',
-            br: brand != undefined ? brand.name : '',
-
+            model: model != undefined ? model.name : '',
+            brand: brand != undefined ? brand.name : '',
         }
 
-        const { id, trailerCode, plate, br, mod, ITVdate, repairs } = list
-        const nObj = { id: id, trailerCode: trailerCode, plate: plate, brand: br, model: mod, ITVdate: ITVdate, repairs: repairs }
-        return nObj
+        return new Trailer(list)
     }
 
 }

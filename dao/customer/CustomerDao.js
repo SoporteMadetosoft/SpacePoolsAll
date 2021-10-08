@@ -63,8 +63,8 @@ class CustomerDao extends GenericDao {
             ContactPhone: contact != undefined ? contact.phone : '',
         }
 
-        const { id, customerCode, comercialName, CIF, phone, email, ContactName, ContactPhone } = list
-        const nObj = { id: id, customerCode: customerCode, comercialName: comercialName, CIF: CIF, phone: phone, email: email, ContactName: ContactName, ContactPhone: ContactPhone }
+        const { id, customerCode, comercialName, CIF, phone, email, ContactName, ContactPhone, idMode, idStatus } = list
+        const nObj = { id, customerCode, comercialName, CIF, phone, email, ContactName, ContactPhone, idMode, idStatus }
         return nObj
     }
 

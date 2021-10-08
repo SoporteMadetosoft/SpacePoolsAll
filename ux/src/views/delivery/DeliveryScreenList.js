@@ -6,7 +6,6 @@ import { CustomDataTable } from '@cc/datatable/CustomDataTable'
 import { startLoadingTable } from '@redux/actions/custom'
 import { handleCleanForm } from '@redux/actions/normalForm'
 
-
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 export const DeliveryScreenList = ({ titulo }) => {
@@ -19,7 +18,6 @@ export const DeliveryScreenList = ({ titulo }) => {
         dispatch(startLoadingTable('Delivery'))
     }, [])
     return (
-
-        <CustomDataTable title={titulo} columns={deliveryList} data={data} />
+        <CustomDataTable title={titulo} columns={deliveryList} data={data} add={0} />
     )
 }

@@ -1,4 +1,4 @@
-import { FileText, MoreVertical, Trash } from "react-feather"
+import { Check, FileText, MoreVertical, Slash, Trash } from "react-feather"
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
@@ -6,6 +6,7 @@ import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
+import Badge from "reactstrap/lib/Badge"
 
 export const customerList = [
   {
@@ -13,14 +14,26 @@ export const customerList = [
     selector: 'id',
     sortable: true,
     searchable: true,
-    width: '8%'
+    width: '8%',
+    cell: row => {
+      return (
+        <div className="d-flex">
+          {row.idMode === 1 ?
+            (<Check className="mr-1" color="green" size={15} />)
+            :
+            (<Slash className="mr-1" color="red" size={15} />)
+          }
+          <label>{row.id}</label>
+        </div>
+      )
+    }
   },
   {
     name: 'Nombre comercial',
     selector: 'comercialName',
     sortable: true,
     searchable: true,
-    width: '20%'
+    width: '15%'
   },
   {
     name: 'Cif',
@@ -41,19 +54,40 @@ export const customerList = [
     selector: 'email',
     sortable: true,
     searchable: true,
-    width: '17%'
+    width: '15%'
   },
   {
     name: 'Nombre contacto',
     selector: 'ContactName',
     sortable: true,
-    width: '17%'
+    width: '15%'
   },
   {
-    name: 'Tel. contacto',
+    name: 'Tel. con.',
     selector: 'ContactPhone',
     sortable: true,
     width: '12%'
+  },
+  {
+    name: 'Estado',
+    sortable: true,
+    width: '9%',
+    cell: row => {
+      return (
+        <>
+
+          {row.idStatus === 2 ?
+            (<Badge color='light-success'>
+              Activo
+            </Badge>)
+            :
+            (<Badge color='light-danger'>
+              Inactivo
+            </Badge>)
+          }
+        </>
+      )
+    }
   },
   {
     name: '',

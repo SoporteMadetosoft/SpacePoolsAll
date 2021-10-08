@@ -37,7 +37,7 @@ class GenericDao {
                     resolve(objList)
                 }
             });
-            
+
         })
     }
 

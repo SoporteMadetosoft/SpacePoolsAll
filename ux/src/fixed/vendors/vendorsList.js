@@ -7,6 +7,7 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 import { handleLoadID, handleStartEditing } from "../../redux/actions/form"
+import Badge from "reactstrap/lib/Badge"
 
 
 
@@ -22,7 +23,7 @@ export const vendorList = [
     selector: 'comercialName',
     sortable: true,
     searchable: true,
-    width: '20%'
+    width: '15%'
   },
   {
     name: 'Cif',
@@ -43,19 +44,40 @@ export const vendorList = [
     selector: 'email',
     sortable: true,
     searchable: true,
-    width: '17%'
+    width: '15%'
   },
   {
     name: 'Nombre contacto',
     selector: 'contactName',
     sortable: true,
-    width: '17%'
+    width: '15%'
   },
   {
     name: 'Tel. contacto',
     selector: 'contactPhone',
     sortable: true,
     width: '12%'
+  },
+  {
+    name: 'Estado',
+    sortable: true,
+    width: '9%',
+    cell: row => {
+      return (
+        <>
+
+          {row.idStatus === 2 ?
+            (<Badge color='light-success'>
+              Activo
+            </Badge>)
+            :
+            (<Badge color='light-danger'>
+              Inactivo
+            </Badge>)
+          }
+        </>
+      )
+    }
   },
   {
     name: '',

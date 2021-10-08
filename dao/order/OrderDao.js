@@ -37,7 +37,7 @@ class OrderDao extends GenericDao {
             idPool: { id: data.idPool, name: (await this.PoolDao.findPoolNameBy(data.idPool)) },
             idTax: { id: data.idTax, name: (await this.TaxesDao.findTaxNameBy(data.idTax)) },
             idCustomer: { id: data.idCustomer, comercialName: (await this.CustomerDao.findCustomerNameBy(data.idCustomer)) },
-            canvasItems: await this.CanvasDao.findByOrderId(data.id),
+            canvasItems: await this.CanvasDao.findByOrderId(data.id)
         }
         let order2 = new Order(order)
         order2 = {
@@ -47,7 +47,7 @@ class OrderDao extends GenericDao {
             email: await this.CustomerDataDao.findOneFieldById("email", data.id)
 
         }
-       
+
         return order2
     }
 
@@ -72,8 +72,9 @@ class OrderDao extends GenericDao {
     }
 
     findOrderById(id) {
+        // console.log(`SELECT * FROM orders WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM orders WHERE Id = ?', [id], (err, result) => {
+            this.db.query('SELECT * FROM orders WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

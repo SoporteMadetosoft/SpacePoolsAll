@@ -18,7 +18,7 @@ class PoolDao extends GenericDao {
             idStatus: await this.StatusDao.findById(data.idStatus),
             items: await this.PoolItemsDao.getItemsByTypeAndPool(data.id, 2),
             raws: await this.PoolItemsDao.getItemsByTypeAndPool(data.id, 1),
-            allItems :  await this.PoolItemsDao.getItemsByIdPool(data.id)
+            allItems: await this.PoolItemsDao.getItemsByIdPool(data.id)
         }
         return pool
     }
@@ -26,12 +26,10 @@ class PoolDao extends GenericDao {
     async mountList(data) {
         const status = await this.StatusDao.findById(data.idStatus)
         const list = {
-            ...data,    
-            idStatus: status != undefined ? status.name : ''
+            ...data,
+            idStatus: status != undefined ? status.id : ''
         }
-        const { id, poolCode, fabricationName, cost, idStatus } = list
-        const nObj = { id: id, poolCode: poolCode, fabricationName: fabricationName, cost: cost, idStatus: idStatus }
-        return nObj
+        return new Pool(list)
     }
 
     findPoolById(id) {
@@ -46,14 +44,14 @@ class PoolDao extends GenericDao {
         })
     }
 
-    findPoolNameBy(id){
+    findPoolNameBy(id) {
         return new Promise((resolve, reject) => {
             this.db.query('SELECT fabricationName FROM pool WHERE Id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                            resolve(result[0].fabricationName)
-                  //  resolve(result[0])
+                    resolve(result[0].fabricationName)
+                    //  resolve(result[0])
                 }
             })
         })

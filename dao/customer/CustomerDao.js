@@ -15,7 +15,7 @@ const Language = require("../global/LanguageDao");
 
 const CustomerAddressDao = require("../customer/CustomerAddressDao");
 const CustomerContactPersonDao = require("./CustomerContactPersonDao");
-const CarrierDocumentsDao = require("./CustomerDocumentsDao");
+const CustomerDocumentsDao = require("./CustomerDocumentsDao");
 const FileManagerDao = require("../global/FileManagerDao");
 
 
@@ -33,7 +33,7 @@ class CustomerDao extends GenericDao {
         this.Language = new Language()
         this.CustomerAddressDao = new CustomerAddressDao()
         this.CustomerContactPersonDao = new CustomerContactPersonDao()
-        this.FileManagerDao = new FileManagerDao(CarrierDocumentsDao)
+        this.FileManagerDao = new FileManagerDao(CustomerDocumentsDao)
     }
 
     async mountObj(data) {

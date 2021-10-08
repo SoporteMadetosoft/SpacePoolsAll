@@ -19,7 +19,7 @@ export const setData = (data, endPoint) => ({
 export const startLoadingTable = (endPoint) => {
     return async (dispatch) => {
         dispatch(cleaningAll())
-        const data = await list(endPoint)    
+        const data = await list(endPoint)
         dispatch(setData(data, endPoint))
     }
 }
@@ -29,13 +29,29 @@ export const deleteRegister = (id) => ({
     payload: id
 })
 
-export const startDeleteRegister = (id) => {
+export const startDeleteRegister = (id, end = null) => {
     return async (dispatch, getState) => {
-        const endPoint = getState().registrosReducer.endPoint
+        const endPoint = end !== null ? end : getState().registrosReducer.endPoint
         const respuesta = await handleConfirmCancel()
         if (respuesta === true) {
             erase(id, endPoint)
             dispatch(deleteRegister(id))
+        }
+    }
+}
+
+export const startDeleteRepairRegister = (id, index, endPoint) => {
+    return async (dispatch, getState) => {
+        const respuesta = await handleConfirmCancel()
+        if (respuesta === true) {
+            erase(id, endPoint)
+            dispatch({
+                type: types.deleteRepair,
+                payload: {
+                    id,
+                    index
+                }
+            })
         }
     }
 }

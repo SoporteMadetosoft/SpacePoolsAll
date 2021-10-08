@@ -48,7 +48,7 @@ const placeholderStyles = {
 
 export const VechiclesForm = () => {
 
-    let {vehicleCode} = useSelector(state =>  state.normalForm)
+    let { vehicleCode } = useSelector(state => state.normalForm)
     const { id } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
@@ -93,7 +93,7 @@ export const VechiclesForm = () => {
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Vehicles", 'vehicleCode'))
         } else vehicleCode = normalForm.id
-      
+
     }, [])
 
     if (id && model) {
@@ -160,13 +160,13 @@ export const VechiclesForm = () => {
             <div className="card">
                 <div className="row card-body">
                     <div className="col-md-2">
-                    <label className="control-label">Nº Vehículo</label>
+                        <label className="control-label">Nº Vehículo</label>
                         <input
-                        className={`form-control`}
-                        name="vehicleCode"
-                        value={vehicleCode}
-                        readOnly
-                    />
+                            className={`form-control`}
+                            name="vehicleCode"
+                            value={vehicleCode}
+                            readOnly
+                        />
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">Matrícula</label>

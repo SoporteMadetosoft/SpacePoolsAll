@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const fileUpload = require('express-fileupload');
 
-dotenv.config({ path: './.env' })
+dotenv.config({ path: './.envLocal' })
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -59,6 +59,9 @@ app.use('/orders', require('./routes/orders'));
 //Production Routes
 app.use('/production', require('./routes/production'));
 //-------------------------------------------------------
+//Delivery Routes
+app.use('/delivery', require('./routes/delivery'));
+//-------------------------------------------------------
 //Users Routes
 app.use('/users', require('./routes/users'));
 //-------------------------------------------------------
@@ -69,9 +72,9 @@ app.use('/calendar', require('./routes/calendar'));
 //app.use('/roles', require('./routes/role'));  
 //-------------------------------------------------------
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/ux/build/index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname + '/ux/build/index.html'));
+// });
 
 const server = app.listen(port, () => {
   console.log(`app listening at ${origin}:${port}`);

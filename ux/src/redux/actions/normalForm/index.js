@@ -43,6 +43,7 @@ export const fillFormData = (data) => ({
 })
 
 export const handleStartEditing = (endpoint, id) => {
+    console.log('Cargamos delivery')
     return async (dispatch) => {
         const data = await getFormData(endpoint, id)
         dispatch(fillFormData(data))

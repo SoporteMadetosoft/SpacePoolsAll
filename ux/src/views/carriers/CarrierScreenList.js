@@ -8,14 +8,14 @@ import { carriersList } from '@fixed/vehicles/carriers/carriersList'
 import { handleCleanForm } from '../../redux/actions/normalForm'
 
 
-export const CarrierScreenList = ({titulo}) => { 
+export const CarrierScreenList = ({ titulo }) => {
 
     const dispatch = useDispatch()
-    const {registros:data} = useSelector(state => state.registrosReducer)
+    const { registros: data } = useSelector(state => state.registrosReducer)
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('Carriers'))   
+        dispatch(startLoadingTable('Carriers'))
     }, [])
 
     return (

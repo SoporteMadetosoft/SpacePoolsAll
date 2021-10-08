@@ -37,6 +37,7 @@ class GenericDao {
                     resolve(objList)
                 }
             });
+
         })
     }
 
@@ -93,7 +94,20 @@ class GenericDao {
                 if (err) {
                     reject(err)
                 } else {
-                    resolve(result)
+                    resolve('')
+                }
+            });
+        })
+    }
+
+    equalize(param1, param2, controlParam, id) {
+        // console.log(`UPDATE ${this.auxModel.table} SET ${param1} = ${param2} WHERE ${controlParam} =  ${id} `)
+        return new Promise((resolve, reject) => {
+            this.db.query(`UPDATE ?? SET ?? = ?? WHERE ?? =  ? `, [this.auxModel.table, param1, param2, controlParam, id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve('')
                 }
             });
         })
@@ -153,9 +167,9 @@ class GenericDao {
         }
     }
 
-    findAutoincrementID(){
+    findAutoincrementID() {
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "alphasfp" AND TABLE_NAME = ?`, [this.auxModel.table], async (err, result) => {
+            this.db.query(`SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?`, [process.env.DB_NAME, this.auxModel.table], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

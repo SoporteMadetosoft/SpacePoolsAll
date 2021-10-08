@@ -1,4 +1,4 @@
-import { FileText, MoreVertical, Trash } from "react-feather"
+import { FileText, MoreVertical, Tool, Trash } from "react-feather"
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
@@ -6,6 +6,7 @@ import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
+import Badge from "reactstrap/lib/Badge"
 
 export const vehiclesList = [
   {
@@ -16,37 +17,58 @@ export const vehiclesList = [
     width: '8%'
   },
   {
-    name: 'Matrícula del vehículo',
+    name: 'Matrícula',
     selector: 'plate',
     sortable: true,
     searchable: true,
-    width: '22%'
+    width: '18%'
   },
   {
     name: 'Conductor',
     selector: 'idCarrier',
     sortable: true,
     searchable: true,
-    width: '22%'
+    width: '20%'
   },
   {
     name: 'Número de bastidor',
     selector: 'frameNumber',
     sortable: true,
     searchable: true,
-    width: '22%'
+    width: '20%'
   },
   {
     name: 'Fecha de ITV',
     selector: 'ITVdate',
     sortable: true,
     searchable: true,
-    width: '22%'
+    width: '20%'
+  },
+  {
+    name: 'Estado',
+    sortable: true,
+    width: '10%',
+    cell: row => {
+      return (
+        <>
+
+          {row.idStatus === 2 ?
+            (<Badge color='light-success'>
+              Activo
+            </Badge>)
+            :
+            (<Badge color='light-danger'>
+              Inactivo
+            </Badge>)
+          }
+        </>
+      )
+    }
   },
   {
     name: '',
     width: '5%',
-    cell: row => {
+    cell: (row, index) => {
 
       const dispatch = useDispatch()
 
@@ -61,6 +83,12 @@ export const vehiclesList = [
                 <DropdownItem tag='a' href='/' className='w-100'>
                   <FileText size={15} />
                   <span className='align-middle ml-50'>Detalles</span>
+                </DropdownItem>
+              </Link>
+              <Link to={`./vehicles/vReparation/${index}`}>
+                <DropdownItem tag='a' href='/' className='w-100'>
+                  <Tool size={15} />
+                  <span className='align-middle ml-50'>Reparaciones</span>
                 </DropdownItem>
               </Link>
               <Link onClick={(e) => {

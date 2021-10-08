@@ -15,11 +15,11 @@ import { addSelectionOnNormalForm, handleSearchCost, handleSearchStock } from '.
 const formStructure = {
     idItem: [
         {
-        id: '',
-        name: ''
-    }
-],
-    quantity: 0
+            id: '',
+            name: ''
+        }
+    ],
+    quantity: 1
 }
 
 export const ItemsRepeater = () => {
@@ -84,7 +84,7 @@ const ItemsForm = ({ position }) => {
 
     useEffect(() => {
         if (itemType) {
-            handleLoadItems({label: itemType.name, value: itemType.id})
+            handleLoadItems({ label: itemType.name, value: itemType.id })
         }
     }, [itemType])
 
@@ -117,7 +117,7 @@ const ItemsForm = ({ position }) => {
         dispatch(handleSearchStock('Items', obj.value, position, 'items'))
     }
 
-
+    const costeReal = cost ? cost * quantity : 0
 
     return (
 
@@ -168,7 +168,7 @@ const ItemsForm = ({ position }) => {
                     type="text"
                     name="cost"
                     className="form-control"
-                    value={cost}
+                    value={costeReal}
                     readOnly />
             </div>
 

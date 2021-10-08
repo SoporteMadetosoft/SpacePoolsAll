@@ -18,8 +18,6 @@ const ValidationSchema = yup.object().shape({
 
 export const ItemsFamilyForm = () => {
 
-    let {familyCode} = useSelector(state =>  state.normalForm)
-
     const { id } = useParams()
     const history = useHistory()
     const dispatch = useDispatch()
@@ -34,8 +32,8 @@ export const ItemsFamilyForm = () => {
 
     useEffect(() => {
         if (normalForm.id === undefined) {
-            dispatch(GetSetNextId("Family",'familyCode'))
-        } else familyCode = normalForm.id
+            dispatch(GetSetNextId("Family", 'id'))
+        }
     }, [])
 
     const submit = async () => {
@@ -55,12 +53,12 @@ export const ItemsFamilyForm = () => {
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
 
-                    <label className="control-label">Nº Familia</label>
+                        <label className="control-label">Nº Familia</label>
                         <input
-                        className={`form-control`}
-                        name="familyCode"
-                        value={familyCode}
-                        readOnly
+                            className={`form-control`}
+                            name="id"
+                            value={normalForm.id}
+                            readOnly
                         />
                     </div>
                     <div className="col-md-5">

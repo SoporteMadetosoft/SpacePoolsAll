@@ -6,6 +6,7 @@ import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
+import Badge from "reactstrap/lib/Badge"
 
 export const poolsList = [
     {
@@ -16,11 +17,67 @@ export const poolsList = [
         width: '8%'
     },
     {
-        name: 'Nombre',
+        name: 'Nombre (fabricación)',
         selector: 'fabricationName',
         sortable: true,
         searchable: true,
-        width: '87%'
+        width: '14%'
+    },
+    {
+        name: 'Nombre (Europa)',
+        selector: 'nameEuropa',
+        sortable: true,
+        searchable: true,
+        width: '14%'
+    },
+    {
+        name: 'Nombre (Space)',
+        selector: 'nameSpace',
+        sortable: true,
+        searchable: true,
+        width: '14%'
+    },
+    {
+        name: 'Nombre (Sociedad)',
+        selector: 'nameSociedad',
+        sortable: true,
+        searchable: true,
+        width: '14%'
+    },
+    {
+        name: 'Nombre (Hydrius)',
+        selector: 'nameHydrius',
+        sortable: true,
+        searchable: true,
+        width: '14%'
+    },
+    {
+        name: 'Coste',
+        selector: 'cost',
+        sortable: true,
+        searchable: true,
+        width: '8%'
+    },
+    {
+        name: 'Estado',
+        sortable: true,
+        width: '10%',
+        cell: row => {
+            return (
+                <>
+
+                    {row.idStatus === 2 ?
+                        (<Badge color='light-success'>
+                            Activo
+                        </Badge>)
+                        :
+                        (<Badge color='light-danger'>
+                            Inactivo
+                        </Badge>)
+                    }
+                </>
+            )
+        }
     },
     {
         name: '',

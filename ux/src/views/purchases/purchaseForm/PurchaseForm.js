@@ -10,7 +10,6 @@ import { ItemsRepeater } from './ItemsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
-import { Select } from '../../../components/form/inputs/Select'
 
 const placeholderStyles = {
     placeholder: (defaultStyles) => {
@@ -22,7 +21,7 @@ const placeholderStyles = {
 }
 
 export const PurchaseForm = () => {
-    let {purchaseCode} = useSelector(state =>  state.normalForm)
+    let { purchaseCode } = useSelector(state => state.normalForm)
 
 
 
@@ -59,13 +58,13 @@ export const PurchaseForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                    <label className="control-label">Nº Pedido</label>
+                        <label className="control-label">Nº Pedido</label>
                         <input
-                        className={`form-control`}
-                        name="purchaseCode"
-                        value={purchaseCode}
-                        readOnly
-                    />
+                            className={`form-control`}
+                            name="purchaseCode"
+                            value={purchaseCode}
+                            readOnly
+                        />
                     </div>
                     <div className="col-md-4">
                         <label className="control-label">Proveedor</label>
@@ -79,15 +78,13 @@ export const PurchaseForm = () => {
                             onChange={handleSelectChange}
                         />
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                         <Input name="purchaseDate" type="date" placeholder="Fecha de compra" label="Fecha de compra" />
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                         <Input name="deliveryDate" type="date" placeholder="Fecha de entrega" label="Fecha de entrega" />
                     </div>
-                    <div className="col-md-2">
-                        <Select name="idStatus" label="Estado" endpoint="Status" />
-                    </div>
+
 
                     <div className="col-md-12">
                         <label className="control-label">Observaciones</label>

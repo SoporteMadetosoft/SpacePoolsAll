@@ -31,7 +31,7 @@ const BootstrapCheckbox = forwardRef(({ onClick, ...rest }, ref) => (
 ))
 
 
-export const CustomDataTable = ({ title, columns, data }) => {
+export const CustomDataTable = ({ title, columns, data, add = 1 }) => {
   // ** States
   const [currentPage, setCurrentPage] = useState(0)
   const [searchValue, setSearchValue] = useState('')
@@ -167,12 +167,17 @@ export const CustomDataTable = ({ title, columns, data }) => {
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledButtonDropdown>
-            <Link to={`${useLocation().pathname}/add`}>
-              <Button className='ml-2' color='primary'>
-                <Plus size={15} />
-                <span className='align-middle ml-50'>Añadir {title}</span>
-              </Button>
-            </Link>
+            {
+              add === 1 ? (
+                <Link to={`${useLocation().pathname}/add`}>
+                  <Button className='ml-2' color='primary'>
+                    <Plus size={15} />
+                    <span className='align-middle ml-50'>Añadir {title}</span>
+                  </Button>
+                </Link>
+              ) : null
+            }
+
           </div>
         </CardHeader>
         <Row className='justify-content-end mx-0'>

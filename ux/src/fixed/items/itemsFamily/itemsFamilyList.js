@@ -16,13 +16,6 @@ export const itemsFamilyList = [
         width: '10%'
     },
     {
-        name: 'Código de familia',
-        selector: 'id',
-        sortable: true,
-        searchable: true,
-        minWidth: '50px'
-    },
-    {
         name: 'Nombre',
         selector: 'name',
         sortable: true,

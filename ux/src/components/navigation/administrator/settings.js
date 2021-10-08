@@ -77,7 +77,7 @@ export default [
         children: [
           {
             id: 'vendorType',
-            title: 'Tipos de vendedor',
+            title: 'Tipos de proveedor',
             icon: <Circle size={12} />,
             navLink: '/setup/vendors/vendorType'
           }

@@ -15,17 +15,19 @@ import productions from './production/settings'
 
 import administrator from './administrator/settings'
 import calendar from './calendar/settings'
+import delivery from './entregas/settings'
 // ** Merge & Export
 
 export default [
-    ...headerMenu, 
+    ...headerMenu,
     ...customers,
     ...vendors,
-    ...vehicles, 
-    ...pool, 
-    ...items, 
-    ...purchases, 
-    ...orders, 
+    ...vehicles,
+    ...pool,
+    ...items,
+    ...purchases,
+    ...orders,
+    ...delivery,
     ...productions,
     ...calendar,
     ...headerAdmin,

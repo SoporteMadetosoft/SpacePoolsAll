@@ -66,16 +66,17 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
     try {
         /**UPDATE VEHICLE */
         const vehicle = req.body.form
         const documents = req.body.form.documents
 
-        delete vehicle.documents
+         delete vehicle.documents
+         
 
-        vehicleDao.update(vehicle)
+        await vehicleDao.update(vehicle)
 
         vehicleDao.multipleAccess(documents, vehicleDocumentsDao, vehicle.id, 'idVehicle')
 

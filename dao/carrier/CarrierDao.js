@@ -24,8 +24,7 @@ class CarrierDao extends GenericDao {
     async mountList(data) {
         status = await this.StatusDao.findById(data.idStatus)
         const list = {
-            ...data,
-            idStatus: status != undefined ? status.name : ''
+            ...data
         }
         const { id, carrierCode, name, NIF, email, phone, phone2, idStatus } = list
         const nObj = { id: id, carrierCode: carrierCode, name: name, NIF: NIF, email: email, phone: phone, phone2: phone2, idStatus: idStatus }

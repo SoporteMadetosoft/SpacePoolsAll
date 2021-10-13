@@ -7,10 +7,16 @@ export const addCanvasElement = (key, structure, position) => ({
     payload: { key, structure, position }
 })
 
-export const editDropedElement = (key, position, obj) => ({
-    type: canvasTypes.DropElement,
-    payload: { key, position, obj }
-})
+export const editDropedElement = (key, position, obj) => {
+    return async (dispatch, getState) => {
+        if (obj.x > 300) {
+            dispatch({
+                type: canvasTypes.DropElement,
+                payload: { key, position, obj }
+            })
+        }
+    }
+}
 
 export const handleCleanCanvas = () => ({
     type: canvasTypes.CleanCanvas
@@ -37,7 +43,7 @@ export const getCItemsByOrderId = (endPoint, id) => {
                 ...element,
                 imgUrl: imageUrl
             }
-            
+
             newItemsList[index] = newItem
         })
         dispatch(handleSetAllCanvas(newItemsList))
@@ -80,7 +86,7 @@ export const setInitialCanvas = () => {
                 x: (window.innerWidth) / 15,
                 y: ((window.innerHeight) / 12) * element.idElemento
             }
-        //    console.log(newItem)
+            //    console.log(newItem)
             dispatch(addCanvasElement("elements", newItem, index))
         })
         //dispatch(handleCleanCanvas())

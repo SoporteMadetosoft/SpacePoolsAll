@@ -23,7 +23,7 @@ class VehicleDao extends SetupDao {
     async mountObj(data) {
         const vehicle = {
             ...data,
-            // repairs: await this.RepairDao.findByVehicleId(data.id),
+            repairs: await this.RepairDao.findByVehicleId(data.id),
             status: await this.StatusDao.findById(data.status),
             model: await this.ModelDao.findById(data.model),
             idStatus: await this.StatusDao.findById(data.idStatus),

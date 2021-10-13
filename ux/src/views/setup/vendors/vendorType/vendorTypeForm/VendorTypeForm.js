@@ -32,7 +32,7 @@ export const VendorTypeForm = () => {
     }
 
     const submit = async () => {
-        save('VendorType', id, form)
+        save('VendorType', id, normalForm)
         history.push('/setup/vendors/vendorType')
     }
 

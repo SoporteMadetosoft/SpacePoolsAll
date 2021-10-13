@@ -20,6 +20,7 @@ export const VehicleRepairForm = () => {
     const { registros: data } = useSelector(state => state.registrosReducer)
 
     const idRepair = id !== undefined ? id : normalForm.idRepair
+    
 
     // const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
@@ -51,9 +52,11 @@ export const VehicleRepairForm = () => {
             history.push(`/porters/vehicles/vReparation/${index}`)
         })
     }
+    console.log(idRepair)
 
     return (
         // <Form onSubmit={handleSubmit(submit)}>
+        
         <Form onSubmit={submit}>
             <div className="card">
                 <div className="row card-body">

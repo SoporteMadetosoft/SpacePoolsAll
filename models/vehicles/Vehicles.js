@@ -1,5 +1,6 @@
 class Vehicles {
     #table = 'vehicles'
+    repairs = []
 
     constructor({
         id,
@@ -19,7 +20,8 @@ class Vehicles {
         observations,
         idStatus,
         filePath,
-        documents = []
+        documents = [],
+        repairs = []
     }) {
         this.id = id
         this.idCarrier = idCarrier
@@ -39,9 +41,11 @@ class Vehicles {
         this.idStatus = idStatus
         this.filePath = filePath
         this.documents = documents
+        this.repairs = repairs
     }
     get table() {
         return this.#table;
+        
     }
 }
 module.exports = Vehicles

@@ -5,7 +5,7 @@ class ProductFamilyDao extends GenericDao {
 
     constructor() {
         super(ProductFamily);
-    }
+         }
 
     findAllFamily(idNode) {
         return new Promise((resolve, reject) => {
@@ -58,7 +58,9 @@ class ProductFamilyDao extends GenericDao {
         })
     }
 
-    setParentNullById(id) {
+        setParentNullById(id) {
+        console.log(`UPDATE item_product_family SET parent = null WHERE id = ${id}`)
+
         return new Promise((resolve, reject) => {
             this.db.query(`UPDATE item_product_family SET parent = null WHERE id = ?`, id, async (err, result) => {
                 if (err) {
@@ -87,7 +89,9 @@ class ProductFamilyDao extends GenericDao {
 
         const productFamily = {
             ...data,
+         
         }
+        
         return new ProductFamily(productFamily)
     }
 
@@ -96,6 +100,7 @@ class ProductFamilyDao extends GenericDao {
         const list = {
             ...data,
             parent: parentName ? parentName : 'Nadie'
+            
         }
         const nObj = list
         return nObj

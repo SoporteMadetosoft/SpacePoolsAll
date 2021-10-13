@@ -71,19 +71,21 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
     try {
         /** UPDATE PRODUCT FAMILY */
         const familia = req.body.form
+        console.log(familia)
         if (familia.id === familia.parent) {
             return res.status(500).send()
         }
         if (familia.parent === null) {
-            productFamilyDao.setParentNullById(familia.id)
+            console.log('holaaaa')
+            await productFamilyDao.setParentNullById(familia.id)
             delete familia.parent
+            
         }
-
         productFamilyDao.update(familia)
 
 
@@ -94,13 +96,13 @@ exports.update = (req, res) => {
     }
 }
 
-exports.findNId= async (req, res) => {
+exports.findNId = async (req, res) => {
     try {
-       
-        res.json({ 
+
+        res.json({
             ok: true,
-            data: await  productFamilyDao.findAutoincrementID()
-         })
+            data: await productFamilyDao.findAutoincrementID()
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

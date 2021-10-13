@@ -31,7 +31,7 @@ export const ItemsFamilyForm = () => {
     }
 
     useEffect(() => {
-        if (normalForm.id === undefined) {
+        if ( !id ) {
             dispatch(GetSetNextId("Family", 'id'))
         }
     }, [])

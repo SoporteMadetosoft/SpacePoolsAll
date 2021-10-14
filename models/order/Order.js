@@ -10,6 +10,7 @@ class Order {
         idCustomer,
         idPool,
         orderDate,
+        productionDate,
         deliveryDate,
         deliverySchedulerStart,
         deliverySchedulerEnd,
@@ -26,12 +27,13 @@ class Order {
         this.idCustomer = idCustomer
         this.idPool = idPool
         this.orderDate = orderDate
+        this.productionDate = productionDate
         this.deliveryDate = deliveryDate
         this.deliverySchedulerStart = deliverySchedulerStart
         this.deliverySchedulerEnd = deliverySchedulerEnd
         this.observations = observations
         this.price = price
-        this.idTax = idTax 
+        this.idTax = idTax
         this.extraItems = extraItems
         this.customerData = customerData
         this.production = production

@@ -18,6 +18,15 @@ export const editDropedElement = (key, position, obj) => {
     }
 }
 
+export const cloneCanvasElement = (key, position) => {
+    return async (dispatch, getState) => {
+        dispatch({
+            type: canvasTypes.CloneElement,
+            payload: { key, position }
+        })
+    }
+}
+
 export const handleCleanCanvas = () => ({
     type: canvasTypes.CleanCanvas
 })

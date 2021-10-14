@@ -27,7 +27,7 @@ export const ItemsRepeater = () => {
     const count = baseItems ? baseItems.length : 0
 
     useEffect(() => {
-        dispatch(startAddSelectOptions('Items','idOpt'))
+        dispatch(startAddSelectOptions('Items', 'idOpt'))
     }, [])
 
     return (
@@ -52,17 +52,27 @@ const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
-    const {name, quantity } = normalForm.baseItems[position]
+    const { name, quantity } = normalForm.baseItems[position]
 
     const decreaseCount = () => {
         dispatch(handleLessPrice(position))
         dispatch(removeRepeaterRegister('baseItems', position))
     }
 
+    const handleInputChange = ({ target }) => {
+        const obj = {
+            name: target.name,
+            value: target.value
+        }
+        dispatch(editRepeaterRegister('baseItems', position, obj))
+        //    dispatch(handleSearchOutID2('Items', position, 'extraItems',"extraItems"))
+        // dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
+    }
+
     return (
 
-        <div className="row border-bottom pb-1 mt-1 mx-1">
-            <div className="col-md-4">
+        <div className="row border-bottom pb-1 mx-1">
+            <div className="col-md-5">
                 <label className="control-label">Producto</label>
                 <input
                     type="text"
@@ -71,14 +81,15 @@ const ItemsForm = ({ position }) => {
                     value={name}
                     readOnly />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-5">
                 <label className="control-label">Cantidad</label>
                 <input
                     type="text"
                     name="quantity"
                     className="form-control"
                     value={quantity}
-                    readOnly />
+                    onChange={handleInputChange}
+                />
             </div>
 
             <div className="col-md-2">

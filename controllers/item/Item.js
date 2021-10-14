@@ -1,3 +1,4 @@
+const ItemsColorsDao = require('../../dao/item/ItemColorsDao')
 const ItemDao = require('../../dao/item/ItemDao')
 const ProductFamilyDao = require('../../dao/item/ProductFamilyDao')
 const ProductPlaceDao = require('../../dao/setup/item/PlaceDao')
@@ -5,6 +6,7 @@ const ProductPlaceDao = require('../../dao/setup/item/PlaceDao')
 const itemDao = new ItemDao()
 const productFamilyDao = new ProductFamilyDao()
 const productPlaceDao = new ProductPlaceDao()
+const itemsColorsDao = new ItemsColorsDao()
 
 //exports.selectByIdType = async (req, res) =>{
 //    const id = parseInt(req.params.id, 10)
@@ -84,7 +86,13 @@ exports.insert = async (req, res) => {
     try {
         /** INSERT ITEM */
         const item = req.body.form
-        await itemDao.insert(item)
+        const colors = req.body.form.idColor
+
+        delete item.idColor
+
+        const insert = await itemDao.insert(item)
+
+        itemDao.multipleAccess(colors, itemsColorsDao, insert.insertId, 'idItem')
 
         res.json({ ok: true })
     } catch (error) {
@@ -107,13 +115,13 @@ exports.update = async (req, res) => {
     }
 }
 
-exports.findNId= async (req, res) => {
+exports.findNId = async (req, res) => {
     try {
-       
-        res.json({ 
+
+        res.json({
             ok: true,
-            data: await  itemDao.findAutoincrementID()
-         })
+            data: await itemDao.findAutoincrementID()
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

@@ -59,13 +59,25 @@ const canvasReducer = (state = { ...initialState }, action) => {
                 rotation: obj.rotation
             }
 
-            // console.log({
-            //     ...newState,
-            //     [key]: [...newState[key]]
-            // })
             return {
                 ...newState,
                 [key]: [...newState[key]]
+            }
+        case canvasTypes.CloneElement:
+
+            const ClonedElement = {
+                ...state[action.payload.key][action.payload.position],
+                x: state[action.payload.key][action.payload.position]['x'] + 50,
+                y: state[action.payload.key][action.payload.position]['y'] + 50,
+                pos: state[action.payload.key].length
+            }
+
+            return {
+                ...state,
+                [action.payload.key]: [
+                    ...state[action.payload.key],
+                    ClonedElement
+                ]
             }
         case canvasTypes.SaveCanvas:
             console.log('SaveCanvas')

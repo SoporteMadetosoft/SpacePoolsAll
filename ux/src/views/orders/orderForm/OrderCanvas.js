@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Stage, Layer, Image, Rect, Transformer } from 'react-konva'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import { editDropedElement, setInitialCanvas, setNewCanvasPosition } from '../../../redux/actions/canvas'
+import { cloneCanvasElement, editDropedElement, setInitialCanvas, setNewCanvasPosition } from '../../../redux/actions/canvas'
 
-const ImageCanvas = ({ el, i, imageObj, isSelected, onChange, onDragEnd, onSelect }) => {
+const ImageCanvas = ({ el, i, imageObj, isSelected, onChange, onDragEnd, onSelect, onClone }) => {
     const shapeRef = useRef()
     const trRef = useRef()
 
@@ -29,6 +29,7 @@ const ImageCanvas = ({ el, i, imageObj, isSelected, onChange, onDragEnd, onSelec
                 image={imageObj}
                 onDragEnd={onDragEnd}
                 onClick={onSelect}
+                onDblClick={onClone}
                 onTransformEnd={(e) => {
                     const node = shapeRef.current
                     onChange({
@@ -82,6 +83,10 @@ export const OrderCanvas = () => {
         dispatch(editDropedElement('elements', e.pos, newEl))
     }
 
+    const handleOnDblClick = (e) => {
+        dispatch(cloneCanvasElement('elements', e.target.attrs.pos))
+    }
+
     const checkDeselect = (e) => {
         // deselect when clicked on empty area
         const clickedOnEmpty = e.target === e.target.getStage()
@@ -89,6 +94,8 @@ export const OrderCanvas = () => {
             selectShape(null)
         }
     }
+
+
 
     return (
         <>
@@ -123,7 +130,7 @@ export const OrderCanvas = () => {
                                 isSelected={i === selectedId}
                                 onDragEnd={handleDragEnd}
                                 onChange={handleOnChange}
-
+                                onClone={handleOnDblClick}
                                 onSelect={() => {
                                     selectShape(i)
                                 }}

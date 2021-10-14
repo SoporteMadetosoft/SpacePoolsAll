@@ -32,7 +32,7 @@ export const ExtraItemsRepeater = () => {
     useEffect(() => {
         dispatch(startAddSelectPoolItems('Items', 'Items', 'name', 2))
     }, [])
-    
+
     return (
         <>
             <h1 className="card-title">Productos Extras</h1>
@@ -65,21 +65,21 @@ const ItemsForm = ({ position }) => {
     const { idItem, quantity } = normalForm.extraItems[position]
     const SelectValue = idItem ? deconstructSelect(idItem) : null
     const decreaseCount = () => {
-      //  dispatch(deleteCanvasElement(position))
+        //  dispatch(deleteCanvasElement(position))
         dispatch(removeRepeaterRegister('extraItems', position))
-        dispatch(handleCalculateTotalCost("extraItems",""))
-        
+        dispatch(handleCalculateTotalCost("extraItems", ""))
+
     }
 
     const handleInputChange = ({ target }) => {
-         //cantidad (obj.name), items(key), position (position)
+        //cantidad (obj.name), items(key), position (position)
         const obj = {
             name: target.name,
             value: target.value
         }
         dispatch(editRepeaterRegister('extraItems', position, obj))
-        dispatch(handleSearchOutID2('Items', position, 'extraItems',"extraItems"))
-       // dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
+        dispatch(handleSearchOutID2('Items', position, 'extraItems', "extraItems"))
+        // dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
     }
 
 
@@ -93,9 +93,9 @@ const ItemsForm = ({ position }) => {
             editRepeaterRegister('extraItems', position, obj)
         )
         dispatch(
-            handleSearchOutID2('Items', position, 'extraItems',"extraItems")
-            )
-      //  dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
+            handleSearchOutID2('Items', position, 'extraItems', "extraItems")
+        )
+        //  dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
     }
     return (
 
@@ -125,9 +125,9 @@ const ItemsForm = ({ position }) => {
                     <X size={14} />
                 </Button.Ripple>
             </div>
-        </div > 
+        </div >
 
     )
-    
+
 
 }

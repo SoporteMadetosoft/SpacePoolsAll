@@ -35,7 +35,6 @@ export const OrderFormScreen = () => {
 
 
     useEffect(() => {
-
         if (id) {
             dispatch(handleStartEditing('Orders', id))
         } else {
@@ -46,7 +45,6 @@ export const OrderFormScreen = () => {
 
     useEffect(() => {
         if (id) {
-            // dispatch(setNewCanvasPosition())
             dispatch(getCItemsByOrderId('Orders', id))
         } else {
             dispatch(setInitialCanvas())

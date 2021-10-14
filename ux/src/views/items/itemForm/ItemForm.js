@@ -15,6 +15,7 @@ import * as yup from "yup"
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import ReactSelect from 'react-select'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+import { undoMultiSelect } from '../../../utility/helpers/undoMultiSelect'
 
 const ValidationSchema = yup.object().shape({
     valueType: yup.string().required()
@@ -42,7 +43,7 @@ export const ItemForm = () => {
     const { normalForm, selectReducer } = useSelector(state => state)
 
     const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
-    console.log(errors)
+
     const { description } = normalForm
     const { ItemType } = selectReducer
 
@@ -72,16 +73,14 @@ export const ItemForm = () => {
             idVendor: exceptionController(form.idVendor),
             itemType: exceptionController(form.itemType),
             idFamily: exceptionController(form.idFamily),
-            idPlace: exceptionController(form.idPlace)
-
+            idPlace: exceptionController(form.idPlace),
+            idColor: undoMultiSelect(form.idColor, 'idColor')
         }
 
         save('Items', id, prettyForm)
-        dispatch(handleCleanUp())
-        history.push('/items')
+        // dispatch(handleCleanUp())
+        // history.push('/items')
     }
-
-    console.log(valueType)
 
     return (
         <Form onSubmit={handleSubmit(submit)}>
@@ -137,13 +136,14 @@ export const ItemForm = () => {
                         <Select name="idPlace" label="Ubicación" endpoint="Place" />
                     </div>
                     <div className="col-md-3">
+                        <Select name="idColor" label="Colores" endpoint="Colors" isMulti={true} />
+                    </div>
+                    <div className="col-md-3">
                         <Input type="number" name="minimumStock" label="Stock mínimo" />
                     </div>
                     <div className="col-md-3">
                         <Input type="number" name="stock" label="Stock" />
                     </div>
-
-
                     <div className="col-md-3">
                         <Input type="number" name="priceVATout" label="Precio sin IVA" />
                     </div>

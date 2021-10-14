@@ -5,6 +5,7 @@ const ProductPlaceDao = require("../setup/item/PlaceDao");
 const ProductFamilyDao = require("../item/ProductFamilyDao");
 const ItemTypeDao = require("../global/ItemTypeDao");
 const VendorDao = require("../vendor/VendorDao");
+const ItemsColorsDao = require("./ItemColorsDao");
 //const PurchaseItemsDao = require("../purchase/ItemDao");
 
 class ItemDao extends GenericDao {
@@ -14,7 +15,7 @@ class ItemDao extends GenericDao {
         this.ProductPlaceDao = new ProductPlaceDao()
         this.ItemTypeDao = new ItemTypeDao()
         this.VendorDao = new VendorDao()
-        //this.PurchaseItemsDao = new PurchaseItemsDao()
+        this.ItemsColorsDao = new ItemsColorsDao()
     }
 
     findByItemType(itemType) {
@@ -82,43 +83,44 @@ class ItemDao extends GenericDao {
         const list = {
             ...data,
         }
-      // this.OrderDao = new OrderDao()
-      // this.ExtraItemDao = new ExtraItemDao()
+        // this.OrderDao = new OrderDao()
+        // this.ExtraItemDao = new ExtraItemDao()
 
-      // let activates = await this.OrderDao.findActiveOrders()
+        // let activates = await this.OrderDao.findActiveOrders()
 
-      // for (let i = 0; i < activates.length; i++) {
-      //     console.log(await this.ExtraItemDao.countItemById(data.id, activates[i]))
-      // }
+        // for (let i = 0; i < activates.length; i++) {
+        //     console.log(await this.ExtraItemDao.countItemById(data.id, activates[i]))
+        // }
 
         const { id, itemCode, name, description, stock } = list
         const nObj = { id: id, itemCode: itemCode, name: name, description: description, stock: stock }
         return nObj
     }
 
-    findNameById(id){
+    findNameById(id) {
+        // console.log(`SELECT name FROM item WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT name FROM item WHERE id = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    
+
                     resolve(result[0].name)
                 }
             });
         })
     }
 
-    findOneFieldById(field,id){
+    findOneFieldById(field, id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT ?? FROM item WHERE id = ?', [field,id], (err, result) => {
+            this.db.query('SELECT ?? FROM item WHERE id = ?', [field, id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    if(result !== undefined){
-                        resolve(result[0][field]) 
+                    if (result !== undefined) {
+                        resolve(result[0][field])
                     }
-                        
+
                 }
             })
         })

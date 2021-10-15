@@ -68,7 +68,6 @@ exports.update = (req, res) => {
 }
 
 exports.findNId = async (req, res) => {
-    console.log('A')
     try {
 
         res.json({

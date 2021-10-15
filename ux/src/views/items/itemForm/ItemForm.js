@@ -78,8 +78,8 @@ export const ItemForm = () => {
         }
 
         save('Items', id, prettyForm)
-        // dispatch(handleCleanUp())
-        // history.push('/items')
+        dispatch(handleCleanUp())
+        history.push('/items')
     }
 
     return (

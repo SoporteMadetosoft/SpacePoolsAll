@@ -1,25 +1,8 @@
 const ItemsColorsDao = require('../../dao/item/ItemColorsDao')
 const ItemDao = require('../../dao/item/ItemDao')
-const ProductFamilyDao = require('../../dao/item/ProductFamilyDao')
-const ProductPlaceDao = require('../../dao/setup/item/PlaceDao')
 
 const itemDao = new ItemDao()
-const productFamilyDao = new ProductFamilyDao()
-const productPlaceDao = new ProductPlaceDao()
 const itemsColorsDao = new ItemsColorsDao()
-
-//exports.selectByIdType = async (req, res) =>{
-//    const id = parseInt(req.params.id, 10)
-//    try {
-//        res.json({
-//            ok: true,
-//            data: await itemDao.findByItemType(id)
-//        })
-//    } catch (error) {
-//        console.log(error)
-//        return res.status(500).send(error);
-//    }
-//}
 
 
 exports.list = async (req, res) => {
@@ -106,7 +89,13 @@ exports.update = async (req, res) => {
     try {
         /** UPDATE ITEM */
         const item = req.body.form
+        const colors = req.body.form.idColor
+
+        delete item.idColor
+
         await itemDao.update(item)
+
+        itemDao.multipleAccess(colors, itemsColorsDao, item.id, 'idItem')
 
         res.json({ ok: true })
     } catch (error) {
@@ -125,5 +114,20 @@ exports.findNId = async (req, res) => {
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)
+    }
+}
+
+
+exports.selectByIdItem = async (req, res) => {
+    const id = parseInt(req.params.id, 10)
+
+    try {
+        res.json({
+            ok: true,
+            data: await itemsColorsDao.findByItemId(id)
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
     }
 }

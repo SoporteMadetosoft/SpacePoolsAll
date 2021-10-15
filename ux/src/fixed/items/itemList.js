@@ -31,7 +31,7 @@ export const itemList = [
     },
     {
         name: 'Stock en almacén',
-        selector: 'storeStock',
+        selector: 'stock',
         sortable: true,
         searchable: true,
         width: '20%'

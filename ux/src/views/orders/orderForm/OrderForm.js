@@ -111,7 +111,6 @@ export const OrderForm = () => {
 
     }
 
-
     const setIvaInRedux = (obj) => {
         dispatch(handleChangeController("idTax", { id: obj.value, name: obj.label }))
         preparePrice()

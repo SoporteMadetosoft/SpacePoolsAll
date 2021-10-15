@@ -80,16 +80,13 @@ const canvasReducer = (state = { ...initialState }, action) => {
                 ]
             }
         case canvasTypes.SaveCanvas:
-            console.log('SaveCanvas')
             return { ...initialState2 }
 
         case canvasTypes.CleanCanvas:
-            console.log('CleanCanvas')
             return { ...initialState2 }
 
 
         case canvasTypes.DeleteCanvasElement:
-            console.log('DeleteCanvasElement')
             delete state[action.payload.key][action.payload.position]
             return {
                 ...state

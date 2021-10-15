@@ -22,5 +22,6 @@ router.put('/item/update', ControllerItem.update);
 router.delete('/item/delete/:id', ControllerItem.delete);
 router.post('/item/find', ControllerItem.listByID);
 router.get('/item/findnid', ControllerItem.findNId)
+router.get('/item/selectByIdItem/:id', ControllerItem.selectByIdItem);
 
 module.exports = router;

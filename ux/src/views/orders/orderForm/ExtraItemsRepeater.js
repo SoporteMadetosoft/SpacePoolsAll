@@ -3,16 +3,19 @@ import Repeater from '@components/repeater'
 import { X, Plus } from 'react-feather'
 import { Button } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import Select from 'react-select'
+import ReactSelect from 'react-select'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { startAddSelectOptions, startAddSelectPoolItems } from '../../../redux/actions/selects'
 import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/actions/orders'
 import { deleteCanvasElement, prepareCanvasItemForm } from '../../../redux/actions/canvas'
+import axios from 'axios'
 
 const formStructure = {
     idItem: '',
+    idColor: '',
+    colores: '',
     cantidad: '1',
     coste: 0
 }
@@ -62,8 +65,11 @@ const ItemsForm = ({ position }) => {
 
     const { normalForm, selectReducer } = useSelector(state => state)
     const { Items } = selectReducer
-    const { idItem, quantity } = normalForm.extraItems[position]
+    const { idItem, colores, idColor, quantity } = normalForm.extraItems[position]
     const SelectValue = idItem ? deconstructSelect(idItem) : null
+    const SelectColor = idColor.name ? deconstructSelect(idColor) : null
+
+
     const decreaseCount = () => {
         //  dispatch(deleteCanvasElement(position))
         dispatch(removeRepeaterRegister('extraItems', position))
@@ -97,20 +103,44 @@ const ItemsForm = ({ position }) => {
         )
         //  dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
     }
+
+    const handleLoadColors = async (obj) => {
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/item/selectByIdItem/${obj.value}`)
+        const colors = data.map(option => ({ label: option.name, value: option.id }))
+        const objFinal = {
+            name: 'colores',
+            value: colors
+        }
+        dispatch(editRepeaterRegister('extraItems', position, objFinal))
+        handleSelectChange('idItem', obj)
+    }
+
     return (
 
 
-        <div className="row border-bottom pb-1 mx-1">
-            <div className="col-md-5">
+        <div className="row border-bottom pb-1">
+            <div className="col-md-4">
                 <label className="control-label">Artículo</label>
-                <Select
+                <ReactSelect
+                    placeholder="Artículo"
                     name="idItem"
-                    options={Items}
-                    onChange={(value) => { handleSelectChange('idItem', value) }}
                     value={SelectValue}
+                    options={Items}
+                    onChange={(obj) => {
+                        handleLoadColors(obj)
+                    }} />
+            </div>
+            <div className="col-md-3">
+                <label className="control-label">Color</label>
+                <ReactSelect
+                    placeholder="Color"
+                    name="idColor"
+                    options={colores}
+                    onChange={(value) => { handleSelectChange('idColor', value) }}
+                    value={SelectColor}
                 />
             </div>
-            <div className="col-md-5">
+            <div className="col-md-3">
                 <label className="control-label">Cantidad</label>
 
                 <input

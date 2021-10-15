@@ -48,7 +48,6 @@ class OrderDao extends GenericDao {
             email: await this.CustomerDataDao.findOneFieldById("email", data.id)
 
         }
-
         return order2
     }
 
@@ -56,9 +55,9 @@ class OrderDao extends GenericDao {
         let customer = await this.CustomerDao.findCustomer(data.idCustomer);
         const list = {
             ...data,
-            customerName: customer != undefined ? customer.comercialName : 'p',
-            customerPhone: customer != undefined ? customer.phone : 'p',
-            customerEmail: customer != undefined ? customer.email : 'p',
+            customerName: customer !== undefined ? customer.comercialName : '',
+            customerPhone: customer !== undefined ? customer.phone : '',
+            customerEmail: customer !== undefined ? customer.email : '',
 
         }
 

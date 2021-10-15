@@ -76,15 +76,13 @@ exports.update = async (req, res) => {
     try {
         /** UPDATE PRODUCT FAMILY */
         const familia = req.body.form
-        console.log(familia)
         if (familia.id === familia.parent) {
             return res.status(500).send()
         }
         if (familia.parent === null) {
-            console.log('holaaaa')
             await productFamilyDao.setParentNullById(familia.id)
             delete familia.parent
-            
+
         }
         productFamilyDao.update(familia)
 

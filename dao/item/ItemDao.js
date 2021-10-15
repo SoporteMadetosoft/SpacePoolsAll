@@ -74,9 +74,10 @@ class ItemDao extends GenericDao {
             idVendor: await this.VendorDao.findById(data.idVendor),
             itemType: await this.ItemTypeDao.findById(data.itemType),
             idFamily: await this.ProductFamilyDao.findById(data.idFamily),
-            idPlace: await this.ProductPlaceDao.findById(data.idPlace)
+            idPlace: await this.ProductPlaceDao.findById(data.idPlace),
+            idColor: await this.ItemsColorsDao.findByItemId(data.id)
         }
-        return new Item(item)
+        return item
     }
 
     async mountList(data) {

@@ -11,6 +11,7 @@ const TaxesDao = require("../setup/general/TaxDao");
 const ItemDao = require("../item/ItemDao")
 const CanvasDao = require("../order/CanvasDao")
 
+
 class OrderDao extends GenericDao {
     constructor() {
         super(Order);
@@ -22,6 +23,7 @@ class OrderDao extends GenericDao {
         this.BaseItemDao = new BaseItemDao()
         this.TaxesDao = new TaxesDao()
         this.CanvasDao = new CanvasDao()
+        
 
     }
 
@@ -37,7 +39,9 @@ class OrderDao extends GenericDao {
             idPool: { id: data.idPool, name: (await this.PoolDao.findPoolNameBy(data.idPool)) },
             idTax: { id: data.idTax, name: (await this.TaxesDao.findTaxNameBy(data.idTax)) },
             idCustomer: { id: data.idCustomer, comercialName: (await this.CustomerDao.findCustomerNameBy(data.idCustomer)) },
-            canvasItems: await this.CanvasDao.findByOrderId(data.id)
+            canvasItems: await this.CanvasDao.findByOrderId(data.id),
+            
+            
         }
         let order2 = new Order(order)
         order2 = {
@@ -53,20 +57,33 @@ class OrderDao extends GenericDao {
 
     async mountList(data) {
         let customer = await this.CustomerDao.findCustomer(data.idCustomer);
+        
         const list = {
             ...data,
-            customerName: customer != undefined ? customer.comercialName : 'p',
-            customerPhone: customer != undefined ? customer.phone : 'p',
-            customerEmail: customer != undefined ? customer.email : 'p',
+            customerName: customer !== undefined ? customer.comercialName : 'p',
+            customerPhone: customer !== undefined ? customer.phone : 'p',
+            customerEmail: customer !== undefined ? customer.email : 'p',
+             
 
         }
 
-        const { id, orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate, price } = list
+        const { id, orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate, price, state} = list
 
         const newOrderDate = this.datetimeToEuropeDate(orderDate)
         const newDliveryDate = this.datetimeToEuropeDate(deliveryDate)
 
-        const nObj = { id: id, deliveryTime: deliverySchedulerStart + " - " + deliverySchedulerEnd, orderCode: orderCode, customerName: customerName, customerPhone: customerPhone, customerEmail: customerEmail, orderDate: newOrderDate, deliveryDate: newDliveryDate, price: price }
+        const nObj = { id: id,
+         deliveryTime: deliverySchedulerStart + " - " + deliverySchedulerEnd, 
+        orderCode: orderCode, 
+        customerName: customerName, 
+        customerPhone: customerPhone, 
+        customerEmail: customerEmail, 
+        orderDate: newOrderDate, 
+        deliveryDate: newDliveryDate, 
+        price: price,
+        state: state,
+        
+         }
 
         return nObj
     }
@@ -98,6 +115,18 @@ class OrderDao extends GenericDao {
                     }
 
                     resolve(objList)
+                }
+            })
+        })
+    }
+    updateOrderState(id) {
+        
+        return new Promise((resolve, reject) => {
+            this.db.query('UPDATE orders SET state = 1 WHERE id = ?',[id], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {                    
+                    resolve('')
                 }
             })
         })

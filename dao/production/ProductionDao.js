@@ -30,10 +30,11 @@ class ProductionDao extends GenericDao {
             deliverySchedulerStart: order != undefined ? order.deliverySchedulerStart : '',
             deliverySchedulerEnd: order != undefined ? order.deliverySchedulerEnd : '',
             observations: order != undefined ? order.observations : '',
-            pools: pool != undefined ? pool.fabricationName : ''
+            pools: pool != undefined ? pool.fabricationName : '',
+            
 
         }
-        const { id, orderCode, pools, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd, observations, isStarted } = list
+        const { id, orderCode, pools, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd, observations, isStarted, idProductionStatus } = list
 
         const newOrderDate = this.datetimeToEuropeDate(orderDate)
         const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)
@@ -46,7 +47,8 @@ class ProductionDao extends GenericDao {
             deliveryDate: newDeliveryDate,
             deliveryTime: deliverySchedulerStart + " - " + deliverySchedulerEnd,
             observations: observations,
-            isStarted: isStarted
+            isStarted: isStarted,
+            idProductionStatus: idProductionStatus
         }
         return nObj
     }

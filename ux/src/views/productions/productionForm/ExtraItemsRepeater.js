@@ -72,17 +72,20 @@ const ItemsForm = ({ position }) => {
             handleSearchOutID2('Items', position, 'extraItems', "extraItems")
         )
     }
+    console.log(SelectValue)
     return (
 
-
+            
         <div className="row border-bottom pb-1 mx-1">
             <div className="col-md-6">
                 <label className="control-label">Artículo</label>
-                <Select
+                <input
+                    type="text"
                     name="idItem"
                     options={Items}
-                    onChange={(value) => { handleSelectChange('idItem', value) }}
-                    value={SelectValue}
+                    className="form-control"
+                    value={SelectValue.label}
+                    readOnly
                 />
             </div>
             <div className="col-md-6">
@@ -92,8 +95,8 @@ const ItemsForm = ({ position }) => {
                     type="number"
                     name="quantity"
                     className="form-control"
-                    onChange={handleInputChange}
-                    value={quantity} />
+                    value={quantity}
+                    readOnly />
             </div>
 
         </div >

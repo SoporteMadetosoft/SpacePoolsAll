@@ -148,3 +148,15 @@ exports.findNId = async (req, res) => {
         return res.status(500).send(error)
     }
 }
+
+exports.switchState = async (req, res) => {
+    
+    try {
+        await orderDao.updateOrderState(req.body.id)
+        res.json({ ok: true })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+
+}

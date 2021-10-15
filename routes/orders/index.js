@@ -12,6 +12,7 @@ router.put('/update', ControllerOrder.update);
 router.delete('/delete/:id', ControllerOrder.delete);
 router.post('/find', ControllerOrder.listByID);
 router.get('/findnid', ControllerOrder.findNId)
+router.put('/switchState', ControllerOrder.switchState);
 
 router.get('/customerData/list', ControllerCustomerData.list);
 router.post('/customerData/insert', ControllerCustomerData.insert);
@@ -26,5 +27,6 @@ router.delete('/extraItems/delete/:id', ControllerExtraItem.delete);
 router.post('/extraItems/find', ControllerExtraItem.listByID);
 
 router.get('/canvas/list/:id', ControllerOrder.listCItems);
+
 
 module.exports = router;

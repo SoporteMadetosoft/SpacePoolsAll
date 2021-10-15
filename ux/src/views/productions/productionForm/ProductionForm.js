@@ -88,9 +88,6 @@ export const ProductionForm = () => {
                         <label className="control-label">Observaciones</label>
                         <h6> {observations} </h6>
                     </div>
-                    <div className="col-md-4">
-                        <Select name="state" placeholder="Estado" label="Estado" endpoint="ProductionStatus" labelName="name" />
-                    </div>
 
                 </div>
             </div>

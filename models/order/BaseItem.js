@@ -5,11 +5,13 @@ class BaseItem {
         id,
         idOrder,
         idItem,
+        idColor,
         quantity
     }) {
         this.id = id
         this.idOrder = idOrder
         this.idItem = idItem
+        this.idColor = idColor
         this.quantity = quantity
     }
     get table() {

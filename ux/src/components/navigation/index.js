@@ -27,7 +27,7 @@ export default [
     ...items,
     ...purchases,
     ...orders,
-    // ...delivery,
+    ...delivery,
     ...productions,
     ...calendar,
     ...headerAdmin,

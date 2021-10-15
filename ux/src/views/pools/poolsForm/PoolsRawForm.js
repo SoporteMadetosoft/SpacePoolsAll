@@ -3,16 +3,19 @@ import Repeater from '@components/repeater'
 import { X, Plus } from 'react-feather'
 import { Button } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import Select from 'react-select'
+import ReactSelect from 'react-select'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { startAddSelectOptions, startAddSelectPoolItems } from '../../../redux/actions/selects'
 import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/actions/orders'
+import axios from 'axios'
 
 
 const formStructure = {
     idItem: '',
+    idColor: '',
+    colores: '',
     quantity: '1',
     coste: 0
 }
@@ -59,17 +62,16 @@ export const PoolsRawForm = () => {
 const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
-
     const { normalForm, selectReducer } = useSelector(state => state)
     const { Raws } = selectReducer
-
-    const { idItem, quantity } = normalForm.raws[position]
-
+    const { idItem, colores, idColor, quantity } = normalForm.raws[position]
     const SelectValue = idItem.name ? deconstructSelect(idItem) : null
+    const SelectColor = idColor.name ? deconstructSelect(idColor) : null
+
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('raws', position))
-        dispatch(handleCalculateTotalCost("items","raws"))
+        dispatch(handleCalculateTotalCost("items", "raws"))
 
     }
 
@@ -79,10 +81,10 @@ const ItemsForm = ({ position }) => {
             value: target.value
         }
         dispatch(editRepeaterRegister('raws', position, obj))
-        dispatch(handleSearchOutID2('Items', position, 'raws','raws','items'))
-       // dispatch(handleCalculateTotalCost("items", "raws",1))
+        dispatch(handleSearchOutID2('Items', position, 'raws', 'raws', 'items'))
+        // dispatch(handleCalculateTotalCost("items", "raws",1))
     }
-    
+
 
     const handleSelectChange = (key, element) => {
         const el = constructSelect(element)
@@ -91,22 +93,47 @@ const ItemsForm = ({ position }) => {
             value: el
         }
         dispatch(editRepeaterRegister('raws', position, obj))
-        dispatch(handleSearchOutID2('Items', position, 'raws', 'raws','items'))
-
+        dispatch(handleSearchOutID2('Items', position, 'raws', 'raws', 'items'))
     }
+
+    const handleLoadColors = async (obj) => {
+
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/item/selectByIdItem/${obj.value}`)
+        const colors = data.map(option => ({ label: option.name, value: option.id }))
+        const objFinal = {
+            name: 'colores',
+            value: colors
+        }
+        dispatch(editRepeaterRegister('raws', position, objFinal))
+        handleSelectChange('idItem', obj)
+    }
+    console.log(colores.length)
     return (
 
-        <div className="row border-bottom pb-1 mx-1">
-            <div className="col-md-5">
+        <div className="row border-bottom pb-1">
+            <div className="col-md-4">
                 <label className="control-label">Materia prima</label>
-                <Select
+                <ReactSelect
+                    placeholder="Materia prima"
                     name="idItem"
                     options={Raws}
-                    onChange={(value) => { handleSelectChange('idItem', value) }}
+                    onChange={(obj) => {
+                        handleLoadColors(obj)
+                    }}
                     value={SelectValue}
                 />
             </div>
-            <div className="col-md-5">
+            <div className="col-md-3">
+                <label className="control-label">Color</label>
+                <ReactSelect
+                    placeholder="Color"
+                    name="idColor"
+                    options={colores}
+                    onChange={(value) => { handleSelectChange('idColor', value) }}
+                    value={SelectColor}
+                />
+            </div>
+            <div className="col-md-3">
                 <label className="control-label">Cantidad</label>
                 <input
                     type="number"

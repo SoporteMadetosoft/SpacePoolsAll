@@ -143,8 +143,6 @@ export const TrailersForm = () => {
         })
     }
 
-    console.log(valueModel)
-
     return (
         <Form onSubmit={handleSubmit(submit)}>
             <div className="card">

@@ -3,19 +3,15 @@ import Repeater from '@components/repeater'
 import { X, Plus } from 'react-feather'
 import { Button } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import Select from 'react-select'
+import ReactSelect from 'react-select'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import React, { useEffect } from 'react'
 
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
-import { handleLessPrice } from '../../../redux/actions/orders'
+import { handleLessPrice, handleSearchOutID2 } from '../../../redux/actions/orders'
 import { deleteCanvasElement } from '../../../redux/actions/canvas'
-
-const formStructure = {
-    id: '',
-    quantity: ''
-}
+import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
 export const ItemsRepeater = () => {
 
@@ -27,7 +23,7 @@ export const ItemsRepeater = () => {
     const count = baseItems ? baseItems.length : 0
 
     useEffect(() => {
-        dispatch(startAddSelectOptions('Items','idOpt'))
+        dispatch(startAddSelectOptions('Items', 'idOpt'))
     }, [])
 
     return (
@@ -52,16 +48,39 @@ const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
-    const {name, quantity } = normalForm.baseItems[position]
+    const { name, colores, idColor, quantity } = normalForm.baseItems[position]
+    const SelectColor = idColor.name ? deconstructSelect(idColor) : null
+
 
     const decreaseCount = () => {
         dispatch(handleLessPrice(position))
         dispatch(removeRepeaterRegister('baseItems', position))
     }
 
+    const handleInputChange = ({ target }) => {
+        const obj = {
+            name: target.name,
+            value: target.value
+        }
+        dispatch(editRepeaterRegister('baseItems', position, obj))
+        //    dispatch(handleSearchOutID2('Items', position, 'extraItems',"extraItems"))
+        // dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
+    }
+
+    const handleSelectChange = (key, element) => {
+        const el = constructSelect(element)
+        const obj = {
+            name: key,
+            value: el
+        }
+        dispatch(editRepeaterRegister('baseItems', position, obj))
+        // dispatch(handleSearchOutID2('Items', position, 'items', 'raws', 'items'))
+    }
+
+
     return (
 
-        <div className="row border-bottom pb-1 mt-1 mx-1">
+        <div className="row border-bottom pb-1">
             <div className="col-md-4">
                 <label className="control-label">Producto</label>
                 <input
@@ -71,14 +90,27 @@ const ItemsForm = ({ position }) => {
                     value={name}
                     readOnly />
             </div>
-            <div className="col-md-4">
+
+            <div className="col-md-3">
+                <label className="control-label">Color</label>
+                <ReactSelect
+                    placeholder="Color"
+                    name="idColor"
+                    options={colores}
+                    onChange={(value) => { handleSelectChange('idColor', value) }}
+                    value={SelectColor}
+                />
+            </div>
+
+            <div className="col-md-3">
                 <label className="control-label">Cantidad</label>
                 <input
                     type="text"
                     name="quantity"
                     className="form-control"
                     value={quantity}
-                    readOnly />
+                    onChange={handleInputChange}
+                />
             </div>
 
             <div className="col-md-2">

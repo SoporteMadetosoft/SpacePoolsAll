@@ -35,7 +35,6 @@ export const OrderFormScreen = () => {
 
 
     useEffect(() => {
-
         if (id) {
             dispatch(handleStartEditing('Orders', id))
         } else {
@@ -46,7 +45,6 @@ export const OrderFormScreen = () => {
 
     useEffect(() => {
         if (id) {
-            // dispatch(setNewCanvasPosition())
             dispatch(getCItemsByOrderId('Orders', id))
         } else {
             dispatch(setInitialCanvas())
@@ -89,9 +87,9 @@ export const OrderFormScreen = () => {
             canvas: canvas.elements,
             customerData: inputExceptionController(customerDataObj),
             production: inputExceptionController(productionObj),
-            baseItems: form.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity })),
-            extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity })),
-            canvas: canvas.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, imageUrl: el.imageUrl }))
+            baseItems: form.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity, idColor: exceptionController(bI.idColor) })),
+            extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity, idColor: exceptionController(eI.idColor) })),
+            canvas: canvas.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, rotation: el.rotation }))
         }
 
         save('Orders', id, prettyForm)

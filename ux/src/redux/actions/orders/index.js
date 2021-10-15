@@ -83,8 +83,6 @@ export const handleSearchOutID2 = (endpoint, position, arr, arrCalcu1, arrCalcu2
             }
             dispatch(editRepeaterRegister(arr, position, obj))
 
-
-
             //calcular e introducir coste total
             let isPool = 0
             if (arrCalcu1 === 'raws' && arrCalcu2 === 'items') {
@@ -110,16 +108,22 @@ export const createItemRepeatersByPool = (idPool) => {
 
 
         const pool = await getFormData("Pools", idPool)
+        console.log(pool)
+
         let go = true
         num = 0
         while (go) {
             if (pool.allItems[num]) {
+
                 const formStructure = {
                     idItem: pool.allItems[num].idItem.id,
                     quantity: pool.allItems[num].quantity,
+                    colores: pool.allItems[num].colores,
+                    idColor: pool.allItems[num].idColor,
                     coste: pool.allItems[num].coste,
                     name: pool.allItems[num].idItem.name
                 }
+
                 dispatch(addRepeaterRegister('baseItems', formStructure))
             } else go = false
             num++

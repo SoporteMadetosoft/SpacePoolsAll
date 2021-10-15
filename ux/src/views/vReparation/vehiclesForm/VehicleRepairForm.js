@@ -22,6 +22,7 @@ export const VehicleRepairForm = () => {
     const idRepair = id !== undefined ? id : normalForm.idRepair
     
 
+
     // const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { description } = normalForm
@@ -56,7 +57,6 @@ export const VehicleRepairForm = () => {
 
     return (
         // <Form onSubmit={handleSubmit(submit)}>
-        
         <Form onSubmit={submit}>
             <div className="card">
                 <div className="row card-body">

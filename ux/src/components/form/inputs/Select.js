@@ -26,10 +26,20 @@ export const Select = ({ name, label, className, placeholder = label, isMulti = 
     const normalForm = useSelector(state => state.normalForm)
     const { [endpoint]: options } = useSelector(state => state.selectReducer)
 
-    const value = normalForm[name] ? deconstructSelect(normalForm[name], labelName) : null
+    let value
 
-    const handleSelectChange = ({ value, label }) => {
-        dispatch(handleChangeController(name, { id: value, [labelName]: label }))
+    let handleSelectChange
+    if (isMulti) {
+        value = normalForm[name] ? normalForm[name].map(element => ({ value: element.id, label: element[labelName] })) : null
+        handleSelectChange = (value) => {
+            const newValues = value.map(element => ({ id: element.value, name: element.label }))
+            dispatch(handleChangeController(name, newValues))
+        }
+    } else {
+        value = normalForm[name] ? { label: normalForm[name][labelName], value: normalForm[name].id } : null
+        handleSelectChange = ({ value, label }) => {
+            dispatch(handleChangeController(name, { id: value, [labelName]: label }))
+        }
     }
 
     return (

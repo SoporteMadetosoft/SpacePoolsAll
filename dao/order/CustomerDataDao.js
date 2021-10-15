@@ -42,9 +42,10 @@ class CustomerDataDao extends GenericDao {
         })
     }
 
-    findOneFieldById(field,id){
+    findOneFieldById(field, id) {
+        // console.log(`SELECT ${field} FROM orders_customer_data WHERE idOrder = ${id}`)
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT ?? FROM orders_customer_data WHERE idOrder = ?', [field,id], (err, result) => {
+            this.db.query('SELECT ?? FROM orders_customer_data WHERE idOrder = ?', [field, id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

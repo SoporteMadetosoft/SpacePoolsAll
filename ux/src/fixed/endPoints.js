@@ -25,7 +25,8 @@ const setupEndpoints = {
     Brand: '/setup/vehicles/brand',
     Model: '/setup/vehicles/brandModel',
 
-    Place: '/setup/items/place'
+    Place: '/setup/items/place',
+    Colors: '/setup/items/colors'
 
 
 }

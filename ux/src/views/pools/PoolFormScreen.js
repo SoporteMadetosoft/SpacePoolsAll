@@ -39,8 +39,8 @@ export const PoolFormScreen = () => {
             ...form,
             cost: price,
             idStatus: exceptionController(form.idStatus),
-            items: form.items.map(item => ({ quantity: item.quantity, idItem: exceptionController(item.idItem) })),
-            raws: form.raws.map(raw => ({ quantity: raw.quantity, idItem: exceptionController(raw.idItem) }))
+            items: form.items.map(item => ({ quantity: item.quantity, idItem: exceptionController(item.idItem), idColor: exceptionController(item.idColor) })),
+            raws: form.raws.map(raw => ({ quantity: raw.quantity, idItem: exceptionController(raw.idItem), idColor: exceptionController(raw.idColor) }))
         }
         save('Pools', id, prettyForm)
         dispatch(handleCleanUp())

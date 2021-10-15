@@ -102,7 +102,7 @@ export const ViewDeliveryForm = () => {
             </div>
             <div className="card">
                 <div className="card-body">
-                    <ProductionCanvas />
+                    {/* <ProductionCanvas /> */}
                 </div>
             </div>
         </>

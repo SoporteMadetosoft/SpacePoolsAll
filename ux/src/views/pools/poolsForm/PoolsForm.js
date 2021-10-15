@@ -9,12 +9,12 @@ import { handleCalculateTotalCost } from '../../../redux/actions/orders'
 import { GetSetNextId, handleChangeController } from '../../../redux/actions/normalForm'
 
 export const PoolsForm = () => {
-    let {poolCode} = useSelector(state =>  state.normalForm)
+    let { poolCode } = useSelector(state => state.normalForm)
 
     const { normalForm } = useSelector(state => state)
 
-    const {price} = useSelector(state => state.ordersReducer)
-    const {cost} = useSelector(state => state.normalForm)
+    const { price } = useSelector(state => state.ordersReducer)
+    const { cost } = useSelector(state => state.normalForm)
 
     const PoolPrice = normalForm.price
 
@@ -27,34 +27,29 @@ export const PoolsForm = () => {
     }, [])
 
     useEffect(() => {
-        dispatch(handleCalculateTotalCost('raws','items',1))
+        dispatch(handleCalculateTotalCost('raws', 'items', 1))
     }, [normalForm])
 
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
-        dispatch(handleCalculateTotalCost('raws','items',1))
+        dispatch(handleCalculateTotalCost('raws', 'items', 1))
     }
-    
+
 
     return (
 
         <>
-            <script>
-                {/* window.addEventListener("load", function(event) {
-                    calculateAfterLoad()
-                }) */}
-            </script>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                    <label className="control-label">Nº Piscina</label>
+                        <label className="control-label">Nº Piscina</label>
                         <input
-                        className={`form-control`}
-                        name="poolCode"
-                        value={poolCode}
-                        readOnly
-                    />
+                            className={`form-control`}
+                            name="poolCode"
+                            value={poolCode}
+                            readOnly
+                        />
                     </div>
                     <div className="col-md-4">
                         <Input name="fabricationName" placeholder="Nombre  de fabricación" label="Nombre  de fabricación" />
@@ -88,15 +83,15 @@ export const PoolsForm = () => {
                     </div>
                     <div className="col-md-3">
 
-                    <label className="control-label">Cost</label>
-                    <input
-                        className={`form-control`}
-                        name="cost"
-                        value={price}
-                        readOnly
-        
+                        <label className="control-label">Cost</label>
+                        <input
+                            className={`form-control`}
+                            name="cost"
+                            value={price}
+                            readOnly
 
-                    />
+
+                        />
 
                     </div>
                 </div>

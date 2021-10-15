@@ -70,6 +70,7 @@ export const OrderForm = () => {
     const idPool = normalForm['idPool'] ? deconstructSelect(normalForm['idPool']) : ''
     const idCustomer = normalForm['idCustomer'] ? deconstructSelect(normalForm['idCustomer'], 'comercialName') : ''
     const orderDate2 = normalForm['orderDate'] ? normalForm['orderDate'] : ''
+    const productionDate = normalForm['productionDate'] ? normalForm['productionDate'] : ''
     const deliveryDate = normalForm['deliveryDate'] ? normalForm['deliveryDate'] : ''
 
     const handleInputChange = ({ target }) => {
@@ -109,7 +110,6 @@ export const OrderForm = () => {
         preparePrice()
 
     }
-
 
     const setIvaInRedux = (obj) => {
         dispatch(handleChangeController("idTax", { id: obj.value, name: obj.label }))
@@ -187,7 +187,6 @@ export const OrderForm = () => {
                             readOnly
                         />
                     </div>
-
                     <div className="col-md-2">
                         <label className="control-label">Fecha de pedido</label>
                         <input
@@ -195,6 +194,17 @@ export const OrderForm = () => {
                             type="date"
                             name="orderDate"
                             value={orderDate2}
+                            onChange={handleInputChange}
+                        />
+
+                    </div>
+                    <div className="col-md-2">
+                        <label className="control-label">Fecha de producción</label>
+                        <input
+                            className="form-control"
+                            type="date"
+                            name="productionDate"
+                            value={productionDate}
                             onChange={handleInputChange}
                         />
 

@@ -112,6 +112,12 @@ export default [
             title: 'Ubicaciones',
             icon: <Circle size={12} />,
             navLink: '/setup/items/place'
+          },
+          {
+            id: 'colors',
+            title: 'Colores',
+            icon: <Circle size={12} />,
+            navLink: '/setup/items/colors'
           }
         ]
       }

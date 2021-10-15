@@ -9,7 +9,8 @@ class Canvas {
         y,
         idOrder,
         width,
-        height
+        height,
+        rotation
     }) {
         this.id = id
         this.idElemento = idElemento
@@ -19,6 +20,7 @@ class Canvas {
         this.idOrder = idOrder
         this.width = width
         this.height = height
+        this.rotation = rotation
     }
     get table() {
         return this.#table;

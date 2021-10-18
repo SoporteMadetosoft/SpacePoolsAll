@@ -1,14 +1,17 @@
 import { FileText, MoreVertical, Trash } from "react-feather"
 import { useDispatch } from "react-redux"
 import { useParams } from 'react-router'
-
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
 import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRepairRegister } from "../../../redux/actions/custom"
-
 import { Link } from "react-router-dom"
+import { datetimeToEuropeDate } from "../../../utility/helpers/dates"
+import { changeToEuro } from "../../../utility/helpers/converterEuros"
+
+
+
 
 export const vRepairList = [
     {
@@ -20,9 +23,24 @@ export const vRepairList = [
     {
         name: 'Fecha',
         selector: 'date',
-        sortable: true,
-        searchable: true,
-        width: '22%'
+        width: '22%',
+
+        cell: row => {
+            console.log(row.date)
+            const fecha = row.date
+
+            return (
+                <>
+                    <div>
+                        <span>{datetimeToEuropeDate(new Date(fecha))}</span>
+
+                    </div>
+                </>
+            )
+
+
+
+        }
     },
     {
         name: 'Descripción',
@@ -43,7 +61,14 @@ export const vRepairList = [
         selector: 'cost',
         sortable: true,
         searchable: true,
-        width: '22%'
+        width: '22%',
+        cell: row => {
+            return (
+              <div>
+                <span>{changeToEuro(row.cost)}</span>
+              </div>
+            )
+          }
     },
     {
         name: '',

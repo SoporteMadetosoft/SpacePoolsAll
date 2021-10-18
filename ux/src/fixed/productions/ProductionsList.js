@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, Check, FileText, MoreVertical, Trash, X } from "react-feather"
+import { ChevronLeft,ChevronRight, Check, FileText, MoreVertical, Trash, X } from "react-feather"
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
@@ -17,7 +17,7 @@ import { endPoints } from "@fixed/endPoints"
 
 
 
-function renderSwitch(param) {
+const renderSwitch = (param) => {
 
   switch (param) {
     case 1:
@@ -106,7 +106,8 @@ export const ProductionsList = [
           {proceso_prod >= 2 && proceso_prod <= 5 ? (<Link onClick={() => {
             save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus - 1 })
             dispatch(startLoadingTable('Productions'))
-          }}><ArrowLeft size={15} color='black' /></Link>) : ''
+          }}><ChevronLeft size={15} color='black' /></Link>) : ''
+
          
           }
 
@@ -118,7 +119,7 @@ export const ProductionsList = [
               if ( (row.idProductionStatus + 1) === 6 ) {
                 axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.orderCode, state : 1 })
               }             
-          }}><ArrowRight size={15} color='black' /></Link>) : ''
+          }}><ChevronRight size={15} color='black' /></Link>) : ''
           
             
 

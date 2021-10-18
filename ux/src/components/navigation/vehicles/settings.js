@@ -5,7 +5,7 @@ import { faTruckMoving } from '@fortawesome/free-solid-svg-icons'
 export default [
   {
     id: 'porters',
-    title: 'Vehículos',
+    title: 'Transporte',
     icon: <FontAwesomeIcon icon={faTruckMoving} />,
     children: [
       {

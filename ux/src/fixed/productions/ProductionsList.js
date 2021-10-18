@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, FileText, MoreVertical, Trash } from "react-feather"
+import { ChevronLeft,ChevronRight, Check, FileText, MoreVertical, Trash, X } from "react-feather"
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
@@ -14,7 +14,7 @@ import axios from "axios"
 import { endPoints } from "@fixed/endPoints"
 import Badge from "reactstrap/lib/Badge"
 
-function renderSwitch(param) {
+const renderSwitch = (param) => {
 
   switch (param) {
     case 1:
@@ -97,15 +97,29 @@ export const ProductionsList = [
       const dispatch = useDispatch()
       return (
         <>
-          <div className="d-flex justify-content-start">
-            {proceso_prod >= 2 && proceso_prod <= 5 ?
-              (
-                <Link onClick={() => {
-                  save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus - 1 })
-                  dispatch(startLoadingTable('Productions'))
-                }}>
-                  <Badge color='dark'><ArrowLeft size={15} /></Badge>
-                </Link>
+          {proceso_prod >= 2 && proceso_prod <= 5 ? (<Link onClick={() => {
+            save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus - 1 })
+            dispatch(startLoadingTable('Productions'))
+          }}><ChevronLeft size={15} color='black' /></Link>) : ''
+
+         
+          }
+
+          {renderSwitch(proceso_prod)}
+
+          {proceso_prod < 6 ? (<Link onClick={() => {
+            save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus + 1 })
+            dispatch(startLoadingTable('Productions'))
+              if ( (row.idProductionStatus + 1) === 6 ) {
+                axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.orderCode, state : 1 })
+              }             
+          }}><ChevronRight size={15} color='black' /></Link>) : ''
+          
+            
+
+          }
+
+      
 
               ) : ''
 

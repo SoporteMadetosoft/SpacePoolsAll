@@ -1,8 +1,11 @@
 import { handleConfirmCancel } from '@helpers/handleConfirmCancel'
+import { handleConfirmCancelDeliveryNote } from '@helpers/handleConfirmCancelDeliveryNote'
 
 import { types } from "@redux/types/types"
 import { erase } from '@helpers/Axios/delete'
 import { list } from '@helpers/Axios/list'
+import { startAddSelectOptions } from '../selects'
+
 
 export const cleaningAll = () => ({
     type: types.cleaningAll
@@ -54,4 +57,24 @@ export const startDeleteRepairRegister = (id, index, endPoint) => {
             })
         }
     }
+}
+
+export const startSelectDriver = (id, index, endPoint) => {
+    return async (dispatch, getState) => {
+        dispatch(startAddSelectOptions('Carriers','Carriers'))
+        
+        const carriers = getState().selectReducer.Carriers 
+        console.log(carriers)
+
+        const respuesta = await handleConfirmCancelDeliveryNote(carriers)
+        if (respuesta === true) {
+
+        }
+
+
+    }
+
+
+
+
 }

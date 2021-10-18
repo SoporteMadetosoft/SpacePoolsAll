@@ -30,7 +30,8 @@ class RepairDao extends GenericDao {
 
         const repair = {
             ...data,
-            date: this.datetimeToDate(data.date)
+            date: this.datetimeToDate(data.date),
+            
         }
         return new Repair(repair)
     }

@@ -1,3 +1,5 @@
+// import { changeToEuro } from "../../ux/src/utility/helpers/converterEuros"
+
 const Order = require("../../models/order/Order");
 const GenericDao = require("../GenericDao");
 
@@ -84,7 +86,6 @@ class OrderDao extends GenericDao {
             deliveryDate: newDliveryDate,
             price: price,
             state: state,
-
         }
         return nObj
     }
@@ -134,5 +135,7 @@ class OrderDao extends GenericDao {
     }
 
 }
+ 
+ 
 
 module.exports = OrderDao

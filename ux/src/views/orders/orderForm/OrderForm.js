@@ -18,6 +18,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
 import { useParams } from 'react-router'
+import { ExtraRawsRepeater } from './ExtraRawsRepeater'
 
 //const ValidationSchema = yup.object().shape({
 //    idPool: yup.string().required()
@@ -251,6 +252,11 @@ export const OrderForm = () => {
                     <div className="card">
                         <div className=" card-body row px-3">
                             <ExtraItemsRepeater />
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ExtraRawsRepeater />
                         </div>
                     </div>
                 </div>

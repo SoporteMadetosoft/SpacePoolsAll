@@ -1,4 +1,5 @@
 import { DeliveryScreenList } from '../../../views/delivery/DeliveryScreenList'
+import { ViewDeliveryNote } from '../../../views/delivery/ViewDeliveryNote'
 import { ViewDeliveryScreen } from '../../../views/delivery/ViewDeliveryScreen'
 
 const DeliveryRoutes = [
@@ -11,6 +12,11 @@ const DeliveryRoutes = [
     path: '/delivery/edit/:id',
     exact: true,
     component: () => <ViewDeliveryScreen />
+  },
+  {
+    path: '/delivery/note/:id',
+    exact: true,
+    component: () => <ViewDeliveryNote />
   }
 ]
 

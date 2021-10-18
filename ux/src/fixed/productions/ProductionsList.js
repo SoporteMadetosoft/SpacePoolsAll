@@ -7,42 +7,38 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister, startLoadingTable } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 import { Spinner } from 'reactstrap'
-import { switchStart } from "../../utility/helpers/Axios/switchStart"
+
 import { save } from "../../utility/helpers/Axios/save"
-import { handleCleanForm } from '@redux/actions/normalForm'
+
 import axios from "axios"
 import { endPoints } from "@fixed/endPoints"
-
-
-
-
+import Badge from "reactstrap/lib/Badge"
 
 const renderSwitch = (param) => {
 
   switch (param) {
     case 1:
-      return 'Pintura'
+      return (<><Badge color='dark'>Pintura</Badge></>)
 
     case 2:
-      return 'Laminar 1'
+      return (<><Badge color='dark'>Laminar 1</Badge></>)
 
     case 3:
-      return 'Laminar 2'
+      return (<><Badge color='dark'>Laminar 2</Badge></>)
 
     case 4:
-      return 'Montaje'
+      return (<><Badge color='dark'>Montaje</Badge></>)
 
     case 5:
-      return 'Proyectado'
+      return (<><Badge color='dark'>Proyectado</Badge></>)
 
     case 6:
-      return 'Acabado'
+      return (<><Badge color='dark'>Acabado</Badge></>)
 
     default:
-      return 'En cola'
+      return (<><Badge color='dark'>En cola</Badge></>)
 
   }
-
 
 }
 
@@ -101,8 +97,6 @@ export const ProductionsList = [
       const dispatch = useDispatch()
       return (
         <>
-        
-
           {proceso_prod >= 2 && proceso_prod <= 5 ? (<Link onClick={() => {
             save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus - 1 })
             dispatch(startLoadingTable('Productions'))
@@ -125,9 +119,30 @@ export const ProductionsList = [
 
           }
 
-          
+      
 
+              ) : ''
 
+            }
+          </div>
+          <div className="d-flex justify-content-center">
+            {renderSwitch(proceso_prod)}
+          </div>
+          <div className="d-flex justify-content-end">
+            {proceso_prod < 6 ?
+              (
+                <Link onClick={() => {
+                  save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus + 1 })
+                  dispatch(startLoadingTable('Productions'))
+                  if ((row.idProductionStatus + 1) === 6) {
+                    axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.orderCode, state: 1 })
+                  }
+                }}>
+                  <Badge color='dark'><ArrowRight size={15} /></Badge>
+                </Link>
+              ) : ''
+            }
+          </div>
 
         </>
 
@@ -156,25 +171,7 @@ export const ProductionsList = [
                     <span className='align-middle ml-50'>Detalles</span>
                   </DropdownItem>
                 </Link>
-                {row.isStarted === 0 ?
-                  (<Link onClick={(e) => {
-                    switchStart(row.id, 'Productions')
-                  }}>
-                    <DropdownItem tag='a' href='/' className='w-100'>
-                      <Check size={15} />
-                      <span className='align-middle ml-50'>Iniciar Tarea</span>
-                    </DropdownItem>
-                  </Link>)
-                  :
-                  (<Link onClick={(e) => {
-                    switchStart(row.id, 'Productions')
-                  }}>
-                    <DropdownItem tag='a' href='/' className='w-100'>
-                      <X size={15} />
-                      <span className='align-middle ml-50'>Finalizar Tarea</span>
-                    </DropdownItem>
-                  </Link>)
-                }
+
                 <Link onClick={(e) => {
                   dispatch(startDeleteRegister(row.id))
                 }}>

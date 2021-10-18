@@ -46,7 +46,7 @@ export const ProductionFormScreen = () => {
     }, [initNormalForm])
 
     useEffect(() => {
-        if (id) {
+        if (idOrder) {
             dispatch(getCItemsByOrderId('Orders', idOrder))
         } else {
             dispatch(setInitialCanvas())

@@ -71,7 +71,13 @@ export const deliveryList = [
               <Link to={`./delivery/edit/${row.id}`}>
                 <DropdownItem tag='a' href='/' className='w-100'>
                   <FileText size={15} />
-                  <span className='align-middle ml-50'>Ver hoja de entrega</span>
+                  <span className='align-middle ml-50'>Detalles del pedido</span>
+                </DropdownItem>
+              </Link>
+              <Link to={`./delivery/note/${row.id}`}>
+                <DropdownItem tag='a' href='/' className='w-100'>
+                  <FileText size={15} />
+                  <span className='align-middle ml-50'>Albarán de entrega</span>
                 </DropdownItem>
               </Link>
               <Link to={`./customers/edit/${row.idCustomer}`}>

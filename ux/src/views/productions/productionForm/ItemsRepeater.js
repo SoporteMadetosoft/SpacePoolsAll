@@ -38,12 +38,12 @@ const ItemsForm = ({ position }) => {
 
     const { normalForm } = useSelector(state => state)
 
-    const { name, quantity } = normalForm['orderData'] ? normalForm['orderData'].baseItems[position] : ''
+    const { name, quantity, idColor } = normalForm['orderData'] ? normalForm['orderData'].baseItems[position] : ''
 
     return (
 
-        <div className="row border-bottom pb-1 mt-1 mx-1">
-            <div className="col-md-6">
+        <div className="row border-bottom pb-1">
+            <div className="col-md-4">
                 <label className="control-label">Producto</label>
                 <input
                     type="text"
@@ -52,7 +52,16 @@ const ItemsForm = ({ position }) => {
                     value={name}
                     readOnly />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
+                <label className="control-label">Color</label>
+                <input
+                    type="text"
+                    name="color"
+                    className="form-control"
+                    value={idColor.name}
+                    readOnly />
+            </div>
+            <div className="col-md-4">
                 <label className="control-label">Cantidad</label>
                 <input
                     type="text"

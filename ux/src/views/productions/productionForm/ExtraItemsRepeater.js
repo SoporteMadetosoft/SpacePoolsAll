@@ -42,42 +42,16 @@ export const ExtraItemsRepeater = () => {
 
 const ItemsForm = ({ position }) => {
 
-    const dispatch = useDispatch()
-
     const { normalForm, selectReducer } = useSelector(state => state)
     const { Items } = selectReducer
-    const { idItem, quantity } = normalForm['orderData'] ? normalForm['orderData'].extraItems[position] : ''
+    const { idItem, quantity, idColor } = normalForm['orderData'] ? normalForm['orderData'].extraItems[position] : ''
     const SelectValue = idItem ? deconstructSelect(idItem) : null
 
-    const handleInputChange = ({ target }) => {
-        const obj = {
-            name: target.name,
-            value: target.value
-        }
-        dispatch(editRepeaterRegister('extraItems', position, obj))
-        dispatch(handleSearchOutID2('Items', position, 'extraItems', "extraItems"))
-    }
-
-
-    const handleSelectChange = (key, element) => {
-        const el = constructSelect(element)
-        const obj = {
-            name: key,
-            value: el
-        }
-        dispatch(
-            editRepeaterRegister('extraItems', position, obj)
-        )
-        dispatch(
-            handleSearchOutID2('Items', position, 'extraItems', "extraItems")
-        )
-    }
-    console.log(SelectValue)
     return (
 
-            
-        <div className="row border-bottom pb-1 mx-1">
-            <div className="col-md-6">
+
+        <div className="row border-bottom pb-1">
+            <div className="col-md-4">
                 <label className="control-label">Artículo</label>
                 <input
                     type="text"
@@ -88,7 +62,16 @@ const ItemsForm = ({ position }) => {
                     readOnly
                 />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
+                <label className="control-label">Color</label>
+                <input
+                    type="text"
+                    name="color"
+                    className="form-control"
+                    value={idColor.name}
+                    readOnly />
+            </div>
+            <div className="col-md-4">
                 <label className="control-label">Cantidad</label>
 
                 <input

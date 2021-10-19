@@ -48,8 +48,8 @@ export const ProductionCanvas = () => {
                         strokeWidth={2}
                         opacity={0.4}
                     />
-                    <Rect x={600} y={100} height={400} width={1} stroke={'#474747'} cornerRadius={25} strokeWidth={1} />
-                    <Rect x={550} y={100} height={400} width={1} stroke={'#474747'} cornerRadius={25} strokeWidth={1} />
+                    <Rect x={600} y={100} height={400} width={1} stroke={'#474747'} cornerRadius={25} strokeWidth={1} opacity={0.4} />
+                    <Rect x={550} y={100} height={400} width={1} stroke={'#474747'} cornerRadius={25} strokeWidth={1} opacity={0.4} />
                     {elem.map((el, i) => {
 
                         const imageObj = new window.Image(50, 50)

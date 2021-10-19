@@ -31,7 +31,7 @@ class ProductionDao extends GenericDao {
             deliverySchedulerEnd: order != undefined ? order.deliverySchedulerEnd : '',
             observations: order != undefined ? order.observations : '',
             pools: pool != undefined ? pool.fabricationName : '',
-            
+
 
         }
         const { id, orderCode, pools, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd, observations, isStarted, idProductionStatus } = list

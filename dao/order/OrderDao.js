@@ -61,7 +61,7 @@ class OrderDao extends GenericDao {
 
     async mountList(data) {
         let customer = await this.CustomerDao.findCustomer(data.idCustomer);
-        
+
         const list = {
             ...data,
 
@@ -73,23 +73,23 @@ class OrderDao extends GenericDao {
 
         }
 
-        const { id, orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate, price, state,idCustomer} = list
+        const { id, orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate, price, state } = list
 
         const newOrderDate = this.datetimeToEuropeDate(orderDate)
         const newDliveryDate = this.datetimeToEuropeDate(deliveryDate)
-        const nObj = { id: id,
-         deliveryTime: deliverySchedulerStart + " - " + deliverySchedulerEnd, 
-        orderCode: orderCode, 
-        customerName: customerName, 
-        customerPhone: customerPhone, 
-        customerEmail: customerEmail, 
-        orderDate: newOrderDate, 
-        deliveryDate: newDliveryDate, 
-        price: price,
-        state: state,
-        idCustomer: idCustomer,        
-         }
 
+        const nObj = {
+            id: id,
+            deliveryTime: deliverySchedulerStart + " - " + deliverySchedulerEnd,
+            orderCode: orderCode,
+            customerName: customerName,
+            customerPhone: customerPhone,
+            customerEmail: customerEmail,
+            orderDate: newOrderDate,
+            deliveryDate: newDliveryDate,
+            price: price,
+            state: state,
+        }
         return nObj
     }
 
@@ -125,12 +125,12 @@ class OrderDao extends GenericDao {
         })
     }
     updateOrderState(id) {
-        
+
         return new Promise((resolve, reject) => {
-            this.db.query('UPDATE orders SET state = 1 WHERE id = ?',[id], (err, result) => {
+            this.db.query('UPDATE orders SET state = 1 WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err)
-                } else {                    
+                } else {
                     resolve('')
                 }
             })

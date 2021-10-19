@@ -7,39 +7,43 @@ import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 
 import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm/index.js'
 import { ViewDeliveryForm } from './purchaseForm/ViewDeliveryForm'
-import { getCItemsByOrderId, setInitialCanvas } from '../../redux/actions/canvas'
+import { getCItemsByOrderId } from '../../redux/actions/canvas'
+import Row from 'reactstrap/lib/Row'
+import Col from 'reactstrap/lib/Col'
+import PreviewCard from './purchaseForm/PreviewCard'
+import { handleCleanUp } from '../../redux/actions/fileUpload'
+import { save } from '../../utility/helpers/Axios/save'
 
 const structureForm = {
     baseItems: [],
     extraItems: []
 }
 
-export const ViewDeliveryScreen = () => {
+export const ViewDeliveryNote = () => {
 
     const { id } = useParams()
-    const { idOrder } = useSelector(state => state.normalForm)
-    const form = useSelector(state => state.normalForm)
+
     const history = useHistory()
     const dispatch = useDispatch()
+    const form = useSelector(state => state.normalForm)
 
     useEffect(() => {
-        dispatch(handleStartEditing('Delivery', id))
+        if (id) {
+            dispatch(handleStartEditing('Delivery', id))
+        }
         dispatch(initNormalForm(structureForm))
     }, [initNormalForm])
 
-    useEffect(() => {
-        if (idOrder) {
-            dispatch(getCItemsByOrderId('Orders', idOrder))
-        } else {
-            dispatch(setInitialCanvas())
-        }
-
-    }, [form])
-
-    const title = 'Detalles del pedido'
+    const title = 'Ver Hoja de Entrega'
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        const prettyForm = {
+            id: form.id,
+            signature: form.signature
+        }
+        save('Delivery', id, prettyForm)
+        dispatch(handleCleanUp())
         history.push('/delivery')
     }
 
@@ -48,7 +52,13 @@ export const ViewDeliveryScreen = () => {
             <form onSubmit={handleSubmit}>
 
                 <BreadCrumbs breadCrumbTitle={title} breadCrumbParent='Gestor de entregas' breadCrumbActive={title} />
-                <ViewDeliveryForm />
+                <div className='invoice-preview-wrapper'>
+                    <Row className='invoice-preview'>
+                        <Col xl={12} md={12} sm={12}>
+                            <PreviewCard />
+                        </Col>
+                    </Row>
+                </div>
                 <ActionButtons />
             </form>
         </>

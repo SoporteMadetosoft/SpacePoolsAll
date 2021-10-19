@@ -40,6 +40,23 @@ class GenericDao {
 
         })
     }
+    findAllStatus() {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT * FROM ?? WHERE idStatus = 2', [this.auxModel.table], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    let objList = []
+                    for (const res of result) {
+                        objList.push(await this.mountList(res))
+                    }
+
+                    resolve(objList)
+                }
+            });
+
+        })
+    }
 
     findAllId(id, foreign) {
         return new Promise((resolve, reject) => {

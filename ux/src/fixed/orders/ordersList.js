@@ -131,7 +131,7 @@ export const ordersList = [
                 </DropdownItem>
               </Link>
               {proceso_prod === 1 ? <Link onClick={(e) => {
-                dispatch(startSelectDriver(row.id))
+                dispatch(startSelectDriver({idOrder: row.id, idCustomer: row.idCustomer}, 'Delivery'))
               }}>
                 <DropdownItem tag='a' href='/' className='w-100'>
                   <Clipboard  size={15}/>

@@ -1,10 +1,11 @@
 import { handleConfirmCancel } from '@helpers/handleConfirmCancel'
-import { handleConfirmCancelDeliveryNote } from '@helpers/handleConfirmCancelDeliveryNote'
-
 import { types } from "@redux/types/types"
 import { erase } from '@helpers/Axios/delete'
 import { list } from '@helpers/Axios/list'
 import { startAddSelectOptions } from '../selects'
+import { save } from '../../../utility/helpers/Axios/save'
+import { useEffect } from 'react'
+import { handleSelectCarrier } from '../../../utility/helpers/handleSelectCarrier'
 
 
 export const cleaningAll = () => ({
@@ -52,6 +53,7 @@ export const startDeleteRepairRegister = (id, index, endPoint) => {
                 type: types.deleteRepair,
                 payload: {
                     id,
+                    
                     index
                 }
             })
@@ -59,22 +61,28 @@ export const startDeleteRepairRegister = (id, index, endPoint) => {
     }
 }
 
-export const startSelectDriver = (id, index, endPoint) => {
-    return async (dispatch, getState) => {
-        dispatch(startAddSelectOptions('Carriers','Carriers'))
-        
-        const carriers = getState().selectReducer.Carriers 
+export const startSelectDriver = ({idOrder, idCustomer},endPoint) => {
+    return async (dispatch,getState) => {
+
+        const carriers = getState().selectReducer.Carriers
         console.log(carriers)
 
-        const respuesta = await handleConfirmCancelDeliveryNote(carriers)
-        if (respuesta === true) {
+        const respuesta = await handleSelectCarrier(carriers)
+        const driver 
+        
+        = {
+            idStatus: 2,
+            idCarrier: respuesta,
+            idOrder,
+            idCustomer
+        }
+
+        console.log(driver)
+        if (respuesta !== false) {           
+            save(endPoint, null, driver)
 
         }
 
 
     }
-
-
-
-
 }

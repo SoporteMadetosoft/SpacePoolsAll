@@ -3,7 +3,7 @@
 const Order = require("../../models/order/Order");
 const GenericDao = require("../GenericDao");
 
-//const ProductionDao = require("../production/ProductionDao");
+// const ProductionDao = require("../production/ProductionDao");
 const PoolDao = require("../pool/PoolDao");
 const CustomerDao = require("../customer/CustomerDao");
 const CustomerDataDao = require("../order/CustomerDataDao");
@@ -26,6 +26,7 @@ class OrderDao extends GenericDao {
         this.TaxesDao = new TaxesDao()
         this.CanvasDao = new CanvasDao()
         
+        
 
     }
 
@@ -43,6 +44,7 @@ class OrderDao extends GenericDao {
             idTax: { id: data.idTax, name: (await this.TaxesDao.findTaxNameBy(data.idTax)) },
             idCustomer: { id: data.idCustomer, comercialName: (await this.CustomerDao.findCustomerNameBy(data.idCustomer)) },
             canvasItems: await this.CanvasDao.findByOrderId(data.id),
+            
             
             
         }
@@ -66,11 +68,12 @@ class OrderDao extends GenericDao {
             customerName: customer !== undefined ? customer.comercialName : '',
             customerPhone: customer !== undefined ? customer.phone : '',
             customerEmail: customer !== undefined ? customer.email : '',
+             
 
 
         }
 
-        const { id, orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate, price, state} = list
+        const { id, orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate, price, state,idCustomer} = list
 
         const newOrderDate = this.datetimeToEuropeDate(orderDate)
         const newDliveryDate = this.datetimeToEuropeDate(deliveryDate)
@@ -84,7 +87,7 @@ class OrderDao extends GenericDao {
         deliveryDate: newDliveryDate, 
         price: price,
         state: state,
-        
+        idCustomer: idCustomer,        
          }
 
         return nObj

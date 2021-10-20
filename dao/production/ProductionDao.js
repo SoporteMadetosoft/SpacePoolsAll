@@ -34,13 +34,14 @@ class ProductionDao extends GenericDao {
 
 
         }
-        const { id, orderCode, pools, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd, observations, isStarted, idProductionStatus } = list
+        const { id, idOrder, orderCode, pools, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd, observations, isStarted, idProductionStatus } = list
 
         const newOrderDate = this.datetimeToEuropeDate(orderDate)
         const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)
 
         const nObj = {
             id: id,
+            idOrder: idOrder,
             orderCode: orderCode,
             pool: pools,
             orderDate: newOrderDate,

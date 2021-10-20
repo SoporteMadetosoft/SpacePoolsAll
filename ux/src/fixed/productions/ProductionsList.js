@@ -1,4 +1,4 @@
-import { ChevronLeft,ChevronRight, Check, FileText, MoreVertical, Trash, X } from "react-feather"
+import { ChevronLeft, ChevronRight, FileText, MoreVertical, Trash } from "react-feather"
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
@@ -14,29 +14,29 @@ import axios from "axios"
 import { endPoints } from "@fixed/endPoints"
 import Badge from "reactstrap/lib/Badge"
 
-const renderSwitch = (param) => {
+function renderSwitch(param) {
 
   switch (param) {
     case 1:
-      return (<><Badge color='dark'>Pintura</Badge></>)
+      return (<><Badge color='light-secondary'>Pintura</Badge></>)
 
     case 2:
-      return (<><Badge color='dark'>Laminar 1</Badge></>)
+      return (<><Badge color='light-dark'>Laminar 1</Badge></>)
 
     case 3:
-      return (<><Badge color='dark'>Laminar 2</Badge></>)
+      return (<><Badge color='light-dark'>Laminar 2</Badge></>)
 
     case 4:
-      return (<><Badge color='dark'>Montaje</Badge></>)
+      return (<><Badge color='light-info'>Montaje</Badge></>)
 
     case 5:
-      return (<><Badge color='dark'>Proyectado</Badge></>)
+      return (<><Badge color='light-primary'>Proyectado</Badge></>)
 
     case 6:
-      return (<><Badge color='dark'>Acabado</Badge></>)
+      return (<><Badge color='light-success'>Acabado</Badge></>)
 
     default:
-      return (<><Badge color='dark'>En cola</Badge></>)
+      return (<><Badge color='light-dark'>En cola</Badge></>)
 
   }
 
@@ -96,55 +96,37 @@ export const ProductionsList = [
       const proceso_prod = row.idProductionStatus
       const dispatch = useDispatch()
       return (
-        <>
-          {proceso_prod >= 2 && proceso_prod <= 5 ? (<Link onClick={() => {
-            save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus - 1 })
-            dispatch(startLoadingTable('Productions'))
-          }}><ChevronLeft size={15} color='black' /></Link>) : ''
+        <div className="d-flex justify-content-start">
+          {proceso_prod >= 2 && proceso_prod <= 5 ?
+            (
+              <Link onClick={() => {
+                save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus - 1 })
+                dispatch(startLoadingTable('Productions'))
+              }}>
+                <Badge color='light-dark' className="mr-1"><ChevronLeft size={15} /></Badge>
+              </Link>
+            ) : ''
 
-         
           }
 
           {renderSwitch(proceso_prod)}
 
-          {proceso_prod < 6 ? (<Link onClick={() => {
-            save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus + 1 })
-            dispatch(startLoadingTable('Productions'))
-              if ( (row.idProductionStatus + 1) === 6 ) {
-                axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.orderCode, state : 1 })
-              }             
-          }}><ChevronRight size={15} color='black' /></Link>) : ''
-          
-            
+          {proceso_prod < 6 ?
+            (
+              <Link onClick={() => {
+                save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus + 1 })
+                dispatch(startLoadingTable('Productions'))
+                if ((row.idProductionStatus + 1) === 6) {
+                  axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.idOrder, state: 1 })
+                }
+              }}>
+                <Badge color='light-dark' className="ml-1"><ChevronRight size={15} /></Badge>
+              </Link>
+            ) : ''
 
           }
 
-      
-
-              ) : ''
-
-            }
-          </div>
-          <div className="d-flex justify-content-center">
-            {renderSwitch(proceso_prod)}
-          </div>
-          <div className="d-flex justify-content-end">
-            {proceso_prod < 6 ?
-              (
-                <Link onClick={() => {
-                  save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus + 1 })
-                  dispatch(startLoadingTable('Productions'))
-                  if ((row.idProductionStatus + 1) === 6) {
-                    axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.orderCode, state: 1 })
-                  }
-                }}>
-                  <Badge color='dark'><ArrowRight size={15} /></Badge>
-                </Link>
-              ) : ''
-            }
-          </div>
-
-        </>
+        </div>
 
       )
     }

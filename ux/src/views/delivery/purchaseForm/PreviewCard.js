@@ -19,18 +19,20 @@ const PreviewCard = () => {
 
   const { normalForm } = useSelector(state => state)
 
-  const cn = normalForm['idCustomer'] !== undefined ? normalForm['idCustomer'].comercialName : ''
-  const deliveryAddress = normalForm['customerData'] !== undefined ? normalForm['customerData'][0].deliveryAddress : ''
-  const phone = normalForm['customerData'] !== undefined ? normalForm['customerData'][0].phone : ''
-  const email = normalForm['customerData'] !== undefined ? normalForm['customerData'][0].email : ''
+  const cn = normalForm['orderData'] !== undefined ? normalForm['orderData']['idCustomer'].comercialName : ''
+  const deliveryAddress = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].deliveryAddress : ''
+  const phone = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].phone : ''
+  const email = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].email : ''
   const carrier = normalForm['idCarrier'] !== undefined ? normalForm['idCarrier'] : ''
   const poolName = normalForm['idPool'] !== undefined ? normalForm['idPool'].fabricationName : ''
   const poolPrice = normalForm['idPool'] !== undefined ? normalForm['idPool'].price : ''
-  const tax = normalForm['idTax'] !== undefined ? normalForm['idTax'].name : ''
+  const tax = normalForm['orderData'] !== undefined ? normalForm['orderData']['idTax'].name : ''
+  const base = normalForm['orderData'] !== undefined ? normalForm['orderData']['baseItems'] : ''
+  const extra = normalForm['orderData'] !== undefined ? normalForm['orderData']['extraItems'] : ''
 
-  const price = normalForm ? normalForm.price : ''
+  const price = normalForm['orderData'] ? normalForm['orderData'].price : ''
   const deliveryDate = normalForm ? normalForm.deliveryDate : ''
-  const observations = normalForm ? normalForm.observations : ''
+  const observations = normalForm['orderData'] ? normalForm['orderData'].observations : ''
 
   const data = {
     customer: {
@@ -48,19 +50,17 @@ const PreviewCard = () => {
       name: poolName,
       price: poolPrice
     },
-    baseItems: normalForm.baseItems,
-    extraItems: normalForm.extraItems,
+    baseItems: base,
+    extraItems: extra,
     tax,
     total: price,
     observations
   }
+  console.log(data)
 
   useEffect(() => {
     if (id) {
       dispatch(handleStartEditing('Delivery', id))
-      // dispatch(getCItemsByOrderId('Orders', idOrder))
-    } else {
-      // dispatch(setInitialCanvas())
     }
     dispatch(initNormalForm(structureForm))
   }, [initNormalForm])
@@ -150,7 +150,7 @@ const PreviewCard = () => {
             <td className='py-1'>
               <p className='card-text font-weight-bold mb-25'>{data.piscina.name}</p>
               {
-                data['baseItems'] !== undefined ? data['baseItems'].map(obj => {
+                (data['baseItems'] !== undefined && data['baseItems'] !== '') ? data['baseItems'].map(obj => {
                   return (
                     <p className='card-text text-nowrap'>
                       - {obj.name} ( {obj.idColor.name} )
@@ -174,7 +174,7 @@ const PreviewCard = () => {
           </tr>
 
           {
-            data['extraItems'] !== undefined ? data['extraItems'].map(obj => {
+            (data['extraItems'] !== undefined && data['extraItems'] !== '') ? data['extraItems'].map(obj => {
               return (
                 <tr className='border-bottom'>
                   <td className='py-1'>

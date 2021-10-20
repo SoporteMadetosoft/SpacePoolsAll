@@ -24,25 +24,32 @@ export const deliveryList = [
     searchable: true,
     width: '20%'
   },
+  {
+    name: 'Transportista',
+    selector: 'carrier',
+    sortable: true,
+    searchable: true,
+    width: '20%'
+  },
 
   {
     name: 'Inicio de entrega',
     selector: 'deliveryStart',
     sortable: true,
     searchable: true,
-    width: '20%'
+    width: '16%'
   },
   {
     name: 'Fin de entrega',
     selector: 'deliveryEnd',
     sortable: true,
     searchable: true,
-    width: '20%'
+    width: '16%'
   },
   {
     name: 'Lugar',
     selector: 'gps',
-    width: '20%',
+    width: '16%',
     cell: row => {
       return (
         <>
@@ -80,7 +87,7 @@ export const deliveryList = [
                   <span className='align-middle ml-50'>Albarán de entrega</span>
                 </DropdownItem>
               </Link>
-              <Link to={`./customers/edit/${row.idCustomer}`}>
+              {/* <Link to={`./customers/edit/${row.idCustomer}`}>
                 <DropdownItem tag='a' href='/' className='w-100'>
                   <FontAwesomeIcon icon={faUser} />
                   <span className='align-middle ml-50'>Cliente</span>
@@ -91,7 +98,7 @@ export const deliveryList = [
                   <FontAwesomeIcon icon={faProjectDiagram} />
                   <span className='align-middle ml-50'>Pedido</span>
                 </DropdownItem>
-              </Link>
+              </Link> */}
               <Link onClick={(e) => {
                 dispatch(startDeleteRegister(row.id))
               }}>

@@ -69,7 +69,7 @@ app.use('/users', require('./routes/users'));
 app.use('/calendar', require('./routes/calendar'));
 //-------------------------------------------------------
 //Roles Routes
-//app.use('/roles', require('./routes/role'));  
+app.use('/roles', require('./routes/role'));
 //-------------------------------------------------------
 
 // app.get('*', (req, res) => {

@@ -1,6 +1,6 @@
 class Role {
     users = []
-    #table = 'users'
+    #table = 'role'
 
     constructor({
         id,

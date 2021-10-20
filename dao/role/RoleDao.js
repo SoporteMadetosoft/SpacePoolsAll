@@ -4,7 +4,7 @@ const GenericDao = require("../GenericDao");
 
 
 class RoleDao extends GenericDao {
-    
+
     constructor() {
         super(Role);
     }
@@ -22,8 +22,8 @@ class RoleDao extends GenericDao {
             ...data,
         }
 
-        const{name} =list
-        const nObj = {name :name}
+        const { id, name } = list
+        const nObj = { id, name }
         return nObj
     }
 

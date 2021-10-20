@@ -125,7 +125,7 @@ class OrderDao extends GenericDao {
         })
     }
     updateOrderState(id) {
-
+        console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('UPDATE orders SET state = 1 WHERE id = ?', [id], (err, result) => {
                 if (err) {
@@ -138,7 +138,7 @@ class OrderDao extends GenericDao {
     }
 
 }
- 
- 
+
+
 
 module.exports = OrderDao

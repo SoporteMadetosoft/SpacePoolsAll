@@ -29,8 +29,7 @@ class DeliveryDao extends GenericDao {
             productionDate: this.datetimeToEuropeDate(new Date(order.productionDate)),
             deliveryDate: this.datetimeToEuropeDate(new Date(order.deliveryDate)),
             idPool: pool,
-            idCarrier: carrier,
-            signature: ''
+            idCarrier: carrier
         }
 
         return obj
@@ -45,6 +44,7 @@ class DeliveryDao extends GenericDao {
 
     async mountList(data) {
         const customer = await this.CustomerDao.findById(data.idCustomer);
+        const carrier = await this.CarrierDao.findById(data.idCarrier);
         const deliveryAddress = await this.CustomerDataDao.findOneFieldById("deliveryAddress", data.idOrder)
 
         const { deliverySchedulerStart, deliverySchedulerEnd, deliveryDate } = await this.OrderDao.findById(data.idOrder)
@@ -61,7 +61,8 @@ class DeliveryDao extends GenericDao {
             deliveryEnd,
             Customer: customer !== undefined ? customer.comercialName : '',
             idCustomer: customer !== undefined ? customer.id : '',
-            idStatus: idStatus !== undefined ? idStatus.id : ''
+            idStatus: idStatus !== undefined ? idStatus.id : '',
+            carrier: carrier !== undefined ? carrier.name : ''
         }
         return list
     }

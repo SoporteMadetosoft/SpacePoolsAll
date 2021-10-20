@@ -16,6 +16,8 @@ import TaxesRoutes from './setup/taxes/TaxesRotes'
 import TrailerReparationRoutes from './porters/trailers/tReparation'
 import VehicleReparationRoutes from './porters/vehicles/vReparation'
 import DeliveryRoutes from './delivery/Delivery'
+import UsersRoutes from './users/Users'
+import RolesRoutes from './roles/Roles'
 
 // ** Document title
 const TemplateTitle = '%s - SpacePools'
@@ -42,7 +44,9 @@ const Routes = [
   ...sRoutes,
   ...ProductionsRoutes,
   ...CalendarRoutes,
-  ...TaxesRoutes
+  ...TaxesRoutes,
+  ...UsersRoutes,
+  ...RolesRoutes
 ]
 
 export { DefaultRoute, TemplateTitle, Routes }

@@ -33,7 +33,7 @@ export const ExtraRawsRepeater = () => {
     }
 
     useEffect(() => {
-        dispatch(startAddSelectPoolItems('Items', 'Items', 'name', 1))
+        dispatch(startAddSelectPoolItems('Items', 'Items', 'name', 2))
     }, [])
 
     return (

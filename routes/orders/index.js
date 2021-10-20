@@ -19,6 +19,7 @@ router.post('/customerData/insert', ControllerCustomerData.insert);
 router.put('/customerData/update', ControllerCustomerData.update);
 router.delete('/customerData/delete/:id', ControllerCustomerData.delete);
 router.post('/customerData/find', ControllerCustomerData.listByID);
+router.get('/customerData/select', ControllerCustomerData.select)
 
 router.get('/extraItems/list', ControllerExtraItem.list);
 router.post('/extraItems/insert', ControllerExtraItem.insert);

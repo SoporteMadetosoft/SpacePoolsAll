@@ -1,47 +1,47 @@
 
 import Swal from "sweetalert2"
+const object = {}
+export const handleSelectCarrier = async (Carriers) => {
 
-export const handleConfirmCancelDeliveryNote = async (Carriers) => {
+    const carr = Carriers.reduce(
+        (obj, item) => Object.assign(obj, { [item.value]: item.label }), {})
 
-    
-    const opciones = []
-    const asd = opciones.concat(Carriers)
-    console.log(asd)
-    // Carriers.map(e => {
-    //     opciones.push(e["value"]: e["label"])
-    // })
     return await Swal.fire({
-        title: 'Selecciona un Conductor',
+        title: 'Selecciona un conductor',
         icon: 'question',
+        width: '',
         showCancelButton: true,
         cancelButtonText: 'Cancelar',
         confirmButtonText: '¡Seleccionar!',
         input: 'select',
-        inputOptions: Carriers,
+        inputOptions: carr,
         customClass: {
             confirmButton: 'btn btn-primary',
-            cancelButton: 'btn btn-danger ml-1'
+            cancelButton: 'btn btn-danger ml-1',
+            input: 'inline-flex',
+            inputLabel: 'inline-flex'
         },
         buttonsStyling: false
     })
         .then(result => {
             if (result.value) {
+                console.log(result)
                 Swal.fire({
                     icon: 'success',
-                    title: '¡Eliminado!',
-                    text: '¡El registro ha sido eliminado!',
+                    title: '¡Genial!',
+                    text: '¡El transportista ha sido seleccionado!',
                     timer: 3000,
                     timerProgressBar: true,
                     customClass: {
                         confirmButton: 'btn btn-success'
                     }
                 })
-                return true
+                return result.value
             } else if (result.dismiss === Swal.DismissReason.cancel) {
 
                 Swal.fire({
                     title: '¡Cancelado!',
-                    text: '¡El registro está a salvo!',
+                    text: '¡No has seleccionado ningún transportista!',
                     icon: 'error',
                     timer: 3000,
                     timerProgressBar: true,

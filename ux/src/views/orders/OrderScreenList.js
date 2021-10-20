@@ -8,6 +8,7 @@ import { ordersList } from '@fixed/orders/ordersList'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { handleCleanCanvas } from '../../redux/actions/canvas'
+import { startAddSelectOptions, startAddSelectStatus } from '../../redux/actions/selects'
 
 
 export const OrderScreenList = ({titulo}) => { 
@@ -19,6 +20,9 @@ export const OrderScreenList = ({titulo}) => {
         dispatch(handleCleanCanvas())
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Orders'))   
+        dispatch(startAddSelectOptions('Carriers','Carriers'))
+        dispatch(startAddSelectStatus('Customers'))
+
     }, [])
     return (
         

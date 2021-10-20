@@ -19,6 +19,7 @@ import { catchAndSetPrice } from '../../redux/actions/orders'
 
 const structureForm = {
     baseItems: [],
+    extraRaws: [],
     extraItems: []
 
 }

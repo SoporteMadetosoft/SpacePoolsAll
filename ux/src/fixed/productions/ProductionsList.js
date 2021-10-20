@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, Check, FileText, MoreVertical, Trash, X } from "react-feather"
+import { ChevronLeft, ChevronRight, FileText, MoreVertical, Trash } from "react-feather"
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
@@ -7,42 +7,38 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister, startLoadingTable } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 import { Spinner } from 'reactstrap'
-import { switchStart } from "../../utility/helpers/Axios/switchStart"
+
 import { save } from "../../utility/helpers/Axios/save"
-import { handleCleanForm } from '@redux/actions/normalForm'
+
 import axios from "axios"
 import { endPoints } from "@fixed/endPoints"
-
-
-
-
+import Badge from "reactstrap/lib/Badge"
 
 function renderSwitch(param) {
 
   switch (param) {
     case 1:
-      return 'Pintura'
+      return (<><Badge color='light-secondary'>Pintura</Badge></>)
 
     case 2:
-      return 'Laminar 1'
+      return (<><Badge color='light-dark'>Laminar 1</Badge></>)
 
     case 3:
-      return 'Laminar 2'
+      return (<><Badge color='light-dark'>Laminar 2</Badge></>)
 
     case 4:
-      return 'Montaje'
+      return (<><Badge color='light-info'>Montaje</Badge></>)
 
     case 5:
-      return 'Proyectado'
+      return (<><Badge color='light-primary'>Proyectado</Badge></>)
 
     case 6:
-      return 'Acabado'
+      return (<><Badge color='light-success'>Acabado</Badge></>)
 
     default:
-      return 'En cola'
+      return (<><Badge color='light-dark'>En cola</Badge></>)
 
   }
-
 
 }
 
@@ -100,35 +96,37 @@ export const ProductionsList = [
       const proceso_prod = row.idProductionStatus
       const dispatch = useDispatch()
       return (
-        <>
-        
+        <div className="d-flex justify-content-start">
+          {proceso_prod >= 2 && proceso_prod <= 5 ?
+            (
+              <Link onClick={() => {
+                save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus - 1 })
+                dispatch(startLoadingTable('Productions'))
+              }}>
+                <Badge color='light-dark' className="mr-1"><ChevronLeft size={15} /></Badge>
+              </Link>
+            ) : ''
 
-          {proceso_prod >= 2 && proceso_prod <= 5 ? (<Link onClick={() => {
-            save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus - 1 })
-            dispatch(startLoadingTable('Productions'))
-          }}><ArrowLeft size={15} color='black' /></Link>) : ''
-         
           }
 
           {renderSwitch(proceso_prod)}
 
-          {proceso_prod < 6 ? (<Link onClick={() => {
-            save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus + 1 })
-            dispatch(startLoadingTable('Productions'))
-              if ( (row.idProductionStatus + 1) === 6 ) {
-                axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.orderCode, state : 1 })
-              }             
-          }}><ArrowRight size={15} color='black' /></Link>) : ''
-          
-            
+          {proceso_prod < 6 ?
+            (
+              <Link onClick={() => {
+                save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus + 1 })
+                dispatch(startLoadingTable('Productions'))
+                if ((row.idProductionStatus + 1) === 6) {
+                  axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.idOrder, state: 1 })
+                }
+              }}>
+                <Badge color='light-dark' className="ml-1"><ChevronRight size={15} /></Badge>
+              </Link>
+            ) : ''
 
           }
 
-          
-
-
-
-        </>
+        </div>
 
       )
     }
@@ -155,25 +153,7 @@ export const ProductionsList = [
                     <span className='align-middle ml-50'>Detalles</span>
                   </DropdownItem>
                 </Link>
-                {row.isStarted === 0 ?
-                  (<Link onClick={(e) => {
-                    switchStart(row.id, 'Productions')
-                  }}>
-                    <DropdownItem tag='a' href='/' className='w-100'>
-                      <Check size={15} />
-                      <span className='align-middle ml-50'>Iniciar Tarea</span>
-                    </DropdownItem>
-                  </Link>)
-                  :
-                  (<Link onClick={(e) => {
-                    switchStart(row.id, 'Productions')
-                  }}>
-                    <DropdownItem tag='a' href='/' className='w-100'>
-                      <X size={15} />
-                      <span className='align-middle ml-50'>Finalizar Tarea</span>
-                    </DropdownItem>
-                  </Link>)
-                }
+
                 <Link onClick={(e) => {
                   dispatch(startDeleteRegister(row.id))
                 }}>

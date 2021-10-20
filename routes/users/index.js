@@ -10,6 +10,7 @@ router.post('/insert', ControllerUser.insert);
 router.put('/update', ControllerUser.update);
 router.delete('/delete/:id', ControllerUser.delete);
 router.post('/find', ControllerUser.listByID);
+router.post('/checkUser', ControllerUser.checkUser);
 
 
 module.exports = router;

@@ -3,24 +3,20 @@ class User {
 
     constructor({
         id,
+        idStatus,
         idRole,
-        username,
+        fullname,
         login,
-        group,
         email,
-        phone,
-        password,
-        status
+        phone
     }) {
         this.id = id
+        this.idStatus = idStatus
         this.idRole = idRole
-        this.username = username
+        this.fullname = fullname
         this.login = login
-        this.group = group
         this.email = email
         this.phone = phone
-        this.password = password
-        this.status = status
     }
     get table() {
         return this.#table;

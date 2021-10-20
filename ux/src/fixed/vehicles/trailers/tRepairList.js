@@ -9,6 +9,8 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRepairRegister } from "../../../redux/actions/custom"
 
 import { Link } from "react-router-dom"
+import { datetimeToEuropeDate } from "../../../utility/helpers/dates"
+import { changeToEuro } from "../../../utility/helpers/converterEuros"
 
 export const tRepairList = [
     {
@@ -20,9 +22,23 @@ export const tRepairList = [
     {
         name: 'Fecha',
         selector: 'date',
-        sortable: true,
-        searchable: true,
-        width: '22%'
+        width: '22%',
+        cell: row => {
+            console.log(row.date)
+            const fecha = row.date
+
+            return (
+                <>
+                    <div>
+                        <span>{datetimeToEuropeDate(new Date(fecha))}</span>
+
+                    </div>
+                </>
+            )
+
+
+
+        }
     },
     {
         name: 'Descripción',
@@ -43,7 +59,14 @@ export const tRepairList = [
         selector: 'cost',
         sortable: true,
         searchable: true,
-        width: '22%'
+        width: '22%',
+        cell: row => {
+            return (
+              <div>
+                <span>{changeToEuro(row.cost)}</span>
+              </div>
+            )
+          }
     },
     {
         name: '',

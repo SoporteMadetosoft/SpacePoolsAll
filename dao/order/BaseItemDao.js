@@ -13,12 +13,22 @@ class BaseItemDao extends GenericDao {
             ...data,
         }
         let baseItem2 = new BaseItem(baseItem)
+
+        const colData = await this.ItemDao.ItemsColorsDao.findByItemId(data.idItem)
+        const colores = colData.map(el => ({
+            label: el.name,
+            value: el.id
+        }))
+        const selectedColor = await this.ItemDao.ItemsColorsDao.ColorsDao.findById(data.idColor)
+
+
         baseItem2 = {
             ...baseItem2,
             name: await this.ItemDao.findNameById(data.idItem),
-            coste: await this.ItemDao.findOneFieldById("cost", data.idItem)
+            coste: await this.ItemDao.findOneFieldById("cost", data.idItem),
+            idColor: selectedColor.id !== undefined ? selectedColor : '',
+            colores: colores
         }
-
         return baseItem2
     }
 

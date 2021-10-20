@@ -17,6 +17,22 @@ exports.list = async (req, res) => {
 
 }
 
+exports.checkUser = async (req, res) => {
+    const username = req.body.username
+
+    try {
+        const respuesta = await userDao.checkUser(username)
+        res.json({
+            ok: respuesta
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+
+}
+
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
     try {
@@ -46,7 +62,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT USER **/
-        userDao.insert(req.body.form)
+        userDao.insertUser(req.body.form)
 
         res.json({ ok: true })
     } catch (error) {
@@ -59,7 +75,7 @@ exports.update = (req, res) => {
 
     try {
         /** UPDATE USER **/
-        userDao.update(req.body.form)
+        userDao.updateUser(req.body.form)
 
         res.json({ ok: true })
     } catch (error) {

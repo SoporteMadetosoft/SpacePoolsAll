@@ -33,7 +33,7 @@ export const ExtraItemsRepeater = () => {
     }
 
     useEffect(() => {
-        dispatch(startAddSelectPoolItems('Items', 'Items', 'name', 2))
+        dispatch(startAddSelectPoolItems('Items', 'Items', 'name', 1))
     }, [])
 
     return (

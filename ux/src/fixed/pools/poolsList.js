@@ -7,6 +7,7 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 import Badge from "reactstrap/lib/Badge"
+import { changeToEuro } from "../../utility/helpers/converterEuros"
 
 export const poolsList = [
     {
@@ -56,7 +57,14 @@ export const poolsList = [
         selector: 'cost',
         sortable: true,
         searchable: true,
-        width: '8%'
+        width: '8%',
+        cell: row => {
+            return (
+              <div>
+                <span>{changeToEuro(row.cost)}</span>
+              </div>
+            )
+          }
     },
     {
         name: 'Estado',

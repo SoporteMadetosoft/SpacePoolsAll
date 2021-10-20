@@ -54,6 +54,8 @@ export const endPoints = {
     Family: '/items/productFamily',
     Productions: '/production',
     Calendar: '/calendar',
+    Users: '/users',
+    Roles: '/roles',
 
     ...globalEndpoints,
     ...setupEndpoints

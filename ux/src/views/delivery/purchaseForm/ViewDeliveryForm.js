@@ -2,27 +2,57 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { ExtraItemsRepeater } from '../../productions/productionForm/ExtraItemsRepeater'
-import { ItemsRepeater } from '../../productions/productionForm/ItemsRepeater'
+
 import { ProductionCanvas } from '../../productions/productionForm/ProductionCanvas'
+
+import '@styles/base/pages/app-invoice.scss'
+import { ViewItemsRepeater } from './ViewItemRepeater'
+import { ItemsRepeater } from '../../productions/productionForm/ItemsRepeater'
+
 
 export const ViewDeliveryForm = () => {
 
     const { normalForm } = useSelector(state => state)
 
-    const cn = normalForm['idCustomer'] !== undefined ? normalForm['idCustomer'].comercialName : ''
-    const deliveryAddress = normalForm['customerData'] !== undefined ? normalForm['customerData'][0].deliveryAddress : ''
-    const phone = normalForm['customerData'] !== undefined ? normalForm['customerData'][0].phone : ''
-    const email = normalForm['customerData'] !== undefined ? normalForm['customerData'][0].email : ''
-    const pool = normalForm['idPool'] !== undefined ? normalForm['idPool'].name : ''
-    const tax = normalForm['idTax'] !== undefined ? normalForm['idTax'].name : ''
+    const cn = normalForm['orderData'] !== undefined ? normalForm['orderData']['idCustomer'].comercialName : ''
+    const deliveryAddress = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].deliveryAddress : ''
+    const phone = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].phone : ''
+    const email = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].email : ''
+    const carrier = normalForm['idCarrier'] !== undefined ? normalForm['idCarrier'] : ''
+    const poolName = normalForm['idPool'] !== undefined ? normalForm['idPool'].fabricationName : ''
+    const poolPrice = normalForm['idPool'] !== undefined ? normalForm['idPool'].price : ''
+    const tax = normalForm['orderData'] !== undefined ? normalForm['orderData']['idTax'].name : ''
 
     const idOrder = normalForm ? normalForm.idOrder : ''
-    const price = normalForm ? normalForm.price : ''
+    const price = normalForm['orderData'] ? normalForm['orderData'].price : ''
     const orderDate = normalForm ? normalForm.orderDate : ''
     const deliveryDate = normalForm ? normalForm.deliveryDate : ''
-    const deliverySchedulerStart = normalForm ? normalForm.deliverySchedulerStart : ''
-    const deliverySchedulerEnd = normalForm ? normalForm.deliverySchedulerEnd : ''
-    const observations = normalForm ? normalForm.observations : ''
+    const deliverySchedulerStart = normalForm['orderData'] ? normalForm['orderData'].deliverySchedulerStart : ''
+    const deliverySchedulerEnd = normalForm['orderData'] ? normalForm['orderData'].deliverySchedulerEnd : ''
+    const observations = normalForm['orderData'] ? normalForm['orderData'].observations : ''
+
+    const deliveryInvoiceData = {
+        customer: {
+            name: cn,
+            address: deliveryAddress,
+            phone,
+            email
+        },
+        deliveryDate,
+        idCarrier: {
+            name: carrier.name,
+            nif: carrier.NIF
+        },
+        piscina: {
+            name: poolName,
+            price: poolPrice
+        },
+        baseItems: normalForm.baseItems,
+        extraItems: normalForm.extraItems,
+        tax,
+        total: price,
+        observations
+    }
 
     return (
         <>
@@ -50,7 +80,7 @@ export const ViewDeliveryForm = () => {
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">Piscina</label>
-                        <h6> {pool} </h6>
+                        <h6> {poolName} </h6>
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">IVA</label>
@@ -100,9 +130,14 @@ export const ViewDeliveryForm = () => {
                     </div>
                 </div>
             </div>
-            <div className="card">
-                <div className="card-body">
-                    {/* <ProductionCanvas /> */}
+            <div className="row">
+                <div className="col-md-12">
+                    <div class="card">
+                        <div className=" card-body row px-3">
+
+                            <ProductionCanvas />
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

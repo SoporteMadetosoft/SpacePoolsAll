@@ -16,6 +16,7 @@ import fileUpload from './fileUpload'
 import canvasReducer from './canvas'
 import ordersReducer from './orders'
 import calenderReducer from './calendar'
+import permisosReducer from './permisos'
 
 const rootReducer = combineReducers({
   auth,
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
   fileUpload,
   canvasReducer,
   ordersReducer,
-  calenderReducer
+  calenderReducer,
+  permisosReducer
 })
 
 export default rootReducer

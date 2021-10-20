@@ -7,7 +7,7 @@ import { ActionButtons } from '../../components/actionButtons/ActionButtons'
 
 import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm/index.js'
 import { ViewDeliveryForm } from './purchaseForm/ViewDeliveryForm'
-import { getCItemsByOrderId } from '../../redux/actions/canvas'
+import { getCItemsByOrderId, setInitialCanvas } from '../../redux/actions/canvas'
 
 const structureForm = {
     baseItems: [],
@@ -18,20 +18,25 @@ export const ViewDeliveryScreen = () => {
 
     const { id } = useParams()
     const { idOrder } = useSelector(state => state.normalForm)
+    const form = useSelector(state => state.normalForm)
     const history = useHistory()
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (id) {
-            dispatch(handleStartEditing('Delivery', id))
+        dispatch(handleStartEditing('Delivery', id))
+        dispatch(initNormalForm(structureForm))
+    }, [initNormalForm])
+
+    useEffect(() => {
+        if (idOrder) {
             dispatch(getCItemsByOrderId('Orders', idOrder))
         } else {
             dispatch(setInitialCanvas())
         }
-        dispatch(initNormalForm(structureForm))
-    }, [initNormalForm])
 
-    const title = 'Ver Hoja de Entrega'
+    }, [form])
+
+    const title = 'Detalles del pedido'
 
     const handleSubmit = async (e) => {
         e.preventDefault()

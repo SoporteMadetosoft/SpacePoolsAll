@@ -30,14 +30,16 @@ exports.listByID = async (req, res) => {
         return res.status(500).send(error);
     }
 }
-
-exports.update = async (req, res) => {
+exports.insert = async (req, res) => {
     try {
+        
+        const delivery = req.body.form
+        
 
-        /** INSERT CUSTOMER */
-        const form = req.body.form
+        console.log(delivery)
 
-        deliveryDao.update(form)
+        await deliveryDao.insert(delivery)
+        
 
         res.json({ ok: true })
     } catch (error) {

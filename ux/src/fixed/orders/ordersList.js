@@ -138,6 +138,15 @@ export const ordersList = [
                   <span className='align-middle ml-50'>Eliminar</span>
                 </DropdownItem>
               </Link>
+              {proceso_prod === 1 ? <Link onClick={(e) => {
+                dispatch(startSelectDriver({idOrder: row.id, idCustomer: row.idCustomer}, 'Delivery'))
+              }}>
+                <DropdownItem tag='a' href='/' className='w-100'>
+                  <Clipboard  size={15}/>
+                  <span className='align-middle ml-50'>Albarán pedido</span>
+                </DropdownItem>
+              </Link> : ''}
+
             </DropdownMenu>
           </UncontrolledDropdown>
         </div>

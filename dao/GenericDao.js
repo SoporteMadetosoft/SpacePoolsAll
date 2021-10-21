@@ -11,6 +11,7 @@ class GenericDao {
     }
 
     findById(id) {
+        // console.log(`SELECT * FROM ${this.auxModel.table} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query(`SELECT * FROM ?? WHERE id = ?`, [this.auxModel.table, id], async (err, result) => {
                 if (err) {
@@ -61,6 +62,7 @@ class GenericDao {
     }
 
     findAllId(id, foreign) {
+        // console.log(`SELECT id FROM ${this.auxModel.table} WHERE ${foreign} = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT id FROM ?? WHERE ?? = ?', [this.auxModel.table, foreign, id], async (err, result) => {
                 if (err) {
@@ -107,7 +109,7 @@ class GenericDao {
     }
 
     update(params) {
-        //  console.log(`UPDATE ${this.auxModel.table} SET ${this.#formatUpdate(params)} WHERE id =  ${params.id} `)
+        // console.log(`UPDATE ${this.auxModel.table} SET ${this.#formatUpdate(params)} WHERE id =  ${params.id} `)
         return new Promise((resolve, reject) => {
             this.db.query(`UPDATE ?? SET ${this.#formatUpdate(params)} WHERE id =  ? `, [this.auxModel.table, params.id], async (err, result) => {
                 if (err) {

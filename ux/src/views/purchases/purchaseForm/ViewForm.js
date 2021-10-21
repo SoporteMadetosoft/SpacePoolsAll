@@ -22,7 +22,8 @@ export const ViewForm = () => {
     const { observations, purchaseDate, deliveryDate } = normalForm
 
     useEffect(() => {
-        dispatch(startAddSelectOptions('Vendors', 'Vendors', 'comercialName'))
+        // dispatch(startAddSelectOptions('Vendors', 'Vendors', 'comercialName'))
+        // dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
     }, [])
 
     const valueVendor = normalForm['idVendor'] ? deconstructSelect(normalForm['idVendor'], 'comercialName') : ''

@@ -42,8 +42,10 @@ class GenericDao {
         })
     }
     findAllStatus() {
+        console.log('hola 3')
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM ?? WHERE idStatus = 2', [this.auxModel.table], async (err, result) => {
+         this.db.query('SELECT * FROM ?? WHERE idStatus = 2', [this.auxModel.table],async (err, result) => {
+            
                 if (err) {
                     reject(err)
                 } else {

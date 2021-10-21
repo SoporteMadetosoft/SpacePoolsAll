@@ -22,6 +22,7 @@ export const PurchaseVerificationFormScreen = () => {
     const form = useSelector(state => state.normalForm)
 
     useEffect(() => {
+        // dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
         if (id) {
             dispatch(handleStartEditing('Purchases', id))
         }

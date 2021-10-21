@@ -15,18 +15,7 @@ exports.list = async (req, res) => {
         return res.status(500).send(error);
     }
 }
-exports.select = async (req, res) => {
-    try {
-        res.json({
-            ok: true,
-            data: await customerDDao.findAllStatus()
-        })
 
-    } catch (error) {
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
 
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)

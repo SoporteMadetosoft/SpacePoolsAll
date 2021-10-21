@@ -38,10 +38,12 @@ export const OrderFormScreen = () => {
     useEffect(() => {
         if (id) {
             dispatch(handleStartEditing('Orders', id))
+            
         } else {
             dispatch(catchAndSetPrice(0))
         }
         dispatch(initNormalForm(structureForm))
+        
     }, [initNormalForm])
 
     useEffect(() => {

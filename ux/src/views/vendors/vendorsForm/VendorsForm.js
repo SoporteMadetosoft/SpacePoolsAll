@@ -16,6 +16,7 @@ import { Select } from '../../../components/form/inputs/Select'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { save } from '../../../utility/helpers/Axios/save'
+import { startAddSelectStatus } from '../../../redux/actions/selects'
 
 const ValidationSchema = yup.object().shape({
     CIF: yup.string().required()
@@ -42,10 +43,13 @@ export const VendorsForm = () => {
 
 
     useEffect(() => {
+        
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Vendors","vendorCode"))
             
         } else vendorCode = normalForm.id
+
+        
 
     }, [])
 

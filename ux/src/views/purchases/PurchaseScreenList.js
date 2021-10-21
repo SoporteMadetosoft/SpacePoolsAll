@@ -15,6 +15,7 @@ export const PurchaseScreenList = ({titulo}) => {
     const {registros:data} = useSelector(state => state.registrosReducer)
 
     useEffect(() => {
+        // dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Purchases'))   
     }, [])

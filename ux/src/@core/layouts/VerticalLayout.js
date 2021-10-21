@@ -121,8 +121,7 @@ const VerticalLayout = props => {
   return (
     <div
       className={classnames(
-        `wrapper vertical-layout ${navbarWrapperClasses[navbarType] || 'navbar-floating'} ${
-          footerClasses[footerType] || 'footer-static'
+        `wrapper vertical-layout ${navbarWrapperClasses[navbarType] || 'navbar-floating'} ${footerClasses[footerType] || 'footer-static'
         }`,
         {
           // Modern Menu
@@ -175,7 +174,7 @@ const VerticalLayout = props => {
       ></div>
       {/* Vertical Nav Menu Overlay */}
 
-      
+
       <footer
         className={classnames(`footer footer-light ${footerClasses[footerType] || 'footer-static'}`, {
           'd-none': footerType === 'hidden'
@@ -186,7 +185,7 @@ const VerticalLayout = props => {
 
       {themeConfig.layout.scrollTop === true ? (
         <div className='scroll-to-top'>
-          <ScrollToTop showUnder={300} style={{ bottom: '5%' }}>
+          <ScrollToTop showUnder={300} duration={1000} style={{ bottom: '5%' }}>
             <Button className='btn-icon' color='primary'>
               <ArrowUp size={14} />
             </Button>

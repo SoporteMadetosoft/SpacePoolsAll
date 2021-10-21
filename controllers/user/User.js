@@ -9,28 +9,23 @@ exports.list = async (req, res) => {
             ok: true,
             data: await userDao.findAll()
         })
-
     } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
-
 }
 
 exports.checkUser = async (req, res) => {
     const username = req.body.username
-
     try {
         const respuesta = await userDao.checkUser(username)
         res.json({
             ok: respuesta
         })
-
     } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
-
 }
 
 exports.listByID = async (req, res) => {
@@ -40,7 +35,6 @@ exports.listByID = async (req, res) => {
             ok: true,
             data: await userDao.findById(id)
         })
-
     } catch (error) {
         console.log(error)
         return res.status(500).send(error);
@@ -56,14 +50,11 @@ exports.delete = async (req, res) => {
         console.log(error)
         return res.status(500).send(error);
     }
-
 }
 
 exports.insert = async (req, res) => {
     try {
-        /** INSERT USER **/
         userDao.insertUser(req.body.form)
-
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
@@ -72,11 +63,8 @@ exports.insert = async (req, res) => {
 }
 
 exports.update = (req, res) => {
-
     try {
-        /** UPDATE USER **/
         userDao.updateUser(req.body.form)
-
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

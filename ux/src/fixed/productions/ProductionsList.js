@@ -126,7 +126,33 @@ export const ProductionsList = [
 
           }
 
+<<<<<<< Updated upstream
         </div>
+=======
+      
+
+           
+          <div className="d-flex justify-content-center">
+            {renderSwitch(proceso_prod)}
+          </div>
+          <div className="d-flex justify-content-end">
+            {proceso_prod < 6 ?
+              (
+                <Link onClick={() => {
+                  save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus + 1 })
+                  dispatch(startLoadingTable('Productions'))
+                  if ((row.idProductionStatus + 1) === 6) {
+                    axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.orderCode, state: 1 })
+                  }
+                }}>
+                  <Badge color='dark'><ArrowRight size={15} /></Badge>
+                </Link>
+              ) : ''
+            }
+          </div>
+
+        </>
+>>>>>>> Stashed changes
 
       )
     }

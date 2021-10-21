@@ -33,7 +33,7 @@ export const ExtraRawsRepeater = () => {
     }
 
     useEffect(() => {
-        dispatch(startAddSelectPoolItems('Items', 'Items', 'name', 2))
+        dispatch(startAddSelectPoolItems('Items', 'Raws', 'name', 2))
     }, [])
 
     return (
@@ -64,7 +64,7 @@ const ItemsForm = ({ position }) => {
     const dispatch = useDispatch()
 
     const { normalForm, selectReducer } = useSelector(state => state)
-    const { Items } = selectReducer
+    const { Raws } = selectReducer
     const { idItem, colores, idColor, quantity } = normalForm.extraRaws[position]
     const SelectValue = idItem ? deconstructSelect(idItem) : null
     const SelectColor = idColor.name ? deconstructSelect(idColor) : null
@@ -125,7 +125,7 @@ const ItemsForm = ({ position }) => {
                     placeholder="Artículo"
                     name="idItem"
                     value={SelectValue}
-                    options={Items}
+                    options={Raws}
                     onChange={(obj) => {
                         handleLoadColors(obj)
                     }} />

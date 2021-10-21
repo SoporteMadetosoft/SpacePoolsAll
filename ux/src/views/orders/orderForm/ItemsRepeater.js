@@ -1,30 +1,21 @@
-
 import Repeater from '@components/repeater'
-import { X, Plus } from 'react-feather'
+import { X } from 'react-feather'
 import { Button } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactSelect from 'react-select'
-import { startAddSelectOptions } from '../../../redux/actions/selects'
-import React, { useEffect } from 'react'
+import React from 'react'
 
-
-import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
-import { handleLessPrice, handleSearchOutID2 } from '../../../redux/actions/orders'
-import { deleteCanvasElement } from '../../../redux/actions/canvas'
+import { editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
+import { handleLessPrice } from '../../../redux/actions/orders'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
 export const ItemsRepeater = () => {
 
-    const dispatch = useDispatch()
     const formValues = useSelector(state => state.normalForm)
 
     const { baseItems } = formValues
 
     const count = baseItems ? baseItems.length : 0
-
-    useEffect(() => {
-        dispatch(startAddSelectOptions('Items', 'idOpt'))
-    }, [])
 
     return (
         <>
@@ -47,7 +38,7 @@ export const ItemsRepeater = () => {
 const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
-    const { normalForm, selectReducer } = useSelector(state => state)
+    const { normalForm } = useSelector(state => state)
     const { name, colores, idColor, quantity } = normalForm.baseItems[position]
     const SelectColor = idColor.name ? deconstructSelect(idColor) : null
 
@@ -63,8 +54,6 @@ const ItemsForm = ({ position }) => {
             value: target.value
         }
         dispatch(editRepeaterRegister('baseItems', position, obj))
-        //    dispatch(handleSearchOutID2('Items', position, 'extraItems',"extraItems"))
-        // dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
     }
 
     const handleSelectChange = (key, element) => {
@@ -74,7 +63,6 @@ const ItemsForm = ({ position }) => {
             value: el
         }
         dispatch(editRepeaterRegister('baseItems', position, obj))
-        // dispatch(handleSearchOutID2('Items', position, 'items', 'raws', 'items'))
     }
 
 

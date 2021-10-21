@@ -14,7 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "antd": "^4.16.13",
-    "aws-sdk": "^2.996.0",
     "bcrypt": "^5.0.1",
     "concurrently": "^6.2.1",
     "cors": "^2.8.5",

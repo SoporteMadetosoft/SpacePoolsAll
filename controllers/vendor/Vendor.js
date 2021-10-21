@@ -1,4 +1,3 @@
-const { CloudWatchLogs } = require('aws-sdk')
 const VendorDao = require('../../dao/vendor/VendorDao')
 
 const vendorDao = new VendorDao()
@@ -111,13 +110,13 @@ exports.update = async (req, res) => {
     }
 }
 
-exports.findNId= async (req, res) => {
+exports.findNId = async (req, res) => {
     try {
-       
-        res.json({ 
+
+        res.json({
             ok: true,
-            data: await  vendorDao.findAutoincrementID()
-         })
+            data: await vendorDao.findAutoincrementID()
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

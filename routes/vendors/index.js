@@ -9,6 +9,7 @@ router.post('/insert', ControllerVendors.insert);
 router.put('/update', ControllerVendors.update);
 router.delete('/delete/:id', ControllerVendors.delete);
 router.post('/find', ControllerVendors.listByID);
-router.get('/findnid', ControllerVendors.findNId)
+router.get('/findnid', ControllerVendors.findNId);
+router.get('/select', ControllerVendors.select)
 
 module.exports = router;

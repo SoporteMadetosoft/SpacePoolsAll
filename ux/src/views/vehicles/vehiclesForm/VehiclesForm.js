@@ -17,7 +17,7 @@ import { FileContext } from '../../../utility/context/FileContext'
 
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
 import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
-import { addSelectOptions, startAddSelectOptions } from '../../../redux/actions/selects'
+import { addSelectOptions, startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
@@ -69,7 +69,7 @@ export const VechiclesForm = () => {
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'Brand'))
-        dispatch(startAddSelectOptions('Carriers', 'Carriers'))
+        dispatch(startAddSelectStatus('Carriers', 'Carriers', 'name'))
     }, [])
 
     const handleLoadModels = async (obj) => {

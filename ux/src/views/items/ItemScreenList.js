@@ -6,6 +6,7 @@ import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 import { itemList } from '../../fixed/items/itemList'
 import { handleCleanForm } from '../../redux/actions/normalForm'
+import { startAddSelectStatus } from '../../redux/actions/selects'
 
 
 export const ItemScreenList = ({ titulo }) => {
@@ -17,6 +18,9 @@ export const ItemScreenList = ({ titulo }) => {
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Items'))
+        //dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
+        
+        
     }, [])
 
     return (

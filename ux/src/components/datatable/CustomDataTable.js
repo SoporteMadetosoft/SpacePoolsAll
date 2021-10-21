@@ -51,6 +51,7 @@ export const CustomDataTable = ({ title, columns, data, add = 1 }) => {
   const handleFilter = e => {
     const value = e.target.value
     let updatedData = []
+    console.log(value)
     setSearchValue(value)
 
     if (value.length) {
@@ -61,12 +62,16 @@ export const CustomDataTable = ({ title, columns, data, add = 1 }) => {
         let returned
 
         schCols.columnas.forEach(col => {
+          console.log(item[col])
           const startsWith = item[col].toLowerCase().startsWith(value.toLowerCase())
+
+          console.log(typeof startsWith)
           const includes = item[col].toLowerCase().includes(value.toLowerCase())
           if (startsWith || (!startsWith && includes)) {
             returned = item
           }
         })
+        
         return returned
       })
       setFilteredData(updatedData)

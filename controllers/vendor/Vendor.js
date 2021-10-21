@@ -1,3 +1,4 @@
+const { CloudWatchLogs } = require('aws-sdk')
 const VendorDao = require('../../dao/vendor/VendorDao')
 
 const vendorDao = new VendorDao()
@@ -7,6 +8,19 @@ exports.list = async (req, res) => {
         res.json({
             ok: true,
             data: await vendorDao.findAll()
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+exports.select = async (req, res) => {
+    console.log('hola2')
+    try {
+        res.json({
+            ok: true,
+            data: await vendorDao.findAllStatus()
         })
 
     } catch (error) {

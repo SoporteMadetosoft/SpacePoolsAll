@@ -37,6 +37,7 @@ export const endPoints = {
 
     Customers: '/customers',
     Vendors: '/vendors',
+    CustomerData: '/customerData',
 
     Carriers: '/carriers',
     Vehicles: '/vehicles',

@@ -17,11 +17,19 @@ class AuthDao {
                 reject('controller Auth->Login(): Los campos estan vacios');
             }
             this.db.query('SELECT id, fullname as fullName, phone, email, password, idRole, idStatus FROM users WHERE login = ? ', [email], async (err, result) => {
-                if (!result || !(await bcrypt.compare(password, result[0].password)) || result[0].status === 0) {
+                if (result.length === 0) {
                     reject('El usuario o contraseña es incorrecto');
                 } else {
-                    delete result[0].password
-                    resolve(await this.mountObj(result[0]))
+                    if (!(await bcrypt.compare(password, result[0].password)) === true) {
+                        reject('El usuario o contraseña es incorrecto');
+                    } else {
+                        if (result[0].idStatus !== 2) {
+                            reject('El usuario ha sido bloqueado');
+                        } else {
+                            delete result[0].password
+                            resolve(await this.mountObj(result[0]))
+                        }
+                    }
                 }
             })
         })

@@ -52,6 +52,7 @@ class ItemDao extends GenericDao {
     }
 
     findByItemTypeAndId(id, itemType) {
+        // console.log(`SELECT * FROM item WHERE id = ${id} AND itemType = ${itemType}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM item WHERE id = ? AND itemType = ?', [id, itemType], async (err, result) => {
                 if (err) {

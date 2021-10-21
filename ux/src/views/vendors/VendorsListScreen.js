@@ -16,7 +16,7 @@ export const VendorsListScreen = ({ titulo }) => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('Users'))
+        dispatch(startLoadingTable('Vendors'))
     }, [])
 
     return (

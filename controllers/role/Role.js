@@ -1,6 +1,8 @@
 const RoleDao = require('../../dao/role/RoleDao')
+const RoleStatusDao = require('../../dao/role/RoleStatusDao')
 
 const roleDao = new RoleDao()
+const roleStatusDao = new RoleStatusDao()
 
 
 exports.list = async (req, res) => {
@@ -46,7 +48,14 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT ROLE **/
-        const insert = await roleDao.insert(req.body.form)
+        const permissions = req.body.form
+        const productionStatus = req.body.form.productionStatus
+
+        delete permissions.productionStatus
+
+        const insert = await roleDao.insert(permissions)
+
+        roleDao.multipleAccess(productionStatus, roleStatusDao, insert.insertId, 'idRole')
 
         res.json({ ok: true })
     } catch (error) {
@@ -55,11 +64,20 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
     try {
         /** UPDATE ROLE **/
-        roleDao.update(req.body.form)
+        const permissions = req.body.form
+        const productionStatus = req.body.form.productionStatus
+
+        delete permissions.productionStatus
+
+        console.log(productionStatus)
+        await roleDao.update(permissions)
+
+        roleDao.multipleAccess(productionStatus, roleStatusDao, permissions.id, 'idRole')
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

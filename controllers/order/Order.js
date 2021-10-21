@@ -70,7 +70,7 @@ exports.insert = async (req, res) => {
         const order = req.body.form
         const production = req.body.form.production
         const extraItems = req.body.form.extraItems
-        const extraRaws = req.body.form.extraItems
+        const extraRaws = req.body.form.extraRaws
         const customerData = req.body.form.customerData
         const baseItems = req.body.form.baseItems
         const canvas = req.body.form.canvas

@@ -25,8 +25,8 @@ class OrderDao extends GenericDao {
         this.BaseItemDao = new BaseItemDao()
         this.TaxesDao = new TaxesDao()
         this.CanvasDao = new CanvasDao()
-        
-        
+
+
 
     }
 
@@ -35,7 +35,8 @@ class OrderDao extends GenericDao {
         const order = {
             ...data,
             customerData: await this.CustomerDataDao.findByOrderId(data.id),
-            extraItems: await this.ExtraItemDao.findByOrderId(data.id),
+            extraItems: await this.ExtraItemDao.getItemsByTypeAndOrder(data.id, 2),
+            extraRaws: await this.ExtraItemDao.getItemsByTypeAndOrder(data.id, 1),
             baseItems: await this.BaseItemDao.findByOrderId(data.id),
             orderDate: this.datetimeToDate(data.orderDate),
             productionDate: this.datetimeToDate(data.productionDate),
@@ -44,10 +45,8 @@ class OrderDao extends GenericDao {
             idTax: { id: data.idTax, name: (await this.TaxesDao.findTaxNameBy(data.idTax)) },
             idCustomer: { id: data.idCustomer, comercialName: (await this.CustomerDao.findCustomerNameBy(data.idCustomer)) },
             canvasItems: await this.CanvasDao.findByOrderId(data.id),
-            
-            
-            
         }
+
         let order2 = new Order(order)
         order2 = {
             ...order2,
@@ -56,6 +55,7 @@ class OrderDao extends GenericDao {
             email: await this.CustomerDataDao.findOneFieldById("email", data.id)
 
         }
+        // console.log(order2)
         return order2
     }
 
@@ -68,7 +68,7 @@ class OrderDao extends GenericDao {
             customerName: customer !== undefined ? customer.comercialName : '',
             customerPhone: customer !== undefined ? customer.phone : '',
             customerEmail: customer !== undefined ? customer.email : '',
-             
+
 
 
         }

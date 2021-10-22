@@ -84,9 +84,10 @@ class ItemDao extends GenericDao {
     }
 
     async mountList(data) {
+        const rs = await this.findReservedStock(data.id)
         const list = {
             ...data,
-            reserveStock: await this.findReservedStock(data.id)
+            reserveStock: rs !== null ? rs : 0
         }
 
         const { id, itemCode, name, description, stock, reserveStock } = list

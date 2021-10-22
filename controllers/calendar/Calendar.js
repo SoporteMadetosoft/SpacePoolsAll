@@ -17,7 +17,6 @@ exports.getEvents = async (req, res) => {
             return res.status(500).send(error);
         }
     } else {
-        console.log('No hay calendarios seleccionados')
         res.json({
             ok: true,
             data: []

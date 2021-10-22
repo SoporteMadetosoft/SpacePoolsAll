@@ -95,7 +95,6 @@ export const setInitialCanvas = () => {
                 x: (window.innerWidth) / 15,
                 y: ((window.innerHeight) / 12) * element.idElemento
             }
-            //    console.log(newItem)
             dispatch(addCanvasElement("elements", newItem, index))
         })
         //dispatch(handleCleanCanvas())

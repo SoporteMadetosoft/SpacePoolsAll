@@ -23,8 +23,6 @@ const placeholderStyles = {
 export const PurchaseForm = () => {
     let { purchaseCode } = useSelector(state => state.normalForm)
 
-
-
     const dispatch = useDispatch()
 
     const { normalForm, selectReducer } = useSelector(state => state)

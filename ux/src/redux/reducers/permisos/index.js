@@ -44,7 +44,6 @@ const permisosReducer = (state = initialState, action) => {
             }
         case formTypes.SwitchPermissionAll:
             const newPermision = Object.entries(state[action.payload.key]).map((el) => {
-                console.log(el[0])
                 return { id: [el[0]], value: action.payload.value }
             })
 

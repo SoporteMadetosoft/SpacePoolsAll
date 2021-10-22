@@ -76,7 +76,6 @@ exports.update = async (req, res) => {
     try {
         /** UPDATE PRODUCT FAMILY */
         const familia = req.body.form
-        console.log(familia)
         if (familia.id === familia.parent) {
             return res.status(500).send()
         }

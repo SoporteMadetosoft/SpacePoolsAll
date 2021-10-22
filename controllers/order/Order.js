@@ -108,12 +108,14 @@ exports.update = (req, res) => {
         const order = req.body.form
         const production = req.body.form.production
         const extraItems = req.body.form.extraItems
+        const extraRaws = req.body.form.extraRaws
         const customerData = req.body.form.customerData
         const baseItems = req.body.form.baseItems
         const canvas = req.body.form.canvas
 
         delete order.production
         delete order.extraItems
+        delete order.extraRaws
         delete order.customerData
         delete order.canvas
         delete order.baseItems
@@ -127,6 +129,7 @@ exports.update = (req, res) => {
         customerDataDao.update(customerData2)
 
         orderDao.multipleAccess(extraItems, orderDao.ExtraItemDao, order.id, 'idOrder')
+        orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, order.id, 'idOrder')
         orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, order.id, 'idOrder')
         orderDao.multipleAccess(canvas, canvasDao, order.id, 'idOrder')
 

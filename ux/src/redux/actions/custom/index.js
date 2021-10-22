@@ -53,7 +53,7 @@ export const startDeleteRepairRegister = (id, index, endPoint) => {
                 type: types.deleteRepair,
                 payload: {
                     id,
-                    
+
                     index
                 }
             })
@@ -61,24 +61,22 @@ export const startDeleteRepairRegister = (id, index, endPoint) => {
     }
 }
 
-export const startSelectDriver = ({idOrder, idCustomer},endPoint) => {
-    return async (dispatch,getState) => {
+export const startSelectDriver = ({ idOrder, idCustomer }, endPoint) => {
+    return async (dispatch, getState) => {
 
         const carriers = getState().selectReducer.Carriers
-        console.log(carriers)
 
         const respuesta = await handleSelectCarrier(carriers)
-        const driver 
-        
-        = {
+        const driver
+
+            = {
             idStatus: 2,
             idCarrier: respuesta,
             idOrder,
             idCustomer
         }
 
-        console.log(driver)
-        if (respuesta !== false) {           
+        if (respuesta !== false) {
             save(endPoint, null, driver)
 
         }

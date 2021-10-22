@@ -56,7 +56,6 @@ const PreviewCard = () => {
     total: price,
     observations
   }
-  console.log(data)
 
   useEffect(() => {
     if (id) {

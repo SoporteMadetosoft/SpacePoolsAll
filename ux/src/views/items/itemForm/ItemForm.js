@@ -76,7 +76,7 @@ export const ItemForm = () => {
             idPlace: exceptionController(form.idPlace),
             idColor: undoMultiSelect(form.idColor, 'idColor')
         }
-        console.log(prettyForm)
+
         save('Items', id, prettyForm)
         dispatch(handleCleanUp())
         history.push('/items')

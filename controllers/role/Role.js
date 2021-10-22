@@ -73,7 +73,6 @@ exports.update = async (req, res) => {
 
         delete permissions.productionStatus
 
-        console.log(productionStatus)
         await roleDao.update(permissions)
 
         roleDao.multipleAccess(productionStatus, roleStatusDao, permissions.id, 'idRole')

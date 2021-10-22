@@ -10,14 +10,12 @@ const CustomerDataDao = require("../order/CustomerDataDao");
 const ExtraItemDao = require("../order/ExtraItemDao");
 const BaseItemDao = require("../order/BaseItemDao")
 const TaxesDao = require("../setup/general/TaxDao");
-const ItemDao = require("../item/ItemDao")
 const CanvasDao = require("../order/CanvasDao")
 
 
 class OrderDao extends GenericDao {
     constructor() {
         super(Order);
-        this.ItemDao = new ItemDao
         this.PoolDao = new PoolDao()
         this.CustomerDao = new CustomerDao()
         this.CustomerDataDao = new CustomerDataDao()
@@ -25,8 +23,6 @@ class OrderDao extends GenericDao {
         this.BaseItemDao = new BaseItemDao()
         this.TaxesDao = new TaxesDao()
         this.CanvasDao = new CanvasDao()
-
-
 
     }
 
@@ -69,8 +65,6 @@ class OrderDao extends GenericDao {
             customerPhone: customer !== undefined ? customer.phone : '',
             customerEmail: customer !== undefined ? customer.email : '',
 
-
-
         }
 
         const { id, orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate, price, state } = list
@@ -100,7 +94,6 @@ class OrderDao extends GenericDao {
                 if (err) {
                     reject(err)
                 } else {
-
                     resolve(result[0])
                 }
             })
@@ -109,7 +102,7 @@ class OrderDao extends GenericDao {
 
     findActiveOrders() {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT id FROM orders WHERE state = 2', (err, result) => {
+            this.db.query('SELECT id FROM orders WHERE state = 0', (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -118,14 +111,14 @@ class OrderDao extends GenericDao {
                     for (const res of result) {
                         objList.push(res.id)
                     }
-
                     resolve(objList)
                 }
             })
         })
     }
+
     updateOrderState(id) {
-        console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
+        // console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('UPDATE orders SET state = 1 WHERE id = ?', [id], (err, result) => {
                 if (err) {

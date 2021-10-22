@@ -55,6 +55,7 @@ exports.insert = async (req, res) => {
         const documents = req.body.form.documents
 
         delete trailer.documents
+        delete trailer.repairs
 
         const insert = await trailerDao.insert(trailer)
 
@@ -76,6 +77,7 @@ exports.update = async (req, res) => {
         const documents = req.body.form.documents
 
         delete trailer.documents
+        delete trailer.repairs
 
         await trailerDao.update(trailer)
 
@@ -88,13 +90,13 @@ exports.update = async (req, res) => {
     }
 }
 
-exports.findNId= async (req, res) => {
+exports.findNId = async (req, res) => {
     try {
-       
-        res.json({ 
+
+        res.json({
             ok: true,
-            data: await  trailerDao.findAutoincrementID()
-         })
+            data: await trailerDao.findAutoincrementID()
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

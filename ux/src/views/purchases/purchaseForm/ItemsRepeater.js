@@ -68,10 +68,12 @@ const ItemsForm = ({ position }) => {
     const { normalForm, selectReducer } = useSelector(state => state)
     const { ItemType } = selectReducer
     const { idVendor } = normalForm
-    const { itemType, idItem, stock, cost, itemsOpt, quantity } = normalForm.items[position]
+    const { itemType, idItem, stock, cost, colores, idColor, itemsOpt, quantity } = normalForm.items[position]
 
     const idItemValue = idItem ? deconstructSelect(idItem) : null
     const itemTypeValue = itemType ? deconstructSelect(itemType) : null
+    const SelectColor = idColor ? deconstructSelect(idColor) : null
+
 
     const handleLoadItems = async (obj) => {
         const nObj = {
@@ -117,6 +119,17 @@ const ItemsForm = ({ position }) => {
         dispatch(handleSearchStock('Items', obj.value, position, 'items'))
     }
 
+    const handleLoadColors = async (obj) => {
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/item/selectByIdItem/${obj.value}`)
+        const colors = data.map(option => ({ label: option.name, value: option.id }))
+        const objFinal = {
+            name: 'colores',
+            value: colors
+        }
+        dispatch(editRepeaterRegister('items', position, objFinal))
+        handleSelectChange('idItem', obj)
+    }
+
     const costeReal = cost ? cost * quantity : 0
 
     return (
@@ -146,13 +159,23 @@ const ItemsForm = ({ position }) => {
                         (obj) => {
                             handleLoadStockCost(obj)
                             handleSelectChange('idItem', obj)
+                            handleLoadColors(obj)
                         }
                     }
                     value={idItemValue}
                 />
             </div>
-
-            <div className="col-md-2">
+            <div className="col-md-3">
+                <label className="control-label">Color</label>
+                <ReactSelect
+                    placeholder="Color"
+                    name="idColor"
+                    options={colores}
+                    onChange={(value) => { handleSelectChange('idColor', value) }}
+                    value={SelectColor}
+                />
+            </div>
+            <div className="col-md-1">
                 <label className="control-label">Cantidad</label>
                 <input
                     type="number"
@@ -162,7 +185,7 @@ const ItemsForm = ({ position }) => {
                     value={quantity}
                 />
             </div>
-            <div className="col-md-2">
+            <div className="col-md-1">
                 <label className="control-label">Precio</label>
                 <input
                     type="text"
@@ -172,7 +195,7 @@ const ItemsForm = ({ position }) => {
                     readOnly />
             </div>
 
-            <div className="col-md-2">
+            <div className="col-md-1">
                 <label className="control-label">Stock</label>
                 <input
                     type="text"

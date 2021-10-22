@@ -16,6 +16,7 @@ export const vendorList = [
     name: 'Nº',
     selector: 'id',
     sortable: true,
+    searchable: true,
     width: '8%'
   },
   {
@@ -50,12 +51,14 @@ export const vendorList = [
     name: 'Nombre contacto',
     selector: 'contactName',
     sortable: true,
+    searchable: true,
     width: '15%'
   },
   {
     name: 'Tel. contacto',
     selector: 'contactPhone',
     sortable: true,
+    searchable: true,
     width: '12%'
   },
   {

@@ -54,6 +54,7 @@ export const carriersList = [
   {
     name: 'Estado',
     sortable: true,
+    searchable: true,
     width: '10%',
     cell: row => {
       return (

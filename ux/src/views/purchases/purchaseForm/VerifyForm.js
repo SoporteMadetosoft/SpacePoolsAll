@@ -2,10 +2,11 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { GetSetNextId } from '../../../redux/actions/normalForm'
-
+import { datetimeToEuropeDate } from "../../../utility/helpers/dates"
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { VerifyItemsRepeater } from './VerifyItemRepeater'
+
 
 export const VerifyForm = () => {
     let { purchaseCode } = useSelector(state => state.normalForm)
@@ -41,11 +42,11 @@ export const VerifyForm = () => {
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">Fecha de compra</label>
-                        <h6>{purchaseDate}</h6>
+                        <h6>{datetimeToEuropeDate(new Date(purchaseDate))}</h6>
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">Fecha de entrega</label>
-                        <h6>{deliveryDate}</h6>
+                        <h6>{datetimeToEuropeDate(new Date(deliveryDate))}</h6>
                     </div>
 
 

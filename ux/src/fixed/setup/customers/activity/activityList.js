@@ -12,6 +12,7 @@ export const activityList = [
     name: 'ID',
     selector: 'id',
     sortable: true,
+    searchable: true,
     minWidth: '50px',
     width: '8%'
   },
@@ -25,6 +26,7 @@ export const activityList = [
   {
     name: '',
     width: '5%',
+    searchable: true,
     cell: row => {
 
       const dispatch = useDispatch()

@@ -16,7 +16,7 @@ exports.list = async (req, res) => {
     }
 }
 exports.select = async (req, res) => {
-    console.log('hola2')
+    
     try {
         res.json({
             ok: true,

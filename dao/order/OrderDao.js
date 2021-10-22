@@ -73,7 +73,7 @@ class OrderDao extends GenericDao {
 
         }
 
-        const { id, orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate, price, state } = list
+        const { id, orderCode, customerName, customerPhone, customerEmail, orderDate, deliverySchedulerStart, deliverySchedulerEnd, deliveryDate, price, state, idCustomer } = list
 
         const newOrderDate = this.datetimeToEuropeDate(orderDate)
         const newDliveryDate = this.datetimeToEuropeDate(deliveryDate)
@@ -89,6 +89,7 @@ class OrderDao extends GenericDao {
             deliveryDate: newDliveryDate,
             price: price,
             state: state,
+            idCustomer: idCustomer
         }
         return nObj
     }

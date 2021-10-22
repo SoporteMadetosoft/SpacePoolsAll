@@ -12,6 +12,7 @@ export const itemsFamilyList = [
         name: 'Nº',
         selector: 'id',
         sortable: true,
+        searchable: true,
         minWidth: '50px',
         width: '10%'
     },
@@ -31,6 +32,7 @@ export const itemsFamilyList = [
     },
     {
         name: 'Acciones',
+        searchable: true,
         width: '150px',
         cell: row => {
 

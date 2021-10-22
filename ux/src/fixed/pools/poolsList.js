@@ -14,6 +14,7 @@ export const poolsList = [
         name: 'Nº',
         selector: 'poolCode',
         sortable: true,
+        searchable: true,
         minWidth: '50px',
         width: '8%'
     },
@@ -69,6 +70,7 @@ export const poolsList = [
     {
         name: 'Estado',
         sortable: true,
+        searchable: true,
         width: '10%',
         cell: row => {
             return (

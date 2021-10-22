@@ -12,6 +12,7 @@ export const rolesList = [
     name: 'Nº',
     selector: 'id',
     sortable: true,
+    searchable: true,
     width: '8%'
   },
   {

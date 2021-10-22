@@ -13,6 +13,7 @@ export const vehiclesList = [
     name: 'Nº',
     selector: 'id',
     sortable: true,
+    searchable: true,
     minWidth: '50px',
     width: '8%'
   },
@@ -47,6 +48,7 @@ export const vehiclesList = [
   {
     name: 'Estado',
     sortable: true,
+    searchable: true,
     width: '10%',
     cell: row => {
       return (

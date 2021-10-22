@@ -12,6 +12,7 @@ export const itemList = [
         name: 'Nº',
         selector: 'id',
         sortable: true,
+        searchable: true,
         minWidth: '50px',
         width: '8%'
     },

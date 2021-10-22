@@ -9,6 +9,7 @@ import { handleStartEditing, initNormalForm } from '../../redux/actions/normalFo
 import { save } from '../../utility/helpers/Axios/save'
 import { PurchaseForm } from './purchaseForm/PurchaseForm'
 import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
+import { startAddSelectStatus } from '../../redux/actions/selects'
 
 const structureForm = {
     items: []
@@ -22,6 +23,7 @@ export const PurchaseFormScreen = () => {
     const form = useSelector(state => state.normalForm)
 
     useEffect(() => {
+        // dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
         if (id) {
             dispatch(handleStartEditing('Purchases', id))
         }

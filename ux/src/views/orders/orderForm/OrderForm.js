@@ -10,7 +10,7 @@ import moment from 'moment'
 
 import { OrderCanvas } from './OrderCanvas'
 
-import { startAddSelectOptions } from '../../../redux/actions/selects'
+import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 import { createItemRepeatersByPool, handleAddCost, handleCalculateTotalCost, handleFillCustomerData } from '../../../redux/actions/orders'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { handleCleanCanvas } from '../../../redux/actions/canvas'
@@ -87,7 +87,10 @@ export const OrderForm = () => {
     useEffect(() => {
         dispatch(startAddSelectOptions('Pools', 'poolsOpt', 'fabricationName'))
         dispatch(startAddSelectOptions('Taxes', 'taxesOpt'))
-        dispatch(startAddSelectOptions('Customers', 'Customers', 'comercialName'))
+        
+        dispatch(startAddSelectStatus('Customers', 'Customers', 'comercialName'))
+
+
 
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Orders", 'orderCode'))

@@ -12,7 +12,7 @@ import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
-import { startAddSelectOptions } from '../../../redux/actions/selects'
+import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 import ReactSelect from 'react-select'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { undoMultiSelect } from '../../../utility/helpers/undoMultiSelect'
@@ -51,6 +51,8 @@ export const ItemForm = () => {
 
     useEffect(() => {
         dispatch(startAddSelectOptions('ItemType', 'ItemType'))
+        dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
+        
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Items", 'itemCode'))
         } else itemCode = normalForm.id

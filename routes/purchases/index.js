@@ -12,5 +12,6 @@ router.put('/verify', ControllerPurchase.verify);
 router.delete('/delete/:id', ControllerPurchase.delete);
 router.post('/find', ControllerPurchase.listByID);
 router.get('/findnid', ControllerPurchase.findNId)
+router.get('/select', ControllerPurchase.select)
 
 module.exports = router;

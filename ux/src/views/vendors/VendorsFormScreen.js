@@ -5,6 +5,7 @@ import BreadCrumbs from '@components/breadcrumbs'
 
 import { GetSetNextId, handleStartEditing, initNormalForm } from '../../redux/actions/normalForm'
 import { VendorsForm } from './vendorsForm/VendorsForm'
+import { startAddSelectStatus } from '../../redux/actions/selects'
 
 const structureForm = {
     addresses: [],
@@ -18,6 +19,7 @@ export const VendorsFormScreen = () => {
     const form = useSelector(state => state.normalForm)
 
     useEffect(() => {
+        
         if (id) {
             dispatch(handleStartEditing('Vendors', id))
         }

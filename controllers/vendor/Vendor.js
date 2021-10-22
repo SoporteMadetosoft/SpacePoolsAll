@@ -14,6 +14,19 @@ exports.list = async (req, res) => {
         return res.status(500).send(error);
     }
 }
+exports.select = async (req, res) => {
+    console.log('hola2')
+    try {
+        res.json({
+            ok: true,
+            data: await vendorDao.findAllStatus()
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
 
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
@@ -97,13 +110,13 @@ exports.update = async (req, res) => {
     }
 }
 
-exports.findNId= async (req, res) => {
+exports.findNId = async (req, res) => {
     try {
-       
-        res.json({ 
+
+        res.json({
             ok: true,
-            data: await  vendorDao.findAutoincrementID()
-         })
+            data: await vendorDao.findAutoincrementID()
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

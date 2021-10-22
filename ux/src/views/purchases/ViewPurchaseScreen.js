@@ -20,6 +20,7 @@ export const ViewPurchaseScreen = () => {
 
     useEffect(() => {
         if (id) {
+            // dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
             dispatch(handleStartEditing('Purchases', id))
         }
         dispatch(initNormalForm(structureForm))

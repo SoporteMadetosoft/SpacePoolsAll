@@ -13,6 +13,7 @@ router.post('/find', ControllerCarrier.listByID);
 router.post('/insert', ControllerCarrier.insert);
 router.put('/update', ControllerCarrier.update);
 router.delete('/delete/:id', ControllerCarrier.delete);
-router.get('/findnid', ControllerCarrier.findNId)
+router.get('/findnid', ControllerCarrier.findNId);
+router.get('/select', ControllerCarrier.select);
 
 module.exports = router;

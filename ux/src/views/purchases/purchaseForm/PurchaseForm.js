@@ -8,7 +8,7 @@ import ReactSelect from 'react-select'
 import { ItemsRepeater } from './ItemsRepeater'
 
 import { Input } from '../../../components/form/inputs/Input'
-import { startAddSelectOptions } from '../../../redux/actions/selects'
+import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
 const placeholderStyles = {
@@ -27,6 +27,7 @@ export const PurchaseForm = () => {
 
     const { normalForm, selectReducer } = useSelector(state => state)
     useEffect(() => {
+        
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Purchases", 'purchaseCode'))
         } else purchaseCode = normalForm.id
@@ -37,7 +38,8 @@ export const PurchaseForm = () => {
     const { Vendors } = selectReducer
 
     useEffect(() => {
-        dispatch(startAddSelectOptions('Vendors', 'Vendors', 'comercialName'))
+        // dispatch(startAddSelectOptions('Vendors', 'Vendors', 'comercialName'))
+        dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
     }, [])
 
     const handleInputChange = ({ target }) => {

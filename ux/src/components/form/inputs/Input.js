@@ -17,7 +17,7 @@ export const Input = ({ name, label, className, placeholder = label, type = "tex
         <>
             <label className="control-label">{label}</label>
             <input
-                className={`form-control ${className} ${formValidator.errors && formValidator.errors[name] ? 'borderless border-danger rounded' : ''}`}
+                className={`form-control ${className}`}
                 id={name}
                 name={name}
                 type={type}

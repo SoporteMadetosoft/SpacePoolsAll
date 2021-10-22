@@ -58,7 +58,8 @@ export const Select = ({ name, label, className, placeholder = label, isMulti = 
 
     return (
         <>
-            <label className="control-label">{label}</label>
+            {label ? (<label className="control-label">{label}</label>) : ('')}
+
             <ReactSelect
                 className={`${className} ${formValidator.errors && formValidator.errors[name] ? 'border-danger rounded' : ''}`}
                 id={name}

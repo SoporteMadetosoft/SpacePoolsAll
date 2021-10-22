@@ -62,16 +62,15 @@ export const CustomDataTable = ({ title, columns, data, add = 1 }) => {
         let returned
 
         schCols.columnas.forEach(col => {
-          console.log(item[col])
-          const startsWith = item[col].toLowerCase().startsWith(value.toLowerCase())
-
-          console.log(typeof startsWith)
-          const includes = item[col].toLowerCase().includes(value.toLowerCase())
+          const colValue = (item[col] !== null && item[col] !== undefined) ? item[col].toString() : ''
+          console.log(colValue)
+          const startsWith = colValue.toLowerCase().startsWith(value.toLowerCase())
+          const includes = colValue.toLowerCase().includes(value.toLowerCase())
           if (startsWith || (!startsWith && includes)) {
-            returned = item
+            returned = item.toString()
           }
         })
-        
+
         return returned
       })
       setFilteredData(updatedData)
@@ -118,6 +117,7 @@ export const CustomDataTable = ({ title, columns, data, add = 1 }) => {
     const columnDelimiter = ','
     const lineDelimiter = '\n'
     const keys = Object.keys(data[0])
+    console.log(array)
 
     result = ''
     result += keys.join(columnDelimiter)
@@ -166,7 +166,7 @@ export const CustomDataTable = ({ title, columns, data, add = 1 }) => {
                 <Download size={15} />
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem className='w-100' onClick={() => downloadCSV(data)}>
+                <DropdownItem className='w-100' onClick={ () => downloadCSV(searchValue.length ? (filteredData) : (data)) }>
                   <FileText size={15} />
                   <span className='align-middle ml-50'>CSV</span>
                 </DropdownItem>

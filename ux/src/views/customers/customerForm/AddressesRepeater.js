@@ -1,21 +1,23 @@
 import React, { useEffect } from 'react'
 import Repeater from '@components/repeater'
-import { X, Plus } from 'react-feather'
+import { X, Plus, Save } from 'react-feather'
 import { Button } from 'reactstrap'
 import RadioButton from '@material-ui/core/Radio'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
 
-import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, editRepeaterRegister, handleChangeController, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+import { save } from '../../../utility/helpers/Axios/save'
 
 const formStructure = {
     addressType: '',
     address: '',
     population: '',
     province: '',
-    postcode: ''
+    postcode: '',
+    defaultAddress: false
 }
 
 export const AddressesRepeater = () => {
@@ -99,6 +101,15 @@ const AddressesForm = ({ position }) => {
         )
     }
 
+    const handleRadioChange = ({target}) => {
+        
+        const newAddressList = normalForm.addresses.map((address, index) => {
+            return { ...address, [target.name] : index === position }
+        })
+        dispatch(handleChangeController('addresses', newAddressList))
+        
+    }
+
     return (
 
         <div className="row border-bottom pb-1 mt-1 mx-1">
@@ -151,9 +162,14 @@ const AddressesForm = ({ position }) => {
                 <label className="control-label">Principal</label>
                 <br />
                 <RadioButton
+                    
                     type="radio"
-                    checked={defaultAddress}
+                    
+                    onChange={handleRadioChange}
                     name="defaultAddress"
+                    defaultValue={SelectValue}
+                    checked={defaultAddress}
+                    
                 />
             </div>
             <div className="col-md-1">

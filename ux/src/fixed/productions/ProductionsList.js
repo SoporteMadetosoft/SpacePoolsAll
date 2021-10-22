@@ -81,11 +81,15 @@ export const ProductionsList = [
   {
     name: 'Horario de entrega',
     selector: 'deliveryTime',
+    searchable: true,
+    searchable: true,
     width: '14%'
   },
   {
     name: 'Observaciones',
     selector: 'observations',
+    searchable: true,
+    searchable: true,
     width: '11%'
   },
   {

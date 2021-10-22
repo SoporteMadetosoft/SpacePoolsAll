@@ -12,6 +12,7 @@ export const TaxesList = [
         name: 'Nº',
         selector: 'id',
         sortable: true,
+        searchable: true,
         minWidth: '50px',
         width: '8%'
     },
@@ -19,6 +20,7 @@ export const TaxesList = [
         name: 'IVA',
         selector: 'name',
         sortable: true,
+        searchable: true,
         width: '45%'
     },
     {

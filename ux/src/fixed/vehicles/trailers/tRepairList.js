@@ -17,6 +17,7 @@ export const tRepairList = [
         name: 'Nº',
         selector: 'id',
         sortable: true,
+        searchable: true,
         width: '8%'
     },
     {

@@ -24,7 +24,6 @@ export const tRepairList = [
         selector: 'date',
         width: '22%',
         cell: row => {
-            console.log(row.date)
             const fecha = row.date
 
             return (
@@ -62,11 +61,11 @@ export const tRepairList = [
         width: '22%',
         cell: row => {
             return (
-              <div>
-                <span>{changeToEuro(row.cost)}</span>
-              </div>
+                <div>
+                    <span>{changeToEuro(row.cost)}</span>
+                </div>
             )
-          }
+        }
     },
     {
         name: '',

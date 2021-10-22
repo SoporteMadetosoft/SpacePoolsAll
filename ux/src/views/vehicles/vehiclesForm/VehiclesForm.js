@@ -154,7 +154,7 @@ export const VechiclesForm = () => {
         })
 
     }
-    console.log(errors)
+
     return (
         <Form onSubmit={handleSubmit(submit)}>
             <div className="card">

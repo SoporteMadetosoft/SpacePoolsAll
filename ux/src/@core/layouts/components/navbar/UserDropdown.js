@@ -14,10 +14,7 @@ import { handleLogout } from '@auth/redux/actions'
 
 // ** Third Party Components
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap'
-import { User, Mail, CheckSquare, MessageSquare, Settings, CreditCard, HelpCircle, Power } from 'react-feather'
-
-// ** Default Avatar Image
-import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
+import { Power } from 'react-feather'
 
 const UserDropdown = () => {
   // ** Store Vars
@@ -33,17 +30,14 @@ const UserDropdown = () => {
     }
   }, [])
 
-  //** Vars
-  const userAvatar = (userData && userData.avatar) || defaultAvatar
-
   return (
     <UncontrolledDropdown tag='li' className='dropdown-user nav-item'>
       <DropdownToggle href='/' tag='a' className='nav-link dropdown-user-link' onClick={e => e.preventDefault()}>
         <div className='user-nav d-sm-flex d-none'>
-          <span className='user-name font-weight-bold'>{(userData && userData['username']) || 'John Doe'}</span>
+          <span className='user-name font-weight-bold'>{(userData && userData['fullName']) || ''}</span>
           <span className='user-status'>{(userData && userData.role) || 'Admin'}</span>
         </div>
-        <Avatar img={userAvatar} imgHeight='40' imgWidth='40' status='online' />
+        <Avatar imgHeight='40' imgWidth='40' status='online' initials={true} content={(userData && userData['fullName']) || ''} />
       </DropdownToggle>
       <DropdownMenu right>
         {/* <DropdownItem tag={Link} to='/pages/profile'>

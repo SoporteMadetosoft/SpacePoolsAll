@@ -32,26 +32,21 @@ export const OrderFormScreen = () => {
     const form = useSelector(state => state.normalForm)
     const canvas = useSelector(state => state.canvasReducer)
     const orders = useSelector(state => state.ordersReducer)
-    const canvasItems = useSelector(state => state.normalForm.canvasItems)
-
 
     useEffect(() => {
         if (id) {
             dispatch(handleStartEditing('Orders', id))
-            
+            dispatch(getCItemsByOrderId('Orders', id))
         } else {
             dispatch(catchAndSetPrice(0))
+            dispatch(setInitialCanvas())
         }
         dispatch(initNormalForm(structureForm))
         
     }, [initNormalForm])
 
     useEffect(() => {
-        if (id) {
-            dispatch(getCItemsByOrderId('Orders', id))
-        } else {
-            dispatch(setInitialCanvas())
-        }
+
         dispatch(catchAndSetPrice())
     }, [form])
 

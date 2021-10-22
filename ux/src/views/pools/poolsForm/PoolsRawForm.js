@@ -107,7 +107,6 @@ const ItemsForm = ({ position }) => {
         dispatch(editRepeaterRegister('raws', position, objFinal))
         handleSelectChange('idItem', obj)
     }
-    console.log(colores.length)
     return (
 
         <div className="row border-bottom pb-1">

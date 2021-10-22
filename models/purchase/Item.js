@@ -5,12 +5,14 @@ class Item {
         id,
         idPurchase,
         idItem,
+        idColor,
         quantity,
         recived
     }) {
         this.id = id
         this.idPurchase = idPurchase
         this.idItem = idItem
+        this.idColor = idColor
         this.quantity = quantity
         this.recived = recived
     }

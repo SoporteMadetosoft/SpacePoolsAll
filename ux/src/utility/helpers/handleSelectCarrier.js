@@ -25,7 +25,6 @@ export const handleSelectCarrier = async (Carriers) => {
     })
         .then(result => {
             if (result.value) {
-                console.log(result)
                 Swal.fire({
                     icon: 'success',
                     title: '¡Genial!',

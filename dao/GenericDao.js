@@ -26,7 +26,7 @@ class GenericDao {
 
     findAll() {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM ??', [this.auxModel.table], async (err, result) => {
+            this.db.query('SELECT * FROM ?? ORDER BY id DESC', [this.auxModel.table], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -41,6 +41,7 @@ class GenericDao {
 
         })
     }
+
     findAllStatus() {
         console.log('hola 3')
         return new Promise((resolve, reject) => {

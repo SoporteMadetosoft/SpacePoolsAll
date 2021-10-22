@@ -55,8 +55,6 @@ exports.insert = async (req, res) => {
         delete pool.items
         delete pool.raws
 
-        console.log(pool)
-
         const insert = await poolDao.insert(pool)
         poolDao.multipleAccess(allItems, poolDao.PoolItemsDao, insert.insertId, 'idPool')
 

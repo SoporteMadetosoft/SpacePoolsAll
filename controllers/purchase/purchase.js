@@ -104,6 +104,7 @@ exports.verify = async (req, res) => {
 
         items.forEach(async i => {
             await purchaseItemDao.sumRecived(i.id, i.recived)
+            await purchaseItemDao.ItemDao.updateStock('+', i.idItem, i.recived)
         })
         // await purchaseDao.multipleAccess(items, purchaseDao.PurchaseItemDao, purchase.id, 'idPurchase')
 

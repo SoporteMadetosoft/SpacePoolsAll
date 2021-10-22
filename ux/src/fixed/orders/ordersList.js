@@ -49,6 +49,8 @@ export const ordersList = [
   {
     name: 'horario de entrega',
     selector: 'deliveryTime',
+    searchable: true,
+    searchable: true,
     minWidth: '200px'
   },
   {
@@ -75,6 +77,7 @@ export const ordersList = [
   {
     name: 'Estado',
     sortable: true,
+    searchable: true,
     width: '8%',
     cell: row => {
       const proceso_prod = row.state
@@ -104,6 +107,7 @@ export const ordersList = [
   {
     name: 'Acciones',
     width: '150px',
+    searchable: true,
     cell: row => {
 
       const dispatch = useDispatch()
@@ -123,7 +127,7 @@ export const ordersList = [
                 </DropdownItem>
               </Link>
               {proceso_prod === 1 ? <Link onClick={(e) => {
-                dispatch(startSelectDriver(row.id))
+                dispatch(startSelectDriver({idOrder: row.id , idCustomer: row.idCustomer}, 'Delivery'))
               }}>
                 <DropdownItem tag='a' href='/' className='w-100'>
                   <Clipboard size={15} />

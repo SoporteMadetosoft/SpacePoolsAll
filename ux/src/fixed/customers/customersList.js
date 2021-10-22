@@ -62,17 +62,20 @@ export const customerList = [
     name: 'Nombre contacto',
     selector: 'ContactName',
     sortable: true,
+    searchable: true,
     width: '15%'
   },
   {
     name: 'Tel. con.',
     selector: 'ContactPhone',
     sortable: true,
+    searchable: true,
     width: '12%'
   },
   {
     name: 'Estado',
     sortable: true,
+    searchable: true,
     width: '9%',
     cell: row => {
       return (

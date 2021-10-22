@@ -50,6 +50,7 @@ export const deliveryList = [
     name: 'Lugar',
     selector: 'gps',
     width: '16%',
+    searchable: true,
     cell: row => {
       return (
         <>
@@ -87,18 +88,6 @@ export const deliveryList = [
                   <span className='align-middle ml-50'>Albarán de entrega</span>
                 </DropdownItem>
               </Link>
-              {/* <Link to={`./customers/edit/${row.idCustomer}`}>
-                <DropdownItem tag='a' href='/' className='w-100'>
-                  <FontAwesomeIcon icon={faUser} />
-                  <span className='align-middle ml-50'>Cliente</span>
-                </DropdownItem>
-              </Link>
-              <Link to={`./orders/edit/${row.idOrder}`}>
-                <DropdownItem tag='a' href='/' className='w-100'>
-                  <FontAwesomeIcon icon={faProjectDiagram} />
-                  <span className='align-middle ml-50'>Pedido</span>
-                </DropdownItem>
-              </Link> */}
               <Link onClick={(e) => {
                 dispatch(startDeleteRegister(row.id))
               }}>

@@ -28,22 +28,27 @@ export const purchasesList = [
     name: 'Fecha de compra',
     selector: 'purchaseDate',
     sortable: true,
+    searchable: true,
     width: '15%'
   },
   {
     name: 'Fecha de entrega',
     selector: 'deliveryDate',
     sortable: true,
+    searchable: true,
     width: '15%'
   },
   {
     name: 'Observaciones',
     selector: 'observations',
+    searchable: true,
+    searchable: true,
     width: '25%'
   },
   {
     name: 'Estado',
     sortable: true,
+    searchable: true,
     width: '10%',
     cell: row => {
       return (

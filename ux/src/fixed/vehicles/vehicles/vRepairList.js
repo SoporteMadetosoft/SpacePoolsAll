@@ -18,11 +18,14 @@ export const vRepairList = [
         name: 'Nº',
         selector: 'id',
         sortable: true,
+        searchable: true,
         width: '8%'
     },
     {
         name: 'Fecha',
         selector: 'date',
+        sortable: true,
+        searchable: true,
         width: '22%',
 
         cell: row => {

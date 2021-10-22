@@ -87,7 +87,6 @@ export const OrderForm = () => {
     useEffect(() => {
         dispatch(startAddSelectOptions('Pools', 'poolsOpt', 'fabricationName'))
         dispatch(startAddSelectOptions('Taxes', 'taxesOpt'))
-        
         dispatch(startAddSelectStatus('Customers', 'Customers', 'comercialName'))
 
 

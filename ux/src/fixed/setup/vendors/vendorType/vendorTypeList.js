@@ -12,6 +12,7 @@ export const vendorTypeList = [
     name: 'ID',
     selector: 'id',
     sortable: true,
+    searchable: true,
     minWidth: '50px',
     width: '8%'
   },

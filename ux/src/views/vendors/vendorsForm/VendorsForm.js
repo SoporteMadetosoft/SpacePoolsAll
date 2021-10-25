@@ -40,20 +40,11 @@ export const VendorsForm = () => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
-
-
     useEffect(() => {
-
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Vendors", "vendorCode"))
-
         } else vendorCode = normalForm.id
-
-
-
     }, [])
-
-    console.log(errors)
 
     const submit = async () => {
         const prettyForm = {

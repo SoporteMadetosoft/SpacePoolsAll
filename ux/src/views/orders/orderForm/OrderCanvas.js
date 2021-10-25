@@ -4,6 +4,7 @@ import { Trash2 } from "react-feather"
 import { Stage, Layer, Image, Rect, Transformer } from 'react-konva'
 import { useDispatch, useSelector } from 'react-redux'
 import { cloneCanvasElement, editDropedElement, removeCanvasElement } from '../../../redux/actions/canvas'
+import Swal from 'sweetalert2'
 
 const ImageCanvas = ({ el, i, imageObj, isSelected, onChange, onDragEnd, onSelect, onClone, draggable = true }) => {
     const shapeRef = useRef()
@@ -96,9 +97,47 @@ export const OrderCanvas = () => {
         }
     }
 
-    const deleteCanvasElement = (e) => {
-        dispatch(removeCanvasElement('elements', selectedId))
-        selectShape(null)
+    const deleteCanvasElement = async () => {
+        await Swal.fire({
+            title: '¿Estás seguro que quieres eliminar el elemento?',
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: '¡Si, eliminalo!',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-danger ml-1'
+            },
+            buttonsStyling: false
+        })
+            .then(result => {
+                if (result.value) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Eliminado!',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        }
+                    })
+                    dispatch(removeCanvasElement('elements', selectedId))
+                    selectShape(null)
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+                    Swal.fire({
+                        title: '¡Cancelado!',
+                        icon: 'error',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        }
+                    })
+                    return false
+                }
+            })
+
     }
 
     return (

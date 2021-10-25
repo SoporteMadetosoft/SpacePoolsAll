@@ -33,7 +33,9 @@ const Avatar = forwardRef((props, ref) => {
     const results = []
     const wordArray = str.split(' ')
     wordArray.forEach(e => {
-      results.push(e[0])
+      if (results.length < 2) {
+        results.push(e[0])
+      }
     })
     return results.join('')
   }

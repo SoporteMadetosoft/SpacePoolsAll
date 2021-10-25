@@ -19,7 +19,7 @@ export const ActivityFormScreen = () => {
         }
     }, [])
 
-    const title = (id) ? 'Editar Actividad' : 'Añadir Actividad'
+    const title = (id) ? 'Editar: Actividad' : 'Añadir Actividad'
     const customName = form.name ? form.name : title
 
     return (

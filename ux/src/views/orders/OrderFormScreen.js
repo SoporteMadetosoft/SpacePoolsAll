@@ -42,7 +42,7 @@ export const OrderFormScreen = () => {
             dispatch(setInitialCanvas())
         }
         dispatch(initNormalForm(structureForm))
-        
+
     }, [initNormalForm])
 
     useEffect(() => {

@@ -32,7 +32,7 @@ const ValidationSchema = yup.object().shape({
 })
 
 export const CustomersForm = () => {
-    let {customerCode} = useSelector(state =>  state.normalForm)
+    let { customerCode } = useSelector(state => state.normalForm)
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -107,8 +107,8 @@ export const CustomersForm = () => {
                 idStatus: exceptionController(value.idStatus),
                 idLanguage: exceptionController(value.idLanguage),
                 filePath: filePath2,
-                addresses: value.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType) })),
-                contacts: value.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department) }))
+                addresses: value.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType), defaultAddress: address.defaultAddress === true ? 1 : 0 })),
+                contacts: value.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department), defaultContact: contact.defaultContact === true ? 1 : 0 }))
             }
             save('Customers', id, prettyForm)
             dispatch(handleCleanUp())
@@ -121,13 +121,13 @@ export const CustomersForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                    <label className="control-label">Nº Cliente</label>
+                        <label className="control-label">Nº Cliente</label>
                         <input
-                        className={`form-control`}
-                        name="customerCode"
-                        value={customerCode}
-                        readOnly
-                    />
+                            className={`form-control`}
+                            name="customerCode"
+                            value={customerCode}
+                            readOnly
+                        />
                         {errors && errors.customerCode && <FormFeedback>Nº Cliente requerido</FormFeedback>}
                     </div>
                     <div className="col-md-4">
@@ -148,13 +148,13 @@ export const CustomersForm = () => {
                         {errors && errors.CIF && <FormFeedback>C.I.F. requerido</FormFeedback>}
                     </div>
                     <div className="col-md-4">
-                        <Input name="socialReason" placeholder="Razon social" label="Razon social" />
+                        <Input name="socialReason" label="Razón social" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="phone" placeholder="Teléfono" label="Teléfono" />
+                        <Input name="phone" label="Teléfono" />
                     </div>
                     <div className="col-md-4">
-                        <Input name="email" type="email" placeholder="E-mail" label="E-mail" />
+                        <Input name="email" type="email" label="E-mail" />
                     </div>
                     <div className="col-md-2">
                         <Select name="idPaymentMethod" label="Forma de pago" endpoint="PaymentMethods" />
@@ -166,7 +166,7 @@ export const CustomersForm = () => {
                         <Select name="idCustomerOrigin" label="Origen" endpoint="Origin" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="accountNumber" placeholder="Número de cuenta" label="Número de cuenta" />
+                        <Input name="accountNumber" label="Número de cuenta" />
                     </div>
                     <div className="col-md-2">
                         <Select name="idCustomerType" label="Tipo de cliente" endpoint="CustomerType" />
@@ -175,7 +175,7 @@ export const CustomersForm = () => {
                         <Select name="idCustomerActivity" label="Actividad" endpoint="Activity" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idCustomerCategory" label="Categoria de cliente" endpoint="CustomerCategory" />
+                        <Select name="idCustomerCategory" label="Categoría de cliente" endpoint="CustomerCategory" />
                     </div>
                     <div className="col-md-2">
                         <Select name="idMode" label="Modo" endpoint="Mode" />

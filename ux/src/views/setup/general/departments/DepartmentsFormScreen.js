@@ -20,7 +20,7 @@ export const DepartmentsFormScreen = () => {
         }
     }, [])
 
-    const title = (id) ? 'Editar departamento' : 'Añadir departamento'
+    const title = (id) ? 'Editar Departamento' : 'Añadir Departamento'
     const customName = form.name ? form.name : title
 
     return (

@@ -4,7 +4,7 @@ import { Fragment, useState, forwardRef } from 'react'
 // ** Third Party Components
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { ChevronDown, FileText, Plus, Download } from 'react-feather'
+import { ChevronDown, FileText, Plus, Download, ArrowLeft } from 'react-feather'
 import {
   Card,
   CardHeader,
@@ -19,6 +19,7 @@ import {
   Row,
   Col
 } from 'reactstrap'
+import { useHistory } from 'react-router'
 
 import { Link, useLocation } from 'react-router-dom'
 
@@ -31,11 +32,12 @@ const BootstrapCheckbox = forwardRef(({ onClick, ...rest }, ref) => (
 ))
 
 
-export const CustomDataTable = ({ title, columns, data, add = 1 }) => {
+export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) => {
   // ** States
   const [currentPage, setCurrentPage] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [filteredData, setFilteredData] = useState([])
+  const history = useHistory()
 
   const searchableColumns = () => {
     const columnas = []
@@ -166,12 +168,22 @@ export const CustomDataTable = ({ title, columns, data, add = 1 }) => {
                 <Download size={15} />
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem className='w-100' onClick={ () => downloadCSV(searchValue.length ? (filteredData) : (data)) }>
+                <DropdownItem className='w-100' onClick={() => downloadCSV(searchValue.length ? (filteredData) : (data))}>
                   <FileText size={15} />
                   <span className='align-middle ml-50'>CSV</span>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledButtonDropdown>
+            {
+              repa !== '' ? (
+                <Link to='#' onClick={() => { history.push(`${repa}`) }}>
+                  <Button className='ml-2' color='secondary' outline>
+                    <ArrowLeft size={15} />
+                    <span className='align-middle ml-50'>Atrás</span>
+                  </Button>
+                </Link>
+              ) : null
+            }
             {
               add === 1 ? (
                 <Link to={`${useLocation().pathname}/add`}>

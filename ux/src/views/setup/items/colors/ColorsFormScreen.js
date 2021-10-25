@@ -20,7 +20,7 @@ export const ColorsFormScreen = () => {
         }
     }, [])
 
-    const title = (id) ? 'Editar color' : 'Añadir color'
+    const title = (id) ? 'Editar Color' : 'Añadir Color'
     const customName = form.name ? form.name : title
 
     return (

@@ -20,7 +20,7 @@ export const BrandFormScreen = () => {
     }, [])
 
 
-    const title = (id) ? 'Editar marca' : 'Añadir marca'
+    const title = (id) ? 'Editar Marca' : 'Añadir Marca'
     const customName = form.name ? form.name : title
 
     return (

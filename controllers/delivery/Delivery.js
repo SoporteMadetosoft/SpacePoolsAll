@@ -34,7 +34,7 @@ exports.insert = async (req, res) => {
     try {
 
         const delivery = req.body.form
-        await deliveryDao.insert(delivery)
+        await deliveryDao.update(delivery)
 
         res.json({ ok: true })
     } catch (error) {

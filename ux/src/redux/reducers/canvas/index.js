@@ -72,6 +72,8 @@ const canvasReducer = (state = { ...initialState }, action) => {
                 pos: state[action.payload.key].length
             }
 
+            delete ClonedElement.id
+
             return {
                 ...state,
                 [action.payload.key]: [

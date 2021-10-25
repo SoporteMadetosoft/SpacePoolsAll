@@ -100,6 +100,12 @@ const canvasReducer = (state = { ...initialState }, action) => {
                 elements: [...data]
 
             }
+        case canvasTypes.RemoveElement:
+            const newCanvas = state[action.payload.key].filter((element, index) => (index !== action.payload.position))
+            return {
+                ...state,
+                [action.payload.key]: [...newCanvas]
+            }
         default:
             return state
     }

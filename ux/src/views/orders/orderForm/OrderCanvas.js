@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { Button } from 'reactstrap'
+import { Trash2 } from "react-feather"
 import { Stage, Layer, Image, Rect, Transformer } from 'react-konva'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router'
-import { cloneCanvasElement, editDropedElement, setInitialCanvas, setNewCanvasPosition } from '../../../redux/actions/canvas'
+import { cloneCanvasElement, editDropedElement, removeCanvasElement } from '../../../redux/actions/canvas'
 
-const ImageCanvas = ({ el, i, imageObj, isSelected, onChange, onDragEnd, onSelect, onClone }) => {
+const ImageCanvas = ({ el, i, imageObj, isSelected, onChange, onDragEnd, onSelect, onClone, draggable = true }) => {
     const shapeRef = useRef()
     const trRef = useRef()
 
@@ -39,7 +40,7 @@ const ImageCanvas = ({ el, i, imageObj, isSelected, onChange, onDragEnd, onSelec
                         rotation: node.rotation()
                     })
                 }}
-                draggable
+                draggable={draggable}
                 scaleX={el.isDragging ? 1.2 : 1}
                 scaleY={el.isDragging ? 1.2 : 1}
                 imgUrl={el.imgUrl}
@@ -95,10 +96,30 @@ export const OrderCanvas = () => {
         }
     }
 
-
+    const deleteCanvasElement = (e) => {
+        dispatch(removeCanvasElement('elements', selectedId))
+        selectShape(null)
+    }
 
     return (
         <>
+            {
+                selectedId ?
+                    (
+                        <div className="row-reverse">
+                            <div className="float-right">
+                                <Button.Ripple onClick={deleteCanvasElement} className='btn-icon' color='danger'>
+                                    <Trash2 size={20} />
+                                </Button.Ripple>
+                            </div>
+                        </div>
+                    ) :
+                    (
+                        <div className="row-reverse">
+                            <div className="float-right">&nbsp;</div>
+                        </div>
+                    )
+            }
             <h1 className="card-title mb-2">Composición</h1>
             <Stage width={window.innerWidth} height={window.innerHeight - 300} onMouseDown={checkDeselect} onTouchStart={checkDeselect}>
                 <Layer>
@@ -123,23 +144,31 @@ export const OrderCanvas = () => {
 
                         imageObj.src = base64image
                         return (
-                            <ImageCanvas
-                                el={el}
-                                i={i}
-                                imageObj={imageObj}
-                                isSelected={i === selectedId}
-                                onDragEnd={handleDragEnd}
-                                onChange={handleOnChange}
-                                onClone={handleOnDblClick}
-                                onSelect={() => {
-                                    selectShape(i)
-                                }}
-                            />
+                            (
+                                i < 6 ?
+                                    (<ImageCanvas
+                                        el={el}
+                                        i={i}
+                                        imageObj={imageObj}
+                                        draggable={false}
+                                        onClone={handleOnDblClick}
+                                    />)
+                                    :
+                                    (<ImageCanvas
+                                        el={el}
+                                        i={i}
+                                        imageObj={imageObj}
+                                        isSelected={i === selectedId}
+                                        onDragEnd={handleDragEnd}
+                                        onChange={handleOnChange}
+                                        onClone={handleOnDblClick}
+                                        onSelect={() => {
+                                            selectShape(i)
+                                        }}
+                                    />)
+                            )
                         )
-
-                    }
-                    )
-                    }
+                    })}
                 </Layer>
             </Stage>
         </>

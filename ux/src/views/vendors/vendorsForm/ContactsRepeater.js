@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
 
 
-import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, editRepeaterRegister, handleChangeController, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
@@ -18,7 +18,8 @@ const formStructure = {
     charge: '',
     startSchedule: '',
     endSchedule: '',
-    department: ''
+    department: '',
+    defaultContact: false
 }
 
 export const ContactsRepeater = () => {
@@ -106,6 +107,17 @@ const ContactsForm = ({ position }) => {
         )
     }
 
+    const handleRadioChange = ({ target }) => {
+
+        const newContactList = normalForm.contacts.map((contact, index) => {
+            return { ...contact, [target.name]: index === position }
+
+        })
+        dispatch(handleChangeController('contacts', newContactList))
+
+    }
+
+
     return (
 
         <div className="row border-bottom pb-1 mt-1 mx-1">
@@ -151,7 +163,9 @@ const ContactsForm = ({ position }) => {
                 <RadioButton
                     type="radio"
                     checked={defaultContact}
+                    onChange={handleRadioChange}
                     name="defaultContact"
+                    defaultValue={SelectValue}
                 />
             </div>
             <div className="col-md-1">

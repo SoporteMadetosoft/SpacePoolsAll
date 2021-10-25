@@ -18,6 +18,11 @@ export const editDropedElement = (key, position, obj) => {
     }
 }
 
+export const removeCanvasElement = (key, position) => ({
+    type: canvasTypes.RemoveElement,
+    payload: { key, position }
+})
+
 export const cloneCanvasElement = (key, position) => {
     return async (dispatch, getState) => {
         dispatch({

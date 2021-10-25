@@ -31,7 +31,7 @@ const ValidationSchema = yup.object().shape({
 })
 
 export const CarriersForm = () => {
-    let {carrierCode} = useSelector(state =>  state.normalForm)
+    let { carrierCode } = useSelector(state => state.normalForm)
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -108,16 +108,16 @@ export const CarriersForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                    <label className="control-label">Nº Transportista</label>
+                        <label className="control-label">Nº Transportista</label>
                         <input
-                        className={`form-control`}
-                        name="carrierCode"
-                        value={carrierCode}
-                        readOnly
-                    />
+                            className={`form-control`}
+                            name="carrierCode"
+                            value={carrierCode}
+                            readOnly
+                        />
                     </div>
                     <div className="col-md-4">
-                        <Input name="name" placeholder="Nombre" label="Nombre" />
+                        <Input name="name" label="Nombre" />
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">N.I.F.</label>
@@ -137,31 +137,31 @@ export const CarriersForm = () => {
                         <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="email" type="email" placeholder="Correo electrónico" label="Correo electrónico" />
+                        <Input name="email" type="email" label="Correo electrónico" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="phone" placeholder="Teléfono 1" label="Teléfono 1" />
+                        <Input name="phone" label="Teléfono" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="phone2" placeholder="Teléfono 2" label="Teléfono 2" />
+                        <Input name="phone2" label="Móvil" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="startSchedule" type="time" placeholder="Horario de contacto" label="Horario de contacto" />
+                        <Input name="startSchedule" type="time" label="Horario de contacto" />
                     </div>
                     <div className="col-md-4">
-                        <Input name="country" placeholder="País" label="País" />
+                        <Input name="country" label="País" />
                     </div>
                     <div className="col-md-4">
-                        <Input name="state" placeholder="Provincia" label="Provincia" />
+                        <Input name="state" label="Provincia" />
                     </div>
                     <div className="col-md-4">
-                        <Input name="city" placeholder="Ciudad" label="Ciudad" />
+                        <Input name="city" label="Ciudad" />
                     </div>
                     <div className="col-md-8">
-                        <Input name="address" placeholder="Dirección" label="Dirección" />
+                        <Input name="address" label="Dirección" />
                     </div>
                     <div className="col-md-4">
-                        <Input name="postcode" placeholder="Código postal" label="Código postal" />
+                        <Input name="postcode" label="Código postal" />
                     </div>
                 </div>
             </div>

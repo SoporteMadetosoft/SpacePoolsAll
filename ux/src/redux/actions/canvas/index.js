@@ -47,7 +47,7 @@ export const getCItemsByOrderId = (endPoint, id) => {
 
         const newItemsList = []
         data.forEach((element, index) => {
-            const imageUrl = getState().canvasReducer.elements[index].imgUrl
+            const imageUrl = getState().canvasReducer.elements[element.idElemento - 1].imgUrl
             const newItem = {
                 ...element,
                 imgUrl: imageUrl

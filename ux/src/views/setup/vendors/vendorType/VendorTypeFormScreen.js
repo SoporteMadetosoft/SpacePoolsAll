@@ -20,7 +20,7 @@ export const VendorTypeFormScreen = () => {
         }
     }, [])
 
-    const title = (id) ? 'Editar tipo de vendedor' : 'Añadir tipo de vendedor'
+    const title = (id) ? 'Editar Tipo de vendedor' : 'Añadir Tipo de vendedor'
     const customName = form.name ? form.name : title
 
     return (

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { useForm } from 'react-hook-form'
@@ -28,7 +28,7 @@ export const VendorsForm = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    let {vendorCode} = useSelector(state =>  state.normalForm)
+    let { vendorCode } = useSelector(state => state.normalForm)
 
     const { normalForm } = useSelector(state => state)
 
@@ -43,13 +43,13 @@ export const VendorsForm = () => {
 
 
     useEffect(() => {
-        
+
         if (normalForm.id === undefined) {
-            dispatch(GetSetNextId("Vendors","vendorCode"))
-            
+            dispatch(GetSetNextId("Vendors", "vendorCode"))
+
         } else vendorCode = normalForm.id
 
-        
+
 
     }, [])
 
@@ -61,8 +61,8 @@ export const VendorsForm = () => {
             idPaymentMethod: exceptionController(normalForm.idPaymentMethod),
             idVendorType: exceptionController(normalForm.idVendorType),
             idStatus: exceptionController(normalForm.idStatus),
-            addresses: normalForm.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType) })),
-            contacts: normalForm.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department) }))
+            addresses: normalForm.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType), defaultAddress: address.defaultAddress === true ? 1 : 0 })),
+            contacts: normalForm.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department), defaultContact: contact.defaultContact === true ? 1 : 0 }))
         }
         save('Vendors', id, prettyForm)
         history.push('/vendors')
@@ -73,16 +73,16 @@ export const VendorsForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                    <label className="control-label">Nº Proveedor</label>
+                        <label className="control-label">Nº Proveedor</label>
                         <input
-                        className={`form-control`}
-                        name="vendorCode"
-                        value={vendorCode}
-                        readOnly
-                    />
+                            className={`form-control`}
+                            name="vendorCode"
+                            value={vendorCode}
+                            readOnly
+                        />
                     </div>
                     <div className="col-md-4">
-                        <Input name="comercialName" placeholder="Nombre Comercial" label="Nombre Comercial" />
+                        <Input name="comercialName" label="Nombre Comercial" />
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">C.I.F.</label>
@@ -99,13 +99,13 @@ export const VendorsForm = () => {
                         {errors && errors.CIF && <FormFeedback>C.I.F. requerido</FormFeedback>}
                     </div>
                     <div className="col-md-3">
-                        <Input name="socialReason" placeholder="Razon social" label="Razon social" />
+                        <Input name="socialReason" label="Razón social" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="phone" placeholder="Teléfono" label="Teléfono" />
+                        <Input name="phone" label="Teléfono" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="email" placeholder="Correo electrónico" label="Correo electrónico" />
+                        <Input name="email" label="Correo electrónico" />
                     </div>
                     <div className="col-md-3">
                         <Select name="idPaymentMethod" label="Forma de pago" endpoint="PaymentMethods" />

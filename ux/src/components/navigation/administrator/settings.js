@@ -85,7 +85,7 @@ export default [
       },
       {
         id: 'vehicles',
-        title: 'Vehiculos',
+        title: 'Vehículos',
         icon: <FontAwesomeIcon icon={faTruckMoving} />,
         children: [
           {

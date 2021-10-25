@@ -118,13 +118,39 @@ class OrderDao extends GenericDao {
         })
     }
 
-    updateOrderState(id) {
+    updateItemStock(id) {
         // console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
-        return new Promise((resolve, reject) => {
-            this.db.query('UPDATE orders SET state = 1 WHERE id = ?', [id], (err, result) => {
+        return new Promise(async (resolve, reject) => {
+            await this.db.query('SELECT * FROM `orders_base_items` WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
+                    for (const res of result) {
+                        await this.BaseItemDao.ItemDao.updateStock('-', res['idItem'], res['quantity'])
+                    }
+                }
+            })
+            await this.db.query('SELECT * FROM `orders_extra_items` WHERE idOrder = ?', [id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    for (const res of result) {
+                        await this.ExtraItemDao.ItemDao.updateStock('-', res['idItem'], res['quantity'])
+                    }
+                }
+            })
+            resolve('')
+        })
+    }
+
+    updateOrderState(id) {
+        // console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
+        return new Promise((resolve, reject) => {
+            this.db.query('UPDATE orders SET state = 1 WHERE id = ?', [id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    await this.updateItemStock(id)
                     resolve('')
                 }
             })

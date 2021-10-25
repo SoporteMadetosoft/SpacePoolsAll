@@ -19,14 +19,14 @@ export const VendorsFormScreen = () => {
     const form = useSelector(state => state.normalForm)
 
     useEffect(() => {
-        
+
         if (id) {
             dispatch(handleStartEditing('Vendors', id))
         }
         dispatch(initNormalForm(structureForm))
     }, [initNormalForm])
 
-    const title = (id) ? 'Editar Proveedores' : 'Añadir Proveedores'
+    const title = (id) ? 'Editar: Proveedores' : 'Añadir Proveedores'
     const vendorName = form.comercialName ? form.comercialName : title
 
     return (

@@ -20,7 +20,7 @@ export const AddressesTypesFormScreen = () => {
         }
     }, [])
 
-    const title = (id) ? 'Editar tipo de dirección' : 'Añadir tipo de dirección'
+    const title = (id) ? 'Editar Tipo de dirección' : 'Añadir Tipo de dirección'
     const customName = form.name ? form.name : title
 
     return (

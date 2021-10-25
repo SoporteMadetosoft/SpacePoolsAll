@@ -20,7 +20,7 @@ export const PlaceFormScreen = () => {
         }
     }, [])
 
-    const title = (id) ? 'Editar ubicación' : 'Añadir ubicación'
+    const title = (id) ? 'Editar Ubicación' : 'Añadir Ubicación'
     const customName = form.name ? form.name : title
 
     return (

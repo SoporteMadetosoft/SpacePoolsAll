@@ -20,7 +20,7 @@ export const PaymentMethodsFormScreen = () => {
         }
     }, [])
 
-    const title = (id) ? 'Editar método de pago' : 'Añadir método de pago'
+    const title = (id) ? 'Editar Método de pago' : 'Añadir Método de pago'
     const customName = form.name ? form.name : title
 
     return (

@@ -19,7 +19,7 @@ export const OriginFormScreen = () => {
         }
     }, [])
 
-    const title = (id) ? 'Editar origen' : 'Añadir origen'
+    const title = (id) ? 'Editar Origen' : 'Añadir Origen'
     const customName = form.name ? form.name : title
 
 

@@ -101,13 +101,13 @@ const AddressesForm = ({ position }) => {
         )
     }
 
-    const handleRadioChange = ({target}) => {
-        
+    const handleRadioChange = ({ target }) => {
+
         const newAddressList = normalForm.addresses.map((address, index) => {
-            return { ...address, [target.name] : index === position }
+            return { ...address, [target.name]: index === position }
         })
         dispatch(handleChangeController('addresses', newAddressList))
-        
+
     }
 
     return (
@@ -162,14 +162,11 @@ const AddressesForm = ({ position }) => {
                 <label className="control-label">Principal</label>
                 <br />
                 <RadioButton
-                    
                     type="radio"
-                    
                     onChange={handleRadioChange}
                     name="defaultAddress"
                     defaultValue={SelectValue}
                     checked={defaultAddress}
-                    
                 />
             </div>
             <div className="col-md-1">

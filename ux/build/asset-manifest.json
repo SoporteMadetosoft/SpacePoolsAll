@@ -14,6 +14,7 @@
     "main.js.map": "/static/js/main.89913dda.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.9dfe1964.js",
     "runtime-main.js.map": "/static/js/runtime-main.9dfe1964.js.map",
+    
     "static/css/5.a88169db.chunk.css": "/static/css/5.a88169db.chunk.css",
     "static/js/5.ec5373be.chunk.js": "/static/js/5.ec5373be.chunk.js",
     "static/js/5.ec5373be.chunk.js.map": "/static/js/5.ec5373be.chunk.js.map",
@@ -21,6 +22,7 @@
     "static/js/6.87c309f2.chunk.js": "/static/js/6.87c309f2.chunk.js",
     "static/js/6.87c309f2.chunk.js.map": "/static/js/6.87c309f2.chunk.js.map",
     "static/css/7.aa8f4dfb.chunk.css": "/static/css/7.aa8f4dfb.chunk.css",
+
     "static/js/7.7e98abfd.chunk.js": "/static/js/7.7e98abfd.chunk.js",
     "static/js/7.7e98abfd.chunk.js.map": "/static/js/7.7e98abfd.chunk.js.map",
     "static/css/8.48ac8b16.chunk.css": "/static/css/8.48ac8b16.chunk.css",
@@ -226,7 +228,9 @@
     "static/media/vuexy-login-bg.jpg": "/static/media/vuexy-login-bg.640b7b14.jpg"
   },
   "entrypoints": [
+
     "static/js/runtime-main.9dfe1964.js",
+
     "static/css/6.cfa759b8.chunk.css",
     "static/js/6.87c309f2.chunk.js",
     "static/css/main.0875dab8.chunk.css",

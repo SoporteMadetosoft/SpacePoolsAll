@@ -73,7 +73,8 @@ export const startSelectDriver = ({ idOrder, idCustomer }, endPoint) => {
             idStatus: 2,
             idCarrier: respuesta,
             idOrder,
-            idCustomer 
+            idCustomer,
+            signature: ''
         }
 
         if (respuesta !== false) {

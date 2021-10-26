@@ -11,7 +11,7 @@ const NotAuthorized = () => {
 
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(handleLogout())
+    // dispatch(handleLogout())
   }, [])
   return (
     <div className='misc-wrapper'>

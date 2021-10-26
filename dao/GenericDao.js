@@ -43,10 +43,10 @@ class GenericDao {
     }
 
     findAllStatus() {
-        
+
         return new Promise((resolve, reject) => {
-         this.db.query('SELECT * FROM ?? WHERE idStatus = 2', [this.auxModel.table],async (err, result) => {
-            
+            this.db.query('SELECT * FROM ?? WHERE idStatus = 2', [this.auxModel.table], async (err, result) => {
+
                 if (err) {
                     reject(err)
                 } else {
@@ -95,7 +95,7 @@ class GenericDao {
     }
 
     insert(params) {
-        // console.log(`INSERT INTO ${this.auxModel.table} (${Object.keys(params)}) VALUES  (${Object.values(params)})`)
+        console.log(`INSERT INTO ${this.auxModel.table} (${Object.keys(params)}) VALUES  (${Object.values(params)})`)
         Object.keys(params).forEach((k) => { if (params[k] === '') { params[k] = null } })
         return new Promise((resolve, reject) => {
             this.db.query(`INSERT INTO ?? (??) VALUES  (?)`, [this.auxModel.table, Object.keys(params), Object.values(params)], async (err, result) => {

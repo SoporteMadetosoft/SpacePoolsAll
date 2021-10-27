@@ -150,3 +150,10 @@ class ItemDao extends GenericDao {
 }
 
 module.exports = ItemDao
+
+
+// CREATE VIEW reserveStock AS SELECT 
+// 	i.id as IDITEM,
+//     (SELECT SUM(quantity) FROM orders_base_items WHERE idOrder IN (SELECT id FROM orders WHERE state = '0') AND idItem = IDITEM) as cantidadBase,
+//     (SELECT SUM(quantity) FROM orders_extra_items WHERE idOrder IN (SELECT id FROM orders WHERE state = '0') AND idItem = IDITEM) as cantidadExtra
+// FROM item i

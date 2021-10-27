@@ -119,11 +119,10 @@ const Login = props => {
                 </Label>
                 <Input
                   autoFocus
-                  type='email'
                   value={email}
                   id='login-email'
                   name='login-email'
-                  placeholder='Email'
+                  placeholder='Login'
                   onChange={e => setEmail(e.target.value)}
                   className={classnames({ 'is-invalid': errors['login-email'] })}
                   innerRef={register({ required: true, validate: value => value !== '' })}

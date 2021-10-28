@@ -52,13 +52,13 @@ class AuthDao {
             userData: {
                 ...data,
                 role: roleName,
-                ability: [
-                    {
-                        action: 'manage',
-                        subject: 'all'
-                    }
-                ]
-                // ability: this.tratarRole(role)
+                // ability: [
+                //     {
+                //         action: 'manage',
+                //         subject: 'all'
+                //     }
+                // ]
+                ability: this.tratarRole(role)
             },
             accessToken,
             refreshToken

@@ -61,7 +61,7 @@ class UserDao extends GenericDao {
         return new Promise((resolve, reject) => {
             const { login, fullname, email, phone, password, idRole, idStatus } = form
             bcrypt.hash(password, saltRounds).then((hash) => {
-                // console.log(`INSERT INTO users (idRole, idStatus, fullname, login, email, phone, password) VALUES (${idRole}, ${idStatus}, ${fullname}, ${login}, ${email}, ${phone}, ${hash})`)
+                console.log(`INSERT INTO users (idRole, idStatus, fullname, login, email, phone, password) VALUES (${idRole}, ${idStatus}, ${fullname}, ${login}, ${email}, ${phone}, ${hash})`)
                 this.db.query('INSERT INTO users (idRole, idStatus, fullname, login, email, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?)', [idRole, idStatus, fullname, login, email, phone, hash], (err, result) => {
                     if (err) {
                         reject(err)
@@ -70,6 +70,31 @@ class UserDao extends GenericDao {
                     }
                 })
             })
+        })
+    }
+
+    updateUser(form) {
+        return new Promise((resolve, reject) => {
+            const { id, login, fullname, email, phone, password, idRole, idStatus } = form
+            if (password) {
+                bcrypt.hash(password, saltRounds).then((hash) => {
+                    this.db.query('UPDATE users SET idRole = ?, idStatus = ?, fullname = ?, login = ?, email = ?, phone = ?, password = ? WHERE id = ?', [idRole, idStatus, fullname, login, email, phone, hash, id], (err, result) => {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            resolve('')
+                        }
+                    })
+                })
+            } else {
+                this.db.query('UPDATE users SET idRole = ?, idStatus = ?, fullname = ?, login = ?, email = ?, phone = ? WHERE id = ?', [idRole, idStatus, fullname, login, email, phone, id], (err, result) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve('')
+                    }
+                })
+            }
         })
     }
 }

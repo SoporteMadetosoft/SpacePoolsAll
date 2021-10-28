@@ -22,6 +22,7 @@ class VendorDao extends GenericDao {
     }
 
     async mountObj(data) {
+        console.log(data)
         const vendor = {
             ...data,
             contacts: await this.ContactDao.findByVendorId(data.id),

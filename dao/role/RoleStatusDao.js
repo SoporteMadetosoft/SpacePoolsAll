@@ -13,6 +13,7 @@ class RoleStatusDao extends GenericDao {
     }
 
     async mountStatus(data) {
+        console.log(data)
         const { name } = await this.ProductionStatusDao.findById(data.idStatus)
         const status = {
             id: data.idStatus,

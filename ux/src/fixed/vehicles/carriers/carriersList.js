@@ -8,6 +8,9 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 
+import { useContext } from "react"
+import { AbilityContext } from '@src/utility/context/Can'
+
 export const carriersList = [
   {
     name: 'Nº',
@@ -79,6 +82,7 @@ export const carriersList = [
     cell: row => {
 
       const dispatch = useDispatch()
+      const ability = useContext(AbilityContext)
 
       return (
         <>
@@ -88,20 +92,24 @@ export const carriersList = [
                 <MoreVertical size={15} />
               </DropdownToggle>
               <DropdownMenu right>
-                <Link to={`./carriers/edit/${row.id}`}>
-                  <DropdownItem tag='a' href='/' className='w-100'>
-                    <FileText size={15} />
-                    <span className='align-middle ml-50'>Detalles</span>
-                  </DropdownItem>
-                </Link>
-                <Link onClick={(e) => {
-                  dispatch(startDeleteRegister(row.id))
-                }}>
-                  <DropdownItem tag='a' href='/' className='w-100'>
-                    <Trash size={15} />
-                    <span className='align-middle ml-50'>Eliminar</span>
-                  </DropdownItem>
-                </Link>
+                {ability.can('update', 'carriers') && (
+                  <Link to={`./carriers/edit/${row.id}`}>
+                    <DropdownItem tag='a' href='/' className='w-100'>
+                      <FileText size={15} />
+                      <span className='align-middle ml-50'>Detalles</span>
+                    </DropdownItem>
+                  </Link>
+                )}
+                {ability.can('delete', 'carriers') && (
+                  <Link onClick={(e) => {
+                    dispatch(startDeleteRegister(row.id))
+                  }}>
+                    <DropdownItem tag='a' href='/' className='w-100'>
+                      <Trash size={15} />
+                      <span className='align-middle ml-50'>Eliminar</span>
+                    </DropdownItem>
+                  </Link>
+                )}
               </DropdownMenu>
             </UncontrolledDropdown>
           </div>

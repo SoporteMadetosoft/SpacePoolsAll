@@ -19,20 +19,24 @@ export const Select = ({ name, label, className, endpoint, placeholder = label, 
     if (isMulti) {
         value = normalForm[name] ? normalForm[name].map(element => ({ value : element.id, label: element[labelName] })) : null
         handleSelectChange = (value) => {
+
             if (formValidator.errors && formValidator.errors[name]) {
                 delete formValidator.errors[name]
             }
             dispatch(removeError(formValidator.errors))
             const newValues = value.map(element => ({ id : element.value, [labelName]: element.label }))
+
             dispatch(handleChangeController(name, newValues))
         }
     } else {
         value = normalForm[name] ? { label: normalForm[name][labelName], value: normalForm[name].id } : null
         handleSelectChange = ({ value, label }) => {
+
             if (formValidator.errors && formValidator.errors[name]) {
                 delete formValidator.errors[name]
             }
             dispatch(removeError(formValidator.errors))
+
             dispatch(handleChangeController(name, { id: value, [labelName]: label }))
         }
     }
@@ -45,7 +49,9 @@ export const Select = ({ name, label, className, endpoint, placeholder = label, 
         <div style={{marginTop: '5px'}}>
             <label className="control-label d-flex justify-content-between">{label} {<InputValidator errMsg={errMsg} errors={formValidator.errors} target={name} />}</label>
             <ReactSelect
+
                 className={`${className} ${formValidator.errors && formValidator.errors[name] ? 'border-danger rounded' : ''}`}
+
                 name={name}
                 options={options}
                 placeholder={placeholder}

@@ -39,8 +39,6 @@ export const VendorsForm = () => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
-
-
     useEffect(() => {
 
         if (normalForm.id === undefined) {
@@ -74,14 +72,15 @@ export const VendorsForm = () => {
                     idPaymentMethod: exceptionController(value.idPaymentMethod),
                     idVendorType: exceptionController(value.idVendorType),
                     idStatus: exceptionController(value.idStatus),
-                    addresses: value.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType) })),
-                    contacts: value.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department) }))
+                    addresses: normalForm.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType), defaultAddress: address.defaultAddress === true ? 1 : 0 })),
+            contacts: normalForm.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department), defaultContact: contact.defaultContact === true ? 1 : 0 }))
                 }
                 save('Vendors', id, prettyForm)
                 dispatch(handleCleanUp())
                 history.push('/vendors')    
 
             })
+
         }
 
 
@@ -115,7 +114,9 @@ export const VendorsForm = () => {
 
                     </div>
                     <div className="col-md-3">
-                        <Input name="socialReason" label="Razon social" />
+
+                        <Input name="socialReason" label="Razón social" />
+
                     </div>
                     <div className="col-md-3">
                         <Input name="phone" label="Teléfono" />

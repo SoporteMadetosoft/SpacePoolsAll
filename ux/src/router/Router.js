@@ -74,6 +74,7 @@ const Router = () => {
       action = route.meta.action ? route.meta.action : null
       resource = route.meta.resource ? route.meta.resource : null
     }
+    const userData = localStorage.getItem('userData')
     if (
       (!isUserLoggedIn() && route.meta === undefined) ||
       (!isUserLoggedIn() && route.meta && !route.meta.authRoute && !route.meta.publicRoute)
@@ -84,7 +85,6 @@ const Router = () => {
        ** If user is not Logged in & route.meta.authRoute, !route.meta.publicRoute are undefined
        ** Then redirect user to login
        */
-
       return <Redirect to='/login' />
       // } else if (route.meta && route.meta.publicRoute) {
       //   return <Redirect to={route.simpleUrl} />

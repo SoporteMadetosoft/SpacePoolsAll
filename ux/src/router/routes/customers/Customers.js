@@ -5,17 +5,32 @@ const CustomersRoutes = [
   {
     path: '/customers',
     exact: true,
-    component: () => <CustomerScreenList titulo={'Clientes'} />
+    layout: 'VerticalLayout',
+    component: () => <CustomerScreenList titulo={'Clientes'} />,
+    meta: {
+      action: 'read',
+      resource: 'customers'
+    }
   },
   {
     path: '/customers/add',
     exact: true,
-    component: () => <CustomerFormScreen />
+    layout: 'VerticalLayout',
+    component: () => <CustomerFormScreen />,
+    meta: {
+      action: 'insert',
+      resource: 'customers'
+    }
   },
   {
     path: '/customers/edit/:id',
     exact: true,
-    component: () => <CustomerFormScreen />
+    layout: 'VerticalLayout',
+    component: () => <CustomerFormScreen />,
+    meta: {
+      action: 'update',
+      resource: 'customers'
+    }
   }
 ]
 

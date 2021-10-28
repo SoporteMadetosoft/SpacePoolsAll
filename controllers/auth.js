@@ -10,12 +10,16 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const user = await authDao.findUser(email, password)
-        res.json(user)
-
+        res.json({
+            ok: true,
+            data: await authDao.findUser(email, password)
+        })
     } catch (error) {
         console.log(error)
-        return res.status(500).send(error);
+        return res.json({
+            ok: false,
+            data: error
+        });
     }
 }
 

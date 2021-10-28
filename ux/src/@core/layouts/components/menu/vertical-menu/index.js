@@ -46,7 +46,6 @@ const Sidebar = props => {
       }
     }
   }
-
   return (
     <Fragment>
       <div

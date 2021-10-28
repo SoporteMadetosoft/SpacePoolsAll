@@ -6,7 +6,7 @@ import RadioButton from '@material-ui/core/Radio'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
 
-import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
+import { addRepeaterRegister, editRepeaterRegister, handleChangeController, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
@@ -15,7 +15,8 @@ const formStructure = {
     address: '',
     population: '',
     province: '',
-    postcode: ''
+    postcode: '',
+    defaultAddress: false
 }
 
 export const AddressesRepeater = () => {
@@ -101,6 +102,15 @@ const AddressesForm = ({ position }) => {
         )
     }
 
+    const handleRadioChange = ({ target }) => {
+
+        const newAddressList = normalForm.addresses.map((address, index) => {
+            return { ...address, [target.name]: index === position }
+        })
+        dispatch(handleChangeController('addresses', newAddressList))
+
+    }
+
     return (
 
         <div className="row border-bottom pb-1 mt-1 mx-1">
@@ -154,8 +164,10 @@ const AddressesForm = ({ position }) => {
                 <br />
                 <RadioButton
                     type="radio"
-                    checked={defaultAddress}
+                    onChange={handleRadioChange}
                     name="defaultAddress"
+                    defaultValue={SelectValue}
+                    checked={defaultAddress}
                 />
             </div>
             <div className="col-md-1">

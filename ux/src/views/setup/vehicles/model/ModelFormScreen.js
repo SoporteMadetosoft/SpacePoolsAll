@@ -19,7 +19,7 @@ export const ModelFormScreen = () => {
         }
     }, [])
 
-    const title = (id) ? 'Editar modelo' : 'Añadir modelo'
+    const title = (id) ? 'Editar Modelo' : 'Añadir Modelo'
     const customName = form.name ? form.name : title
 
     return (

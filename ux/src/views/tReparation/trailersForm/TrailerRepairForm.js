@@ -51,7 +51,7 @@ export const TrailerRepairForm = () => {
             history.push(`/porters/trailers/tReparation/${index}`)
         })
     }
-    console.log(idRepair)
+
     return (
         // <Form onSubmit={handleSubmit(submit)}>
         <Form onSubmit={submit}>

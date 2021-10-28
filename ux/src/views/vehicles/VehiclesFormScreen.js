@@ -25,7 +25,7 @@ export const VehiclesFormScreen = () => {
         dispatch(initNormalForm(structureForm))
     }, [initNormalForm])
 
-    const title = (id) ? 'Editar Vehículo' : 'Añadir Vehículo'
+    const title = (id) ? 'Editar: Vehículo' : 'Añadir Vehículo'
     const customName = (form.plateNumber) ? form.plateNumber : title
 
     return (

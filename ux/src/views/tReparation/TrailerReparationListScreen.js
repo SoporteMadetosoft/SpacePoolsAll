@@ -24,6 +24,6 @@ export const TrailerReparationListScreen = ({ titulo }) => {
     }, [])
 
     return (
-        <CustomDataTable title={`${titulo} - ${plateNumber}`} columns={tRepairList} data={repairData} />
+        <CustomDataTable title={`${titulo} - ${plateNumber}`} repa='/porters/trailers' columns={tRepairList} data={repairData} />
     )
 }

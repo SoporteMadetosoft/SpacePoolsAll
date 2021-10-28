@@ -55,9 +55,8 @@ export const RolesForm = () => {
             Place: JSON.stringify(permisosReducer.Place),
             Colors: JSON.stringify(permisosReducer.Colors)
         }
-        console.log(prettyForm)
         save('Roles', id, prettyForm)
-        // history.push('/roles')
+        history.push('/roles')
     }
 
     return (

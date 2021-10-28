@@ -24,9 +24,11 @@ export const Input = ({ name, label, className, placeholder = label, type = "tex
         <div style={{marginTop: '5px'}}>
             <label className="control-label d-flex justify-content-between">{label} {<InputValidator errMsg={errMsg} errors={formValidator.errors} target={name} />}</label>
             <input
+
                 style={{...styles}}
                 type={type}
                 className={`form-control ${className} ${formValidator.errors && formValidator.errors[name] ? 'borderless border-danger rounded' : ''}`}
+
                 name={name}
                 placeholder={placeholder}
                 value={value}

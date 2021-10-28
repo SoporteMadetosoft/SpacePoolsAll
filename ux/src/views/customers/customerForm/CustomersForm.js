@@ -93,6 +93,7 @@ export const CustomersForm = () => {
         })
     }
 
+
     const submit = async (e) => {
         e.preventDefault()
 
@@ -120,14 +121,15 @@ export const CustomersForm = () => {
                     idStatus: exceptionController(value.idStatus),
                     idLanguage: exceptionController(value.idLanguage),
                     filePath: filePath2,
-                    addresses: value.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType) })),
-                    contacts: value.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department) }))
+                    addresses: value.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType), defaultAddress: address.defaultAddress === true ? 1 : 0 })),
+                contacts: value.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department), defaultContact: contact.defaultContact === true ? 1 : 0 }))
                 }
                 save('Customers', id, prettyForm)
                 dispatch(handleCleanUp())
                 history.push('/customers')
             })
         }
+
     }
 
     return (
@@ -142,6 +144,7 @@ export const CustomersForm = () => {
                             value={customerCode}
                             readOnly
                         />
+
                     </div>
                     <div className="col-md-4">
                         <Input name="comercialName" label="Nombre" />
@@ -158,7 +161,9 @@ export const CustomersForm = () => {
                         />
                     </div>
                     <div className="col-md-4">
-                        <Input name="socialReason" label="Razon social" />
+
+                        <Input name="socialReason" label="Razón social" />
+
                     </div>
                     <div className="col-md-2">
                         <Input name="phone" label="Teléfono" />
@@ -185,7 +190,7 @@ export const CustomersForm = () => {
                         <Select name="idCustomerActivity" label="Actividad" endpoint="Activity" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idCustomerCategory" label="Categoria de cliente" endpoint="CustomerCategory" />
+                        <Select name="idCustomerCategory" label="Categoría de cliente" endpoint="CustomerCategory" />
                     </div>
                     <div className="col-md-2">
                         <Select name="idMode" label="Modo" endpoint="Mode" />

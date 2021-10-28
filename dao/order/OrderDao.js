@@ -10,14 +10,12 @@ const CustomerDataDao = require("../order/CustomerDataDao");
 const ExtraItemDao = require("../order/ExtraItemDao");
 const BaseItemDao = require("../order/BaseItemDao")
 const TaxesDao = require("../setup/general/TaxDao");
-const ItemDao = require("../item/ItemDao")
 const CanvasDao = require("../order/CanvasDao")
 
 
 class OrderDao extends GenericDao {
     constructor() {
         super(Order);
-        this.ItemDao = new ItemDao
         this.PoolDao = new PoolDao()
         this.CustomerDao = new CustomerDao()
         this.CustomerDataDao = new CustomerDataDao()
@@ -25,8 +23,6 @@ class OrderDao extends GenericDao {
         this.BaseItemDao = new BaseItemDao()
         this.TaxesDao = new TaxesDao()
         this.CanvasDao = new CanvasDao()
-        
-        
 
     }
 
@@ -35,7 +31,8 @@ class OrderDao extends GenericDao {
         const order = {
             ...data,
             customerData: await this.CustomerDataDao.findByOrderId(data.id),
-            extraItems: await this.ExtraItemDao.findByOrderId(data.id),
+            extraItems: await this.ExtraItemDao.getItemsByTypeAndOrder(data.id, 2),
+            extraRaws: await this.ExtraItemDao.getItemsByTypeAndOrder(data.id, 1),
             baseItems: await this.BaseItemDao.findByOrderId(data.id),
             orderDate: this.datetimeToDate(data.orderDate),
             productionDate: this.datetimeToDate(data.productionDate),
@@ -44,10 +41,8 @@ class OrderDao extends GenericDao {
             idTax: { id: data.idTax, name: (await this.TaxesDao.findTaxNameBy(data.idTax)) },
             idCustomer: { id: data.idCustomer, comercialName: (await this.CustomerDao.findCustomerNameBy(data.idCustomer)) },
             canvasItems: await this.CanvasDao.findByOrderId(data.id),
-            
-            
-            
         }
+
         let order2 = new Order(order)
         order2 = {
             ...order2,
@@ -56,6 +51,7 @@ class OrderDao extends GenericDao {
             email: await this.CustomerDataDao.findOneFieldById("email", data.id)
 
         }
+        // console.log(order2)
         return order2
     }
 
@@ -68,8 +64,6 @@ class OrderDao extends GenericDao {
             customerName: customer !== undefined ? customer.comercialName : '',
             customerPhone: customer !== undefined ? customer.phone : '',
             customerEmail: customer !== undefined ? customer.email : '',
-             
-
 
         }
 
@@ -101,7 +95,6 @@ class OrderDao extends GenericDao {
                 if (err) {
                     reject(err)
                 } else {
-
                     resolve(result[0])
                 }
             })
@@ -110,7 +103,7 @@ class OrderDao extends GenericDao {
 
     findActiveOrders() {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT id FROM orders WHERE state = 2', (err, result) => {
+            this.db.query('SELECT id FROM orders WHERE state = 0', (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -119,25 +112,50 @@ class OrderDao extends GenericDao {
                     for (const res of result) {
                         objList.push(res.id)
                     }
-
                     resolve(objList)
                 }
             })
         })
     }
-    updateOrderState(id) {
-        console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
-        return new Promise((resolve, reject) => {
-            this.db.query('UPDATE orders SET state = 1 WHERE id = ?', [id], (err, result) => {
+
+    updateItemStock(id) {
+        // console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
+        return new Promise(async (resolve, reject) => {
+            await this.db.query('SELECT * FROM `orders_base_items` WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
+                    for (const res of result) {
+                        await this.BaseItemDao.ItemDao.updateStock('-', res['idItem'], res['quantity'])
+                    }
+                }
+            })
+            await this.db.query('SELECT * FROM `orders_extra_items` WHERE idOrder = ?', [id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    for (const res of result) {
+                        await this.ExtraItemDao.ItemDao.updateStock('-', res['idItem'], res['quantity'])
+                    }
+                }
+            })
+            resolve('')
+        })
+    }
+
+    updateOrderState(id) {
+        // console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
+        return new Promise((resolve, reject) => {
+            this.db.query('UPDATE orders SET state = 1 WHERE id = ?', [id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    await this.updateItemStock(id)
                     resolve('')
                 }
             })
         })
     }
-
 }
 
 

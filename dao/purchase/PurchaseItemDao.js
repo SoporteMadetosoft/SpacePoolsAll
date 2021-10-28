@@ -14,11 +14,19 @@ class PurchaseItemDao extends GenericDao {
             ...data,
             idItem: await this.ItemDao.findById(data.idItem)
         }
-        return new Item(item)
+
+        return item
 
     }
 
     async mountItem(data) {
+        const colData = await this.ItemDao.ItemsColorsDao.findByItemId(data.idItem.id)
+        const colores = colData.map(el => ({
+            label: el.name,
+            value: el.id
+        }))
+        const selectedColor = await this.ItemDao.ItemsColorsDao.ColorsDao.findById(data.idColor)
+
         const item = {
             id: data.id,
             idItem: {
@@ -26,6 +34,8 @@ class PurchaseItemDao extends GenericDao {
                 name: data.idItem.name
             },
             itemType: data.idItem.itemType,
+            idColor: selectedColor.id !== undefined ? selectedColor : '',
+            colores: colores,
             quantity: data.quantity,
             recived: data.recived,
             cost: data.idItem.cost,
@@ -34,15 +44,6 @@ class PurchaseItemDao extends GenericDao {
         return item
     }
 
-
-    async mountList(data) {
-        const list = {
-            ...data,
-        }
-        const { purchaseId, idItem, quantity } = list
-        const nObj = { purchaseId: purchaseId, idItem: idItem, quantity: quantity }
-        return nObj
-    }
 
     findByPurchaseId(id) {
         return new Promise((resolve, reject) => {

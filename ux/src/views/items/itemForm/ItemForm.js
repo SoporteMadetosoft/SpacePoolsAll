@@ -98,6 +98,7 @@ export const ItemForm = () => {
             dispatch(handleCleanUp())
             history.push('/items')
         }
+
     }
 
     return (

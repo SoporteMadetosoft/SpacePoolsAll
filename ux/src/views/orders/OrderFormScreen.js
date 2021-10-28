@@ -32,26 +32,21 @@ export const OrderFormScreen = () => {
     const form = useSelector(state => state.normalForm)
     const canvas = useSelector(state => state.canvasReducer)
     const orders = useSelector(state => state.ordersReducer)
-    const canvasItems = useSelector(state => state.normalForm.canvasItems)
-
 
     useEffect(() => {
         if (id) {
             dispatch(handleStartEditing('Orders', id))
-            
+            dispatch(getCItemsByOrderId('Orders', id))
         } else {
             dispatch(catchAndSetPrice(0))
+            dispatch(setInitialCanvas())
         }
         dispatch(initNormalForm(structureForm))
-        
+
     }, [initNormalForm])
 
     useEffect(() => {
-        if (id) {
-            dispatch(getCItemsByOrderId('Orders', id))
-        } else {
-            dispatch(setInitialCanvas())
-        }
+
         dispatch(catchAndSetPrice())
     }, [form])
 
@@ -92,6 +87,7 @@ export const OrderFormScreen = () => {
             production: inputExceptionController(productionObj),
             baseItems: form.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity, idColor: exceptionController(bI.idColor) })),
             extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity, idColor: exceptionController(eI.idColor) })),
+            extraRaws: form.extraRaws.map(eR => ({ idItem: eR.idItem.id, quantity: eR.quantity, idColor: exceptionController(eR.idColor) })),
             canvas: canvas.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, rotation: el.rotation }))
         }
 

@@ -7,5 +7,5 @@ export default [
     title: 'Clientes',
     icon: <FontAwesomeIcon icon={faUser} />,
     navLink: '/customers'
-}
+  }
 ]

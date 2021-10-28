@@ -56,7 +56,6 @@ const PreviewCard = () => {
     total: price,
     observations
   }
-  console.log(data)
 
   useEffect(() => {
     if (id) {
@@ -204,7 +203,7 @@ const PreviewCard = () => {
         <Row className='invoice-sales-total-wrapper'>
           <Col className='d-flex justify-content-end' md='8' order={{ md: 6, lg: 8 }}>
             {
-              (normalForm['signature'] !== undefined && normalForm['signature'] !== '') ?
+              (normalForm['signature'] !== undefined && normalForm['signature'] !== '' && normalForm['signature'] !== null) ?
                 (<>
                   <img src={normalForm['signature']} style={{ width: 700, height: 300 }} />
                 </>)

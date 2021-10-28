@@ -18,6 +18,11 @@ export const editDropedElement = (key, position, obj) => {
     }
 }
 
+export const removeCanvasElement = (key, position) => ({
+    type: canvasTypes.RemoveElement,
+    payload: { key, position }
+})
+
 export const cloneCanvasElement = (key, position) => {
     return async (dispatch, getState) => {
         dispatch({
@@ -47,7 +52,7 @@ export const getCItemsByOrderId = (endPoint, id) => {
 
         const newItemsList = []
         data.forEach((element, index) => {
-            const imageUrl = getState().canvasReducer.elements[index].imgUrl
+            const imageUrl = getState().canvasReducer.elements[element.idElemento - 1].imgUrl
             const newItem = {
                 ...element,
                 imgUrl: imageUrl
@@ -95,7 +100,6 @@ export const setInitialCanvas = () => {
                 x: (window.innerWidth) / 15,
                 y: ((window.innerHeight) / 12) * element.idElemento
             }
-            //    console.log(newItem)
             dispatch(addCanvasElement("elements", newItem, index))
         })
         //dispatch(handleCleanCanvas())

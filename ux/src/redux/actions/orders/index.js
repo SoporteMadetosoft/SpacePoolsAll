@@ -108,7 +108,6 @@ export const createItemRepeatersByPool = (idPool) => {
 
 
         const pool = await getFormData("Pools", idPool)
-        console.log(pool)
 
         let go = true
         num = 0
@@ -170,7 +169,6 @@ export const catchAndSetPrice = (numE) => {
 export const handleFillCustomerData = (idCustomer) => {
     return async (dispatch, getState) => {
         const customerData = await getFormData("Customers", idCustomer)
-        // console.log(customerData)
         customerData['addresses'].map(
             elements => {
                 if (elements.addressType.id === 1) {

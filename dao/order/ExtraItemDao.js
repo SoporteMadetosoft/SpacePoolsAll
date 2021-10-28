@@ -56,6 +56,28 @@ class ExtraItemDao extends GenericDao {
         })
     }
 
+    async getItemsByTypeAndOrder(idOrder, itemType) {
+        return new Promise((resolve, reject) => {
+            this.db.query(`SELECT * FROM orders_extra_items WHERE idOrder = ?`, [idOrder], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    let ItemList = []
+                    for (const data of result) {
+                        const item = await this.ItemDao.findByItemTypeAndId(data.idItem, itemType)
+                        if (item[0]) {
+                            if (item[0]['itemType'].id === itemType) {
+                                ItemList.push(await this.mountObj(data))
+                            }
+                        }
+                        //ItemList.push(await this.mountObj(data))
+                    }
+                    resolve(ItemList)
+                }
+            });
+        })
+    }
+
     countItemById(id, idOrder) {
         return new Promise((resolve, reject) => {
             this.db.query('SELECT id FROM orders_extra_items WHERE idItem = ? and idOrder = ?', [id, idOrder], (err, result) => {

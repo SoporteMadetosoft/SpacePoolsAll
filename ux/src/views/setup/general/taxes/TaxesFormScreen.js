@@ -15,7 +15,7 @@ export const TaxesFormScreen = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(handleStartEditing('Tax', id))
+            dispatch(handleStartEditing('Taxes', id))
         }
     }, [])
 

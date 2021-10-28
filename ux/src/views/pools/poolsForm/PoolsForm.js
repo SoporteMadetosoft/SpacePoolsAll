@@ -52,25 +52,25 @@ export const PoolsForm = () => {
                         />
                     </div>
                     <div className="col-md-4">
-                        <Input name="fabricationName" placeholder="Nombre  de fabricación" label="Nombre  de fabricación" />
+                        <Input name="fabricationName"  label="Nombre  de fabricación" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="simultaneousFabrications" type="number" placeholder="Nº máximo de fabriación" label="Nº máximo de fabriación" />
+                        <Input name="simultaneousFabrications" type="number"  label="Nº máximo de fabriación" />
                     </div>
                     <div className="col-md-3">
                         <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="nameEuropa" placeholder="Nombre Europa" label="Nombre Europa" />
+                        <Input name="nameEuropa"  label="Nombre Europa" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="nameSpace" placeholder="Nombre Space" label="Nombre Space" />
+                        <Input name="nameSpace"  label="Nombre Space" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="nameSociedad" placeholder="Nombre Sociedad" label="Nombre Sociedad" />
+                        <Input name="nameSociedad" label="Nombre Sociedad" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="nameHydrius" placeholder="Nombre Hydrus" label="Nombre Hydrus" />
+                        <Input name="nameHydrius"  label="Nombre Hydrus" />
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">Precio</label>

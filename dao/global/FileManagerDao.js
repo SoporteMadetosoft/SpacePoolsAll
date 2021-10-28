@@ -10,9 +10,11 @@ class FileManagerDao {
 
     createFile(filePath) {
         try {
-            if (!fs.existsSync(`${__dirname}/../../public/${filePath}/`)) {
-                const dateNow = filePath;
-                fs.mkdirSync(`./public/${dateNow}`);
+            if (filePath !== null) {
+                if (!fs.existsSync(`${__dirname}/../../public/${filePath}/`)) {
+                    const dateNow = filePath;
+                    fs.mkdirSync(`./public/${dateNow}`);
+                }
             }
         } catch (error) {
             console.log(error)
@@ -20,14 +22,16 @@ class FileManagerDao {
     }
 
     uploadFile(filePath, files) {
-        files.forEach(element => {
-            const file = element;
-            file.mv(`${__dirname}/../../public/${filePath}/${file.name}`, err => {
-                if (err) {
-                    console.error(err);
-                }
+        if (filePath !== null) {
+            files.forEach(element => {
+                const file = element;
+                file.mv(`${__dirname}/../../public/${filePath}/${file.name}`, err => {
+                    if (err) {
+                        console.error(err);
+                    }
+                })
             })
-        })
+        }
     }
 
     deleteFile(url) {
@@ -41,7 +45,7 @@ class FileManagerDao {
     getDocumentsInfo(filePath) {
         return new Promise((resolve, reject) => {
             try {
-                if (filePath !== '') {
+                if (filePath !== null) {
                     fs.readdir(`${__dirname}/../../public/${filePath}/`, async (err, files) => {
                         if (err) {
                             reject(err)
@@ -56,13 +60,14 @@ class FileManagerDao {
 
                             if (doc.length === 0) {
 
-                                const { mime: filetype } = await FileType.fromFile(`${__dirname}/../../public/${filePath}/${filename}`);
+                                // const { mime: filetype } = await FileType.fromFile(`${__dirname}/../../public/${filePath}/${filename}`);
                                 const { size: filesize } = fs.statSync(`${__dirname}/../../public/${filePath}/${filename}`);
                                 doc = {
                                     name: '',
                                     filename,
                                     filesize: this.helperFileSize(filesize),
-                                    filetype: this.helperMime(filetype),
+                                    filetype: '',
+                                    // filetype: this.helperMime(filetype),
                                     url: `/public/${filePath}/${filename}`
                                 }
                             }

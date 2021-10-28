@@ -1,65 +1,64 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactSelect from 'react-select'
+
 import { handleChangeController } from '../../../redux/actions/normalForm'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
-import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+import { removeError } from '../../../redux/actions/formValidator'
+import { InputValidator } from './InputValidator'
 
-const placeholderStyles = {
-    placeholder: (defaultStyles) => {
-        return {
-            ...defaultStyles,
-            FontSize: '5px'
-        }
-    }
-}
-
-export const Select = ({ name, label, className, placeholder = label, isMulti = false, labelName = 'name', endpoint }) => {
+export const Select = ({ name, label, className, endpoint, placeholder = label, isMulti = false, labelName = 'name', errMsg = '' }) => {
 
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(startAddSelectOptions(endpoint, endpoint, labelName))
-    }, [])
-
-    const normalForm = useSelector(state => state.normalForm)
-    const { [endpoint]: options } = useSelector(state => state.selectReducer)
-
-    let value
-
+    const { selectReducer, normalForm, formValidator} = useSelector(state => state)
+    const { [endpoint]: options } = selectReducer
+    
+    let value 
     let handleSelectChange
+
     if (isMulti) {
-        value = normalForm[name] ? normalForm[name].map(element => ({ value: element.id, label: element[labelName] })) : null
+        value = normalForm[name] ? normalForm[name].map(element => ({ value : element.id, label: element[labelName] })) : null
         handleSelectChange = (value) => {
-            const newValues = value.map(element => ({ id: element.value, name: element.label }))
+
+            if (formValidator.errors && formValidator.errors[name]) {
+                delete formValidator.errors[name]
+            }
+            dispatch(removeError(formValidator.errors))
+            const newValues = value.map(element => ({ id : element.value, [labelName]: element.label }))
+
             dispatch(handleChangeController(name, newValues))
         }
     } else {
         value = normalForm[name] ? { label: normalForm[name][labelName], value: normalForm[name].id } : null
         handleSelectChange = ({ value, label }) => {
+
+            if (formValidator.errors && formValidator.errors[name]) {
+                delete formValidator.errors[name]
+            }
+            dispatch(removeError(formValidator.errors))
+
             dispatch(handleChangeController(name, { id: value, [labelName]: label }))
         }
     }
-
+    
     useEffect(() => {
         dispatch(startAddSelectOptions(endpoint, endpoint, labelName))
     }, [])
 
     return (
-        <>
-            {label ? (<label className="control-label">{label}</label>) : ('')}
-
+        <div style={{marginTop: '5px'}}>
+            <label className="control-label d-flex justify-content-between">{label} {<InputValidator errMsg={errMsg} errors={formValidator.errors} target={name} />}</label>
             <ReactSelect
-                className={`${className}`}
-                id={name}
+
+                className={`${className} ${formValidator.errors && formValidator.errors[name] ? 'border-danger rounded' : ''}`}
+
                 name={name}
-                isMulti={isMulti}
                 options={options}
-                value={value}
-                styles={placeholderStyles}
                 placeholder={placeholder}
+                value={value}
+                isMulti={isMulti}
                 onChange={handleSelectChange}
             />
-        </>
+        </div>
     )
 }

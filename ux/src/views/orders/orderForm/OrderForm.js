@@ -20,9 +20,11 @@ import * as yup from "yup"
 import { useParams } from 'react-router'
 import { ExtraRawsRepeater } from './ExtraRawsRepeater'
 
+
 //const ValidationSchema = yup.object().shape({
 //    idPool: yup.string().required()
 //})
+
 export const OrderForm = () => {
     //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
@@ -145,13 +147,13 @@ export const OrderForm = () => {
                             }} />
                     </div>
                     <div className="col-md-2">
-                        <Input name="deliveryAddress" placeholder="Dirección de entrega" label="Dirección" />
+                        <Input name="deliveryAddress"  label="Dirección" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="phone" placeholder="Teléfono" label="Teléfono" />
+                        <Input name="phone"  label="Teléfono" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="email" placeholder="Correo Electrónico" label="Correo Electrónico" />
+                        <Input name="email"  label="Correo Electrónico" />
                     </div>
 
                     <div className="col-md-2">
@@ -223,10 +225,10 @@ export const OrderForm = () => {
                         />
                     </div>
                     <div className="col-md-2">
-                        <Input name="deliverySchedulerStart" type="time" placeholder="" label="Inicio de Horario de entrega" />
+                        <Input name="deliverySchedulerStart" type="time"  label="Inicio de Horario de entrega" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="deliverySchedulerEnd" type="time" placeholder="" label="Fin de Horario de entrega" />
+                        <Input name="deliverySchedulerEnd" type="time"  label="Fin de Horario de entrega" />
                     </div>
                     <div className="col-md-12">
                         <label className="control-label">Observaciones</label>

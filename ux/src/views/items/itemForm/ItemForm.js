@@ -16,10 +16,17 @@ import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/acti
 import ReactSelect from 'react-select'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { undoMultiSelect } from '../../../utility/helpers/undoMultiSelect'
+import { validator } from '../../../utility/formValidator/ValidationTypes'
+import { setSchema } from '../../../redux/actions/formValidator'
 
-const ValidationSchema = yup.object().shape({
-    valueType: yup.string().required()
-})
+// const ValidationSchema = yup.object().shape({
+//     valueType: yup.string().required()
+// })
+
+const formSchema = {
+    familia: { validations: [validator.isRequired] },
+    subfamilia: { validations: [validator.isRequired] }
+}
 
 const placeholderStyles = {
     placeholder: (defaultStyles) => {
@@ -42,7 +49,7 @@ export const ItemForm = () => {
 
     const { normalForm, selectReducer } = useSelector(state => state)
 
-    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+    // const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { description } = normalForm
     const { ItemType } = selectReducer
@@ -51,11 +58,12 @@ export const ItemForm = () => {
 
     useEffect(() => {
         dispatch(startAddSelectOptions('ItemType', 'ItemType'))
-        dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
-        
+        dispatch(startAddSelectStatus('Vendors', 'Vendors', 'comercialName'))
+
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Items", 'itemCode'))
         } else itemCode = normalForm.id
+        dispatch(setSchema(formSchema))
     }, [])
 
     const handleInputChange = ({ target }) => {
@@ -70,22 +78,30 @@ export const ItemForm = () => {
     }
 
     const submit = async () => {
-        const prettyForm = {
-            ...form,
-            idVendor: exceptionController(form.idVendor),
-            itemType: exceptionController(form.itemType),
-            idFamily: exceptionController(form.idFamily),
-            idPlace: exceptionController(form.idPlace),
-            idColor: undoMultiSelect(form.idColor, 'idColor')
+
+        const errors = validate(formValidator.schema, form)
+
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
+
+        } else {
+            const prettyForm = {
+                ...form,
+                idVendor: exceptionController(form.idVendor),
+                itemType: exceptionController(form.itemType),
+                idFamily: exceptionController(form.idFamily),
+                idPlace: exceptionController(form.idPlace),
+                idColor: undoMultiSelect(form.idColor, 'idColor')
+            }
+            console.log(prettyForm)
+            save('Items', id, prettyForm)
+            dispatch(handleCleanUp())
+            history.push('/items')
         }
-        console.log(prettyForm)
-        save('Items', id, prettyForm)
-        dispatch(handleCleanUp())
-        history.push('/items')
     }
 
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
@@ -120,16 +136,10 @@ export const ItemForm = () => {
                             tabIndex={-1}
                             autoComplete="off"
                             value={valueType}
-                            innerRef={register({ required: true })}
-                            invalid={errors.valueType && true}
                             style={{ opacity: 0, height: 0, position: 'absolute' }}
                             onChange={handleInputChange}
                         />
-                        {errors && errors.valueType && (
-                            <>
-                                <FormFeedback>Tipo de artículo requerido</FormFeedback>
-                            </>
-                        )}
+                        
                     </div>
                     <div className="col-md-3">
                         <Select required="true" name="idVendor" label="Proveedor" endpoint="Vendors" labelName="comercialName" />

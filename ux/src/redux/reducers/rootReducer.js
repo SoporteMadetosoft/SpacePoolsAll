@@ -7,6 +7,7 @@ import navbar from './navbar'
 import layout from './layout'
 
 import registrosReducer from './custom'
+import formValidator from './formValidator'
 
 import normalForm from './normalForm'
 import selectReducer from './selects'
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
   canvasReducer,
   ordersReducer,
   calenderReducer,
-  permisosReducer
+  permisosReducer,
+  formValidator
 })
 
 export default rootReducer

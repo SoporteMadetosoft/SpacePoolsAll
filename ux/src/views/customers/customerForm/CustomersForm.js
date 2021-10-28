@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { useForm } from 'react-hook-form'
-
+import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 
 import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
 import { Input } from '../../../components/form/inputs/Input'
-
 import { Select } from '../../../components/form/inputs/Select'
 
 import { FileContext } from '../../../utility/context/FileContext'
@@ -21,18 +20,22 @@ import { uploadFile } from '../../../utility/helpers/Axios/uploadFile'
 import { save } from '../../../utility/helpers/Axios/save'
 import { SwalUploadAndSave } from '../../../utility/helpers/SwalUploadAndSave'
 import { loadFiles } from '../../../utility/helpers/Axios/loadFiles'
-
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { AddressesRepeater } from './AddressesRepeater'
 import { ContactsRepeater } from './ContactsRepeater'
 import { CustomerDocForm } from './CustomerDocForm'
+import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 
-const ValidationSchema = yup.object().shape({
-    CIF: yup.string().required()
-})
+
+const formSchema = {
+    comercialName: { validations: [validator.isRequired] },
+    email: { validations: [validator.isEmail] },
+    CIF: { validations: [validator.isRequired] },
+    idStatus: { validations: [validator.isRequired] }
+}
 
 export const CustomersForm = () => {
-    let {customerCode} = useSelector(state =>  state.normalForm)
+    let { customerCode } = useSelector(state => state.normalForm)
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -44,8 +47,9 @@ export const CustomersForm = () => {
     const realFilePath = form.filePath ? form.filePath : filePath
 
     const { normalForm } = useSelector(state => state)
+    const { formValidator } = useSelector(state => state)
 
-    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+    //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { observations } = normalForm
 
@@ -56,6 +60,7 @@ export const CustomersForm = () => {
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Customers", 'customerCode'))
         } else customerCode = normalForm.id
+        dispatch(setSchema(formSchema))
 
     }, [])
 
@@ -88,50 +93,58 @@ export const CustomersForm = () => {
         })
     }
 
-    const submit = async () => {
-        const filePath2 = MkDir('Customers', realFilePath)
+    const submit = async (e) => {
+        e.preventDefault()
 
-        await preSubmit(filePath2)
+        const errors = validate(formValidator.schema, normalForm)
 
-        const form2 = dispatch(handleGetForm())
-        form2.then(async (value) => {
-            const prettyForm = {
-                ...value,
-                idPaymentMethod: exceptionController(value.idPaymentMethod),
-                idPayDay: exceptionController(value.idPayDay),
-                idCustomerOrigin: exceptionController(value.idCustomerOrigin),
-                idCustomerType: exceptionController(value.idCustomerType),
-                idCustomerActivity: exceptionController(value.idCustomerActivity),
-                idCustomerCategory: exceptionController(value.idCustomerCategory),
-                idMode: exceptionController(value.idMode),
-                idStatus: exceptionController(value.idStatus),
-                idLanguage: exceptionController(value.idLanguage),
-                filePath: filePath2,
-                addresses: value.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType) })),
-                contacts: value.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department) }))
-            }
-            save('Customers', id, prettyForm)
-            dispatch(handleCleanUp())
-            history.push('/customers')
-        })
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
+            
+        } else {
+            const filePath2 = MkDir('Customers', realFilePath)
+
+            await preSubmit(filePath2)
+
+            const form2 = dispatch(handleGetForm())
+            form2.then(async (value) => {
+                const prettyForm = {
+                    ...value,
+                    idPaymentMethod: exceptionController(value.idPaymentMethod),
+                    idPayDay: exceptionController(value.idPayDay),
+                    idCustomerOrigin: exceptionController(value.idCustomerOrigin),
+                    idCustomerType: exceptionController(value.idCustomerType),
+                    idCustomerActivity: exceptionController(value.idCustomerActivity),
+                    idCustomerCategory: exceptionController(value.idCustomerCategory),
+                    idMode: exceptionController(value.idMode),
+                    idStatus: exceptionController(value.idStatus),
+                    idLanguage: exceptionController(value.idLanguage),
+                    filePath: filePath2,
+                    addresses: value.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType) })),
+                    contacts: value.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department) }))
+                }
+                save('Customers', id, prettyForm)
+                dispatch(handleCleanUp())
+                history.push('/customers')
+            })
+        }
     }
 
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                    <label className="control-label">Nº Cliente</label>
+                        <label className="control-label">Nº Cliente</label>
                         <input
-                        className={`form-control`}
-                        name="customerCode"
-                        value={customerCode}
-                        readOnly
-                    />
-                        {errors && errors.customerCode && <FormFeedback>Nº Cliente requerido</FormFeedback>}
+                            className={`form-control`}
+                            name="customerCode"
+                            value={customerCode}
+                            readOnly
+                        />
                     </div>
                     <div className="col-md-4">
-                        <Input name="comercialName" placeholder="Nombre" label="Nombre" />
+                        <Input name="comercialName" label="Nombre" />
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">C.I.F.</label>
@@ -141,20 +154,17 @@ export const CustomersForm = () => {
                             type="text"
                             value={normalForm['CIF']}
                             placeholder="C.I.F."
-                            innerRef={register({ required: true })}
-                            invalid={errors.CIF && true}
                             onChange={handleInputChange}
                         />
-                        {errors && errors.CIF && <FormFeedback>C.I.F. requerido</FormFeedback>}
                     </div>
                     <div className="col-md-4">
-                        <Input name="socialReason" placeholder="Razon social" label="Razon social" />
+                        <Input name="socialReason" label="Razon social" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="phone" placeholder="Teléfono" label="Teléfono" />
+                        <Input name="phone" label="Teléfono" />
                     </div>
                     <div className="col-md-4">
-                        <Input name="email" type="email" placeholder="E-mail" label="E-mail" />
+                        <Input name="email" type="email" label="E-mail" />
                     </div>
                     <div className="col-md-2">
                         <Select name="idPaymentMethod" label="Forma de pago" endpoint="PaymentMethods" />
@@ -166,7 +176,7 @@ export const CustomersForm = () => {
                         <Select name="idCustomerOrigin" label="Origen" endpoint="Origin" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="accountNumber" placeholder="Número de cuenta" label="Número de cuenta" />
+                        <Input name="accountNumber" label="Número de cuenta" />
                     </div>
                     <div className="col-md-2">
                         <Select name="idCustomerType" label="Tipo de cliente" endpoint="CustomerType" />

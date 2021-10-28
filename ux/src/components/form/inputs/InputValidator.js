@@ -1,6 +1,6 @@
 import React from 'react'
-import { faInfoCircle } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 
 export const InputValidator = ({errors, errMsg, target}) => {
   

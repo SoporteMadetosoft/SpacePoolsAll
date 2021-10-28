@@ -25,10 +25,16 @@ import { loadFiles } from '../../../utility/helpers/Axios/loadFiles'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 
 import { CarrierDocForm } from './CarrierDocForm'
+import { setSchema } from '../../../redux/actions/formValidator'
+import { validator } from '../../../utility/formValidator/ValidationTypes'
 
-const ValidationSchema = yup.object().shape({
-    NIF: yup.string().required()
-})
+
+
+const formSchema = {
+    DNI: { validations: [validator.isRequired] },
+    estado: { validations: [validator.isRequired] }
+   
+}
 
 export const CarriersForm = () => {
     let {carrierCode} = useSelector(state =>  state.normalForm)
@@ -44,7 +50,7 @@ export const CarriersForm = () => {
 
     const { normalForm } = useSelector(state => state)
 
-    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+    //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
@@ -54,6 +60,7 @@ export const CarriersForm = () => {
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Carriers", 'carrierCode'))
         } else carrierCode = normalForm.id
+        dispatch(setSchema(formSchema))
     }, [])
 
     const preSubmit = (filePath2) => {
@@ -86,6 +93,13 @@ export const CarriersForm = () => {
     }
 
     const submit = async () => {
+
+        const errors = validate(formValidator.schema, value)
+
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
+            
+        } else {
         const filePath2 = MkDir('Carriers', realFilePath)
 
         await preSubmit(filePath2)
@@ -102,9 +116,10 @@ export const CarriersForm = () => {
             history.push('/porters/carriers')
         })
     }
+}
 
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
@@ -117,7 +132,7 @@ export const CarriersForm = () => {
                     />
                     </div>
                     <div className="col-md-4">
-                        <Input name="name" placeholder="Nombre" label="Nombre" />
+                        <Input name="name" label="Nombre" />
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">N.I.F.</label>
@@ -125,43 +140,39 @@ export const CarriersForm = () => {
                             id="NIF"
                             name="NIF"
                             type="text"
-                            value={normalForm['NIF']}
                             placeholder="N.I.F."
-                            innerRef={register({ required: true })}
-                            invalid={errors.NIF && true}
                             onChange={handleInputChange}
                         />
-                        {errors && errors.NIF && <FormFeedback>N.I.F. requerido</FormFeedback>}
                     </div>
                     <div className="col-md-3">
                         <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="email" type="email" placeholder="Correo electrónico" label="Correo electrónico" />
+                        <Input name="email" type="email"  label="Correo electrónico" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="phone" placeholder="Teléfono 1" label="Teléfono 1" />
+                        <Input name="phone"  label="Teléfono 1" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="phone2" placeholder="Teléfono 2" label="Teléfono 2" />
+                        <Input name="phone2"  label="Teléfono 2" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="startSchedule" type="time" placeholder="Horario de contacto" label="Horario de contacto" />
+                        <Input name="startSchedule" type="time"  label="Horario de contacto" />
                     </div>
                     <div className="col-md-4">
-                        <Input name="country" placeholder="País" label="País" />
+                        <Input name="country"  label="País" />
                     </div>
                     <div className="col-md-4">
-                        <Input name="state" placeholder="Provincia" label="Provincia" />
+                        <Input name="state"  label="Provincia" />
                     </div>
                     <div className="col-md-4">
-                        <Input name="city" placeholder="Ciudad" label="Ciudad" />
+                        <Input name="city"  label="Ciudad" />
                     </div>
                     <div className="col-md-8">
-                        <Input name="address" placeholder="Dirección" label="Dirección" />
+                        <Input name="address"  label="Dirección" />
                     </div>
                     <div className="col-md-4">
-                        <Input name="postcode" placeholder="Código postal" label="Código postal" />
+                        <Input name="postcode"  label="Código postal" />
                     </div>
                 </div>
             </div>

@@ -28,11 +28,16 @@ import { loadFiles } from '../../../utility/helpers/Axios/loadFiles'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { TrailerDocForm } from './TrailerDocForm'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+import { setSchema } from '../../../redux/actions/formValidator'
+import { validator } from '../../../utility/formValidator/ValidationTypes'
 
-const ValidationSchema = yup.object().shape({
-    plate: yup.string().required(),
-    valueModel: yup.string().required()
-})
+
+const formSchema = {
+    matricula: { validations: [validator.isRequired] },
+    marca: { validations: [validator.isRequired] },
+    modelo: { validations: [validator.isRequired] },
+    estado: { validations: [validator.isRequired] }
+}
 
 const placeholderStyles = {
     placeholder: (defaultStyles) => {
@@ -59,7 +64,7 @@ export const TrailersForm = () => {
 
     const { normalForm, selectReducer } = useSelector(state => state)
 
-    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+    //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { observations, model } = normalForm
 
@@ -78,6 +83,7 @@ export const TrailersForm = () => {
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Trailers", 'trailerCode'))
         } else trailerCode = normalForm.id
+        dispatch(setSchema(formSchema))
     }, [])
 
 
@@ -125,26 +131,34 @@ export const TrailersForm = () => {
     }
 
     const submit = async () => {
-        const filePath2 = MkDir('Trailers', realFilePath)
-        await preSubmit(filePath2)
 
-        const form2 = dispatch(handleGetForm())
-        form2.then(async (value) => {
-            const prettyForm = {
-                ...value,
-                idStatus: exceptionController(value.idStatus),
-                model: exceptionController(value.model),
-                filePath: filePath2
-            }
+        const errors = validate(formValidator.schema, value)
 
-            save('Trailers', id, prettyForm)
-            dispatch(handleCleanUp())
-            history.push('/porters/trailers')
-        })
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
+
+        } else {
+            const filePath2 = MkDir('Trailers', realFilePath)
+            await preSubmit(filePath2)
+
+            const form2 = dispatch(handleGetForm())
+            form2.then(async (value) => {
+                const prettyForm = {
+                    ...value,
+                    idStatus: exceptionController(value.idStatus),
+                    model: exceptionController(value.model),
+                    filePath: filePath2
+                }
+
+                save('Trailers', id, prettyForm)
+                dispatch(handleCleanUp())
+                history.push('/porters/trailers')
+            })
+        }
     }
 
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className="row card-body">
                     <div className="col-md-3">
@@ -162,13 +176,9 @@ export const TrailersForm = () => {
                             id="plate"
                             name="plate"
                             type="text"
-                            value={normalForm['plate']}
                             placeholder="Matrícula del remolque"
-                            innerRef={register({ required: true })}
-                            invalid={errors.plate && true}
                             onChange={handleInputChange}
                         />
-                        {errors && errors.plate && <FormFeedback>Matrícula del remolque requerida</FormFeedback>}
                     </div>
                     <div className="col-md-3">
                         <Input name="frame" label="Número de bastidor" />
@@ -183,9 +193,7 @@ export const TrailersForm = () => {
                             name="brand"
                             value={brandValue}
                             options={Brand}
-                            onChange={(obj) => {
-                                handleLoadModels(obj)
-                            }} />
+                             />
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">Modelo</label>
@@ -204,16 +212,10 @@ export const TrailersForm = () => {
                             tabIndex={-1}
                             autoComplete="off"
                             value={valueModel}
-                            innerRef={register({ required: true })}
-                            invalid={errors.valueModel && true}
                             style={{ opacity: 0, height: 0, position: 'absolute' }}
                             onChange={handleInputChange}
                         />
-                        {errors && errors.valueModel && (
-                            <>
-                                <FormFeedback>Modelo requerido</FormFeedback>
-                            </>
-                        )}
+                        
                     </div>
 
                     <div className="col-md-3">

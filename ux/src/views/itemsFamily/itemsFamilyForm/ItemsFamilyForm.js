@@ -11,10 +11,16 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
 import { useForm } from 'react-hook-form'
 import { GetSetNextId, handleChangeController } from '../../../redux/actions/normalForm'
+import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 
-const ValidationSchema = yup.object().shape({
-    name: yup.string().required()
-})
+// const ValidationSchema = yup.object().shape({
+//     name: yup.string().required()
+// })
+const formSchema = {
+    name: { validations: [validator.isRequired] }
+}
+
 
 export const ItemsFamilyForm = () => {
 
@@ -24,31 +30,40 @@ export const ItemsFamilyForm = () => {
     const form = useSelector(state => state.normalForm)
     const { normalForm } = useSelector(state => state)
 
-    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+    //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
     useEffect(() => {
-        if ( !id ) {
+        if (!id) {
             dispatch(GetSetNextId("Family", 'id'))
-        }
+        } else id = normalForm.id
+        dispatch(setSchema(formSchema))
     }, [])
 
     const submit = async () => {
-        const prettyForm = {
-            ...form,
-            parent: form.parent
-        }
 
-        save('Family', id, prettyForm)
-        dispatch(handleCleanUp())
-        history.push('/items/family')
+        const errors = validate(formValidator.schema, normalForm)
+
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
+
+        } else {
+            const prettyForm = {
+                ...form,
+                parent: form.parent
+            }
+
+            save('Family', id, prettyForm)
+            dispatch(handleCleanUp())
+            history.push('/items/family')
+        }
     }
 
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
@@ -67,13 +82,9 @@ export const ItemsFamilyForm = () => {
                             id="name"
                             name="name"
                             type="text"
-                            value={normalForm['name']}
                             placeholder="Nombre"
-                            innerRef={register({ required: true })}
-                            invalid={errors.name && true}
                             onChange={handleInputChange}
                         />
-                        {errors && errors.name && <FormFeedback>Nombre requerido</FormFeedback>}
                     </div>
                     <div className="col-md-5">
                         <SelectArbol name="parent" label="Padre" endpoint="Family" />

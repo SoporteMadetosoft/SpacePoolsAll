@@ -81,10 +81,10 @@ export const PurchaseForm = () => {
                         />
                     </div>
                     <div className="col-md-3">
-                        <Input name="purchaseDate" type="date" placeholder="Fecha de compra" label="Fecha de compra" />
+                        <Input name="purchaseDate" type="date"  label="Fecha de compra" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="deliveryDate" type="date" placeholder="Fecha de entrega" label="Fecha de entrega" />
+                        <Input name="deliveryDate" type="date"  label="Fecha de entrega" />
                     </div>
 
 

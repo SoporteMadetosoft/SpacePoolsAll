@@ -39,6 +39,7 @@ export const VehicleRepairForm = () => {
 
     const submit = async (e) => {
         e.preventDefault()
+        
         const form2 = dispatch(handleGetForm())
         form2.then(async (value) => {
             delete value.idRepair

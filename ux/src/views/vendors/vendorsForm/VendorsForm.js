@@ -1,14 +1,9 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { useForm } from 'react-hook-form'
-import { handleChangeController, GetSetNextId } from '../../../redux/actions/normalForm'
-
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-
+import { handleChangeController, GetSetNextId, handleGetForm } from '../../../redux/actions/normalForm'
 import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
-
 import { AddressesRepeater } from './AddressesRepeater'
 import { ContactsRepeater } from './ContactsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
@@ -16,11 +11,16 @@ import { Select } from '../../../components/form/inputs/Select'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { save } from '../../../utility/helpers/Axios/save'
-import { startAddSelectStatus } from '../../../redux/actions/selects'
+import { setSchema } from '../../../redux/actions/formValidator'
+import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
+import { handleCleanUp } from '../../../redux/actions/fileUpload'
 
-const ValidationSchema = yup.object().shape({
-    CIF: yup.string().required()
-})
+
+const formSchema = {
+    CIF: { validations: [validator.isRequired] },
+    idStatus: { validations: [validator.isRequired] }
+
+}
 
 export const VendorsForm = () => {
 
@@ -28,11 +28,10 @@ export const VendorsForm = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    let {vendorCode} = useSelector(state =>  state.normalForm)
+    let { vendorCode } = useSelector(state => state.normalForm)
 
     const { normalForm } = useSelector(state => state)
-
-    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+    const { formValidator } = useSelector(state => state)
 
     const { observations } = normalForm
 
@@ -43,46 +42,66 @@ export const VendorsForm = () => {
 
 
     useEffect(() => {
-        
-        if (normalForm.id === undefined) {
-            dispatch(GetSetNextId("Vendors","vendorCode"))
-            
-        } else vendorCode = normalForm.id
 
-        
+        if (normalForm.id === undefined) {
+            dispatch(GetSetNextId("Vendors", "vendorCode"))
+
+        } else vendorCode = normalForm.id
+        dispatch(setSchema(formSchema))
+
+
 
     }, [])
 
-    console.log(errors)
+
 
     const submit = async () => {
-        const prettyForm = {
-            ...normalForm,
-            idPaymentMethod: exceptionController(normalForm.idPaymentMethod),
-            idVendorType: exceptionController(normalForm.idVendorType),
-            idStatus: exceptionController(normalForm.idStatus),
-            addresses: normalForm.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType) })),
-            contacts: normalForm.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department) }))
+
+        const errors = validate(formValidator.schema, normalForm)
+        console.log(errors)
+
+        if (Object.keys(errors).length !== 0) {
+            console.log('entro en los errores')
+            dispatch(setErrors(errors))
+
+        } else {
+            console.log('entro al prettyform')
+
+            const form2 = dispatch(handleGetForm())
+            form2.then(async (value) => {
+                const prettyForm = {
+                    ...value,
+                    idPaymentMethod: exceptionController(value.idPaymentMethod),
+                    idVendorType: exceptionController(value.idVendorType),
+                    idStatus: exceptionController(value.idStatus),
+                    addresses: value.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType) })),
+                    contacts: value.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department) }))
+                }
+                save('Vendors', id, prettyForm)
+                dispatch(handleCleanUp())
+                history.push('/vendors')    
+
+            })
         }
-        save('Vendors', id, prettyForm)
-        history.push('/vendors')
+
+
     }
 
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                    <label className="control-label">Nº Proveedor</label>
+                        <label className="control-label">Nº Proveedor</label>
                         <input
-                        className={`form-control`}
-                        name="vendorCode"
-                        value={vendorCode}
-                        readOnly
-                    />
+                            className={`form-control`}
+                            name="vendorCode"
+                            value={vendorCode}
+                            readOnly
+                        />
                     </div>
                     <div className="col-md-4">
-                        <Input name="comercialName" placeholder="Nombre Comercial" label="Nombre Comercial" />
+                        <Input name="comercialName" label="Nombre Comercial" />
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">C.I.F.</label>
@@ -90,22 +109,19 @@ export const VendorsForm = () => {
                             id="CIF"
                             name="CIF"
                             type="text"
-                            value={normalForm['CIF']}
-                            placeholder="C.I.F."
-                            innerRef={register({ required: true })}
-                            invalid={errors.CIF && true}
+                            // value={normalForm['CIF']}
                             onChange={handleInputChange}
                         />
-                        {errors && errors.CIF && <FormFeedback>C.I.F. requerido</FormFeedback>}
+
                     </div>
                     <div className="col-md-3">
-                        <Input name="socialReason" placeholder="Razon social" label="Razon social" />
+                        <Input name="socialReason" label="Razon social" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="phone" placeholder="Teléfono" label="Teléfono" />
+                        <Input name="phone" label="Teléfono" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="email" placeholder="Correo electrónico" label="Correo electrónico" />
+                        <Input name="email" label="Correo electrónico" />
                     </div>
                     <div className="col-md-3">
                         <Select name="idPaymentMethod" label="Forma de pago" endpoint="PaymentMethods" />

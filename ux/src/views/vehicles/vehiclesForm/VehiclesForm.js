@@ -30,12 +30,24 @@ import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { VehicleDocForm } from './VehicleDocForm'
 
 import '../styles/form.css'
+import { validator } from '../../../utility/formValidator/ValidationTypes'
+import { setSchema } from '../../../redux/actions/formValidator'
 
-const ValidationSchema = yup.object().shape({
-    plate: yup.string().required(),
-    frameNumber: yup.string().required(),
-    valueCarrier: yup.string().required()
-})
+// const ValidationSchema = yup.object().shape({
+//     plate: yup.string().required(),
+//     frameNumber: yup.string().required(),
+//     valueCarrier: yup.string().required()
+// })
+
+const formSchema = {
+    matricula_vehiuclo: { validations: [validator.isRequired] },
+    num_bastidor: { validations: [validator.isRequired] },
+    estado: { validations: [validator.isRequired] },
+    Transportista: { validations: [validator.isRequired] },
+    Remolque: { validations: [validator.isRequired] },
+    estado: { validations: [validator.isRequired] }
+}
+
 
 const placeholderStyles = {
     placeholder: (defaultStyles) => {
@@ -61,7 +73,7 @@ export const VechiclesForm = () => {
 
     const { normalForm, selectReducer } = useSelector(state => state)
 
-    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+//    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { observations, model } = normalForm
     const { Brand, Carriers } = selectReducer
@@ -93,7 +105,7 @@ export const VechiclesForm = () => {
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Vehicles", 'vehicleCode'))
         } else vehicleCode = normalForm.id
-
+        dispatch(setSchema(formSchema))
     }, [])
 
     if (id && model) {
@@ -134,29 +146,36 @@ export const VechiclesForm = () => {
     }
 
     const submit = async () => {
-        const filePath2 = MkDir('Vehicles', realFilePath)
-        await preSubmit(filePath2)
 
-        const form2 = dispatch(handleGetForm())
-        form2.then(async (value) => {
-            const prettyForm = {
-                ...value,
-                idStatus: exceptionController(value.idStatus),
-                model: exceptionController(value.model),
-                idCarrier: exceptionController(value.idCarrier),
-                idTrailer: exceptionController(value.idTrailer),
-                filePath: filePath2
-            }
+        const errors = validate(formValidator.schema, value)
 
-            save('Vehicles', id, prettyForm)
-            dispatch(handleCleanUp())
-            history.push('/porters/vehicles')
-        })
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
 
+        } else {
+            const filePath2 = MkDir('Vehicles', realFilePath)
+            await preSubmit(filePath2)
+
+            const form2 = dispatch(handleGetForm())
+            form2.then(async (value) => {
+                const prettyForm = {
+                    ...value,
+                    idStatus: exceptionController(value.idStatus),
+                    model: exceptionController(value.model),
+                    idCarrier: exceptionController(value.idCarrier),
+                    idTrailer: exceptionController(value.idTrailer),
+                    filePath: filePath2
+                }
+
+                save('Vehicles', id, prettyForm)
+                dispatch(handleCleanUp())
+                history.push('/porters/vehicles')
+            })
+
+        }
     }
-    console.log(errors)
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className="row card-body">
                     <div className="col-md-2">
@@ -174,13 +193,9 @@ export const VechiclesForm = () => {
                             id="plate"
                             name="plate"
                             type="text"
-                            value={normalForm['plate']}
                             placeholder="Matrícula"
-                            innerRef={register({ required: true })}
-                            invalid={errors.plate && true}
                             onChange={handleInputChange}
                         />
-                        {errors && errors.vehicleCode && <FormFeedback>Matrícula requerida</FormFeedback>}
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">Número de bastidor</label>
@@ -188,19 +203,15 @@ export const VechiclesForm = () => {
                             id="frameNumber"
                             name="frameNumber"
                             type="text"
-                            value={normalForm['frameNumber']}
                             placeholder="Número de bastidor"
-                            innerRef={register({ required: true })}
-                            invalid={errors.frameNumber && true}
                             onChange={handleInputChange}
                         />
-                        {errors && errors.frameNumber && <FormFeedback>Número de bastidor requerido</FormFeedback>}
                     </div>
                     <div className="col-md-3">
-                        <Input name="policyNumber" placeholder="Número de poliza" label="Número de poliza" />
+                        <Input name="policyNumber" label="Número de poliza" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="tachograph" placeholder="Tacografo del camión" label="Tacografo del camión" />
+                        <Input name="tachograph" label="Tacografo del camión" />
                     </div>
                     <div className="col-md-4">
                         <label className="control-label">Transportista</label>
@@ -211,32 +222,15 @@ export const VechiclesForm = () => {
                             value={valueCarrier}
                             styles={placeholderStyles}
                             placeholder="Transportista"
-                            onChange={(obj) => {
-                                handleSelectChange('idCarrier', obj)
-                            }}
+                            
                         />
-                        {errors && errors.valueCarrier && (
-                            <>
-                                <InputValid
-                                    id="valueCarrier"
-                                    name="valueCarrier"
-                                    tabIndex={-1}
-                                    autoComplete="off"
-                                    value={valueCarrier}
-                                    innerRef={register({ required: true })}
-                                    invalid={errors.itemCode && true}
-                                    style={{ opacity: 0, height: 0, position: 'absolute' }}
-                                    onChange={handleInputChange}
-                                />
-                                <FormFeedback>Transportista requerido</FormFeedback>
-                            </>
-                        )}
+                        
                     </div>
                     <div className="col-md-2">
-                        <Input name="tare" placeholder="Tara" label="Tara" />
+                        <Input name="tare" label="Tara" />
                     </div>
                     <div className="col-md-2 ">
-                        <Input name="mma" placeholder="M.M.A." label="M.M.A." />
+                        <Input name="mma" label="M.M.A." />
                     </div>
 
                     <div className="col-md-2">
@@ -260,7 +254,7 @@ export const VechiclesForm = () => {
                         <Input name="ITVdate" type="date" placeholder="Fecha ITV" label="Fecha ITV" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="maintenanceDate" type="date" placeholder="Fecha de mantenimiento" label="Fecha de mantenimiento" />
+                        <Input name="maintenanceDate" type="date" label="Fecha de mantenimiento" />
                     </div>
                     <div className="col-md-2">
                         <Select name="idStatus" label="Estado" endpoint="Status" />

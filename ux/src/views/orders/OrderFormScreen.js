@@ -49,6 +49,7 @@ export const OrderFormScreen = () => {
         if (id) {
             dispatch(handleStartEditing('Orders', id))
             dispatch(getCItemsByOrderId('Orders', id))
+
         } else {
             dispatch(catchAndSetPrice(0))
             dispatch(setInitialCanvas())

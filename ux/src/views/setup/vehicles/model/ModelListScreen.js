@@ -7,6 +7,7 @@ import { modelList } from '@fixed/setup/vehicles/model/modelList'
 import { handleCleanForm } from '../../../../redux/actions/normalForm'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { cleanFormValidator } from '../../../../redux/actions/formValidator'
 
 export const ModelListScreen = ({titulo}) => {
 
@@ -15,7 +16,8 @@ export const ModelListScreen = ({titulo}) => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('Model'))   
+        dispatch(startLoadingTable('Model'))
+        dispatch(cleanFormValidator())    
     }, [])
 
     return (

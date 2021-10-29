@@ -7,6 +7,7 @@ import { customerTypeList } from '@fixed/setup/customers/customerType/customerTy
 import { handleCleanForm } from '../../../../redux/actions/normalForm'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { cleanFormValidator } from '../../../../redux/actions/formValidator'
 
 export const CustomerTypeScreenList = ({titulo}) => {
 
@@ -15,7 +16,8 @@ export const CustomerTypeScreenList = ({titulo}) => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('CustomerType'))   
+        dispatch(startLoadingTable('CustomerType'))
+        dispatch(cleanFormValidator())    
     }, [])
 
     return (

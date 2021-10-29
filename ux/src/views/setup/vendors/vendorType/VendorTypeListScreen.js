@@ -7,6 +7,7 @@ import { vendorTypeList } from '@fixed/setup/vendors/vendorType/vendorTypeList'
 import { handleCleanForm } from '../../../../redux/actions/normalForm'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { cleanFormValidator } from '../../../../redux/actions/formValidator'
 
 export const VendorTypeListScreen = ({titulo}) => {
 
@@ -15,7 +16,8 @@ export const VendorTypeListScreen = ({titulo}) => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('VendorType'))   
+        dispatch(startLoadingTable('VendorType')) 
+        dispatch(cleanFormValidator())   
     }, [])
 
     return (

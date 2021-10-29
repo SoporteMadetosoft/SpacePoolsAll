@@ -6,6 +6,7 @@ import { startLoadingTable } from '@redux/actions/custom'
 import { placeList } from '@fixed/setup/items/place/placeList'
 import { handleCleanForm } from '../../../../redux/actions/normalForm'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { cleanFormValidator } from '../../../../redux/actions/formValidator'
 
 export const PlaceScreenList = ({titulo}) => {
 
@@ -14,7 +15,8 @@ export const PlaceScreenList = ({titulo}) => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('Place'))   
+        dispatch(startLoadingTable('Place'))
+        dispatch(cleanFormValidator())  
     }, [])
 
     return (

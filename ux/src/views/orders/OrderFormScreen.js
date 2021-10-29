@@ -48,11 +48,11 @@ export const OrderFormScreen = () => {
     useEffect(() => {
         if (id) {
             dispatch(handleStartEditing('Orders', id))
-<<<<<<< Updated upstream
-            dispatch(getCItemsByOrderId('Orders', id))
-=======
+// <<<<<<< Updated upstream
+//             dispatch(getCItemsByOrderId('Orders', id))
+// =======
 
->>>>>>> Stashed changes
+// >>>>>>> Stashed changes
         } else {
             dispatch(catchAndSetPrice(0))
             dispatch(setInitialCanvas())
@@ -102,7 +102,6 @@ export const OrderFormScreen = () => {
         delete form.email
         delete form.status
         delete form.canvasItems
-<<<<<<< Updated upstream
         const prettyForm = {
             ...form,
             idTax: form.idTax !== undefined ? form.idTax.id : 1,
@@ -117,8 +116,6 @@ export const OrderFormScreen = () => {
             extraRaws: form.extraRaws.map(eR => ({ idItem: eR.idItem.id, quantity: eR.quantity, idColor: exceptionController(eR.idColor) })),
             canvas: canvas.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, rotation: el.rotation }))
         }
-=======
->>>>>>> Stashed changes
 
         const errors = validate(formValidator.schema, normalForm)
         console.log(errors)

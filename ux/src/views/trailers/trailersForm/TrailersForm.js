@@ -28,15 +28,16 @@ import { loadFiles } from '../../../utility/helpers/Axios/loadFiles'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { TrailerDocForm } from './TrailerDocForm'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
-import { setSchema } from '../../../redux/actions/formValidator'
-import { validator } from '../../../utility/formValidator/ValidationTypes'
+import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 
 
 const formSchema = {
-    matricula: { validations: [validator.isRequired] },
+    idMatricula: { validations: [validator.isRequired] },
     marca: { validations: [validator.isRequired] },
-    modelo: { validations: [validator.isRequired] },
-    estado: { validations: [validator.isRequired] }
+    model: { validations: [validator.isRequired] },
+    idStatus: { validations: [validator.isRequired] },
+    frame: { validations: [validator.isRequired] }
 }
 
 const placeholderStyles = {
@@ -62,7 +63,7 @@ export const TrailersForm = () => {
 
     const realFilePath = form.filePath ? form.filePath : filePath
 
-    const { normalForm, selectReducer } = useSelector(state => state)
+    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
 
     //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
@@ -130,9 +131,10 @@ export const TrailersForm = () => {
         })
     }
 
-    const submit = async () => {
+    const submit = async (e) => {
+        e.preventDefault()
 
-        const errors = validate(formValidator.schema, value)
+        const errors = validate(formValidator.schema, form)
 
         if (Object.keys(errors).length !== 0) {
             dispatch(setErrors(errors))
@@ -147,7 +149,9 @@ export const TrailersForm = () => {
                     ...value,
                     idStatus: exceptionController(value.idStatus),
                     model: exceptionController(value.model),
-                    filePath: filePath2
+                    filePath: filePath2,
+                    idMatricula : exceptionController(value.idMatrucula),
+                    frame: exceptionController(value.frame)
                 }
 
                 save('Trailers', id, prettyForm)
@@ -171,51 +175,20 @@ export const TrailersForm = () => {
                         />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Matrícula del remolque</label>
-                        <InputValid
-                            id="plate"
-                            name="plate"
-                            type="text"
-                            placeholder="Matrícula del remolque"
-                            onChange={handleInputChange}
-                        />
+
+                        <Select required="true" name="idMatricula" label="Matrícula del remolque" endpoint="Trailers" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="frame" label="Número de bastidor" />
+                        <Input required="true" name="frame" label="Número de bastidor" />
                     </div>
                     <div className="col-md-3">
                         <Input name="policyNumber" label="Número de poliza" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Marca</label>
-                        <ReactSelect
-                            placeholder="Marca"
-                            name="brand"
-                            value={brandValue}
-                            options={Brand}
-                             />
+                        <Select required="true" name="marca" label="Marca" endpoint="Brand" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Modelo</label>
-                        <ReactSelect
-                            id="model"
-                            name="model"
-                            options={Model}
-                            value={valueModel}
-                            styles={placeholderStyles}
-                            placeholder="Modelo"
-                            onChange={handleSelectChange}
-                        />
-                        <InputValid
-                            id="valueModel"
-                            name="valueModel"
-                            tabIndex={-1}
-                            autoComplete="off"
-                            value={valueModel}
-                            style={{ opacity: 0, height: 0, position: 'absolute' }}
-                            onChange={handleInputChange}
-                        />
-                        
+                        <Select required="true" name="model" label="Modelo" endpoint="Model" />
                     </div>
 
                     <div className="col-md-3">

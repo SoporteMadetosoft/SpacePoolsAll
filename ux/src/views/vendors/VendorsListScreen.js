@@ -8,6 +8,7 @@ import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 import { handleCleanForm } from '../../redux/actions/normalForm'
 import { vendorList } from '../../fixed/vendors/vendorsList'
+import { cleanFormValidator } from '../../redux/actions/formValidator'
 
 export const VendorsListScreen = ({ titulo }) => {
 
@@ -17,6 +18,7 @@ export const VendorsListScreen = ({ titulo }) => {
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Vendors'))
+        dispatch(cleanFormValidator())
     }, [])
 
     return (

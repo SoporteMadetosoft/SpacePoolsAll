@@ -6,6 +6,7 @@ import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 import { itemsFamilyList } from '../../fixed/items/itemsFamily/itemsFamilyList'
 import { handleCleanForm } from '../../redux/actions/normalForm'
+import { cleanFormValidator } from '../../redux/actions/formValidator'
 
 
 export const ItemsFamilyScreenList = ({ titulo }) => {
@@ -16,6 +17,7 @@ export const ItemsFamilyScreenList = ({ titulo }) => {
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Family'))
+        dispatch(cleanFormValidator())
     }, [])
 
     return (

@@ -1,77 +1,87 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
-import { useForm } from 'react-hook-form'
-
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
-
-import { handleChangeController, handleStartEditing } from '../../../../../redux/actions/normalForm'
+import { GetSetNextId,  handleGetForm } from '../../../../../redux/actions/normalForm'
 import { save } from '../../../../../utility/helpers/Axios/save'
-
 import { ActionButtons } from '../../../../../components/actionButtons/ActionButtons'
+import { setErrors, setSchema } from '../../../../../redux/actions/formValidator'
+import { exceptionController } from '../../../../../utility/helpers/undefinedExceptionController'
+import { handleCleanUp } from '../../../../../redux/actions/fileUpload'
+import { validate, validator } from '../../../../../utility/formValidator/ValidationTypes'
+import { Input } from '../../../../../components/form/inputs/Input'
+import Form from 'reactstrap/lib/Form'
 
-const ValidationSchema = yup.object().shape({
-    name: yup.string().required(),
-    value: yup.number().required()
-})
+const formSchema = {
+    name: { validations: [validator.isRequired] },
+    value: { validations: [validator.isRequired] }
+}
+
+
 
 export const PaymentMethodsForm = () => {
 
     const { id } = useParams()
+    const form = useSelector(state => state.normalForm)
     const history = useHistory()
     const dispatch = useDispatch()
+    const { normalForm, formValidator } = useSelector(state => state)
 
-    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
-    const { normalForm } = useSelector(state => state)
+    useEffect(() => {
 
-    const handleInputChange = ({ target }) => {
-        dispatch(handleChangeController(target.name, target.value))
-    }
+        dispatch(setSchema(formSchema))
+    })
 
-    const submit = async () => {
-        save('PaymentMethods', id, normalForm)
-        history.push('/setup/general/paymentMethods')
+    const submit = async (e) => {
+        e.preventDefault()
+
+        const errors = validate(formValidator.schema, normalForm)
+
+        if (Object.keys(errors).length !== 0) {
+
+            dispatch(setErrors(errors))
+        } else {
+            const form2 = dispatch(handleGetForm())
+            form2.then(async (value) => {
+                const prettyForm = {
+                    ...value,
+                    name: exceptionController(value.name),
+                    valor: exceptionController(value.valor)
+
+                }
+
+                save('PaymentMethods', id, prettyForm)
+                dispatch(handleCleanUp)
+                history.push('/setup/general/paymentMethods')
+
+            })
+
+        }
     }
 
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        <Form onSubmit={submit}>
+   
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-4">
-                        <label className="control-label">Métodos de pago</label>
-                        <InputValid
-                            id="name"
+                        <Input
+                            label="Métodos de pago"
                             name="name"
-                            type="text"
-                            value={normalForm['name']}
-                            placeholder="Métodos de pago"
-                            innerRef={register({ required: true })}
-                            invalid={errors.name && true}
-                            onChange={handleInputChange}
                         />
-                        {errors && errors.name && <FormFeedback>Métodos de pago requerido</FormFeedback>}
                     </div>
                     <div className="col-md-4">
-                        <label className="control-label">Valor</label>
-                        <InputValid
-                            id="value"
+                        <Input
+                            label="Valor"
                             name="value"
                             type="number"
-                            value={normalForm['value']}
-                            placeholder="Valor"
-                            innerRef={register({ required: true })}
-                            invalid={errors.value && true}
-                            onChange={handleInputChange}
                         />
-                        {errors && errors.value && <FormFeedback>Valor requerido</FormFeedback>}
                     </div>
                 </div>
             </div>
+            
             <ActionButtons />
         </Form>
+      
     )
 }

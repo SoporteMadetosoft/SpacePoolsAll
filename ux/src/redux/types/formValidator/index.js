@@ -4,5 +4,6 @@ export const formValidatorTypes = {
     removeSchema: '[FormValidator] removing Schema',
     setErrors : '[FormValidator] setting Errors',
     removeError: '[FormValidator] removing Errors',
-    cleanError: '[FormValidator] cleanError' 
+    cleanFormValidator: '[FormValidator] clean Validator' 
+
 }

@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { GetSetNextId, handleChangeController, handleCleanSection } from '../../../redux/actions/normalForm'
-import ReactSelect from 'react-select'
-
-
 import { ItemsRepeater } from './ItemsRepeater'
-
 import { Input } from '../../../components/form/inputs/Input'
 import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+import { setSchema } from '../../../redux/actions/formValidator'
+import { Select } from '../../../components/form/inputs/Select'
 
 const placeholderStyles = {
     placeholder: (defaultStyles) => {
@@ -31,6 +28,7 @@ export const PurchaseForm = () => {
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Purchases", 'purchaseCode'))
         } else purchaseCode = normalForm.id
+        
     }, [])
 
     const { observations } = normalForm
@@ -67,10 +65,10 @@ export const PurchaseForm = () => {
                         />
                     </div>
                     <div className="col-md-4">
-                        <label className="control-label">Proveedor</label>
-                        <ReactSelect
+                        <Select
                             id="idVendor"
                             name="idVendor"
+                            label="Proveedor"
                             options={Vendors}
                             value={valueVendor}
                             styles={placeholderStyles}

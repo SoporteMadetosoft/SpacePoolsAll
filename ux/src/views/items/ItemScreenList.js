@@ -19,6 +19,7 @@ export const ItemScreenList = ({ titulo }) => {
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Items'))
+        dispatch(cleanFormValidator())
         //dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
         dispatch(cleanError())
     }, [])

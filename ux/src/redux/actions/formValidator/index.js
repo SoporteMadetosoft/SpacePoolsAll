@@ -17,3 +17,6 @@ export const removeError = (errors) => ({
     type: formValidatorTypes.removeError,
     payload: errors
 })
+export const cleanError = (errors) => ({
+    type: formValidatorTypes.removeError
+})

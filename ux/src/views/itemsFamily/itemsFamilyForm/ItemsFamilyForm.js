@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form'
 import { GetSetNextId, handleChangeController } from '../../../redux/actions/normalForm'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
+import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 
 // const ValidationSchema = yup.object().shape({
 //     name: yup.string().required()
@@ -28,7 +29,7 @@ export const ItemsFamilyForm = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const form = useSelector(state => state.normalForm)
-    const { normalForm } = useSelector(state => state)
+    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
 
     //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
@@ -43,9 +44,10 @@ export const ItemsFamilyForm = () => {
         dispatch(setSchema(formSchema))
     }, [])
 
-    const submit = async () => {
+    const submit = async (e) => {
+        e.preventDefault()
 
-        const errors = validate(formValidator.schema, normalForm)
+        const errors = validate(formValidator.schema, form)
 
         if (Object.keys(errors).length !== 0) {
             dispatch(setErrors(errors))
@@ -53,7 +55,8 @@ export const ItemsFamilyForm = () => {
         } else {
             const prettyForm = {
                 ...form,
-                parent: form.parent
+                parent: exceptionController(form.parent),
+                name : exceptionController(form.name)
             }
 
             save('Family', id, prettyForm)
@@ -77,14 +80,8 @@ export const ItemsFamilyForm = () => {
                         />
                     </div>
                     <div className="col-md-5">
-                        <label className="control-label">Nombre</label>
-                        <InputValid
-                            id="name"
-                            name="name"
-                            type="text"
-                            placeholder="Nombre"
-                            onChange={handleInputChange}
-                        />
+                        <Input required="true" name="name" label="Nombre" endpoint="Family" />
+                        
                     </div>
                     <div className="col-md-5">
                         <SelectArbol name="parent" label="Padre" endpoint="Family" />

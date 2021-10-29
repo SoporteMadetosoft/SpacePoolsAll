@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleChangeController, handleStartEditing } from '../../../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController, handleStartEditing } from '../../../../../redux/actions/normalForm'
 import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
 import { useForm } from 'react-hook-form'
 import { useHistory, useParams } from 'react-router'
 import { ActionButtons } from '../../../../../components/actionButtons/ActionButtons'
 import { save } from '../../../../../utility/helpers/Axios/save'
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
+import { Form } from 'reactstrap'
+import { Input } from '../../../../../components/form/inputs/Input'
+import { setErrors, setSchema } from '../../../../../redux/actions/formValidator'
+import { validate, validator } from '../../../../../utility/formValidator/ValidationTypes'
 
+const formSchema = {
+    name: { validations: [validator.isRequired] }
+}
 
-const ValidationSchema = yup.object().shape({
-    name: yup.string().required()
-})
 
 export const OriginForm = () => {
     const dispatch = useDispatch()
@@ -20,39 +22,47 @@ export const OriginForm = () => {
 
     const { id } = useParams()
 
-    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+    const form = useSelector(state => state.normalForm)
 
-    const { normalForm } = useSelector(state => state)
-    const { name } = normalForm
+    const { normalForm, formValidator } = useSelector(state => state)
 
+    useEffect(() => {
+        //dispatch(startAddSelectOptionsons('Activity', 'Activity'))
 
+        if (normalForm.id === undefined) {
+            dispatch(GetSetNextId("Origin", 'id'))
+        } else id = normalForm.id
+        dispatch(setSchema(formSchema))
+    }, [])
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
-    const submit = async () => {
-        save('Origin', id, normalForm)
+    const submit = async (e) => {
+        e.preventDefault()
+
+        const errors = validate(formValidator.schema, form)
+
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
+
+        } else {
+            const prettyForm = {
+                ...form,
+                name : exceptionController(form.name)
+            }
+        save('Origin', id, prettyForm)
         history.push('/setup/customer/origin')
+        }
     }
 
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-4">
-                        <label className="control-label">Origen</label>
-                            <InputValid
-                            id="name"
-                            name="name"
-                            type="text"
-                            value={normalForm['name']}
-                            placeholder="Origen"
-                            innerRef={register({ required: true })}
-                            invalid={errors.name && true}
-                            onChange={handleInputChange}
-                        />
-                        {errors && errors.name && <FormFeedback>Origen requerido</FormFeedback>}
+                        <Input required="true" name="name" type="text" label="Origen" onChange={handleInputChange}/>
                     </div>
                 </div>
             </div>

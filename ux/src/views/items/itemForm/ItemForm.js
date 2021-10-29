@@ -8,24 +8,24 @@ import { handleCleanUp } from '../../../redux/actions/fileUpload'
 import { GetSetNextId, handleChangeController } from '../../../redux/actions/normalForm'
 import { save } from '../../../utility/helpers/Axios/save'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from "yup"
+import { Form } from 'reactstrap'
 import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
-import ReactSelect from 'react-select'
+
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { undoMultiSelect } from '../../../utility/helpers/undoMultiSelect'
-import { validator } from '../../../utility/formValidator/ValidationTypes'
-import { setSchema } from '../../../redux/actions/formValidator'
+import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
+import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 
 // const ValidationSchema = yup.object().shape({
 //     valueType: yup.string().required()
 // })
 
 const formSchema = {
-    familia: { validations: [validator.isRequired] },
-    subfamilia: { validations: [validator.isRequired] }
+    itemType: { validations: [validator.isRequired] },
+    idVendor: { validations: [validator.isRequired] },
+    idFamily: { validations: [validator.isRequired] },
+    idPlace: {validations: [validator.isRequired]}
+
 }
 
 const placeholderStyles = {
@@ -47,7 +47,7 @@ export const ItemForm = () => {
 
     const form = useSelector(state => state.normalForm)
 
-    const { normalForm, selectReducer } = useSelector(state => state)
+    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
 
     // const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
@@ -77,7 +77,8 @@ export const ItemForm = () => {
 
     }
 
-    const submit = async () => {
+    const submit = async (e) => {
+        e.preventDefault()
 
         const errors = validate(formValidator.schema, form)
 
@@ -120,26 +121,7 @@ export const ItemForm = () => {
                         <Select name="idFamily" label="Familia" endpoint="Family" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Tipo de artículo</label>
-                        <ReactSelect
-                            id="itemType"
-                            name="itemType"
-                            options={ItemType}
-                            value={valueType}
-                            styles={placeholderStyles}
-                            placeholder="Tipo de artículo"
-                            onChange={handleSelectChange}
-                        />
-                        <InputValid
-                            id="valueType"
-                            name="valueType"
-                            tabIndex={-1}
-                            autoComplete="off"
-                            value={valueType}
-                            style={{ opacity: 0, height: 0, position: 'absolute' }}
-                            onChange={handleInputChange}
-                        />
-
+                        <Select required="true" name="itemType" label="Tipo de artículo" endpoint="ItemType" />
                     </div>
                     <div className="col-md-3">
                         <Select required="true" name="idVendor" label="Proveedor" endpoint="Vendors" labelName="comercialName" />

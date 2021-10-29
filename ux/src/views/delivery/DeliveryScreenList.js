@@ -7,6 +7,7 @@ import { startLoadingTable } from '@redux/actions/custom'
 import { handleCleanForm } from '@redux/actions/normalForm'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { cleanFormValidator } from '../../redux/actions/formValidator'
 
 export const DeliveryScreenList = ({ titulo }) => {
 
@@ -16,6 +17,7 @@ export const DeliveryScreenList = ({ titulo }) => {
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Delivery'))
+        dispatch(cleanFormValidator())
     }, [])
     return (
         <CustomDataTable title={titulo} columns={deliveryList} data={data} add={0} />

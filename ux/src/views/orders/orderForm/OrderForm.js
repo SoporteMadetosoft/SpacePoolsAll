@@ -1,32 +1,34 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { GetSetNextId, handleChangeController } from '../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
 import React, { useEffect } from 'react'
-import ReactSelect from 'react-select'
 import { ItemsRepeater } from './ItemsRepeater'
 import { ExtraItemsRepeater } from './ExtraItemsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
-import moment from 'moment'
-
 import { OrderCanvas } from './OrderCanvas'
-
 import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 import { createItemRepeatersByPool, handleAddCost, handleCalculateTotalCost, handleFillCustomerData } from '../../../redux/actions/orders'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
-import { handleCleanCanvas } from '../../../redux/actions/canvas'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from "yup"
-import { useParams } from 'react-router'
 import { ExtraRawsRepeater } from './ExtraRawsRepeater'
+import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
+import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
+import { save } from '../../../utility/helpers/Axios/save'
+import { handleCleanUp } from '../../../redux/actions/fileUpload'
+import { Form } from 'reactstrap'
 
 
-//const ValidationSchema = yup.object().shape({
-//    idPool: yup.string().required()
-//})
+const formSchema = {
+    //piscina, cliente, fecha de entrega, fecha de pedido y fecha de produccion
+    idCustomer: { validations: [validator.isRequired] },
+    idPool: { validations: [validator.isRequired] },
+    orderDate: { validations: [validator.isRequired] },
+    productionDate: { validations: [validator.isRequired] },
+    deliveryDate: { validations: [validator.isRequired] }
+
+}
 
 export const OrderForm = () => {
-    //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { price } = useSelector(state => state.ordersReducer)
 
@@ -35,39 +37,11 @@ export const OrderForm = () => {
 
     const dispatch = useDispatch()
 
-    const { normalForm, selectReducer } = useSelector(state => state)
+    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
     const { poolsOpt, taxesOpt, Customers } = selectReducer
     const { observations } = normalForm
 
     const date = orderDate ? orderDate : new Date()
-    // const year = date.getFullYear()
-    // const month = date.getMonth(2)
-    // const dt = date.getDate()
-
-    // if (dt < 10) {
-    //     dt = `0dt`;
-    //   }
-    //   if (month < 10) {
-    //     month = `0month`;
-    //   }
-
-    //const strDate =  `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`
-    //const dateNotSelect = `${date.getFullYear()}-${(date.getMonth() + 4).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`
-
-    // const momentDate = moment(date, "YYYY-MM-DD")
-
-    // const momentDate2 = momentDate.clone().add(1, "months")
-
-
-    // const day = momentDate.format('DD')
-    // const month = momentDate.format('MM')
-    // const year = momentDate.format('YYYY')
-    // const day2 = momentDate2.format('DD')
-    // const month2 = momentDate2.format('MM')
-    // const year2 = momentDate2.format('YYYY')
-
-    // const strDate = `${year}-${month}-${day}`
-    // const dateNotSelect = `${year2}-${month2}-${day2}`
 
     const idTax = normalForm['idTax'] ? deconstructSelect(normalForm['idTax']) : ''
     const idPool = normalForm['idPool'] ? deconstructSelect(normalForm['idPool']) : ''
@@ -95,9 +69,9 @@ export const OrderForm = () => {
 
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Orders", 'orderCode'))
-            // dispatch(handleChangeController('orderDate', orderDate2))
-            // dispatch(handleChangeController('deliveryDate', deliveryDate))
+
         } else orderCode = normalForm.id
+        dispatch(setSchema(formSchema))
 
         if (normalForm.price) {
             //  price = normalForm.price
@@ -121,14 +95,49 @@ export const OrderForm = () => {
         preparePrice()
     }
 
+    const submit = async (e) => {
+        e.preventDefault()
+
+        const errors = validate(formValidator.schema, normalForm)
+        console.log(errors)
+
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
+            console.log('error')
+        } else {
+
+            const form2 = dispatch(handleGetForm())
+            form2.then(async (value) => {
+                const prettyForm = {
+                    ...value,
+                    customerData: exceptionController(value.customerData),
+                    extraItems: exceptionController(value.extraItems),
+                    baseItems: exceptionController(value.baseItems),
+                    orderDate: exceptionController(value.orderCode),
+                    productionDate: exceptionController(value.productionDate),
+                    deliveryDate: exceptionController(value.deliveryDate),
+                    idPool: exceptionController(value.idPool),
+                    idTax: exceptionController(value.idTax),
+                    idCustomer: exceptionController(value.idCustomer),
+                    canvasItems: exceptionController(value.canvasItems)
+                }
+                 save('Orders', id, prettyForm)
+                dispatch(handleCleanUp())
+               history.push('/orders')
+            })
+
+        }
+
+    }
+
 
     return (
-        <>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
                         <label className="control-label">Nº Pedido</label>
-                        <input
+                        <Input
                             className={`form-control`}
                             name="orderCode"
                             value={orderCode}
@@ -136,31 +145,33 @@ export const OrderForm = () => {
                         />
                     </div>
                     <div className="col-md-4">
-                        <label className="control-label">Cliente</label>
-                        <ReactSelect
+
+                        <Select
                             placeholder="Cliente"
+                            label="Cliente"
                             name="idCustomer"
                             value={idCustomer}
                             options={Customers}
                             onChange={(obj) => {
                                 handleSelectChange('idCustomer', obj)
-                            }} />
+                            }}
+                             />
                     </div>
                     <div className="col-md-2">
-                        <Input name="deliveryAddress"  label="Dirección" />
+                        <Input name="deliveryAddress" label="Dirección" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="phone"  label="Teléfono" />
+                        <Input name="phone" label="Teléfono" />
                     </div>
                     <div className="col-md-2">
-                        <Input name="email"  label="Correo Electrónico" />
+                        <Input name="email" label="Correo Electrónico" />
                     </div>
 
                     <div className="col-md-2">
-                        <label className="control-label">Piscina</label>
-                        <ReactSelect
+                        <Select
                             placeholder="Piscina"
                             name="idPool"
+                            label="Piscina"
                             value={idPool}
                             options={poolsOpt}
                             onChange={(obj) => {
@@ -172,7 +183,7 @@ export const OrderForm = () => {
                     <div className="col-md-2">
 
                         <label className="control-label">IVA</label>
-                        <ReactSelect
+                        <Select
                             placeholder="IVA"
                             name="idTax"
                             value={idTax}
@@ -185,7 +196,7 @@ export const OrderForm = () => {
 
                     <div className="col-md-2">
                         <label className="control-label">Precio</label>
-                        <input
+                        <Input
                             className={`form-control`}
                             name="price"
                             value={price}
@@ -193,42 +204,21 @@ export const OrderForm = () => {
                         />
                     </div>
                     <div className="col-md-2">
-                        <label className="control-label">Fecha de pedido</label>
-                        <input
-                            className="form-control"
-                            type="date"
-                            name="orderDate"
-                            value={orderDate2}
-                            onChange={handleInputChange}
-                        />
-
-                    </div>
-                    <div className="col-md-2">
-                        <label className="control-label">Fecha de producción</label>
-                        <input
-                            className="form-control"
-                            type="date"
-                            name="productionDate"
-                            value={productionDate}
-                            onChange={handleInputChange}
-                        />
-
-                    </div>
-                    <div className="col-md-2">
-                        <label className="control-label">Fecha de entrega</label>
-                        <input
-                            className="form-control"
-                            type="date"
-                            name="deliveryDate"
-                            value={deliveryDate}
-                            onChange={handleInputChange}
+                        <Input className="form-control" label="Fecha de pedido" type="date" name="orderDate" value={orderDate2} onChange={handleInputChange}
                         />
                     </div>
                     <div className="col-md-2">
-                        <Input name="deliverySchedulerStart" type="time"  label="Inicio de Horario de entrega" />
+                        <Input className="form-control" label="Fecha de producción" type="date" name="productionDate" value={productionDate} onChange={handleInputChange}
+                        />
                     </div>
                     <div className="col-md-2">
-                        <Input name="deliverySchedulerEnd" type="time"  label="Fin de Horario de entrega" />
+                        <Input className="form-control" label="Fecha de entrega" type="date" name="deliveryDate" value={deliveryDate} onChange={handleInputChange}/>
+                    </div>
+                    <div className="col-md-2">
+                        <Input name="deliverySchedulerStart" type="time" label="Inicio de Horario de entrega" />
+                    </div>
+                    <div className="col-md-2">
+                        <Input name="deliverySchedulerEnd" type="time" label="Fin de Horario de entrega" />
                     </div>
                     <div className="col-md-12">
                         <label className="control-label">Observaciones</label>
@@ -270,6 +260,6 @@ export const OrderForm = () => {
                     <OrderCanvas />
                 </div>
             </div>
-        </>
+        </Form>
     )
 }

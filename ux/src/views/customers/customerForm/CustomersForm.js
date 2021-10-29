@@ -6,7 +6,7 @@ import { validate, validator } from '../../../utility/formValidator/ValidationTy
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
+import { Form } from 'reactstrap'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 
@@ -25,6 +25,8 @@ import { AddressesRepeater } from './AddressesRepeater'
 import { ContactsRepeater } from './ContactsRepeater'
 import { CustomerDocForm } from './CustomerDocForm'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+
+
 
 
 const formSchema = {
@@ -98,6 +100,7 @@ export const CustomersForm = () => {
         e.preventDefault()
 
         const errors = validate(formValidator.schema, normalForm)
+       
 
         if (Object.keys(errors).length !== 0) {
             dispatch(setErrors(errors))
@@ -150,15 +153,8 @@ export const CustomersForm = () => {
                         <Input name="comercialName" label="Nombre" />
                     </div>
                     <div className="col-md-2">
-                        <label className="control-label">C.I.F.</label>
-                        <InputValid
-                            id="CIF"
-                            name="CIF"
-                            type="text"
-                            value={normalForm['CIF']}
-                            placeholder="C.I.F."
-                            onChange={handleInputChange}
-                        />
+                        
+                        <Input  id="CIF" name="CIF" type="text" value={normalForm['CIF']} placeholder="C.I.F." onChange={handleInputChange} label="C.I.F" />
                     </div>
                     <div className="col-md-4">
 
@@ -233,3 +229,4 @@ export const CustomersForm = () => {
         </Form>
     )
 }
+

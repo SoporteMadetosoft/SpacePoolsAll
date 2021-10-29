@@ -27,6 +27,7 @@ class PoolDao extends GenericDao {
         const status = await this.StatusDao.findById(data.idStatus)
         const list = {
             ...data,
+            
             idStatus: status != undefined ? status.id : ''
         }
         return new Pool(list)

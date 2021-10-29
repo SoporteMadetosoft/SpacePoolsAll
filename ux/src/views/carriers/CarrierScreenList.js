@@ -6,6 +6,7 @@ import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 import { carriersList } from '@fixed/vehicles/carriers/carriersList'
 import { handleCleanForm } from '../../redux/actions/normalForm'
+import { cleanFormValidator } from '../../redux/actions/formValidator'
 
 
 export const CarrierScreenList = ({ titulo }) => {
@@ -16,6 +17,7 @@ export const CarrierScreenList = ({ titulo }) => {
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Carriers'))
+        dispatch(cleanFormValidator())
     }, [])
 
     return (

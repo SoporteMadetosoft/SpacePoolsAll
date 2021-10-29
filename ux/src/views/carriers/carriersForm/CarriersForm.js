@@ -99,25 +99,26 @@ export const CarriersForm = () => {
         if (Object.keys(errors).length !== 0) {
             dispatch(setErrors(errors))
 
-        } else {    
+        } else {
             const filePath2 = MkDir('Carriers', realFilePath)
 
             await preSubmit(filePath2)
 
             const form2 = dispatch(handleGetForm())
-            
+
             form2.then(async (value) => {
-            const prettyForm = {
-                ...value,
-                idUser: exceptionController(value.idUser),
-                idStatus: exceptionController(value.idStatus),
-                filePath: filePath2,
-                NIF: exceptionController(value.NIF)
-            }
-            await save('Carriers', id, prettyForm)
-            dispatch(handleCleanUp())
-            history.push('/porters/carriers')
-        })
+                const prettyForm = {
+                    ...value,
+                    idUser: exceptionController(value.idUser),
+                    idStatus: exceptionController(value.idStatus),
+                    filePath: filePath2,
+                    NIF: exceptionController(value.NIF)
+                }
+                await save('Carriers', id, prettyForm)
+                dispatch(handleCleanUp())
+                history.push('/porters/carriers')
+            })
+        }
     }
 
     return (
@@ -140,7 +141,7 @@ export const CarriersForm = () => {
                         <Input required="true" name="NIF" type="text" label="N.I.F." endpoint="Carriers" />
                     </div>
                     <div className="col-md-3">
-                        <Select required ="true" name="idStatus" label="Estado" endpoint="Status" />
+                        <Select required="true" name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-3">
                         <Input name="email" type="email" label="Correo electrónico" />

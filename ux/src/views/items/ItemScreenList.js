@@ -6,22 +6,19 @@ import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 import { itemList } from '../../fixed/items/itemList'
 import { handleCleanForm } from '../../redux/actions/normalForm'
-import { startAddSelectStatus } from '../../redux/actions/selects'
-import { cleanError } from '../../redux/actions/formValidator'
-
+import { cleanFormValidator } from '../../redux/actions/formValidator'
 
 export const ItemScreenList = ({ titulo }) => {
 
     const dispatch = useDispatch()
     const { registros: data } = useSelector(state => state.registrosReducer)
-    
+
 
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Items'))
         dispatch(cleanFormValidator())
         //dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
-        dispatch(cleanError())
     }, [])
 
     return (

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
-import { GetSetNextId, handleChangeController } from '../../../../../redux/actions/normalForm'
+import { handleChangeController } from '../../../../../redux/actions/normalForm'
 import { save } from '../../../../../utility/helpers/Axios/save'
 import { Form } from 'reactstrap'
 import { ActionButtons } from '../../../../../components/actionButtons/ActionButtons'
@@ -18,21 +18,16 @@ export const BrandForm = () => {
     const history = useHistory()
 
     const { id } = useParams()
-    
+
     const form = useSelector(state => state.normalForm)
 
-    const { normalForm, formValidator } = useSelector(state => state)
+    const { formValidator } = useSelector(state => state)
 
     useEffect(() => {
-        //dispatch(startAddSelectOptionsons('Activity', 'Activity'))
-
-        if (normalForm.id === undefined) {
-            dispatch(GetSetNextId("Brand", 'id'))
-        } else id = normalForm.id
         dispatch(setSchema(formSchema))
     }, [])
 
-    
+
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
@@ -48,10 +43,10 @@ export const BrandForm = () => {
         } else {
             const prettyForm = {
                 ...form,
-                name : exceptionController(form.name)
+                name: exceptionController(form.name)
             }
-        save('Brand', id, prettyForm)
-        history.push('/setup/vehicles/brand')
+            save('Brand', id, prettyForm)
+            history.push('/setup/vehicles/brand')
         }
     }
 

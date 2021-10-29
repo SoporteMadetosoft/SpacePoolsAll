@@ -18,7 +18,7 @@ export const ProductionScreenList = () => {
     useEffect(() => {
         dispatch(handleCleanForm())
 
-        dispatch(startLoadingTable('Productions'))
+        dispatch(startLoadingTableProduction('Productions'))
         dispatch(cleanFormValidator())
 
     }, [])

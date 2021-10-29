@@ -21,5 +21,3 @@ export const removeError = (errors) => ({
 export const cleanFormValidator = () => ({
     type: formValidatorTypes.cleanFormValidator
 })
-
-

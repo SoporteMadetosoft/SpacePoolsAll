@@ -93,7 +93,6 @@ export const ItemForm = () => {
                 idPlace: exceptionController(form.idPlace),
                 idColor: undoMultiSelect(form.idColor, 'idColor')
             }
-            console.log(prettyForm)
             save('Items', id, prettyForm)
             dispatch(handleCleanUp())
             history.push('/items')
@@ -140,7 +139,7 @@ export const ItemForm = () => {
                             style={{ opacity: 0, height: 0, position: 'absolute' }}
                             onChange={handleInputChange}
                         />
-                        
+
                     </div>
                     <div className="col-md-3">
                         <Select required="true" name="idVendor" label="Proveedor" endpoint="Vendors" labelName="comercialName" />

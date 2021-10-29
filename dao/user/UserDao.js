@@ -61,7 +61,6 @@ class UserDao extends GenericDao {
         return new Promise((resolve, reject) => {
             const { login, fullname, email, phone, password, idRole, idStatus } = form
             bcrypt.hash(password, saltRounds).then((hash) => {
-                console.log(`INSERT INTO users (idRole, idStatus, fullname, login, email, phone, password) VALUES (${idRole}, ${idStatus}, ${fullname}, ${login}, ${email}, ${phone}, ${hash})`)
                 this.db.query('INSERT INTO users (idRole, idStatus, fullname, login, email, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?)', [idRole, idStatus, fullname, login, email, phone, hash], (err, result) => {
                     if (err) {
                         reject(err)

@@ -41,6 +41,7 @@ class AuthDao {
 
         const role = await this.RoleDao.findById(data.idRole)
         const roleName = role.name
+        const { productionStatus } = role
 
         delete role.id
         delete role.name
@@ -48,17 +49,13 @@ class AuthDao {
 
         const accessToken = jwt.sign({ id: data.id }, process.env.JWT_SECRET)
         const refreshToken = jwt.sign({ id: data.id }, process.env.JWT_SECRET_REFRESH)
+        // ability: [{action: 'manage', subject: 'all'}]
         const user = {
             userData: {
                 ...data,
                 role: roleName,
-                // ability: [
-                //     {
-                //         action: 'manage',
-                //         subject: 'all'
-                //     }
-                // ]
-                ability: this.tratarRole(role)
+                ability: this.tratarRole(role),
+                productionStatus
             },
             accessToken,
             refreshToken

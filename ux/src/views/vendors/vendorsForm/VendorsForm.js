@@ -56,15 +56,10 @@ export const VendorsForm = () => {
     const submit = async () => {
 
         const errors = validate(formValidator.schema, normalForm)
-        console.log(errors)
 
         if (Object.keys(errors).length !== 0) {
-            console.log('entro en los errores')
             dispatch(setErrors(errors))
-
         } else {
-            console.log('entro al prettyform')
-
             const form2 = dispatch(handleGetForm())
             form2.then(async (value) => {
                 const prettyForm = {
@@ -73,11 +68,11 @@ export const VendorsForm = () => {
                     idVendorType: exceptionController(value.idVendorType),
                     idStatus: exceptionController(value.idStatus),
                     addresses: normalForm.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType), defaultAddress: address.defaultAddress === true ? 1 : 0 })),
-            contacts: normalForm.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department), defaultContact: contact.defaultContact === true ? 1 : 0 }))
+                    contacts: normalForm.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department), defaultContact: contact.defaultContact === true ? 1 : 0 }))
                 }
                 save('Vendors', id, prettyForm)
                 dispatch(handleCleanUp())
-                history.push('/vendors')    
+                history.push('/vendors')
 
             })
 

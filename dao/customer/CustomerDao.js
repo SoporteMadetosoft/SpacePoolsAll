@@ -18,7 +18,6 @@ const CustomerContactPersonDao = require("./CustomerContactPersonDao");
 const CustomerDocumentsDao = require("./CustomerDocumentsDao");
 const FileManagerDao = require("../global/FileManagerDao");
 
-
 class CustomerDao extends GenericDao {
     constructor() {
         super(Customer);

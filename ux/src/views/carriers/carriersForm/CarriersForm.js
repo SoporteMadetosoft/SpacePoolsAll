@@ -33,7 +33,7 @@ import { validator } from '../../../utility/formValidator/ValidationTypes'
 const formSchema = {
     DNI: { validations: [validator.isRequired] },
     estado: { validations: [validator.isRequired] }
-   
+
 }
 
 export const CarriersForm = () => {
@@ -98,25 +98,26 @@ export const CarriersForm = () => {
 
         if (Object.keys(errors).length !== 0) {
             dispatch(setErrors(errors))
-            
+
         } else {
-        const filePath2 = MkDir('Carriers', realFilePath)
+            const filePath2 = MkDir('Carriers', realFilePath)
 
-        await preSubmit(filePath2)
+            await preSubmit(filePath2)
 
-        const form2 = dispatch(handleGetForm())
-        form2.then(async (value) => {
-            const prettyForm = {
-                ...value,
-                idStatus: exceptionController(value.idStatus),
-                filePath: filePath2
-            }
-            await save('Carriers', id, prettyForm)
-            dispatch(handleCleanUp())
-            history.push('/porters/carriers')
-        })
+            const form2 = dispatch(handleGetForm())
+            form2.then(async (value) => {
+                const prettyForm = {
+                    ...value,
+                    idUser: exceptionController(value.idUser),
+                    idStatus: exceptionController(value.idStatus),
+                    filePath: filePath2
+                }
+                await save('Carriers', id, prettyForm)
+                dispatch(handleCleanUp())
+                history.push('/porters/carriers')
+            })
+        }
     }
-}
 
     return (
         <Form onSubmit={submit}>
@@ -170,12 +171,14 @@ export const CarriersForm = () => {
                     <div className="col-md-4">
                         <Input name="city" label="Ciudad" />
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-4">
                         <Input name="address" label="Dirección" />
                     </div>
                     <div className="col-md-4">
                         <Input name="postcode" label="Código postal" />
-
+                    </div>
+                    <div className="col-md-4">
+                        <Select name="idUser" label="Usuario" endpoint="Users" labelName='fullname' />
                     </div>
                 </div>
             </div>

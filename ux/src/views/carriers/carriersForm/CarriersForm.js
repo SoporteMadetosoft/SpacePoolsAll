@@ -32,7 +32,6 @@ import { validate, validator } from '../../../utility/formValidator/ValidationTy
 const formSchema = {
     NIF: { validations: [validator.isRequired] },
     idStatus: { validations: [validator.isRequired] }
-   
 }
 
 export const CarriersForm = () => {
@@ -99,11 +98,9 @@ export const CarriersForm = () => {
 
         if (Object.keys(errors).length !== 0) {
             dispatch(setErrors(errors))
-            
-        } else {
-    
-            const filePath2 = MkDir('Carriers', realFilePath)
 
+        } else {    
+            const filePath2 = MkDir('Carriers', realFilePath)
 
             await preSubmit(filePath2)
 
@@ -112,6 +109,7 @@ export const CarriersForm = () => {
             form2.then(async (value) => {
             const prettyForm = {
                 ...value,
+                idUser: exceptionController(value.idUser),
                 idStatus: exceptionController(value.idStatus),
                 filePath: filePath2,
                 NIF: exceptionController(value.NIF)
@@ -121,7 +119,6 @@ export const CarriersForm = () => {
             history.push('/porters/carriers')
         })
     }
-}
 
     return (
         <Form onSubmit={submit}>
@@ -166,12 +163,14 @@ export const CarriersForm = () => {
                     <div className="col-md-4">
                         <Input name="city" label="Ciudad" />
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-4">
                         <Input name="address" label="Dirección" />
                     </div>
                     <div className="col-md-4">
                         <Input name="postcode" label="Código postal" />
-
+                    </div>
+                    <div className="col-md-4">
+                        <Select name="idUser" label="Usuario" endpoint="Users" labelName='fullname' />
                     </div>
                 </div>
             </div>

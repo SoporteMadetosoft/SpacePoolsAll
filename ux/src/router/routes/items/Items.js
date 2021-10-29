@@ -7,32 +7,29 @@ const ItemsRoutes = [
     {
         path: '/items',
         exact: true,
-        component: () => <ItemScreenList titulo={'Artículos'} />
+        component: () => <ItemScreenList titulo={'Artículos'} />,
+        meta: {
+            action: 'read',
+            resource: 'items'
+        }
     },
     {
         path: '/items/add',
         exact: true,
-        component: () => <ItemFormScreen />
+        component: () => <ItemFormScreen />,
+        meta: {
+            action: 'insert',
+            resource: 'items'
+        }
     },
     {
         path: '/items/edit/:id',
         exact: true,
-        component: () => <ItemFormScreen />
-    },
-    {
-        path: '/items/family',
-        exact: true,
-        component: () => <ItemsFamilyScreenList titulo="Familias" />
-    },
-    {
-        path: '/items/family/add',
-        exact: true,
-        component: () => <ItemsFamilyFormScreen />
-    },
-    {
-        path: '/items/family/edit/:id',
-        exact: true,
-        component: () => <ItemsFamilyFormScreen />
+        component: () => <ItemFormScreen />,
+        meta: {
+            action: 'update',
+            resource: 'items'
+        }
     }
 ]
 

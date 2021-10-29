@@ -15,7 +15,7 @@ export default [
         navLink: '/items'
       },
       {
-        id: 'itemFamily',
+        id: 'family',
         title: 'Familias',
         icon: <Circle size={12} />,
         navLink: '/items/family'

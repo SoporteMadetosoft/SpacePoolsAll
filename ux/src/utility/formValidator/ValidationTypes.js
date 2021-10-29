@@ -7,35 +7,34 @@ const isRequired = (value) => {
     return !!value && Object.keys(value).length !== 0
 }
 export const validate = (schema, form) => {
-    console.log(schema, form)
     const errors = {}
-    Object.keys(schema).forEach( inputName => {
+    Object.keys(schema).forEach(inputName => {
         if (Array.isArray(schema[inputName].validations)) {
-            schema[inputName].validations.forEach( validationType => {
-                if ( !validationType( form[inputName] )) {
+            schema[inputName].validations.forEach(validationType => {
+                if (!validationType(form[inputName])) {
                     errors[inputName] = validationType.name
                 }
             })
         } else {
-            form[inputName].forEach( (repForm, index) => {
-                Object.keys(schema[inputName]).forEach( (repInputName) => {
-                    schema[inputName][repInputName].validations.forEach( validationType => {
-                        if ( !validationType(repForm[repInputName]) ) {
-                            const oldErrors =  errors[inputName] && errors[inputName][index] ? errors[inputName][index] : {}
-                            errors[inputName] = {...errors[inputName], [index]: { ...oldErrors, [repInputName]: validationType.name}}
+            form[inputName].forEach((repForm, index) => {
+                Object.keys(schema[inputName]).forEach((repInputName) => {
+                    schema[inputName][repInputName].validations.forEach(validationType => {
+                        if (!validationType(repForm[repInputName])) {
+                            const oldErrors = errors[inputName] && errors[inputName][index] ? errors[inputName][index] : {}
+                            errors[inputName] = { ...errors[inputName], [index]: { ...oldErrors, [repInputName]: validationType.name } }
                         }
-                    })                
+                    })
                 })
             })
-            
+
         }
-        
+
     })
     return errors
 }
 
 const length = (value, { min, max }) => {
-    return value.length > min || max < validate.length 
+    return value.length > min || max < validate.length
 }
 
 const inFormat = (regex) => {
@@ -43,7 +42,7 @@ const inFormat = (regex) => {
 }
 
 const repeaterValidation = () => {
-   
+
 }
 
 export const validator = {

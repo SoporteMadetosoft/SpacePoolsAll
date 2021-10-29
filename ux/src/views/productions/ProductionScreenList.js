@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { startLoadingTable } from '@redux/actions/custom'
+
+import { startLoadingTableProduction } from '@redux/actions/custom'
 import { handleCleanForm } from '@redux/actions/normalForm'
 import { ProductionsList } from '@fixed/productions/ProductionsList'
 
@@ -15,7 +16,7 @@ export const ProductionScreenList = () => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('Productions'))
+        dispatch(startLoadingTableProduction('Productions'))
     }, [])
     return (
         <>

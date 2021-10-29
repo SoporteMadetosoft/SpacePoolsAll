@@ -2,14 +2,6 @@ import { lazy } from 'react'
 
 const PagesRoutes = [
   {
-    path: '/public',
-    simpleUrl: '/public/1630305744921/logo.png',
-    layout: 'BlankLayout',
-    meta: {
-      authRoute: true
-    }
-  },
-  {
     path: '/login',
     component: lazy(() => import('@views/authentication/Login')),
     layout: 'BlankLayout',

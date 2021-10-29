@@ -9,6 +9,7 @@ import TrailersRoutes from './porters/trailers/Trailers'
 import PoolsRoutes from './pools/Pools'
 import PurchasesRoutes from './purchases/Purchases'
 import ItemsRoutes from './items/Items'
+import FamilyRoutes from './family/Family'
 import OrdersRoutes from './orders/Orders'
 import ProductionsRoutes from './productions/Productions'
 import CalendarRoutes from './calendar/Calendar'
@@ -18,12 +19,15 @@ import VehicleReparationRoutes from './porters/vehicles/vReparation'
 import DeliveryRoutes from './delivery/Delivery'
 import UsersRoutes from './users/Users'
 import RolesRoutes from './roles/Roles'
+import { getUserData } from '../../utility/Utils'
 
 // ** Document title
 const TemplateTitle = '%s - SpacePools'
 
 // ** Default Route
-const DefaultRoute = '/customers'
+const data = getUserData()
+const main = data ? data.ability.find(reg => reg.action === 'read') : ''
+const DefaultRoute = main !== null ? `/${main.subject}` : ''
 
 const sRoutes = setupRoutes()
 // ** Merge Routes
@@ -38,6 +42,7 @@ const Routes = [
   ...PoolsRoutes,
   ...PurchasesRoutes,
   ...ItemsRoutes,
+  ...FamilyRoutes,
   ...OrdersRoutes,
   ...DeliveryRoutes,
   ...PagesRoutes,

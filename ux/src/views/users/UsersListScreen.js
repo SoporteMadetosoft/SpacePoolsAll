@@ -18,7 +18,6 @@ export const UsersListScreen = ({ titulo }) => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Users'))
     }, [])
-
     return (
         <CustomDataTable title={titulo} columns={usersList} data={data} />
     )

@@ -25,8 +25,8 @@ class Role {
         Taxes,
         CustomerType,
         CustomerCategory,
-        Activities,
-        Origins,
+        Activity,
+        Origin,
         VendorType,
         Brand,
         Model,
@@ -56,8 +56,8 @@ class Role {
         this.Taxes = Taxes
         this.CustomerType = CustomerType
         this.CustomerCategory = CustomerCategory
-        this.Activities = Activities
-        this.Origins = Origins
+        this.Activity = Activity
+        this.Origin = Origin
         this.VendorType = VendorType
         this.Brand = Brand
         this.Model = Model

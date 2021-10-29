@@ -6,10 +6,10 @@ import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
-import { handleLoadID, handleStartEditing } from "../../redux/actions/form"
 import Badge from "reactstrap/lib/Badge"
 
-
+import { useContext } from "react"
+import { AbilityContext } from '@src/utility/context/Can'
 
 export const vendorList = [
   {
@@ -88,6 +88,7 @@ export const vendorList = [
     cell: row => {
 
       const dispatch = useDispatch()
+      const ability = useContext(AbilityContext)
 
       return (
         <div className='d-flex'>
@@ -96,20 +97,24 @@ export const vendorList = [
               <MoreVertical size={15} />
             </DropdownToggle>
             <DropdownMenu right>
-              <Link to={`./vendors/edit/${row.id}`}>
-                <DropdownItem tag='a' href='/' className='w-100'>
-                  <FileText size={15} />
-                  <span className='align-middle ml-50'>Detalles</span>
-                </DropdownItem>
-              </Link>
-              <Link onClick={(e) => {
-                dispatch(startDeleteRegister(row.id))
-              }}>
-                <DropdownItem tag='a' href='/' className='w-100'>
-                  <Trash size={15} />
-                  <span className='align-middle ml-50'>Eliminar</span>
-                </DropdownItem>
-              </Link>
+              {ability.can('update', 'vendors') && (
+                <Link to={`./vendors/edit/${row.id}`}>
+                  <DropdownItem tag='a' href='/' className='w-100'>
+                    <FileText size={15} />
+                    <span className='align-middle ml-50'>Detalles</span>
+                  </DropdownItem>
+                </Link>
+              )}
+              {ability.can('delete', 'vendors') && (
+                <Link onClick={(e) => {
+                  dispatch(startDeleteRegister(row.id))
+                }}>
+                  <DropdownItem tag='a' href='/' className='w-100'>
+                    <Trash size={15} />
+                    <span className='align-middle ml-50'>Eliminar</span>
+                  </DropdownItem>
+                </Link>
+              )}
             </DropdownMenu>
           </UncontrolledDropdown>
         </div>

@@ -1,54 +1,66 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
-import { handleChangeController } from '../../../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController } from '../../../../../redux/actions/normalForm'
 import { save } from '../../../../../utility/helpers/Axios/save'
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-import { useForm } from 'react-hook-form'
+import { Form } from 'reactstrap'
 import { ActionButtons } from '../../../../../components/actionButtons/ActionButtons'
+import { Input } from '../../../../../components/form/inputs/Input'
+import { setErrors, setSchema } from '../../../../../redux/actions/formValidator'
+import { validate, validator } from '../../../../../utility/formValidator/ValidationTypes'
 
-
-const ValidationSchema = yup.object().shape({
-    name: yup.string().required()
-})
+const formSchema = {
+    name: { validations: [validator.isRequired] }
+}
 
 export const BrandForm = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
     const { id } = useParams()
-    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+    
+    const form = useSelector(state => state.normalForm)
 
-    const { normalForm } = useSelector(state => state)
-    const { name } = normalForm
+    const { normalForm, formValidator } = useSelector(state => state)
 
+    useEffect(() => {
+        //dispatch(startAddSelectOptionsons('Activity', 'Activity'))
+
+        if (normalForm.id === undefined) {
+            dispatch(GetSetNextId("Brand", 'id'))
+        } else id = normalForm.id
+        dispatch(setSchema(formSchema))
+    }, [])
+
+    
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
-    const submit = async () => {
-        save('Brand', id, normalForm)
+
+    const submit = async (e) => {
+        e.preventDefault()
+        const errors = validate(formValidator.schema, form)
+
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
+
+        } else {
+            const prettyForm = {
+                ...form,
+                name : exceptionController(form.name)
+            }
+        save('Brand', id, prettyForm)
         history.push('/setup/vehicles/brand')
+        }
     }
 
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-4">
-                        <InputValid
-                            id="name"
-                            name="name"
-                            type="text"
-                            value={normalForm['name']}
-                            placeholder="Marca"
-                            innerRef={register({ required: true })}
-                            invalid={errors.name && true}
-                            onChange={handleInputChange}
-                        />
-                        {errors && errors.name && <FormFeedback>Marca requerida</FormFeedback>}
+                        <Input required="true" name="name" type="text" label="Marca" onChange={handleInputChange} />
                     </div>
                 </div>
             </div>

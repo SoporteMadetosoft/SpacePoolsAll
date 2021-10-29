@@ -53,7 +53,6 @@ export const CustomMiniTable = ({ columns, data }) => {
 
                 schCols.columnas.forEach(col => {
                     const colValue = item[col] !== undefined ? item[col].toString() : ''
-                    console.log(colValue)
                     const startsWith = colValue.toLowerCase().startsWith(value.toLowerCase())
                     const includes = colValue.toLowerCase().includes(value.toLowerCase())
                     if (startsWith || (!startsWith && includes)) {

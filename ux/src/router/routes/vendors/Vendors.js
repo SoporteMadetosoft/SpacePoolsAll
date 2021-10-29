@@ -5,17 +5,29 @@ const VendorsRoutes = [
   {
     path: '/vendors',
     exact: true,
-    component: () => <VendorsListScreen titulo={'Proveedores'} />
+    component: () => <VendorsListScreen titulo={'Proveedores'} />,
+    meta: {
+      action: 'read',
+      resource: 'vendors'
+    }
   },
   {
     path: '/vendors/add',
     exact: true,
-    component: () => <VendorsFormScreen />
+    component: () => <VendorsFormScreen />,
+    meta: {
+      action: 'insert',
+      resource: 'vendors'
+    }
   },
   {
     path: '/vendors/edit/:id',
     exact: true,
-    component: () => <VendorsFormScreen />
+    component: () => <VendorsFormScreen />,
+    meta: {
+      action: 'update',
+      resource: 'vendors'
+    }
   }
 ]
 

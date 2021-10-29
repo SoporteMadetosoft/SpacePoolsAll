@@ -29,8 +29,10 @@ const formValidator = (state = initialState, action) => {
                 errors:{ ...action.payload }
             }
 
+
         case formValidatorTypes.cleanFormValidator:
             return  initialState
+
         default:
             return state
     }

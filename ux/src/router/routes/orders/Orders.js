@@ -5,17 +5,29 @@ const PurchasesRoutes = [
   {
     path: '/orders',
     exact: true,
-    component: () => <OrderScreenList titulo="Pedidos" />
+    component: () => <OrderScreenList titulo="Pedidos" />,
+    meta: {
+      action: 'read',
+      resource: 'orders'
+    }
   },
   {
     path: '/orders/add',
     exact: true,
-    component: () => <OrderFormScreen />
+    component: () => <OrderFormScreen />,
+    meta: {
+      action: 'insert',
+      resource: 'orders'
+    }
   },
   {
     path: '/orders/edit/:id',
     exact: true,
-    component: () => <OrderFormScreen />
+    component: () => <OrderFormScreen />,
+    meta: {
+      action: 'update',
+      resource: 'orders'
+    }
   }
 ]
 

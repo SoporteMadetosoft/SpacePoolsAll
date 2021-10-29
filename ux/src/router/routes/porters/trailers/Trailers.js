@@ -6,17 +6,29 @@ const TrailersRoutes = [
   {
     path: '/porters/trailers',
     exact: true,
-    component: () => <TrailersListScreen titulo={'Remolques'} />
+    component: () => <TrailersListScreen titulo={'Remolques'} />,
+    meta: {
+      action: 'read',
+      resource: 'trailers'
+    }
   },
   {
     path: '/porters/trailers/add',
     exact: true,
-    component: () => <TrailersFormScreen />
+    component: () => <TrailersFormScreen />,
+    meta: {
+      action: 'insert',
+      resource: 'trailers'
+    }
   },
   {
     path: '/porters/trailers/edit/:id',
     exact: true,
-    component: () => <TrailersFormScreen />
+    component: () => <TrailersFormScreen />,
+    meta: {
+      action: 'update',
+      resource: 'trailers'
+    }
   }
 ]
 

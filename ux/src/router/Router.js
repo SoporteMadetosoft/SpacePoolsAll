@@ -67,6 +67,7 @@ const Router = () => {
    */
   const FinalRoute = props => {
     const route = props.route
+
     let action, resource
 
     // ** Assign vars based on route meta
@@ -74,7 +75,7 @@ const Router = () => {
       action = route.meta.action ? route.meta.action : null
       resource = route.meta.resource ? route.meta.resource : null
     }
-    const userData = localStorage.getItem('userData')
+
     if (
       (!isUserLoggedIn() && route.meta === undefined) ||
       (!isUserLoggedIn() && route.meta && !route.meta.authRoute && !route.meta.publicRoute)

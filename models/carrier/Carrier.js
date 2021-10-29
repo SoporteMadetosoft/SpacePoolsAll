@@ -3,6 +3,7 @@ class Carrier {
 
     constructor({
         id,
+        idUser,
         carrierCode,
         name,
         NIF,
@@ -21,6 +22,7 @@ class Carrier {
         documents = []
     }) {
         this.id = id
+        this.idUser = idUser
         this.carrierCode = carrierCode
         this.name = name
         this.NIF = NIF

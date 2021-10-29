@@ -6,17 +6,29 @@ const TaxesRoutes = [
   {
     path: '/setup/taxes',
     exact: true,
-    component: () => <TaxesListScreen titulo="Impuestos" />
+    component: () => <TaxesListScreen titulo="Impuestos" />,
+    meta: {
+      action: 'read',
+      resource: 'taxes'
+    }
   },
   {
     path: '/setup/taxes/add',
     exact: true,
-    component: () => <TaxesFormScreen />
+    component: () => <TaxesFormScreen />,
+    meta: {
+      action: 'insert',
+      resource: 'taxes'
+    }
   },
   {
     path: '/setup/taxes/edit/:id',
     exact: true,
-    component: () => <TaxesFormScreen />
+    component: () => <TaxesFormScreen />,
+    meta: {
+      action: 'update',
+      resource: 'taxes'
+    }
   }
 ]
 

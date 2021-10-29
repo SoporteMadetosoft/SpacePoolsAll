@@ -5,22 +5,29 @@ const CarriersRoutes = [
   {
     path: '/porters/carriers',
     exact: true,
-    component: () => <CarrierScreenList titulo={'Transportistas'} />
+    component: () => <CarrierScreenList titulo={'Transportistas'} />,
+    meta: {
+      action: 'read',
+      resource: 'carriers'
+    }
   },
   {
     path: '/porters/carriers/add',
     exact: true,
-    component: () => <CarrierFormScreen />
+    component: () => <CarrierFormScreen />,
+    meta: {
+      action: 'insert',
+      resource: 'carriers'
+    }
   },
   {
     path: '/porters/carriers/edit/:id',
     exact: true,
-    component: () => <CarrierFormScreen />
-  },
-  {
-    path: '/porters/carriers/Pdf',
-    exact: true,
-    component: () => <Pdf />
+    component: () => <CarrierFormScreen />,
+    meta: {
+      action: 'update',
+      resource: 'carriers'
+    }
   }
 ]
 

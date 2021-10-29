@@ -109,13 +109,15 @@ export const customerList = [
               <MoreVertical size={15} />
             </DropdownToggle>
             <DropdownMenu right>
-              <Link to={`./customers/edit/${row.id}`}>
-                <DropdownItem tag='a' href='/' className='w-100'>
-                  <FileText size={15} />
-                  <span className='align-middle ml-50'>Detalles</span>
-                </DropdownItem>
-              </Link>
-              {ability.can('delete', 'customers') ? (
+              {ability.can('update', 'customers') && (
+                <Link to={`./customers/edit/${row.id}`}>
+                  <DropdownItem tag='a' href='/' className='w-100'>
+                    <FileText size={15} />
+                    <span className='align-middle ml-50'>Detalles</span>
+                  </DropdownItem>
+                </Link>
+              )}
+              {ability.can('delete', 'customers') && (
                 <Link onClick={(e) => {
                   dispatch(startDeleteRegister(row.id))
                 }}>
@@ -124,7 +126,7 @@ export const customerList = [
                     <span className='align-middle ml-50'>Eliminar</span>
                   </DropdownItem>
                 </Link>
-              ) : null}
+              )}
             </DropdownMenu>
           </UncontrolledDropdown>
         </div>

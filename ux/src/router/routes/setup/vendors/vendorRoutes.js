@@ -5,17 +5,29 @@ const vendorRoutes = [
   {
     path: '/setup/vendors/vendorType',
     exact: true,
-    component: () => <VendorTypeListScreen titulo={'Tipos de proveedor'} />
+    component: () => <VendorTypeListScreen titulo={'Tipos de proveedor'} />,
+    meta: {
+      action: 'read',
+      resource: 'vendorType'
+    }
   },
   {
     path: '/setup/vendors/vendorType/add',
     exact: true,
-    component: () => <VendorTypeFormScreen />
+    component: () => <VendorTypeFormScreen />,
+    meta: {
+      action: 'insert',
+      resource: 'vendorType'
+    }
   },
   {
     path: '/setup/vendors/vendorType/edit/:id',
     exact: true,
-    component: () => <VendorTypeFormScreen />
+    component: () => <VendorTypeFormScreen />,
+    meta: {
+      action: 'update',
+      resource: 'vendorType'
+    }
   }
 ]
 

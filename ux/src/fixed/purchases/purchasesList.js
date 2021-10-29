@@ -7,6 +7,8 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 import Badge from "reactstrap/lib/Badge"
+import { useContext } from "react"
+import { AbilityContext } from '@src/utility/context/Can'
 
 export const purchasesList = [
 
@@ -76,6 +78,7 @@ export const purchasesList = [
     width: '5%',
     cell: row => {
       const dispatch = useDispatch()
+      const ability = useContext(AbilityContext)
 
       return (
         <div className='d-flex'>
@@ -86,40 +89,41 @@ export const purchasesList = [
             <DropdownMenu right>
               {row.idStatus !== 3 ? (
                 <>
-                  <Link to={`./purchases/edit/${row.id}`}>
-                    <DropdownItem tag='a' href='/' className='w-100'>
-                      <FileText size={15} />
-                      <span className='align-middle ml-50'>Detalles</span>
-                    </DropdownItem>
-                  </Link>
-
-
-                  <Link to={`./purchases/verify/${row.id}`}>
-                    <DropdownItem tag='a' href='/' className='w-100'>
-                      <Check size={15} />
-                      <span className='align-middle ml-50'>Verificar</span>
-                    </DropdownItem>
-                  </Link>
+                  {ability.can('update', 'purchases') && (
+                    <Link to={`./purchases/edit/${row.id}`}>
+                      <DropdownItem tag='a' href='/' className='w-100'>
+                        <FileText size={15} />
+                        <span className='align-middle ml-50'>Detalles</span>
+                      </DropdownItem>
+                    </Link>
+                  )}
+                  {ability.can('actions', 'purchases') && (
+                    <Link to={`./purchases/verify/${row.id}`}>
+                      <DropdownItem tag='a' href='/' className='w-100'>
+                        <Check size={15} />
+                        <span className='align-middle ml-50'>Verificar</span>
+                      </DropdownItem>
+                    </Link>
+                  )}
                 </>
-              ) : row.idStatus === 3 ? (
+              ) : (row.idStatus === 3 && ability.can('update', 'purchases')) && (
                 <Link to={`./purchases/view/${row.id}`}>
                   <DropdownItem tag='a' href='/' className='w-100'>
                     <FileText size={15} />
                     <span className='align-middle ml-50'>Detalles</span>
                   </DropdownItem>
                 </Link>
-              )
-                : null
-              }
-
-              <Link onClick={(e) => {
-                dispatch(startDeleteRegister(row.id))
-              }}>
-                <DropdownItem tag='a' href='/' className='w-100'>
-                  <Trash size={15} />
-                  <span className='align-middle ml-50'>Eliminar</span>
-                </DropdownItem>
-              </Link>
+              )}
+              {ability.can('delete', 'purchases') && (
+                <Link onClick={(e) => {
+                  dispatch(startDeleteRegister(row.id))
+                }}>
+                  <DropdownItem tag='a' href='/' className='w-100'>
+                    <Trash size={15} />
+                    <span className='align-middle ml-50'>Eliminar</span>
+                  </DropdownItem>
+                </Link>
+              )}
             </DropdownMenu>
           </UncontrolledDropdown>
         </div>

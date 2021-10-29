@@ -25,15 +25,13 @@ import { loadFiles } from '../../../utility/helpers/Axios/loadFiles'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 
 import { CarrierDocForm } from './CarrierDocForm'
-import { setSchema } from '../../../redux/actions/formValidator'
-import { validator } from '../../../utility/formValidator/ValidationTypes'
-
+import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 
 
 const formSchema = {
-    DNI: { validations: [validator.isRequired] },
-    estado: { validations: [validator.isRequired] }
-   
+    NIF: { validations: [validator.isRequired] },
+    idStatus: { validations: [validator.isRequired] }
 }
 
 export const CarriersForm = () => {
@@ -48,7 +46,7 @@ export const CarriersForm = () => {
 
     const realFilePath = form.filePath ? form.filePath : filePath
 
-    const { normalForm } = useSelector(state => state)
+    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
 
     //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
@@ -92,31 +90,35 @@ export const CarriersForm = () => {
         })
     }
 
-    const submit = async () => {
+    const submit = async (e) => {
+        e.preventDefault()
 
-        const errors = validate(formValidator.schema, value)
+        const errors = validate(formValidator.schema, form)
+
 
         if (Object.keys(errors).length !== 0) {
             dispatch(setErrors(errors))
+
+        } else {    
+            const filePath2 = MkDir('Carriers', realFilePath)
+
+            await preSubmit(filePath2)
+
+            const form2 = dispatch(handleGetForm())
             
-        } else {
-        const filePath2 = MkDir('Carriers', realFilePath)
-
-        await preSubmit(filePath2)
-
-        const form2 = dispatch(handleGetForm())
-        form2.then(async (value) => {
+            form2.then(async (value) => {
             const prettyForm = {
                 ...value,
+                idUser: exceptionController(value.idUser),
                 idStatus: exceptionController(value.idStatus),
-                filePath: filePath2
+                filePath: filePath2,
+                NIF: exceptionController(value.NIF)
             }
             await save('Carriers', id, prettyForm)
             dispatch(handleCleanUp())
             history.push('/porters/carriers')
         })
     }
-}
 
     return (
         <Form onSubmit={submit}>
@@ -135,21 +137,12 @@ export const CarriersForm = () => {
                         <Input name="name" label="Nombre" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">N.I.F.</label>
-                        <InputValid
-                            id="NIF"
-                            name="NIF"
-                            type="text"
-                            placeholder="N.I.F."
-                            onChange={handleInputChange}
-                        />
+                        <Input required="true" name="NIF" type="text" label="N.I.F." endpoint="Carriers" />
                     </div>
                     <div className="col-md-3">
-                        <Select name="idStatus" label="Estado" endpoint="Status" />
+                        <Select required ="true" name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-3">
-
-
                         <Input name="email" type="email" label="Correo electrónico" />
                     </div>
                     <div className="col-md-3">
@@ -170,12 +163,14 @@ export const CarriersForm = () => {
                     <div className="col-md-4">
                         <Input name="city" label="Ciudad" />
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-4">
                         <Input name="address" label="Dirección" />
                     </div>
                     <div className="col-md-4">
                         <Input name="postcode" label="Código postal" />
-
+                    </div>
+                    <div className="col-md-4">
+                        <Select name="idUser" label="Usuario" endpoint="Users" labelName='fullname' />
                     </div>
                 </div>
             </div>

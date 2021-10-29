@@ -8,27 +8,47 @@ const PurchasesRoutes = [
   {
     path: '/purchases',
     exact: true,
-    component: () => <PurchaseScreenList titulo="Compras" />
+    component: () => <PurchaseScreenList titulo="Compras" />,
+    meta: {
+      action: 'read',
+      resource: 'purchases'
+    }
   },
   {
     path: '/purchases/add',
     exact: true,
-    component: () => <PurchaseFormScreen />
+    component: () => <PurchaseFormScreen />,
+    meta: {
+      action: 'insert',
+      resource: 'purchases'
+    }
   },
   {
     path: '/purchases/edit/:id',
     exact: true,
-    component: () => <PurchaseFormScreen />
+    component: () => <PurchaseFormScreen />,
+    meta: {
+      action: 'update',
+      resource: 'purchases'
+    }
   },
   {
     path: '/purchases/verify/:id',
     exact: true,
-    component: () => <PurchaseVerificationFormScreen />
+    component: () => <PurchaseVerificationFormScreen />,
+    meta: {
+      action: 'actions',
+      resource: 'purchases'
+    }
   },
   {
     path: '/purchases/view/:id',
     exact: true,
-    component: () => <ViewPurchaseScreen />
+    component: () => <ViewPurchaseScreen />,
+    meta: {
+      action: 'actions',
+      resource: 'purchases'
+    }
   }
 ]
 

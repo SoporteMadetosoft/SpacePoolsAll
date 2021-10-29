@@ -4,9 +4,15 @@ const productionDao = new ProductionDao()
 
 exports.list = async (req, res) => {
     try {
+        const productionStatus = req.body.productionStatus
+        const arrayIDS = []
+        productionStatus.forEach((p, index) => {
+            arrayIDS.push(p.id)
+        })
+
         res.json({
             ok: true,
-            data: await productionDao.findAll()
+            data: await productionDao.findByState(arrayIDS)
         })
 
     } catch (error) {

@@ -6,9 +6,10 @@ import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { Link } from "react-router-dom"
 import Badge from "reactstrap/lib/Badge"
-import { startDeleteRegister, startLoadingTable, startSelectDriver } from "@redux/actions/custom"
+import { startDeleteRegister, startSelectDriver } from "@redux/actions/custom"
 import { changeToEuro } from "../../utility/helpers/converterEuros"
-
+import { useContext } from "react"
+import { AbilityContext } from '@src/utility/context/Can'
 
 
 export const ordersList = [
@@ -113,6 +114,8 @@ export const ordersList = [
       const dispatch = useDispatch()
       const proceso_prod = row.state
 
+      const ability = useContext(AbilityContext)
+
       return (
         <div className='d-flex'>
           <UncontrolledDropdown>
@@ -120,28 +123,33 @@ export const ordersList = [
               <MoreVertical size={15} />
             </DropdownToggle>
             <DropdownMenu right>
-              <Link to={`./orders/edit/${row.id}`}>
-                <DropdownItem tag='a' href='/' className='w-100'>
-                  <FileText size={15} />
-                  <span className='align-middle ml-50'>Detalles</span>
-                </DropdownItem>
-              </Link>
-              {proceso_prod === 1 ? <Link onClick={(e) => {
-                dispatch(startSelectDriver({idOrder: row.id , idCustomer: row.idCustomer}, 'Delivery'))
+              {ability.can('update', 'orders') && (
+                <Link to={`./orders/edit/${row.id}`}>
+                  <DropdownItem tag='a' href='/' className='w-100'>
+                    <FileText size={15} />
+                    <span className='align-middle ml-50'>Detalles</span>
+                  </DropdownItem>
+                </Link>
+              )}
+              {ability.can('actions', 'orders') && proceso_prod === 1 && <Link onClick={(e) => {
+                dispatch(startSelectDriver({ idOrder: row.id, idCustomer: row.idCustomer }, 'Delivery'))
               }}>
                 <DropdownItem tag='a' href='/' className='w-100'>
                   <Clipboard size={15} />
                   <span className='align-middle ml-50'>Albarán pedido</span>
                 </DropdownItem>
-              </Link> : ''}
-              <Link onClick={(e) => {
-                dispatch(startDeleteRegister(row.id))
-              }}>
-                <DropdownItem tag='a' href='/' className='w-100'>
-                  <Trash size={15} />
-                  <span className='align-middle ml-50'>Eliminar</span>
-                </DropdownItem>
               </Link>
+              }
+              {ability.can('delete', 'orders') && (
+                <Link onClick={(e) => {
+                  dispatch(startDeleteRegister(row.id))
+                }}>
+                  <DropdownItem tag='a' href='/' className='w-100'>
+                    <Trash size={15} />
+                    <span className='align-middle ml-50'>Eliminar</span>
+                  </DropdownItem>
+                </Link>
+              )}
             </DropdownMenu>
           </UncontrolledDropdown>
         </div>

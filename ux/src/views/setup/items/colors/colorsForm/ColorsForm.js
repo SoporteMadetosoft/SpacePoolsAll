@@ -1,21 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
-import { useForm } from 'react-hook-form'
+import { Form } from 'reactstrap'
 
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
-
-import { handleChangeController } from '../../../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController } from '../../../../../redux/actions/normalForm'
 import { save } from '../../../../../utility/helpers/Axios/save'
 
 import { ActionButtons } from '../../../../../components/actionButtons/ActionButtons'
+import { setErrors, setSchema } from '../../../../../redux/actions/formValidator'
+import { validate, validator } from '../../../../../utility/formValidator/ValidationTypes'
+import { Input } from '../../../../../components/form/inputs/Input'
 
-const ValidationSchema = yup.object().shape({
-    name: yup.string().required()
-})
+const formSchema = {
+    name: { validations: [validator.isRequired] }
+}
 
 export const ColorsForm = () => {
 
@@ -23,36 +21,48 @@ export const ColorsForm = () => {
     const history = useHistory()
     const dispatch = useDispatch()
 
-    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
-    const { normalForm } = useSelector(state => state)
+    const { normalForm, formValidator } = useSelector(state => state)
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
+    useEffect(() => {
+       
+        dispatch(setSchema(formSchema))
+    }, [])
 
-    const submit = async () => {
-        save('Colors', id, normalForm)
-        history.push('/setup/items/colors')
+    const submit = async (e) => {
+        e.preventDefault()
+        const errors = validate(formValidator.schema, normalForm)
+
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
+        } else {
+
+            const form2 = dispatch(handleGetForm())
+            form2.then(async (value) => {
+                const prettyForm = {
+                    ...value,
+                    name: exceptionController(value.name)
+                }
+                save('Colors', id, prettyForm)
+                history.push('/setup/items/colors')
+            })
+        }
     }
 
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-4">
-                        <label className="control-label">Color</label>
-                        <InputValid
+                        <Input
                             id="name"
+                            label="Color"
                             name="name"
                             type="text"
-                            value={normalForm['name']}
-                            placeholder="Color"
-                            innerRef={register({ required: true })}
-                            invalid={errors.name && true}
-                            onChange={handleInputChange}
                         />
-                        {errors && errors.name && <FormFeedback>Color requerido</FormFeedback>}
                     </div>
 
                 </div>

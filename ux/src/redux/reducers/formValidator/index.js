@@ -28,8 +28,11 @@ const formValidator = (state = initialState, action) => {
                 ...state,
                 errors:{ ...action.payload }
             }
-        case formValidatorTypes.cleanError :
-            return initialState    
+
+
+        case formValidatorTypes.cleanFormValidator:
+            return  initialState
+
         default:
             return state
     }

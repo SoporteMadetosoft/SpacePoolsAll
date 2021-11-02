@@ -7,6 +7,7 @@ import { departmentsList } from '@fixed/setup/general/departments/departmentsLis
 import { handleCleanForm } from '../../../../redux/actions/normalForm'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { cleanFormValidator } from '../../../../redux/actions/formValidator'
 
 export const DepartmentsScreenList = ({titulo}) => {
 
@@ -15,7 +16,8 @@ export const DepartmentsScreenList = ({titulo}) => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('Departments'))   
+        dispatch(startLoadingTable('Departments'))
+        dispatch(cleanFormValidator())   
     }, [])
 
     return (

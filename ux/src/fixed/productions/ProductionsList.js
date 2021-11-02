@@ -4,7 +4,7 @@ import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
 import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
-import { startDeleteRegister, startLoadingTable } from "@redux/actions/custom"
+import { startDeleteRegister, startLoadingTableProduction } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 import { Spinner } from 'reactstrap'
 
@@ -108,7 +108,7 @@ export const ProductionsList = [
             (
               <Link onClick={() => {
                 save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus - 1 })
-                dispatch(startLoadingTable('Productions'))
+                dispatch(startLoadingTableProduction('Productions'))
               }}>
                 <Badge color='light-dark' className="mr-1"><ChevronLeft size={15} /></Badge>
               </Link>
@@ -122,7 +122,7 @@ export const ProductionsList = [
             (
               <Link onClick={() => {
                 save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus + 1 })
-                dispatch(startLoadingTable('Productions'))
+                dispatch(startLoadingTableProduction('Productions'))
                 if ((row.idProductionStatus + 1) === 6) {
                   axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.idOrder, state: 1 })
                 }

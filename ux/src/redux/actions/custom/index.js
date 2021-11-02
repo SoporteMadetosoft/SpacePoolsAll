@@ -5,6 +5,7 @@ import { list } from '@helpers/Axios/list'
 import { save } from '../../../utility/helpers/Axios/save'
 import { handleSelectCarrier } from '../../../utility/helpers/handleSelectCarrier'
 import { listProduction } from '../../../utility/helpers/Axios/listProduction'
+import { listDelivery } from '../../../utility/helpers/Axios/listDelivery'
 
 
 export const cleaningAll = () => ({
@@ -84,6 +85,16 @@ export const startLoadingTableProduction = (endPoint) => {
         const userData = JSON.parse(localStorage.getItem('userData'))
 
         const data = await listProduction(endPoint, userData['productionStatus'])
+        dispatch(setData(data, endPoint))
+    }
+}
+
+export const startLoadingTableDelivery = (endPoint) => {
+    return async (dispatch) => {
+        dispatch(cleaningAll())
+        const userData = JSON.parse(localStorage.getItem('userData'))
+
+        const data = await listDelivery(endPoint, userData['id'])
         dispatch(setData(data, endPoint))
     }
 }

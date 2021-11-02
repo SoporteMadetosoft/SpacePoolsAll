@@ -7,6 +7,7 @@ import { originList } from '@fixed/setup/customers/origin/originList'
 import { handleCleanForm } from '../../../../redux/actions/normalForm'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { cleanFormValidator } from '../../../../redux/actions/formValidator'
 
 export const OriginScreenList = ({titulo}) => {
 
@@ -15,7 +16,8 @@ export const OriginScreenList = ({titulo}) => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('Origin'))   
+        dispatch(startLoadingTable('Origin'))
+        dispatch(cleanFormValidator())    
     }, [])
 
     return (

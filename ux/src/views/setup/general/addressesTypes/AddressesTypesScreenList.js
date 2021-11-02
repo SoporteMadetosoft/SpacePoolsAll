@@ -7,6 +7,7 @@ import { AddressesTypesList } from '@fixed/setup/general/addressesTypes/addresse
 import { handleCleanForm } from '../../../../redux/actions/normalForm'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { cleanFormValidator } from '../../../../redux/actions/formValidator'
 
 export const AddressesTypesScreenList = ({titulo}) => {
 
@@ -15,7 +16,8 @@ export const AddressesTypesScreenList = ({titulo}) => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('AddressesTypes'))   
+        dispatch(startLoadingTable('AddressesTypes'))  
+        dispatch(cleanFormValidator()) 
     }, [])
 
     return (

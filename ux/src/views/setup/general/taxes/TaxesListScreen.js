@@ -6,6 +6,7 @@ import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 import { TaxesList } from '../../../../fixed/setup/general/taxes/TaxesList'
 import { handleCleanForm } from '../../../../redux/actions/normalForm'
+import { cleanFormValidator } from '../../../../redux/actions/formValidator'
 
 
 export const TaxesListScreen = ({ titulo }) => {
@@ -16,6 +17,7 @@ export const TaxesListScreen = ({ titulo }) => {
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Taxes'))
+        dispatch(cleanFormValidator())
     }, [])
 
     return (

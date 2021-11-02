@@ -5,9 +5,10 @@ import { customerList } from '@fixed/customers/customersList'
 import { CustomDataTable } from '@cc/datatable/CustomDataTable'
 import { startLoadingTable } from '@redux/actions/custom'
 import { handleCleanForm } from '@redux/actions/normalForm'
-
-
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { cleanFormValidator } from '../../redux/actions/formValidator/index.js'
+
+
 
 export const CustomerScreenList = ({titulo}) => { 
 
@@ -16,7 +17,9 @@ export const CustomerScreenList = ({titulo}) => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('Customers'))   
+        dispatch(startLoadingTable('Customers'))
+        dispatch(cleanFormValidator())
+      
     }, [])
 
     return (

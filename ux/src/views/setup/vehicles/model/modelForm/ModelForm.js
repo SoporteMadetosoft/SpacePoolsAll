@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { GetSetNextId, handleChangeController, handleStartEditing } from '../../../../../redux/actions/normalForm'
-import { save } from '../../../../../utility/helpers/Axios/save'
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
-import { yupResolver } from "@hookform/resolvers/yup"
-import { useForm } from 'react-hook-form'
-import { ActionButtons } from '../../../../../components/actionButtons/ActionButtons'
 import { useHistory, useParams } from 'react-router'
-import ReactSelect from 'react-select'
+import { useDispatch, useSelector } from 'react-redux'
+import { Form } from 'reactstrap'
+
+import { handleChangeController } from '@redux/actions/normalForm'
+import { save } from '../../../../../utility/helpers/Axios/save'
+import { ActionButtons } from '@cc/actionButtons/ActionButtons'
 import { startAddSelectOptions } from '../../../../../redux/actions/selects'
 import { deconstructSelect } from '../../../../../utility/helpers/deconstructSelect'
 import { exceptionController } from '../../../../../utility/helpers/undefinedExceptionController'
@@ -19,7 +17,7 @@ import { setErrors, setSchema } from '../../../../../redux/actions/formValidator
 
 const formSchema = {
     name: { validations: [validator.isRequired] },
-    idBrand :{ validations: [validator.isRequired] }
+    idBrand: { validations: [validator.isRequired] }
 }
 
 
@@ -36,17 +34,13 @@ export const ModelForm = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const { id } = useParams()
-    
+
     const form = useSelector(state => state.normalForm)
 
     const { normalForm, formValidator } = useSelector(state => state)
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'Brand'))
-
-        if (normalForm.id === undefined) {
-            dispatch(GetSetNextId("Brand", 'id'))
-        } else id = normalForm.id
         dispatch(setSchema(formSchema))
     }, [])
 
@@ -70,12 +64,12 @@ export const ModelForm = () => {
 
         } else {
             const prettyForm = {
-            ...normalForm,
-            idBrand: exceptionController(normalForm.idBrand),
-            name: exceptionController(normalForm.name)
-        }
-        save('Model', id, prettyForm)
-        history.push('/setup/vehicles/model')
+                ...normalForm,
+                idBrand: exceptionController(normalForm.idBrand),
+                name: exceptionController(normalForm.name)
+            }
+            save('Model', id, prettyForm)
+            history.push('/setup/vehicles/model')
         }
     }
 
@@ -87,10 +81,10 @@ export const ModelForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-4">
-                        <Select  required="true" name="idBrand" label="Marca" endpoint="Brand" onChange={handleSelectChange}/>
+                        <Select required="true" name="idBrand" label="Marca" endpoint="Brand" onChange={handleSelectChange} />
                     </div>
                     <div className="col-md-4">
-                        <Input required="true" name="name" type="text" label="Modelo"onChange={handleInputChange}/>
+                        <Input required="true" name="name" type="text" label="Modelo" onChange={handleInputChange} />
                     </div>
                 </div>
             </div>

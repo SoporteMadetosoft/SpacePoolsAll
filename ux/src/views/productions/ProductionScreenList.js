@@ -8,6 +8,7 @@ import { ProductionsList } from '@fixed/productions/ProductionsList'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { CustomMiniTable } from '../../components/datatable/CustomMiniTable'
+import { cleanFormValidator } from '../../redux/actions/formValidator'
 
 
 export const ProductionScreenList = () => {
@@ -16,7 +17,10 @@ export const ProductionScreenList = () => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
+
         dispatch(startLoadingTableProduction('Productions'))
+        dispatch(cleanFormValidator())
+
     }, [])
     return (
         <>

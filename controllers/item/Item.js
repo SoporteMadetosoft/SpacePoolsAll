@@ -69,9 +69,11 @@ exports.insert = async (req, res) => {
     try {
         /** INSERT ITEM */
         const item = req.body.form
-        const colors = req.body.form.idColor
+        const colors = req.body.form.colors
 
-        delete item.idColor
+        delete item.color
+        delete item.colors
+
 
         const insert = await itemDao.insert(item)
 

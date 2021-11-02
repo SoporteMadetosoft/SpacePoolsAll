@@ -30,9 +30,7 @@ class ProductionDao extends GenericDao {
             deliverySchedulerStart: order != undefined ? order.deliverySchedulerStart : '',
             deliverySchedulerEnd: order != undefined ? order.deliverySchedulerEnd : '',
             observations: order != undefined ? order.observations : '',
-            pools: pool != undefined ? pool.fabricationName : '',
-
-
+            pools: pool != undefined ? pool.fabricationName : ''
         }
         const { id, idOrder, orderCode, pools, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd, observations, isStarted, idProductionStatus } = list
 
@@ -56,16 +54,34 @@ class ProductionDao extends GenericDao {
 
     findByOrderId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM production WHERE idOrder = ?', [id], (err, result) => {
+            this.db.query('SELECT * FROM production WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    const order = []
-                    for (const centerDB of result) {
-                        order.push(this.mountObj(centerDB))
+                    const production = []
+                    for (const res of result) {
+                        production.push(await this.mountObj(res))
                     }
 
-                    resolve(order)
+                    resolve(production)
+                }
+            })
+        })
+    }
+
+    findByState(states) {
+        // console.log(`SELECT * FROM production WHERE idProductionStatus IN (${states})`)
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT * FROM production WHERE idProductionStatus IN (?)', [states], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    const production = []
+                    for (const res of result) {
+                        production.push(await this.mountList(res))
+                    }
+
+                    resolve(production)
                 }
             })
         })
@@ -73,7 +89,7 @@ class ProductionDao extends GenericDao {
 
     switchStart(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('UPDATE production SET isStarted = (CASE isStarted WHEN 1 THEN 0 ELSE 1 END) WHERE id = ?', [id], (err, result) => {
+            this.db.query('UPDATE production SET isStarted = (CASE isStarted WHEN 1 THEN 0 ELSE 1 END) WHERE id = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

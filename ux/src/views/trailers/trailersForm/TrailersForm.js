@@ -28,15 +28,16 @@ import { loadFiles } from '../../../utility/helpers/Axios/loadFiles'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { TrailerDocForm } from './TrailerDocForm'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
-import { setSchema } from '../../../redux/actions/formValidator'
-import { validator } from '../../../utility/formValidator/ValidationTypes'
+import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 
 
 const formSchema = {
-    matricula: { validations: [validator.isRequired] },
+    idMatricula: { validations: [validator.isRequired] },
     marca: { validations: [validator.isRequired] },
-    modelo: { validations: [validator.isRequired] },
-    estado: { validations: [validator.isRequired] }
+    model: { validations: [validator.isRequired] },
+    idStatus: { validations: [validator.isRequired] },
+    frame: { validations: [validator.isRequired] }
 }
 
 const placeholderStyles = {
@@ -62,7 +63,7 @@ export const TrailersForm = () => {
 
     const realFilePath = form.filePath ? form.filePath : filePath
 
-    const { normalForm, selectReducer } = useSelector(state => state)
+    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
 
     //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
@@ -86,20 +87,21 @@ export const TrailersForm = () => {
         dispatch(setSchema(formSchema))
     }, [])
 
+    const handleSelectChange = ({ value, label }) => {
+        dispatch(handleChangeController('model', { id: value, name: label }))
+    }
 
     const handleLoadModels = async (obj) => {
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/brandModel/selectByIdBrand/${obj.value}`)
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/model/selectByIdBrand/${obj.value}`)
         dispatch(addSelectOptions('Model', data.map(option => ({ label: option.name, value: option.id }))))
         dispatch(handleChangeController('model', ''))
+        handleSelectChange('brand', obj)
     }
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
-    const handleSelectChange = ({ value, label }) => {
-        dispatch(handleChangeController('model', { id: value, name: label }))
-    }
 
     const preSubmit = (filePath2) => {
         return new Promise(async (resolve, reject) => {
@@ -130,9 +132,10 @@ export const TrailersForm = () => {
         })
     }
 
-    const submit = async () => {
+    const submit = async (e) => {
+        e.preventDefault()
 
-        const errors = validate(formValidator.schema, value)
+        const errors = validate(formValidator.schema, form)
 
         if (Object.keys(errors).length !== 0) {
             dispatch(setErrors(errors))
@@ -147,7 +150,9 @@ export const TrailersForm = () => {
                     ...value,
                     idStatus: exceptionController(value.idStatus),
                     model: exceptionController(value.model),
-                    filePath: filePath2
+                    filePath: filePath2,
+                    idMatricula: exceptionController(value.idMatrucula),
+                    frame: exceptionController(value.frame)
                 }
 
                 save('Trailers', id, prettyForm)
@@ -171,51 +176,33 @@ export const TrailersForm = () => {
                         />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Matrícula del remolque</label>
-                        <InputValid
-                            id="plate"
-                            name="plate"
-                            type="text"
-                            placeholder="Matrícula del remolque"
-                            onChange={handleInputChange}
-                        />
+
+                        <Select required="true" name="idMatricula" label="Matrícula del remolque" endpoint="Trailers" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="frame" label="Número de bastidor" />
+                        <Input required="true" name="frame" label="Número de bastidor" />
                     </div>
                     <div className="col-md-3">
                         <Input name="policyNumber" label="Número de poliza" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Marca</label>
-                        <ReactSelect
-                            placeholder="Marca"
+                        <Select
+                            required="true"
                             name="brand"
-                            value={brandValue}
-                            options={Brand}
-                             />
+                            label="Marca"
+                            onSelect={(obj) => {
+                                handleLoadModels(obj)
+                            }}
+                            endpoint="Brand"
+                        />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Modelo</label>
-                        <ReactSelect
-                            id="model"
+                        <Select
+                            required="true"
                             name="model"
-                            options={Model}
-                            value={valueModel}
-                            styles={placeholderStyles}
-                            placeholder="Modelo"
-                            onChange={handleSelectChange}
+                            label="Modelo"
+                            endpoint="Model"
                         />
-                        <InputValid
-                            id="valueModel"
-                            name="valueModel"
-                            tabIndex={-1}
-                            autoComplete="off"
-                            value={valueModel}
-                            style={{ opacity: 0, height: 0, position: 'absolute' }}
-                            onChange={handleInputChange}
-                        />
-                        
                     </div>
 
                     <div className="col-md-3">

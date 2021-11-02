@@ -18,7 +18,6 @@ class VendorDao extends GenericDao {
         this.PaymentMethodDao = new PaymentMethodDao()
         this.StatusDao = new StatusDao()
         this.OriginDao = new OriginDao()
-        // this.PurchaseDao = new PurchaseDao()
     }
 
     async mountObj(data) {

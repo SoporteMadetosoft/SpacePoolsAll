@@ -2,10 +2,10 @@ import { handleConfirmCancel } from '@helpers/handleConfirmCancel'
 import { types } from "@redux/types/types"
 import { erase } from '@helpers/Axios/delete'
 import { list } from '@helpers/Axios/list'
-import { startAddSelectOptions } from '../selects'
 import { save } from '../../../utility/helpers/Axios/save'
-import { useEffect } from 'react'
 import { handleSelectCarrier } from '../../../utility/helpers/handleSelectCarrier'
+import { listProduction } from '../../../utility/helpers/Axios/listProduction'
+import { listDelivery } from '../../../utility/helpers/Axios/listDelivery'
 
 
 export const cleaningAll = () => ({
@@ -63,12 +63,9 @@ export const startDeleteRepairRegister = (id, index, endPoint) => {
 
 export const startSelectDriver = ({ idOrder, idCustomer }, endPoint) => {
     return async (dispatch, getState) => {
-
         const carriers = getState().selectReducer.Carriers
-
         const respuesta = await handleSelectCarrier(carriers)
         const driver
-
             = {
             idStatus: 2,
             idCarrier: respuesta,
@@ -76,12 +73,28 @@ export const startSelectDriver = ({ idOrder, idCustomer }, endPoint) => {
             idCustomer,
             signature: ''
         }
-
         if (respuesta !== false) {
             save(endPoint, null, driver)
-
         }
+    }
+}
 
+export const startLoadingTableProduction = (endPoint) => {
+    return async (dispatch) => {
+        dispatch(cleaningAll())
+        const userData = JSON.parse(localStorage.getItem('userData'))
 
+        const data = await listProduction(endPoint, userData['productionStatus'])
+        dispatch(setData(data, endPoint))
+    }
+}
+
+export const startLoadingTableDelivery = (endPoint) => {
+    return async (dispatch) => {
+        dispatch(cleaningAll())
+        const userData = JSON.parse(localStorage.getItem('userData'))
+
+        const data = await listDelivery(endPoint, userData['id'])
+        dispatch(setData(data, endPoint))
     }
 }

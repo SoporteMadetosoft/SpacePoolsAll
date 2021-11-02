@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { startLoadingTable } from '@redux/actions/custom'
+
+import { startLoadingTableProduction } from '@redux/actions/custom'
 import { handleCleanForm } from '@redux/actions/normalForm'
 import { ProductionsList } from '@fixed/productions/ProductionsList'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { CustomMiniTable } from '../../components/datatable/CustomMiniTable'
+import { cleanFormValidator } from '../../redux/actions/formValidator'
 
 
 export const ProductionScreenList = () => {
@@ -15,7 +17,10 @@ export const ProductionScreenList = () => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('Productions'))
+
+        dispatch(startLoadingTableProduction('Productions'))
+        dispatch(cleanFormValidator())
+
     }, [])
     return (
         <>

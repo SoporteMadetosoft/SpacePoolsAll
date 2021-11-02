@@ -19,9 +19,8 @@ class GenericDao {
                 } else {
                     resolve(await this.mountObj(result[0]))
                 }
-            });
+            })
         })
-
     }
 
     findAll() {
@@ -34,11 +33,9 @@ class GenericDao {
                     for (const res of result) {
                         objList.push(await this.mountList(res))
                     }
-
                     resolve(objList)
                 }
-            });
-
+            })
         })
     }
 
@@ -46,7 +43,6 @@ class GenericDao {
 
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM ?? WHERE idStatus = 2', [this.auxModel.table], async (err, result) => {
-
                 if (err) {
                     reject(err)
                 } else {
@@ -54,11 +50,9 @@ class GenericDao {
                     for (const res of result) {
                         objList.push(await this.mountList(res))
                     }
-
                     resolve(objList)
                 }
-            });
-
+            })
         })
     }
 
@@ -73,14 +67,12 @@ class GenericDao {
                     for (const res of result) {
                         idList.push(res.id)
                     }
-
                     resolve(idList)
                 }
-            });
+            })
         })
     }
 
-    /**Delete from databse, returns the id on the success **/
     deleteById(id) {
         // console.log(`DELETE FROM ${this.auxModel.table} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
@@ -90,12 +82,12 @@ class GenericDao {
                 } else {
                     resolve(id)
                 }
-            });
+            })
         })
     }
 
     insert(params) {
-        console.log(`INSERT INTO ${this.auxModel.table} (${Object.keys(params)}) VALUES  (${Object.values(params)})`)
+        // console.log(`INSERT INTO ${this.auxModel.table} (${Object.keys(params)}) VALUES  (${Object.values(params)})`)
         Object.keys(params).forEach((k) => { if (params[k] === '') { params[k] = null } })
         return new Promise((resolve, reject) => {
             this.db.query(`INSERT INTO ?? (??) VALUES  (?)`, [this.auxModel.table, Object.keys(params), Object.values(params)], async (err, result) => {
@@ -103,9 +95,8 @@ class GenericDao {
                     reject(err)
                 } else {
                     resolve(result)
-
                 }
-            });
+            })
         })
     }
 
@@ -118,7 +109,7 @@ class GenericDao {
                 } else {
                     resolve('')
                 }
-            });
+            })
         })
     }
 
@@ -131,7 +122,7 @@ class GenericDao {
                 } else {
                     resolve('')
                 }
-            });
+            })
         })
     }
 
@@ -163,7 +154,7 @@ class GenericDao {
             if (element[0] != 'id' && element[1] != 'null' && element[1] != null && element[1] != undefined) {
                 update = update.concat("`", element[0], "` = ", "'", element[1], "', ")
             }
-        });
+        })
         return update.substring(0, update.length - 2)
     }
 
@@ -190,7 +181,6 @@ class GenericDao {
     }
 
     findAutoincrementID() {
-
         return new Promise((resolve, reject) => {
             this.db.query(`SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?`, [process.env.DB_NAME, this.auxModel.table], async (err, result) => {
                 if (err) {
@@ -198,7 +188,7 @@ class GenericDao {
                 } else {
                     resolve(result)
                 }
-            });
+            })
         })
     }
 }

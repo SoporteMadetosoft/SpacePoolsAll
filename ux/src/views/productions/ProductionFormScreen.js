@@ -58,57 +58,11 @@ export const ProductionFormScreen = () => {
     const title = (id) ? 'Ver Producción' : ''
     const customerName = form.ordercod ? form.idOrder : title
 
-    const handleSubmit = async (e) => {
-        //e.preventDefault()
-        //
-        //let idCustomer = undefined
-        //if (form.customerData !== undefined) {
-        //    idCustomer = form.customerData[0].id
-        //}
-        //const customerDataObj = {
-        //    id: idCustomer,
-        //    deliveryAddress: form.deliveryAddress,
-        //    phone: form.phone,
-        //    email: form.email
-        //}
-        //const productionObj = {
-        //    isStarted: 0
-        //}
-        //
-        //delete form.deliveryAddress
-        //delete form.phone
-        //delete form.email
-        //delete form.status
-        //delete form.canvasItems
-        //
-        ////const insert = await orderDao.insert(customer)
-        //const prettyForm = {
-        //    ...form,
-        //    idTax: form.idTax.id,
-        //    idPool: form.idPool.id,
-        //    price: orders.price,
-        //    idCustomer: form.idCustomer.id,
-        //    canvas: canvas.elements,
-        //    customerData: customerDataObj,
-        //    production: productionObj,
-        //    baseItems: form.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity })),
-        //    extraItems: form.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity })),
-        //    canvas: canvas.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, imageUrl: el.imageUrl }))
-        //}
-        ////console.log(prettyForm)
-        //save('Orders', id, prettyForm)
-        //// dispatch(handleCleanUp())
-        //// history.push('/orders')
-
-    }
-
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <BreadCrumbs breadCrumbTitle={customerName} breadCrumbParent='Pedidos' breadCrumbActive={title} />
-                <ProductionForm />
-                <ActionButtons />
-            </form>
+            <BreadCrumbs breadCrumbTitle={customerName} breadCrumbParent='Pedidos' breadCrumbActive={title} />
+            <ProductionForm />
+            <ActionButtons form={false} />
         </>
 
     )

@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { GetSetNextId, handleChangeController, handleCleanSection } from '../../../redux/actions/normalForm'
-import ReactSelect from 'react-select'
-
-
 import { ItemsRepeater } from './ItemsRepeater'
-
 import { Input } from '../../../components/form/inputs/Input'
 import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+import { setSchema } from '../../../redux/actions/formValidator'
+import { Select } from '../../../components/form/inputs/Select'
+import ReactSelect from 'react-select'
+
 
 const placeholderStyles = {
     placeholder: (defaultStyles) => {
@@ -27,10 +26,11 @@ export const PurchaseForm = () => {
 
     const { normalForm, selectReducer } = useSelector(state => state)
     useEffect(() => {
-        
+
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Purchases", 'purchaseCode'))
         } else purchaseCode = normalForm.id
+
     }, [])
 
     const { observations } = normalForm
@@ -39,7 +39,7 @@ export const PurchaseForm = () => {
 
     useEffect(() => {
         // dispatch(startAddSelectOptions('Vendors', 'Vendors', 'comercialName'))
-        dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
+        dispatch(startAddSelectStatus('Vendors', 'Vendors', 'comercialName'))
     }, [])
 
     const handleInputChange = ({ target }) => {
@@ -67,22 +67,18 @@ export const PurchaseForm = () => {
                         />
                     </div>
                     <div className="col-md-4">
-                        <label className="control-label">Proveedor</label>
-                        <ReactSelect
-                            id="idVendor"
+                        <Select
                             name="idVendor"
-                            options={Vendors}
-                            value={valueVendor}
+                            label="Proveedor"
                             styles={placeholderStyles}
-                            placeholder="Proveedor"
-                            onChange={handleSelectChange}
+                            endpoint='Vendors'
                         />
                     </div>
                     <div className="col-md-3">
-                        <Input name="purchaseDate" type="date"  label="Fecha de compra" />
+                        <Input name="purchaseDate" type="date" label="Fecha de compra" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="deliveryDate" type="date"  label="Fecha de entrega" />
+                        <Input name="deliveryDate" type="date" label="Fecha de entrega" />
                     </div>
 
 

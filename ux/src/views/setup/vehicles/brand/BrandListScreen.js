@@ -7,6 +7,7 @@ import { brandList } from '@fixed/setup/vehicles/brand/brandList'
 import { handleCleanForm } from '../../../../redux/actions/normalForm'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { cleanFormValidator } from '../../../../redux/actions/formValidator'
 
 export const BrandListScreen = ({titulo}) => {
 
@@ -15,7 +16,8 @@ export const BrandListScreen = ({titulo}) => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('Brand'))   
+        dispatch(startLoadingTable('Brand')) 
+        dispatch(cleanFormValidator())   
     }, [])
 
     return (

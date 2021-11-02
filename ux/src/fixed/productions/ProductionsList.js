@@ -4,7 +4,7 @@ import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
 import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
-import { startDeleteRegister, startLoadingTable } from "@redux/actions/custom"
+import { startDeleteRegister, startLoadingTableProduction } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 import { Spinner } from 'reactstrap'
 
@@ -13,6 +13,9 @@ import { save } from "../../utility/helpers/Axios/save"
 import axios from "axios"
 import { endPoints } from "@fixed/endPoints"
 import Badge from "reactstrap/lib/Badge"
+
+import { useContext } from "react"
+import { AbilityContext } from '@src/utility/context/Can'
 
 function renderSwitch(param) {
 
@@ -105,7 +108,7 @@ export const ProductionsList = [
             (
               <Link onClick={() => {
                 save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus - 1 })
-                dispatch(startLoadingTable('Productions'))
+                dispatch(startLoadingTableProduction('Productions'))
               }}>
                 <Badge color='light-dark' className="mr-1"><ChevronLeft size={15} /></Badge>
               </Link>
@@ -119,7 +122,7 @@ export const ProductionsList = [
             (
               <Link onClick={() => {
                 save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus + 1 })
-                dispatch(startLoadingTable('Productions'))
+                dispatch(startLoadingTableProduction('Productions'))
                 if ((row.idProductionStatus + 1) === 6) {
                   axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.idOrder, state: 1 })
                 }
@@ -141,6 +144,7 @@ export const ProductionsList = [
     cell: row => {
 
       const dispatch = useDispatch()
+      const ability = useContext(AbilityContext)
 
       return (
         <>
@@ -151,22 +155,24 @@ export const ProductionsList = [
                 <MoreVertical size={15} />
               </DropdownToggle>
               <DropdownMenu right>
-                <Link to={`./production/edit/${row.id}`}>
-                  <DropdownItem tag='a' href='/' className='w-100'>
-                    <FileText size={15} />
-                    <span className='align-middle ml-50'>Detalles</span>
-                  </DropdownItem>
-                </Link>
-
-                <Link onClick={(e) => {
-                  dispatch(startDeleteRegister(row.id))
-                }}>
-                  <DropdownItem tag='a' href='/' className='w-100'>
-                    <Trash size={15} />
-                    <span className='align-middle ml-50'>Eliminar</span>
-                  </DropdownItem>
-                </Link>
-
+                {ability.can('update', 'production') && (
+                  <Link to={`./production/edit/${row.id}`}>
+                    <DropdownItem tag='a' href='/' className='w-100'>
+                      <FileText size={15} />
+                      <span className='align-middle ml-50'>Detalles</span>
+                    </DropdownItem>
+                  </Link>
+                )}
+                {ability.can('delete', 'production') && (
+                  <Link onClick={(e) => {
+                    dispatch(startDeleteRegister(row.id))
+                  }}>
+                    <DropdownItem tag='a' href='/' className='w-100'>
+                      <Trash size={15} />
+                      <span className='align-middle ml-50'>Eliminar</span>
+                    </DropdownItem>
+                  </Link>
+                )}
               </DropdownMenu>
             </UncontrolledDropdown>
           </div>

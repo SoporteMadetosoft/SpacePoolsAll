@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { useForm } from 'react-hook-form'
 import { handleChangeController, GetSetNextId, handleGetForm } from '../../../redux/actions/normalForm'
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
+import { Form } from 'reactstrap'
 import { AddressesRepeater } from './AddressesRepeater'
 import { ContactsRepeater } from './ContactsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
@@ -11,7 +11,7 @@ import { Select } from '../../../components/form/inputs/Select'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { save } from '../../../utility/helpers/Axios/save'
-import { setSchema } from '../../../redux/actions/formValidator'
+import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 import { handleCleanUp } from '../../../redux/actions/fileUpload'
 
@@ -53,17 +53,18 @@ export const VendorsForm = () => {
 
 
 
-    const submit = async () => {
-
+    const submit = async (e) => {
+        e.preventDefault()
         const errors = validate(formValidator.schema, normalForm)
-        console.log(errors)
+
+        
 
         if (Object.keys(errors).length !== 0) {
-            console.log('entro en los errores')
-            dispatch(setErrors(errors))
+            
 
+            dispatch(setErrors(errors))
         } else {
-            console.log('entro al prettyform')
+
 
             const form2 = dispatch(handleGetForm())
             form2.then(async (value) => {
@@ -73,11 +74,11 @@ export const VendorsForm = () => {
                     idVendorType: exceptionController(value.idVendorType),
                     idStatus: exceptionController(value.idStatus),
                     addresses: normalForm.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType), defaultAddress: address.defaultAddress === true ? 1 : 0 })),
-            contacts: normalForm.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department), defaultContact: contact.defaultContact === true ? 1 : 0 }))
+                    contacts: normalForm.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department), defaultContact: contact.defaultContact === true ? 1 : 0 }))
                 }
                 save('Vendors', id, prettyForm)
                 dispatch(handleCleanUp())
-                history.push('/vendors')    
+                history.push('/vendors')
 
             })
 
@@ -103,14 +104,8 @@ export const VendorsForm = () => {
                         <Input name="comercialName" label="Nombre Comercial" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">C.I.F.</label>
-                        <InputValid
-                            id="CIF"
-                            name="CIF"
-                            type="text"
-                            // value={normalForm['CIF']}
-                            onChange={handleInputChange}
-                        />
+                        
+                        <Input id="CIF" name="CIF" placeholder="C.I.F" type="text"  value={normalForm['CIF']}  onChange={handleInputChange} label="C.I.F"/>
 
                     </div>
                     <div className="col-md-3">

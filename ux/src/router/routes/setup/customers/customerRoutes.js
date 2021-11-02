@@ -11,62 +11,110 @@ const customerRoutes = [
   {
     path: '/setup/customer/customerType',
     exact: true,
-    component: () => <CustomerTypeScreenList titulo={'Tipos de cliente'} />
+    component: () => <CustomerTypeScreenList titulo={'Tipos de cliente'} />,
+    meta: {
+      action: 'read',
+      resource: 'customerType'
+    }
   },
   {
     path: '/setup/customer/customerType/add',
     exact: true,
-    component: () => <CustomerTypeFormScreen />
+    component: () => <CustomerTypeFormScreen />,
+    meta: {
+      action: 'insert',
+      resource: 'customerType'
+    }
   },
   {
     path: '/setup/customer/customerType/edit/:id',
     exact: true,
-    component: () => <CustomerTypeFormScreen />
+    component: () => <CustomerTypeFormScreen />,
+    meta: {
+      action: 'update',
+      resource: 'customerType'
+    }
   },
   {
     path: '/setup/customer/category',
     exact: true,
-    component: () => <CustomerCategoryScreenList titulo={'Categorias de cliente'} />
+    component: () => <CustomerCategoryScreenList titulo={'Categorias de cliente'} />,
+    meta: {
+      action: 'read',
+      resource: 'customerCategory'
+    }
   },
   {
     path: '/setup/customer/category/add',
     exact: true,
-    component: () => <CustomerCategoryFormScreen />
+    component: () => <CustomerCategoryFormScreen />,
+    meta: {
+      action: 'insert',
+      resource: 'customerCategory'
+    }
   },
   {
     path: '/setup/customer/category/edit/:id',
     exact: true,
-    component: () => <CustomerCategoryFormScreen />
+    component: () => <CustomerCategoryFormScreen />,
+    meta: {
+      action: 'update',
+      resource: 'customerCategory'
+    }
   },
   {
     path: '/setup/customer/activity',
     exact: true,
-    component: () => <ActivityScreenList titulo={'Actividades'} />
+    component: () => <ActivityScreenList titulo={'Actividades'} />,
+    meta: {
+      action: 'read',
+      resource: 'activity'
+    }
   },
   {
     path: '/setup/customer/activity/add',
     exact: true,
-    component: () => <ActivityFormScreen />
+    component: () => <ActivityFormScreen />,
+    meta: {
+      action: 'insert',
+      resource: 'activity'
+    }
   },
   {
     path: '/setup/customer/activity/edit/:id',
     exact: true,
-    component: () => <ActivityFormScreen />
+    component: () => <ActivityFormScreen />,
+    meta: {
+      action: 'update',
+      resource: 'activity'
+    }
   },
   {
     path: '/setup/customer/origin',
     exact: true,
-    component: () => <OriginScreenList titulo={'Origenes'} />
+    component: () => <OriginScreenList titulo={'Origenes'} />,
+    meta: {
+      action: 'read',
+      resource: 'origin'
+    }
   },
   {
     path: '/setup/customer/origin/add',
     exact: true,
-    component: () => <OriginFormScreen />
+    component: () => <OriginFormScreen />,
+    meta: {
+      action: 'insert',
+      resource: 'origin'
+    }
   },
   {
     path: '/setup/customer/origin/edit/:id',
     exact: true,
-    component: () => <OriginFormScreen />
+    component: () => <OriginFormScreen />,
+    meta: {
+      action: 'update',
+      resource: 'origin'
+    }
   }
 ]
 

@@ -7,6 +7,7 @@ import { paymentMethodsList } from '@fixed/setup/general/paymentMethods/paymentM
 import { handleCleanForm } from '../../../../redux/actions/normalForm'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { cleanFormValidator } from '../../../../redux/actions/formValidator'
 
 export const PaymentMethodsScreenList = ({titulo}) => {
 
@@ -15,7 +16,8 @@ export const PaymentMethodsScreenList = ({titulo}) => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('PaymentMethods'))   
+        dispatch(startLoadingTable('PaymentMethods'))
+        dispatch(cleanFormValidator())    
     }, [])
 
     return (

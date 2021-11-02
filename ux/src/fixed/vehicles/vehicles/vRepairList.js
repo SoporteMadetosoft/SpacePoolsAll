@@ -10,8 +10,8 @@ import { Link } from "react-router-dom"
 import { datetimeToEuropeDate } from "../../../utility/helpers/dates"
 import { changeToEuro } from "../../../utility/helpers/converterEuros"
 
-
-
+import { useContext } from "react"
+import { AbilityContext } from '@src/utility/context/Can'
 
 export const vRepairList = [
     {
@@ -79,6 +79,7 @@ export const vRepairList = [
 
             const dispatch = useDispatch()
             const { id } = useParams()
+            const ability = useContext(AbilityContext)
 
             return (
                 <div className='d-flex'>
@@ -87,21 +88,24 @@ export const vRepairList = [
                             <MoreVertical size={15} />
                         </DropdownToggle>
                         <DropdownMenu right>
-                            <Link to={`./${id}/edit/${row.id}`}>
-                                <DropdownItem tag='a' href='/' className='w-100'>
-                                    <FileText size={15} />
-                                    <span className='align-middle ml-50'>Detalles</span>
-                                </DropdownItem>
-                            </Link>
-
-                            <Link onClick={(e) => {
-                                dispatch(startDeleteRepairRegister(row.id, id, 'VRepair'))
-                            }}>
-                                <DropdownItem tag='a' href='/' className='w-100'>
-                                    <Trash size={15} />
-                                    <span className='align-middle ml-50'>Eliminar</span>
-                                </DropdownItem>
-                            </Link>
+                            {ability.can('update', 'vehicles') && (
+                                <Link to={`./${id}/edit/${row.id}`}>
+                                    <DropdownItem tag='a' href='/' className='w-100'>
+                                        <FileText size={15} />
+                                        <span className='align-middle ml-50'>Detalles</span>
+                                    </DropdownItem>
+                                </Link>
+                            )}
+                            {ability.can('delete', 'vehicles') && (
+                                <Link onClick={(e) => {
+                                    dispatch(startDeleteRepairRegister(row.id, id, 'VRepair'))
+                                }}>
+                                    <DropdownItem tag='a' href='/' className='w-100'>
+                                        <Trash size={15} />
+                                        <span className='align-middle ml-50'>Eliminar</span>
+                                    </DropdownItem>
+                                </Link>
+                            )}
                         </DropdownMenu>
                     </UncontrolledDropdown>
                 </div>

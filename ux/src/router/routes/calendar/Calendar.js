@@ -4,7 +4,11 @@ const CalendarRoutes = [
   {
     path: '/calendar',
     exact: true,
-    component: () => <CalendarComponent />
+    component: () => <CalendarComponent />,
+    meta: {
+      action: 'read',
+      resource: 'calendar'
+    }
   }
 ]
 

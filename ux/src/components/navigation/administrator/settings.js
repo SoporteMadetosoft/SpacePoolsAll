@@ -40,7 +40,7 @@ export default [
         ]
       },
       {
-        id: 'customer',
+        id: 'setupCustomers',
         title: 'Clientes',
         icon: <FontAwesomeIcon icon={faUser} />,
         children: [
@@ -71,7 +71,7 @@ export default [
         ]
       },
       {
-        id: 'vendors',
+        id: 'setupVendors',
         title: 'Proveedores',
         icon: <FontAwesomeIcon icon={faBoxes} />,
         children: [
@@ -84,7 +84,7 @@ export default [
         ]
       },
       {
-        id: 'vehicles',
+        id: 'setupVehicles',
         title: 'Vehículos',
         icon: <FontAwesomeIcon icon={faTruckMoving} />,
         children: [
@@ -103,7 +103,7 @@ export default [
         ]
       },
       {
-        id: 'items',
+        id: 'setupItems',
         title: 'Artículos',
         icon: <FontAwesomeIcon icon={faCube} />,
         children: [
@@ -121,9 +121,6 @@ export default [
           }
         ]
       }
-
-
-
     ]
   }
 ]

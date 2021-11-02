@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment, useState, forwardRef } from 'react'
+import { Fragment, useState, forwardRef, useContext } from 'react'
 
 // ** Third Party Components
 import ReactPaginate from 'react-paginate'
@@ -20,8 +20,11 @@ import {
   Col
 } from 'reactstrap'
 import { useHistory } from 'react-router'
+import { AbilityContext } from '@src/utility/context/Can'
+
 
 import { Link, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 // ** Bootstrap Checkbox Component
 const BootstrapCheckbox = forwardRef(({ onClick, ...rest }, ref) => (
@@ -38,6 +41,15 @@ export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) =>
   const [searchValue, setSearchValue] = useState('')
   const [filteredData, setFilteredData] = useState([])
   const history = useHistory()
+  const ability = useContext(AbilityContext)
+
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toLowerCase() + string.slice(1)
+  }
+
+  const { endPoint } = useSelector(state => state.registrosReducer)
+  const can = endPoint !== null ? capitalizeFirstLetter(endPoint) : null
 
   const searchableColumns = () => {
     const columnas = []
@@ -53,7 +65,6 @@ export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) =>
   const handleFilter = e => {
     const value = e.target.value
     let updatedData = []
-    console.log(value)
     setSearchValue(value)
 
     if (value.length) {
@@ -65,7 +76,6 @@ export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) =>
 
         schCols.columnas.forEach(col => {
           const colValue = (item[col] !== null && item[col] !== undefined) ? item[col].toString() : ''
-          console.log(colValue)
           const startsWith = colValue.toLowerCase().startsWith(value.toLowerCase())
           const includes = colValue.toLowerCase().includes(value.toLowerCase())
           if (startsWith || (!startsWith && includes)) {
@@ -119,7 +129,6 @@ export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) =>
     const columnDelimiter = ','
     const lineDelimiter = '\n'
     const keys = Object.keys(data[0])
-    console.log(array)
 
     result = ''
     result += keys.join(columnDelimiter)
@@ -185,7 +194,8 @@ export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) =>
               ) : null
             }
             {
-              add === 1 ? (
+
+              add === 1 && (can && ability.can('insert', can)) ? (
                 <Link to={`${useLocation().pathname}/add`}>
                   <Button className='ml-2' color='primary'>
                     <Plus size={15} />

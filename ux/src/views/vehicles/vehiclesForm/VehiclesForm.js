@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
-import { useForm } from 'react-hook-form'
-
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
 
 import axios from 'axios'
 
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
-import ReactSelect from 'react-select'
+import { Form } from 'reactstrap'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 
@@ -30,8 +25,8 @@ import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { VehicleDocForm } from './VehicleDocForm'
 
 import '../styles/form.css'
-import { validator } from '../../../utility/formValidator/ValidationTypes'
-import { setSchema } from '../../../redux/actions/formValidator'
+import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
+import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 
 // const ValidationSchema = yup.object().shape({
 //     plate: yup.string().required(),
@@ -40,12 +35,14 @@ import { setSchema } from '../../../redux/actions/formValidator'
 // })
 
 const formSchema = {
-    matricula_vehiuclo: { validations: [validator.isRequired] },
-    num_bastidor: { validations: [validator.isRequired] },
-    estado: { validations: [validator.isRequired] },
-    Transportista: { validations: [validator.isRequired] },
-    Remolque: { validations: [validator.isRequired] },
-    estado: { validations: [validator.isRequired] }
+
+    plate: { validations: [validator.isRequired] },
+    numeroBastidor: { validations: [validator.isRequired] },
+    marca: { validations: [validator.isRequired] },
+    model: { validations: [validator.isRequired] },
+    idStatus: { validations: [validator.isRequired] },
+    idCarrier: { validations: [validator.isRequired] }
+
 }
 
 
@@ -71,9 +68,9 @@ export const VechiclesForm = () => {
     const form = useSelector(state => state.normalForm)
     const realFilePath = form.filePath ? form.filePath : filePath
 
-    const { normalForm, selectReducer } = useSelector(state => state)
+    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
 
-//    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+    //    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { observations, model } = normalForm
     const { Brand, Carriers } = selectReducer
@@ -84,19 +81,20 @@ export const VechiclesForm = () => {
         dispatch(startAddSelectStatus('Carriers', 'Carriers', 'name'))
     }, [])
 
+
+    const handleSelectChange = (name, { value, label }) => {
+        dispatch(handleChangeController(name, { id: value, name: label }))
+    }
+
     const handleLoadModels = async (obj) => {
         const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/model/selectByIdBrand/${obj.value}`)
         dispatch(addSelectOptions('Model', data.map(option => ({ label: option.name, value: option.id }))))
         dispatch(handleChangeController('model', ''))
+        handleSelectChange('brand', obj)
     }
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
-    }
-
-
-    const handleSelectChange = (name, { value, label }) => {
-        dispatch(handleChangeController(name, { id: value, name: label }))
     }
 
 
@@ -113,8 +111,6 @@ export const VechiclesForm = () => {
             brandValue = model && deconstructSelect(model.idBrand)
         }
     }
-
-    const valueCarrier = normalForm['idCarrier'] ? deconstructSelect(normalForm['idCarrier']) : ''
 
     const preSubmit = (filePath2) => {
         return new Promise(async (resolve, reject) => {
@@ -145,9 +141,10 @@ export const VechiclesForm = () => {
         })
     }
 
-    const submit = async () => {
+    const submit = async (e) => {
+        e.preventDefault()
 
-        const errors = validate(formValidator.schema, value)
+        const errors = validate(formValidator.schema, form)
 
         if (Object.keys(errors).length !== 0) {
             dispatch(setErrors(errors))
@@ -164,7 +161,10 @@ export const VechiclesForm = () => {
                     model: exceptionController(value.model),
                     idCarrier: exceptionController(value.idCarrier),
                     idTrailer: exceptionController(value.idTrailer),
-                    filePath: filePath2
+                    filePath: filePath2,
+                    plate: exceptionController(value.plate),
+                    numeroBastidor: exceptionController(value.numeroBastidor),
+                    marca: exceptionController(value.numeroBastidor)
                 }
 
                 save('Vehicles', id, prettyForm)
@@ -189,24 +189,12 @@ export const VechiclesForm = () => {
                         />
                     </div>
                     <div className="col-md-2">
-                        <label className="control-label">Matrícula</label>
-                        <InputValid
-                            id="plate"
-                            name="plate"
-                            type="text"
-                            placeholder="Matrícula"
-                            onChange={handleInputChange}
-                        />
+                        <Input required="true" type="text" name="plate" label="Matrícula" endpoint="Vehicles" />
+
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Número de bastidor</label>
-                        <InputValid
-                            id="frameNumber"
-                            name="frameNumber"
-                            type="text"
-                            placeholder="Número de bastidor"
-                            onChange={handleInputChange}
-                        />
+                        <Input required="true" type="text" name="numeroBastidor" label="Número de bastidor" />
+
                     </div>
                     <div className="col-md-3">
                         <Input name="policyNumber" label="Número de poliza" />
@@ -215,17 +203,8 @@ export const VechiclesForm = () => {
                         <Input name="tachograph" label="Tacografo del camión" />
                     </div>
                     <div className="col-md-4">
-                        <label className="control-label">Transportista</label>
-                        <ReactSelect
-                            id="idCarrier"
-                            name="idCarrier"
-                            options={Carriers}
-                            value={valueCarrier}
-                            styles={placeholderStyles}
-                            placeholder="Transportista"
-                            
-                        />
-                        
+                        <Select required="true" name="idCarrier" label="Transportista" endpoint="Carriers" />
+
                     </div>
                     <div className="col-md-2">
                         <Input name="tare" label="Tara" />
@@ -235,18 +214,23 @@ export const VechiclesForm = () => {
                     </div>
 
                     <div className="col-md-2">
-                        <label className="control-label">Marca</label>
-                        <ReactSelect
-                            placeholder="Marca"
+                        <Select
+                            required="true"
                             name="brand"
-                            value={brandValue}
-                            options={Brand}
-                            onChange={(obj) => {
+                            label="Marca"
+                            onSelect={(obj) => {
                                 handleLoadModels(obj)
-                            }} />
+                            }}
+                            endpoint="Brand"
+                        />
                     </div>
                     <div className="col-md-2">
-                        <Select name="model" label="Modelo" endpoint="Model" />
+                        <Select
+                            required="true"
+                            name="model"
+                            label="Modelo"
+                            endpoint="Model"
+                        />
                     </div>
                     <div className="col-md-2">
                         <Select name="idTrailer" label="Remolque" endpoint="Trailers" labelName="plate" />
@@ -258,7 +242,7 @@ export const VechiclesForm = () => {
                         <Input name="maintenanceDate" type="date" label="Fecha de mantenimiento" />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idStatus" label="Estado" endpoint="Status" />
+                        <Select required="true" name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-12">
                         <label className="control-label">Observaciones</label>

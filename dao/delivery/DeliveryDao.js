@@ -52,7 +52,6 @@ class DeliveryDao extends GenericDao {
         const deliveryStart = `${this.datetimeToEuropeDate(new Date(deliveryDate))} ${deliverySchedulerStart}`
         const deliveryEnd = `${this.datetimeToEuropeDate(new Date(deliveryDate))} ${deliverySchedulerEnd}`
         const idStatus = await this.StatusDao.findById(data.idStatus)
-
         const list = {
             id: data.id,
             idOrder: data.idOrder,
@@ -65,6 +64,44 @@ class DeliveryDao extends GenericDao {
             carrier: carrier !== undefined ? carrier.name : ''
         }
         return list
+    }
+
+    comprobarCarrier(idUser) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT id FROM carriers WHERE idUser = ?', [idUser], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    let isCarrier = false
+                    for (const res of result) {
+                        isCarrier = true
+                    }
+                    resolve(isCarrier)
+                }
+            })
+        })
+    }
+
+    async findDeliveryByUser(idUser) {
+        const isCarrier = await this.comprobarCarrier(idUser)
+        if (isCarrier === true) {
+            // console.log(`SELECT * FROM delivery WHERE idCarrier = (SELECT id FROM carriers WHERE idUser = ${idUser})`)
+            return new Promise((resolve, reject) => {
+                this.db.query('SELECT * FROM delivery WHERE idCarrier = (SELECT id FROM carriers WHERE idUser = ?)', [idUser], async (err, result) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        let objList = []
+                        for (const res of result) {
+                            objList.push(await this.mountList(res))
+                        }
+                        resolve(objList)
+                    }
+                })
+            })
+        } else {
+            return await this.findAll()
+        }
     }
 
 }

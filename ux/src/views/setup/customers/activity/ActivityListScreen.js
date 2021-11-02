@@ -7,6 +7,7 @@ import { activityList } from '@fixed/setup/customers/activity/activityList'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { handleCleanForm } from '../../../../redux/actions/normalForm'
+import { cleanFormValidator } from '../../../../redux/actions/formValidator'
 
 export const ActivityScreenList = ({titulo}) => {
 
@@ -15,7 +16,8 @@ export const ActivityScreenList = ({titulo}) => {
 
     useEffect(() => {
         dispatch(handleCleanForm())
-        dispatch(startLoadingTable('Activity'))   
+        dispatch(startLoadingTable('Activity'))
+        dispatch(cleanFormValidator())    
     }, [])
 
     return (

@@ -1,23 +1,25 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { handleChangeController, handleStartEditing } from '../../../../../redux/actions/normalForm'
-import { save } from '../../../../../utility/helpers/Axios/save'
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-import { useForm } from 'react-hook-form'
-import { ActionButtons } from '../../../../../components/actionButtons/ActionButtons'
 import { useHistory, useParams } from 'react-router'
-import ReactSelect from 'react-select'
+import { useDispatch, useSelector } from 'react-redux'
+import { Form } from 'reactstrap'
+
+import { handleChangeController } from '@redux/actions/normalForm'
+import { save } from '../../../../../utility/helpers/Axios/save'
+import { ActionButtons } from '@cc/actionButtons/ActionButtons'
 import { startAddSelectOptions } from '../../../../../redux/actions/selects'
 import { deconstructSelect } from '../../../../../utility/helpers/deconstructSelect'
 import { exceptionController } from '../../../../../utility/helpers/undefinedExceptionController'
+import { validate, validator } from '../../../../../utility/formValidator/ValidationTypes'
+import { Select } from '../../../../../components/form/inputs/Select'
+import { Input } from '../../../../../components/form/inputs/Input'
+import { setErrors, setSchema } from '../../../../../redux/actions/formValidator'
 
 
-const ValidationSchema = yup.object().shape({
-    name: yup.string().required(),
-    valueBrand: yup.string().required()
-})
+const formSchema = {
+    name: { validations: [validator.isRequired] },
+    idBrand: { validations: [validator.isRequired] }
+}
+
 
 const placeholderStyles = {
     placeholder: (defaultStyles) => {
@@ -31,18 +33,17 @@ const placeholderStyles = {
 export const ModelForm = () => {
     const dispatch = useDispatch()
     const history = useHistory()
+    const { id } = useParams()
+
+    const form = useSelector(state => state.normalForm)
+
+    const { normalForm, formValidator } = useSelector(state => state)
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'Brand'))
+        dispatch(setSchema(formSchema))
     }, [])
 
-    const { id } = useParams()
-
-    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
-
-    const { normalForm, selectReducer } = useSelector(state => state)
-
-    const { Brand } = selectReducer
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
@@ -53,66 +54,37 @@ export const ModelForm = () => {
     }
 
 
-    const submit = async () => {
-        const prettyForm = {
-            ...normalForm,
-            idBrand: exceptionController(normalForm.idBrand)
+    const submit = async (e) => {
+        e.preventDefault()
+
+        const errors = validate(formValidator.schema, form)
+
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
+
+        } else {
+            const prettyForm = {
+                ...normalForm,
+                idBrand: exceptionController(normalForm.idBrand),
+                name: exceptionController(normalForm.name)
+            }
+            save('Model', id, prettyForm)
+            history.push('/setup/vehicles/model')
         }
-        save('Model', id, prettyForm)
-        history.push('/setup/vehicles/model')
     }
 
 
     const valueBrand = normalForm['idBrand'] ? deconstructSelect(normalForm['idBrand']) : ''
 
     return (
-        <Form onSubmit={handleSubmit(submit)}>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-4">
-
-                        <label className="control-label">Marca</label>
-                        <ReactSelect
-                            id="idBrand"
-                            name="idBrand"
-                            options={Brand}
-                            value={valueBrand}
-                            styles={placeholderStyles}
-                            placeholder="Marca"
-                            onChange={handleSelectChange}
-                        />
-                         <InputValid
-                                    id="valueBrand"
-                                    name="valueBrand"
-                                    tabIndex={-1}
-                                    autoComplete="off"
-                                    value={valueBrand}
-                                    innerRef={register({ required: true })}
-                                    invalid={errors.valueBrand && true}
-                                    style={{ opacity: 0, height: 0, position: 'absolute' }}
-                                    onChange={handleInputChange}
-                                />
-                        {errors && errors.valueBrand && (
-                            <>
-                           
-                                <FormFeedback>Marca requerida</FormFeedback>
-                            </>
-                        )}
+                        <Select required="true" name="idBrand" label="Marca" endpoint="Brand" onChange={handleSelectChange} />
                     </div>
                     <div className="col-md-4">
-                        <label className="control-label">Modelo</label>
-                        <InputValid
-                            id="name"
-                            name="name"
-                            type="text"
-                            value={normalForm['name']}
-                            placeholder="Modelo"
-                            innerRef={register({ required: true })}
-                            invalid={errors.name && true}
-                            onChange={handleInputChange}
-                        />
-                        {errors && errors.name && <FormFeedback>Modelo requerido</FormFeedback>}
-
+                        <Input required="true" name="name" type="text" label="Modelo" onChange={handleInputChange} />
                     </div>
                 </div>
             </div>

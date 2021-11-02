@@ -8,6 +8,7 @@ import { startLoadingTable } from '@redux/actions/custom'
 import { handleCleanForm } from '../../redux/actions/normalForm'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { cleanFormValidator } from '../../redux/actions/formValidator'
 
 export const VehicleReparationListScreen = ({ titulo }) => {
 
@@ -21,6 +22,7 @@ export const VehicleReparationListScreen = ({ titulo }) => {
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Vehicles'))
+        dispatch(cleanFormValidator())
     }, [])
 
     return (

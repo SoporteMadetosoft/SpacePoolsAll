@@ -12,13 +12,12 @@ export const RolesFormScreen = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
 
-    const { normalForm: form, permisosReducer } = useSelector(state => state)
+    const { normalForm: form } = useSelector(state => state)
 
     useEffect(() => {
         if (id) {
             dispatch(handleStartEditing('Roles', id))
             dispatch(handleFillPermissions('Roles', id))
-            // dispatch(setInitialCanvas())
         } else {
             dispatch(setInitialPermissions())
         }

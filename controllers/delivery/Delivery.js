@@ -5,9 +5,11 @@ const deliveryDao = new DeliveryDao()
 
 exports.list = async (req, res) => {
     try {
+        const { idUser } = req.body
+
         res.json({
             ok: true,
-            data: await deliveryDao.findAll()
+            data: await deliveryDao.findDeliveryByUser(idUser)
         })
 
     } catch (error) {

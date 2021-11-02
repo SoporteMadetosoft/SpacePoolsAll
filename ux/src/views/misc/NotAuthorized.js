@@ -1,10 +1,21 @@
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { handleLogout } from '../authentication/redux/actions'
+
 import { Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
+
 import notAuthImg from '@src/assets/images/pages/not-authorized.svg'
 
 import '@styles/base/pages/page-misc.scss'
 
 const NotAuthorized = () => {
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(handleLogout())
+  }, [])
+
   return (
     <div className='misc-wrapper'>
       <div className='misc-inner p-2 p-sm-3'>

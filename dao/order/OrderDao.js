@@ -37,7 +37,7 @@ class OrderDao extends GenericDao {
             orderDate: this.datetimeToDate(data.orderDate),
             productionDate: this.datetimeToDate(data.productionDate),
             deliveryDate: this.datetimeToDate(data.deliveryDate),
-            idPool: { id: data.idPool, name: (await this.PoolDao.findPoolNameBy(data.idPool)) },
+            idPool: { id: data.idPool, fabricationName: (await this.PoolDao.findPoolNameBy(data.idPool)) },
             idTax: { id: data.idTax, name: (await this.TaxesDao.findTaxNameBy(data.idTax)) },
             idCustomer: { id: data.idCustomer, comercialName: (await this.CustomerDao.findCustomerNameBy(data.idCustomer)) },
             canvasItems: await this.CanvasDao.findByOrderId(data.id),

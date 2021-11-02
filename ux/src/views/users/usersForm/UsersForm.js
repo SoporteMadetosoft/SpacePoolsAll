@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
@@ -15,9 +15,15 @@ import { exceptionController } from '../../../utility/helpers/undefinedException
 import generator from 'generate-password'
 import InputPasswordToggle from '@components/input-password-toggle'
 import { toast } from 'react-toastify'
-import { Check } from 'react-feather'
-import { Avatar } from 'antd'
+import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
+import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 
+const formSchema = {
+    login: { validations: [validator.isRequired] },
+    fullname: { validations: [validator.isRequired] },
+    idRole: { validations: [validator.isRequired] },
+    idStatus: { validations: [validator.isRequired] }
+}
 
 export const UsersForm = () => {
     const dispatch = useDispatch()
@@ -26,9 +32,13 @@ export const UsersForm = () => {
     const { id } = useParams()
 
     const { normalForm } = useSelector(state => state)
+    const { formValidator } = useSelector(state => state)
 
     const pass = normalForm.password ? normalForm.password : ''
 
+    useEffect(() => {
+        dispatch(setSchema(formSchema))
+    }, [])
 
     const SuccessProgressToast = () => (
         <>
@@ -64,9 +74,27 @@ export const UsersForm = () => {
 
     const submit = async (e) => {
         e.preventDefault()
-        let error
-        if (id) {
-            if (normalForm.password) {
+        const errors = validate(formValidator.schema, normalForm)
+
+
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
+
+        } else {
+            let error
+            if (id) {
+                if (normalForm.password) {
+                    if (normalForm.password !== normalForm.confirmPassword) {
+                        error = '¡Las contraseñas no coinciden!'
+                        dispatch(handleChangeController('password', ''))
+                        dispatch(handleChangeController('confirmPassword', ''))
+                    } else if (normalForm.password.length < 8) {
+                        error = '¡Contraseña demasiado corta!'
+                        dispatch(handleChangeController('password', ''))
+                        dispatch(handleChangeController('confirmPassword', ''))
+                    }
+                }
+            } else {
                 if (normalForm.password !== normalForm.confirmPassword) {
                     error = '¡Las contraseñas no coinciden!'
                     dispatch(handleChangeController('password', ''))
@@ -76,39 +104,29 @@ export const UsersForm = () => {
                     dispatch(handleChangeController('password', ''))
                     dispatch(handleChangeController('confirmPassword', ''))
                 }
-            }
-        } else {
-            if (normalForm.password !== normalForm.confirmPassword) {
-                error = '¡Las contraseñas no coinciden!'
-                dispatch(handleChangeController('password', ''))
-                dispatch(handleChangeController('confirmPassword', ''))
-            } else if (normalForm.password.length < 8) {
-                error = '¡Contraseña demasiado corta!'
-                dispatch(handleChangeController('password', ''))
-                dispatch(handleChangeController('confirmPassword', ''))
-            }
 
-            const { data } = await axios.post(`${process.env.REACT_APP_HOST_URI}${endPoints['Users']}/checkUser`, { username: normalForm.login })
-            if (data.ok === false) {
-                error = '¡Este usuario ya está introducido!'
-                dispatch(handleChangeController('login', ''))
+                const { data } = await axios.post(`${process.env.REACT_APP_HOST_URI}${endPoints['Users']}/checkUser`, { username: normalForm.login })
+                if (data.ok === false) {
+                    error = '¡Este usuario ya está introducido!'
+                    dispatch(handleChangeController('login', ''))
+                }
             }
-        }
-        if (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: error
-            })
-        } else {
-            const prettyForm = {
-                ...normalForm,
-                idStatus: exceptionController(normalForm.idStatus),
-                idRole: exceptionController(normalForm.idRole)
+            if (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error
+                })
+            } else {
+                const prettyForm = {
+                    ...normalForm,
+                    idStatus: exceptionController(normalForm.idStatus),
+                    idRole: exceptionController(normalForm.idRole)
+                }
+                delete prettyForm.confirmPassword
+                save('Users', id, prettyForm)
+                history.push('/users')
             }
-            delete prettyForm.confirmPassword
-            save('Users', id, prettyForm)
-            history.push('/users')
         }
     }
 

@@ -87,20 +87,21 @@ export const TrailersForm = () => {
         dispatch(setSchema(formSchema))
     }, [])
 
+    const handleSelectChange = ({ value, label }) => {
+        dispatch(handleChangeController('model', { id: value, name: label }))
+    }
 
     const handleLoadModels = async (obj) => {
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/brandModel/selectByIdBrand/${obj.value}`)
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/model/selectByIdBrand/${obj.value}`)
         dispatch(addSelectOptions('Model', data.map(option => ({ label: option.name, value: option.id }))))
         dispatch(handleChangeController('model', ''))
+        handleSelectChange('brand', obj)
     }
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
-    const handleSelectChange = ({ value, label }) => {
-        dispatch(handleChangeController('model', { id: value, name: label }))
-    }
 
     const preSubmit = (filePath2) => {
         return new Promise(async (resolve, reject) => {
@@ -150,7 +151,7 @@ export const TrailersForm = () => {
                     idStatus: exceptionController(value.idStatus),
                     model: exceptionController(value.model),
                     filePath: filePath2,
-                    idMatricula : exceptionController(value.idMatrucula),
+                    idMatricula: exceptionController(value.idMatrucula),
                     frame: exceptionController(value.frame)
                 }
 
@@ -185,10 +186,23 @@ export const TrailersForm = () => {
                         <Input name="policyNumber" label="Número de poliza" />
                     </div>
                     <div className="col-md-3">
-                        <Select required="true" name="marca" label="Marca" endpoint="Brand" />
+                        <Select
+                            required="true"
+                            name="brand"
+                            label="Marca"
+                            onSelect={(obj) => {
+                                handleLoadModels(obj)
+                            }}
+                            endpoint="Brand"
+                        />
                     </div>
                     <div className="col-md-3">
-                        <Select required="true" name="model" label="Modelo" endpoint="Model" />
+                        <Select
+                            required="true"
+                            name="model"
+                            label="Modelo"
+                            endpoint="Model"
+                        />
                     </div>
 
                     <div className="col-md-3">

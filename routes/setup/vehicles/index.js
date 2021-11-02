@@ -7,6 +7,6 @@ const express = require('express');
 const router = express.Router();
 
 router.use('/brand', require('./brand'));
-router.use('/brandModel', require('./model'));
+router.use('/model', require('./model'));
 
 module.exports = router;

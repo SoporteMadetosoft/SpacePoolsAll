@@ -1,14 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { GetSetNextId, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
 import React, { useEffect } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
 import { ItemsRepeater } from './ItemsRepeater'
 import { ExtraItemsRepeater } from './ExtraItemsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 import { OrderCanvas } from './OrderCanvas'
-import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
-import { createItemRepeatersByPool, handleAddCost, handleCalculateTotalCost, handleFillCustomerData } from '../../../redux/actions/orders'
-import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+import { createItemRepeatersByPool, handleCalculateTotalCost, handleFillCustomerData } from '../../../redux/actions/orders'
 import { ExtraRawsRepeater } from './ExtraRawsRepeater'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
@@ -16,56 +15,41 @@ import { exceptionController } from '../../../utility/helpers/undefinedException
 import { save } from '../../../utility/helpers/Axios/save'
 import { handleCleanUp } from '../../../redux/actions/fileUpload'
 import { Form } from 'reactstrap'
-
+import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 
 const formSchema = {
-    //piscina, cliente, fecha de entrega, fecha de pedido y fecha de produccion
     idCustomer: { validations: [validator.isRequired] },
     idPool: { validations: [validator.isRequired] },
     orderDate: { validations: [validator.isRequired] },
     productionDate: { validations: [validator.isRequired] },
     deliveryDate: { validations: [validator.isRequired] }
-
 }
 
 export const OrderForm = () => {
-
+    const { id } = useParams()
+    const history = useHistory()
     const { price } = useSelector(state => state.ordersReducer)
-
-    let { orderCode } = useSelector(state => state.normalForm)
-    const { orderDate } = useSelector(state => state.normalForm)
 
     const dispatch = useDispatch()
 
-    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
-    const { poolsOpt, taxesOpt, Customers } = selectReducer
+    const { normalForm, formValidator, canvasReducer } = useSelector(state => state)
+
     const { observations } = normalForm
 
-    const date = orderDate ? orderDate : new Date()
-
-    const idTax = normalForm['idTax'] ? deconstructSelect(normalForm['idTax']) : ''
-    const idPool = normalForm['idPool'] ? deconstructSelect(normalForm['idPool']) : ''
-    const idCustomer = normalForm['idCustomer'] ? deconstructSelect(normalForm['idCustomer'], 'comercialName') : ''
     const orderDate2 = normalForm['orderDate'] ? normalForm['orderDate'] : ''
     const productionDate = normalForm['productionDate'] ? normalForm['productionDate'] : ''
     const deliveryDate = normalForm['deliveryDate'] ? normalForm['deliveryDate'] : ''
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
-
     }
 
-    const handleSelectChange = (name, { value, label }) => {
-        dispatch(handleChangeController(name, { id: value, comercialName: label }))
+    const handleSelectChange = (name, { value, label }, labelName = 'name') => {
+        dispatch(handleChangeController(name, { id: value, [labelName]: label }))
         dispatch(handleFillCustomerData(value))
     }
 
     useEffect(() => {
-        dispatch(startAddSelectOptions('Pools', 'poolsOpt', 'fabricationName'))
-        dispatch(startAddSelectOptions('Taxes', 'taxesOpt'))
-        dispatch(startAddSelectStatus('Customers', 'Customers', 'comercialName'))
-
-
 
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Orders", 'orderCode'))
@@ -77,17 +61,16 @@ export const OrderForm = () => {
             //  price = normalForm.price
             //  dispatch(handleAddCost(price))
         }
-    }, [])
+    }, [formSchema])
 
     const preparePrice = () => {
         dispatch(handleCalculateTotalCost("extraItems", ""))
     }
 
-    const setPoolInRedux = (obj) => {
+    const setPoolInRedux = (obj, labelName = 'name') => {
         dispatch(createItemRepeatersByPool(obj.value))
-        dispatch(handleChangeController("idPool", { id: obj.value, name: obj.label }))
+        dispatch(handleChangeController("idPool", { id: obj.value, [labelName]: obj.label }))
         preparePrice()
-
     }
 
     const setIvaInRedux = (obj) => {
@@ -99,63 +82,55 @@ export const OrderForm = () => {
         e.preventDefault()
 
         const errors = validate(formValidator.schema, normalForm)
-        console.log(errors)
 
         if (Object.keys(errors).length !== 0) {
             dispatch(setErrors(errors))
-            console.log('error')
         } else {
-
             const form2 = dispatch(handleGetForm())
             form2.then(async (value) => {
                 const prettyForm = {
                     ...value,
-                    customerData: exceptionController(value.customerData),
-                    extraItems: exceptionController(value.extraItems),
-                    baseItems: exceptionController(value.baseItems),
-                    orderDate: exceptionController(value.orderCode),
-                    productionDate: exceptionController(value.productionDate),
-                    deliveryDate: exceptionController(value.deliveryDate),
+                    customerData: {
+                        deliveryAddress: value.deliveryAddress,
+                        phone: value.phone,
+                        email: value.email
+                    },
                     idPool: exceptionController(value.idPool),
                     idTax: exceptionController(value.idTax),
                     idCustomer: exceptionController(value.idCustomer),
-                    canvasItems: exceptionController(value.canvasItems)
+                    baseItems: value.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity, idColor: exceptionController(bI.idColor) })),
+                    extraItems: value.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity, idColor: exceptionController(eI.idColor) })),
+                    extraRaws: value.extraRaws.map(eR => ({ idItem: eR.idItem.id, quantity: eR.quantity, idColor: exceptionController(eR.idColor) })),
+                    canvas: canvasReducer.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, rotation: el.rotation }))
                 }
-                 save('Orders', id, prettyForm)
+                delete prettyForm.deliveryAddress
+                delete prettyForm.phone
+                delete prettyForm.email
+
+                save('Orders', id, prettyForm)
                 dispatch(handleCleanUp())
-               history.push('/orders')
+                history.push('/orders')
             })
-
         }
-
     }
-
 
     return (
         <Form onSubmit={submit}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <label className="control-label">Nº Pedido</label>
-                        <Input
-                            className={`form-control`}
-                            name="orderCode"
-                            value={orderCode}
-                            readOnly
-                        />
+                        <Input name="orderCode" label="Nº Pedido" readonly={'readonly'} />
                     </div>
                     <div className="col-md-4">
-
                         <Select
-                            placeholder="Cliente"
                             label="Cliente"
                             name="idCustomer"
-                            value={idCustomer}
-                            options={Customers}
-                            onChange={(obj) => {
-                                handleSelectChange('idCustomer', obj)
+                            onSelect={(obj) => {
+                                handleSelectChange('idCustomer', obj, 'comercialName')
                             }}
-                             />
+                            endpoint='Customers'
+                            labelName='comercialName'
+                        />
                     </div>
                     <div className="col-md-2">
                         <Input name="deliveryAddress" label="Dirección" />
@@ -169,50 +144,45 @@ export const OrderForm = () => {
 
                     <div className="col-md-2">
                         <Select
-                            placeholder="Piscina"
                             name="idPool"
                             label="Piscina"
-                            value={idPool}
-                            options={poolsOpt}
-                            onChange={(obj) => {
-                                setPoolInRedux(obj)
-                            }} />
+                            onSelect={(obj) => {
+                                setPoolInRedux(obj, 'fabricationName')
+                            }}
+                            endpoint='Pools'
+                            labelName='fabricationName'
+                        />
                     </div>
-
-
                     <div className="col-md-2">
-
-                        <label className="control-label">IVA</label>
                         <Select
-                            placeholder="IVA"
                             name="idTax"
-                            value={idTax}
-                            options={taxesOpt}
-                            onChange={(obj) => {
+                            label="IVA"
+                            onSelect={(obj) => {
                                 setIvaInRedux(obj)
-                            }} />
+                            }}
+                            endpoint='Taxes'
+                        />
 
                     </div>
 
                     <div className="col-md-2">
-                        <label className="control-label">Precio</label>
+                        <label className="control-label d-flex">Precio</label>
                         <Input
                             className={`form-control`}
                             name="price"
                             value={price}
-                            readOnly
+                            readonly='readonly'
                         />
                     </div>
                     <div className="col-md-2">
-                        <Input className="form-control" label="Fecha de pedido" type="date" name="orderDate" value={orderDate2} onChange={handleInputChange}
-                        />
+                        <Input className="form-control" label="Fecha de pedido" type="date" name="orderDate" value={orderDate2} onChange={handleInputChange} />
                     </div>
                     <div className="col-md-2">
                         <Input className="form-control" label="Fecha de producción" type="date" name="productionDate" value={productionDate} onChange={handleInputChange}
                         />
                     </div>
                     <div className="col-md-2">
-                        <Input className="form-control" label="Fecha de entrega" type="date" name="deliveryDate" value={deliveryDate} onChange={handleInputChange}/>
+                        <Input className="form-control" label="Fecha de entrega" type="date" name="deliveryDate" value={deliveryDate} onChange={handleInputChange} />
                     </div>
                     <div className="col-md-2">
                         <Input name="deliverySchedulerStart" type="time" label="Inicio de Horario de entrega" />
@@ -260,6 +230,7 @@ export const OrderForm = () => {
                     <OrderCanvas />
                 </div>
             </div>
+            <ActionButtons />
         </Form>
     )
 }

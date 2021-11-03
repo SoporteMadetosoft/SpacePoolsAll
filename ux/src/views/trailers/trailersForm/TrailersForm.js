@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
-import { useForm } from 'react-hook-form'
 
 import axios from 'axios'
 
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
-import ReactSelect from 'react-select'
+import { Form } from 'reactstrap'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 
@@ -40,15 +35,6 @@ const formSchema = {
     frame: { validations: [validator.isRequired] }
 }
 
-const placeholderStyles = {
-    placeholder: (defaultStyles) => {
-        return {
-            ...defaultStyles,
-            FontSize: '5px'
-        }
-    }
-}
-
 export const TrailersForm = () => {
 
     let { trailerCode } = useSelector(state => state.normalForm)
@@ -63,16 +49,12 @@ export const TrailersForm = () => {
 
     const realFilePath = form.filePath ? form.filePath : filePath
 
-    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
+    const { normalForm, formValidator } = useSelector(state => state)
 
     //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { observations, model } = normalForm
 
-    const { Brand, Model } = selectReducer
-
-    const valueModel = normalForm['model'] ? deconstructSelect(normalForm['model']) : ''
-    let brandValue
     if (id && model) {
         if (model.idBrand !== undefined) {
             brandValue = model && deconstructSelect(model.idBrand)
@@ -177,7 +159,7 @@ export const TrailersForm = () => {
                     </div>
                     <div className="col-md-3">
 
-                        <Select required="true" name="idMatricula" label="Matrícula del remolque" endpoint="Trailers" />
+                        <Input required="true" name="plate" label="Matrícula del remolque" />
                     </div>
                     <div className="col-md-3">
                         <Input required="true" name="frame" label="Número de bastidor" />

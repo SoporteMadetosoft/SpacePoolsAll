@@ -23,7 +23,7 @@ const setupEndpoints = {
     VendorType: '/setup/vendors/type',
 
     Brand: '/setup/vehicles/brand',
-    Model: '/setup/vehicles/brandModel',
+    Model: '/setup/vehicles/model',
 
     Place: '/setup/items/place',
     Colors: '/setup/items/colors'

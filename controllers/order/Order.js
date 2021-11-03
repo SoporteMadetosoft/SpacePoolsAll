@@ -81,6 +81,7 @@ exports.insert = async (req, res) => {
         delete order.customerData
         delete order.canvas
         delete order.baseItems
+
         const insert = await orderDao.insert(order)
 
         const customerData2 = {

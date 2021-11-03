@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
@@ -15,6 +15,10 @@ import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { undoMultiSelect } from '../../../utility/helpers/undoMultiSelect'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+import { ColorRepeater} from './ColorRepeater'
+import { FileContext } from '../../../utility/context/FileContext'
+import { CustomerDocForm } from '../../customers/customerForm/CustomerDocForm'
+import { colors } from '@material-ui/core'
 
 // const ValidationSchema = yup.object().shape({
 //     valueType: yup.string().required()
@@ -44,6 +48,9 @@ export const ItemForm = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
+    const [file, setFile] = useState('')
+    const { upload, filePath } = useSelector(state => state.fileUpload)
+
 
     const form = useSelector(state => state.normalForm)
 
@@ -92,7 +99,7 @@ export const ItemForm = () => {
                 itemType: exceptionController(form.itemType),
                 idFamily: exceptionController(form.idFamily),
                 idPlace: exceptionController(form.idPlace),
-                idColor: undoMultiSelect(form.idColor, 'idColor')
+                colors: form.color.map(color => ({ ...color,idColor : exceptionController(color.idColor)}))
             }
             save('Items', id, prettyForm)
             dispatch(handleCleanUp())
@@ -130,13 +137,7 @@ export const ItemForm = () => {
                         <Select name="idPlace" label="Ubicación" endpoint="Place" />
                     </div>
                     <div className="col-md-3">
-                        <Select name="idColor" label="Colores" endpoint="Colors" isMulti={true} />
-                    </div>
-                    <div className="col-md-3">
                         <Input type="number" name="minimumStock" label="Stock mínimo" />
-                    </div>
-                    <div className="col-md-3">
-                        <Input type="number" name="stock" label="Stock" />
                     </div>
                     <div className="col-md-3">
                         <Input type="number" name="priceVATout" label="Precio sin IVA" />
@@ -162,6 +163,11 @@ export const ItemForm = () => {
                             onChange={handleInputChange}
                         />
                     </div>
+                </div>
+            </div>
+            <div className="card">
+                <div className="card-body">
+                    <ColorRepeater />
                 </div>
             </div>
             <ActionButtons />

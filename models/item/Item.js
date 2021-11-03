@@ -1,5 +1,6 @@
 
 class Item {
+    color = []
     #table = 'item'
 
     constructor({
@@ -17,7 +18,8 @@ class Item {
         stock,
         itemType,
         description,
-        imgUrl
+        imgUrl,
+        color = []
     }) {
         this.id = id
         this.idVendor = idVendor
@@ -34,6 +36,7 @@ class Item {
         this.itemType = itemType
         this.description = description
         this.imgUrl = imgUrl
+        this.color = color
     }
     get table() {
         return this.#table;

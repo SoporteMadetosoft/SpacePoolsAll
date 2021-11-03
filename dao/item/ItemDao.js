@@ -72,26 +72,30 @@ class ItemDao extends GenericDao {
 
 
     async mountObj(data) {
+        const colorName = await this.ItemsColorsDao.findByItemId(data.id)
         const item = {
             ...data,
             idVendor: data.idVendor !== null ? await this.VendorDao.findById(data.idVendor) : null,
             itemType: await this.ItemTypeDao.findById(data.itemType),
             idFamily: await this.ProductFamilyDao.findById(data.idFamily),
             idPlace: await this.ProductPlaceDao.findById(data.idPlace),
-            idColor: await this.ItemsColorsDao.findByItemId(data.id)
+                color : colorName !== undefined ? colorName : ''
         }
-        return item
+        return new Item(item)
     }
 
     async mountList(data) {
         const rs = await this.findReservedStock(data.id)
+        const stock = await this.totalStock(data.id)
         const list = {
             ...data,
-            reserveStock: rs !== null ? rs : 0
+            reserveStock: rs !== null ? rs : 0,
+            stock : stock !== null ? stock : 0
         }
 
-        const { id, itemCode, name, description, stock, reserveStock } = list
-        const nObj = { id: id, itemCode: itemCode, name: name, description: description, stock: stock, reserveStock: reserveStock }
+        const { id, itemCode, name, description, reserveStock, stock} = list
+        //const nObj = { id: id, itemCode: itemCode, name: name, description: description, colorName, stock, stock: stock, reserveStock: reserveStock }
+        const nObj = { id, itemCode, name, description, reserveStock, stock }
         return nObj
     }
 
@@ -139,6 +143,18 @@ class ItemDao extends GenericDao {
     findReservedStock(idItem) {
         return new Promise((resolve, reject) => {
             this.db.query(`SELECT (cantidadBase+cantidadExtra) as reserveStock FROM reserveStock WHERE IDITEM = ?`, [idItem], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(result[0].reserveStock)
+                }
+            })
+        })
+    }
+
+    totalStock(idItem) {
+        return new Promise((resolve, reject) => {
+            this.db.query(`SELECT sum(stock) FROM item_colors WHERE idItem = ?`, [idItem], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

@@ -91,9 +91,10 @@ exports.update = async (req, res) => {
     try {
         /** UPDATE ITEM */
         const item = req.body.form
-        const colors = req.body.form.idColor
+        const colors = req.body.form.colors
 
-        delete item.idColor
+        delete item.color
+        delete item.colors
 
         await itemDao.update(item)
 

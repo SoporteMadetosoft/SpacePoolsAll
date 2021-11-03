@@ -8,7 +8,7 @@ import { ItemForm } from './itemForm/ItemForm'
 import { startAddSelectStatus } from '../../redux/actions/selects'
 
 const structureForm = {
-    color: []
+    color:[]
 }
 
 export const ItemFormScreen = () => {

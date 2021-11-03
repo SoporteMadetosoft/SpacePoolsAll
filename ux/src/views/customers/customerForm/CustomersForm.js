@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
-import { useForm } from 'react-hook-form'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-
 import { Form } from 'reactstrap'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
-
 import { FileContext } from '../../../utility/context/FileContext'
-
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
 import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'

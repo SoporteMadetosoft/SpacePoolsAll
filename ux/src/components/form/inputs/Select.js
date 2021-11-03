@@ -16,6 +16,9 @@ export const Select = ({ name, label, className, endpoint, placeholder = label, 
     let value
     let handleSelectChange
 
+    const optionNone = [{ label: '-', value: null }]
+    const realOptions = options !== undefined ? optionNone.concat(options) : null
+
     if (isMulti) {
         value = normalForm[name] ? normalForm[name].map(element => ({ value: element.id, label: element[labelName] })) : null
         handleSelectChange = (value) => {
@@ -51,7 +54,7 @@ export const Select = ({ name, label, className, endpoint, placeholder = label, 
             <ReactSelect
                 className={`${className} ${formValidator.errors && formValidator.errors[name] ? 'border-danger rounded' : ''}`}
                 name={name}
-                options={options}
+                options={realOptions}
                 placeholder={placeholder}
                 value={value}
                 isMulti={isMulti}

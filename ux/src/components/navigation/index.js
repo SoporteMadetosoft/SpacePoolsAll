@@ -17,6 +17,7 @@ import administrator from './administrator/settings'
 import calendar from './calendar/settings'
 import delivery from './entregas/settings'
 import users from './users/settings'
+import alerts from './alerts/settings'
 // ** Merge & Export
 
 export default [
@@ -33,5 +34,6 @@ export default [
     ...calendar,
     ...headerAdmin,
     ...users,
-    ...administrator
+    ...administrator,
+    ...alerts
 ]

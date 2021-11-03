@@ -24,6 +24,7 @@ class GenericDao {
     }
 
     findAll() {
+        // console.log(`SELECT * FROM ${this.auxModel.table} ORDER BY id DESC`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM ?? ORDER BY id DESC', [this.auxModel.table], async (err, result) => {
                 if (err) {

@@ -24,6 +24,8 @@ const PreviewCard = () => {
   const phone = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].phone : ''
   const email = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].email : ''
   const carrier = normalForm['idCarrier'] !== undefined ? normalForm['idCarrier'] : ''
+  const vehicle = normalForm['idVehicle'] !== undefined ? normalForm['idVehicle'] : ''
+  const trailer = normalForm['idVehicle'] !== undefined ? normalForm['idVehicle']['idTrailer'] : ''
   const poolName = normalForm['idPool'] !== undefined ? normalForm['idPool'].fabricationName : ''
   const poolPrice = normalForm['idPool'] !== undefined ? normalForm['idPool'].price : ''
   const tax = normalForm['orderData'] !== undefined ? normalForm['orderData']['idTax'].name : ''
@@ -45,6 +47,10 @@ const PreviewCard = () => {
     idCarrier: {
       name: carrier.name,
       nif: carrier.NIF
+    },
+    vehicle: {
+      plate: vehicle.plate,
+      trailerPlate: trailer.plate
     },
     piscina: {
       name: poolName,
@@ -70,6 +76,7 @@ const PreviewCard = () => {
     dispatch(handleChangeController('signature', sigCanvas.getTrimmedCanvas().toDataURL('image/png')))
   }
 
+  console.log(vehicle.idTrailer)
 
   return (
     <Card className='invoice-preview-card'>
@@ -116,7 +123,7 @@ const PreviewCard = () => {
             <table>
               <tbody>
                 <tr>
-                  <td className='pr-1'>Nombre</td>
+                  <td className='pr-1'>Nombre:</td>
                   <td>
                     <span className='font-weight-bolder'>{data.idCarrier.name}</span>
                   </td>
@@ -124,6 +131,10 @@ const PreviewCard = () => {
                 <tr>
                   <td className='pr-1'>NIF: </td>
                   <td>{data.idCarrier.nif}</td>
+                </tr>
+                <tr>
+                  <td className='pr-1'>Matrícula: </td>
+                  <td>{data.vehicle.plate} ( {data.vehicle.trailerPlate} )</td>
                 </tr>
               </tbody>
             </table>
@@ -137,10 +148,10 @@ const PreviewCard = () => {
         <thead>
           <tr>
             <th className='py-1'>Artículo</th>
-            <th className='py-1'>Base</th>
+            {/* <th className='py-1'>Base</th>
             <th className='py-1'>IVA</th>
             <th className='py-1'>Cantidad</th>
-            <th className='py-1'>Total</th>
+            <th className='py-1'>Total</th> */}
           </tr>
         </thead>
         <tbody>
@@ -151,14 +162,15 @@ const PreviewCard = () => {
               {
                 (data['baseItems'] !== undefined && data['baseItems'] !== '') ? data['baseItems'].map(obj => {
                   return (
-                    <p className='card-text text-nowrap'>
-                      - {obj.name} ( {obj.idColor.name} )
-                    </p>
+                    (obj.show === 2 &&
+                      (<p className='card-text text-nowrap'>
+                        - {obj.name} {obj.idColor.name !== undefined ? (`(${obj.idColor.name})`) : null}
+                      </p>))
                   )
                 }) : ''
               }
             </td>
-            <td className='py-1'>
+            {/* <td className='py-1'>
               <span className='font-weight-bold'>{(data.piscina.price * 1).toFixed(2)}€</span>
             </td>
             <td className='py-1'>
@@ -169,7 +181,7 @@ const PreviewCard = () => {
             </td>
             <td className='py-1'>
               <span className='font-weight-bold'>{(data.piscina.price * (1 + (data.tax / 100))).toFixed(2)}€</span>
-            </td>
+            </td> */}
           </tr>
 
           {
@@ -201,7 +213,7 @@ const PreviewCard = () => {
       {/* Total & Sales Person */}
       <CardBody className='invoice-padding pb-0'>
         <Row className='invoice-sales-total-wrapper'>
-          <Col className='d-flex justify-content-end' md='8' order={{ md: 6, lg: 8 }}>
+          <Col className='d-flex justify-content-center' md='12' order={{ md: 12, lg: 12 }}>
             {
               (normalForm['signature'] !== undefined && normalForm['signature'] !== '' && normalForm['signature'] !== null) ?
                 (<>
@@ -217,7 +229,7 @@ const PreviewCard = () => {
             }
 
           </Col>
-          <Col className='d-flex justify-content-end' md='4' order={{ md: 6, lg: 4 }}>
+          {/* <Col className='d-flex justify-content-end' md='4' order={{ md: 6, lg: 4 }}>
             <div className='invoice-total-wrapper'>
               <div className='invoice-total-item'>
                 <p className='invoice-total-title'>Subtotal:</p>
@@ -233,7 +245,7 @@ const PreviewCard = () => {
                 <p className='invoice-total-amount'>{(data.total * 1).toFixed(2)}€</p>
               </div>
             </div>
-          </Col>
+          </Col> */}
         </Row>
       </CardBody>
       {/* /Total & Sales Person */}

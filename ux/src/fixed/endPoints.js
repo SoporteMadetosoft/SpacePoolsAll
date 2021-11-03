@@ -6,6 +6,7 @@ const globalEndpoints = {
     Status: '/global/status',
     ProductionStatus: '/global/productionStatus',
     PurchaseStatus: '/global/purchaseStatus',
+    Show: '/global/show',
     PayDay: '/global/payday'
 }
 

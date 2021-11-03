@@ -6,6 +6,7 @@ const ProductFamilyDao = require("../item/ProductFamilyDao");
 const ItemTypeDao = require("../global/ItemTypeDao");
 const VendorDao = require("../vendor/VendorDao");
 const ItemsColorsDao = require("./ItemColorsDao");
+const ShowDao = require("../global/ShowDao");
 
 //const PurchaseItemsDao = require("../purchase/ItemDao");
 
@@ -17,6 +18,7 @@ class ItemDao extends GenericDao {
         this.ItemTypeDao = new ItemTypeDao()
         this.VendorDao = new VendorDao()
         this.ItemsColorsDao = new ItemsColorsDao()
+        this.ShowDao = new ShowDao()
 
     }
 
@@ -78,6 +80,7 @@ class ItemDao extends GenericDao {
             itemType: await this.ItemTypeDao.findById(data.itemType),
             idFamily: await this.ProductFamilyDao.findById(data.idFamily),
             idPlace: await this.ProductPlaceDao.findById(data.idPlace),
+            show: await this.ShowDao.findById(data.show),
             idColor: await this.ItemsColorsDao.findByItemId(data.id)
         }
         return item

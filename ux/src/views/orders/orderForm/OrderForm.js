@@ -52,9 +52,8 @@ export const OrderForm = () => {
     useEffect(() => {
 
         if (normalForm.id === undefined) {
-            dispatch(GetSetNextId("Orders", 'orderCode'))
-
-        } else orderCode = normalForm.id
+            dispatch(GetSetNextId("Orders", 'id'))
+        }
         dispatch(setSchema(formSchema))
 
         if (normalForm.price) {
@@ -103,6 +102,7 @@ export const OrderForm = () => {
                     extraRaws: value.extraRaws.map(eR => ({ idItem: eR.idItem.id, quantity: eR.quantity, idColor: exceptionController(eR.idColor) })),
                     canvas: canvasReducer.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, rotation: el.rotation }))
                 }
+                delete prettyForm.canvasItems
                 delete prettyForm.deliveryAddress
                 delete prettyForm.phone
                 delete prettyForm.email
@@ -119,7 +119,7 @@ export const OrderForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <Input name="orderCode" label="Nº Pedido" readonly={'readonly'} />
+                        <Input name="id" label="Nº Pedido" readonly={'readonly'} />
                     </div>
                     <div className="col-md-4">
                         <Select

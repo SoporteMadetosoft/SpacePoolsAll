@@ -20,6 +20,7 @@ class TrailerDao extends SetupDao {
     }
 
     async mountObj(data) {
+        const model = await this.ModelDao.findById(data.model)
         const trailer = {
             ...data,
             repairs: await this.RepairDao.findByTrailerId(data.id),
@@ -27,7 +28,8 @@ class TrailerDao extends SetupDao {
             ITVdate: await this.datetimeToDate(data.ITVdate),
             maintenanceDate: await this.datetimeToDate(data.maintenanceDate),
             insuranceDateLimit: await this.datetimeToDate(data.insuranceDateLimit),
-            model: await this.ModelDao.findById(data.model),
+            model,
+            brand: model.idBrand,
             documents: await this.FileManagerDao.getDocumentsInfo(data.filePath)
         }
         return new Trailer(trailer)

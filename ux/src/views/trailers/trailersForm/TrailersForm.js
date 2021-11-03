@@ -53,13 +53,8 @@ export const TrailersForm = () => {
 
     //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
-    const { observations, model } = normalForm
+    const { observations } = normalForm
 
-    if (id && model) {
-        if (model.idBrand !== undefined) {
-            brandValue = model && deconstructSelect(model.idBrand)
-        }
-    }
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'Brand'))
         dispatch(startAddSelectOptions('Model', 'Model'))

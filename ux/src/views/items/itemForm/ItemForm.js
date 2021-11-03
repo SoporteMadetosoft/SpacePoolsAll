@@ -24,7 +24,7 @@ const formSchema = {
     itemType: { validations: [validator.isRequired] },
     idVendor: { validations: [validator.isRequired] },
     idFamily: { validations: [validator.isRequired] },
-    idPlace: {validations: [validator.isRequired]}
+    idPlace: { validations: [validator.isRequired] }
 
 }
 
@@ -92,6 +92,7 @@ export const ItemForm = () => {
                 itemType: exceptionController(form.itemType),
                 idFamily: exceptionController(form.idFamily),
                 idPlace: exceptionController(form.idPlace),
+                show: exceptionController(form.show),
                 idColor: undoMultiSelect(form.idColor, 'idColor')
             }
             save('Items', id, prettyForm)
@@ -150,7 +151,9 @@ export const ItemForm = () => {
                     <div className="col-md-3">
                         <Input type="number" name="maximumCost" label="Coste máximo" />
                     </div>
-
+                    <div className="col-md-3">
+                        <Select name="show" label="Mostrar en albaran" endpoint="Show" />
+                    </div>
 
                     <div className="col-md-12">
                         <label className="control-label">Descripción</label>

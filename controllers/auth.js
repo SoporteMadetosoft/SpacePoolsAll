@@ -42,5 +42,27 @@ exports.register = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
+        return res.json({
+            ok: false,
+            data: error
+        });
+    }
+}
+
+exports.refreshToken = async (req, res) => {
+    try {
+
+
+        // res.json({
+        //     ok: true,
+        //     data: await generarJWT()
+        // })
+
+    } catch (error) {
+        console.log(error);
+        return res.json({
+            ok: false,
+            data: error
+        });
     }
 }

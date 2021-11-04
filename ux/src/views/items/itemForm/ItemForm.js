@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
@@ -11,18 +11,9 @@ import { exceptionController } from '../../../utility/helpers/undefinedException
 import { Form } from 'reactstrap'
 import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 
-import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
-import { undoMultiSelect } from '../../../utility/helpers/undoMultiSelect'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 import { ColorRepeater } from './ColorRepeater'
-import { FileContext } from '../../../utility/context/FileContext'
-import { CustomerDocForm } from '../../customers/customerForm/CustomerDocForm'
-import { colors } from '@material-ui/core'
-
-// const ValidationSchema = yup.object().shape({
-//     valueType: yup.string().required()
-// })
 
 const formSchema = {
     itemType: { validations: [validator.isRequired] },
@@ -32,15 +23,6 @@ const formSchema = {
 
 }
 
-const placeholderStyles = {
-    placeholder: (defaultStyles) => {
-        return {
-            ...defaultStyles,
-            FontSize: '5px'
-        }
-    }
-}
-
 export const ItemForm = () => {
 
     let { itemCode } = useSelector(state => state.normalForm)
@@ -48,20 +30,12 @@ export const ItemForm = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
-    const [file, setFile] = useState('')
-    const { upload, filePath } = useSelector(state => state.fileUpload)
-
 
     const form = useSelector(state => state.normalForm)
 
-    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
-
-    // const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+    const { normalForm, formValidator } = useSelector(state => state)
 
     const { description } = normalForm
-    const { ItemType } = selectReducer
-
-    const valueType = normalForm['itemType'] ? deconstructSelect(normalForm['itemType']) : ''
 
     useEffect(() => {
         dispatch(startAddSelectOptions('ItemType', 'ItemType'))
@@ -75,13 +49,6 @@ export const ItemForm = () => {
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
-
-    }
-
-    const handleSelectChange = ({ value, label }) => {
-        dispatch(handleChangeController('itemType', { id: value, name: label }))
-        //  dispatch(handleChangeController('valueType', value))
-
     }
 
     const submit = async (e) => {
@@ -106,7 +73,6 @@ export const ItemForm = () => {
             dispatch(handleCleanUp())
             history.push('/items')
         }
-
     }
 
     return (
@@ -137,6 +103,13 @@ export const ItemForm = () => {
                     <div className="col-md-3">
                         <Select name="idPlace" label="Ubicación" endpoint="Place" />
                     </div>
+                    {
+                        (normalForm.color && normalForm.color.length === 0) && (
+                            <div className="col-md-3">
+                                <Input type="number" name="stock" label="Stock" />
+                            </div>
+                        )
+                    }
                     <div className="col-md-3">
                         <Input type="number" name="minimumStock" label="Stock mínimo" />
                     </div>
@@ -168,9 +141,13 @@ export const ItemForm = () => {
                     </div>
                 </div>
             </div>
-            <div className="card">
-                <div className="card-body">
-                    <ColorRepeater />
+            <div className="row">
+                <div className="col-md-6">
+                    <div className="card">
+                        <div className="card-body">
+                            <ColorRepeater />
+                        </div>
+                    </div>
                 </div>
             </div>
             <ActionButtons />

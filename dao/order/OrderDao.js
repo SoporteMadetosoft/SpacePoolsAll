@@ -1,9 +1,6 @@
-// import { changeToEuro } from "../../ux/src/utility/helpers/converterEuros"
-
 const Order = require("../../models/order/Order");
 const GenericDao = require("../GenericDao");
 
-// const ProductionDao = require("../production/ProductionDao");
 const PoolDao = require("../pool/PoolDao");
 const CustomerDao = require("../customer/CustomerDao");
 const CustomerDataDao = require("../order/CustomerDataDao");

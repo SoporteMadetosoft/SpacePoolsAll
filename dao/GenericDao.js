@@ -24,6 +24,7 @@ class GenericDao {
     }
 
     findAll() {
+        // console.log(`SELECT * FROM ${this.auxModel.table} ORDER BY id DESC`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM ?? ORDER BY id DESC', [this.auxModel.table], async (err, result) => {
                 if (err) {
@@ -151,8 +152,10 @@ class GenericDao {
     #formatUpdate(params) {
         let update = ''
         Object.entries(params).forEach(element => {
-            if (element[0] != 'id' && element[1] != 'null' && element[1] != null && element[1] != undefined) {
+            if (element[0] !== 'id' && element[1] !== null && element[1] !== undefined) {
                 update = update.concat("`", element[0], "` = ", "'", element[1], "', ")
+            } else if (element[0] !== 'id' && element[1] === null) {
+                update = update.concat("`", element[0], "` = NULL, ")
             }
         })
         return update.substring(0, update.length - 2)

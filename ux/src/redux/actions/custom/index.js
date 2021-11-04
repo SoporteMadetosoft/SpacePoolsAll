@@ -1,6 +1,6 @@
-import { handleConfirmCancel } from '@helpers/handleConfirmCancel'
+import { handleDeleteConfirmation } from '@helpers/handleDeleteConfirmation'
 import { types } from "@redux/types/types"
-import { erase } from '@helpers/Axios/delete'
+import { deleteRecord } from '@helpers/Axios/deleteRecord'
 import { list } from '@helpers/Axios/list'
 import { save } from '../../../utility/helpers/Axios/save'
 import { handleSelectCarrier } from '../../../utility/helpers/handleSelectCarrier'
@@ -36,9 +36,9 @@ export const deleteRegister = (id) => ({
 export const startDeleteRegister = (id, end = null) => {
     return async (dispatch, getState) => {
         const endPoint = end !== null ? end : getState().registrosReducer.endPoint
-        const respuesta = await handleConfirmCancel()
+        const respuesta = await handleDeleteConfirmation()
         if (respuesta === true) {
-            erase(id, endPoint)
+            deleteRecord(id, endPoint)
             dispatch(deleteRegister(id))
         }
     }
@@ -46,9 +46,9 @@ export const startDeleteRegister = (id, end = null) => {
 
 export const startDeleteRepairRegister = (id, index, endPoint) => {
     return async (dispatch, getState) => {
-        const respuesta = await handleConfirmCancel()
+        const respuesta = await handleDeleteConfirmation()
         if (respuesta === true) {
-            erase(id, endPoint)
+            deleteRecord(id, endPoint)
             dispatch({
                 type: types.deleteRepair,
                 payload: {

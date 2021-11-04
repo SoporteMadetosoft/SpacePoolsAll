@@ -1,25 +1,17 @@
-
 import Swal from "sweetalert2"
 
-export const handleSelectCarrier = async (Carriers) => {
-
-    const carr = Carriers.reduce(
-        (obj, item) => Object.assign(obj, { [item.value]: item.label }), {})
+export const handleDeleteConfirmation = async () => {
 
     return await Swal.fire({
-        title: 'Selecciona un conductor',
-        icon: 'question',
-        width: '',
+        title: '¿Estás seguro que quieres eliminar el registro?',
+        text: "¡No vas a poder revertir los cambios!",
+        icon: 'warning',
         showCancelButton: true,
         cancelButtonText: 'Cancelar',
-        confirmButtonText: '¡Seleccionar!',
-        input: 'select',
-        inputOptions: carr,
+        confirmButtonText: '¡Si, eliminalo!',
         customClass: {
             confirmButton: 'btn btn-primary',
-            cancelButton: 'btn btn-danger ml-1',
-            input: 'inline-flex',
-            inputLabel: 'inline-flex'
+            cancelButton: 'btn btn-danger ml-1'
         },
         buttonsStyling: false
     })
@@ -27,20 +19,20 @@ export const handleSelectCarrier = async (Carriers) => {
             if (result.value) {
                 Swal.fire({
                     icon: 'success',
-                    title: '¡Genial!',
-                    text: '¡El transportista ha sido seleccionado!',
+                    title: '¡Eliminado!',
+                    text: '¡El registro ha sido eliminado!',
                     timer: 3000,
                     timerProgressBar: true,
                     customClass: {
                         confirmButton: 'btn btn-success'
                     }
                 })
-                return result.value
+                return true
             } else if (result.dismiss === Swal.DismissReason.cancel) {
 
                 Swal.fire({
                     title: '¡Cancelado!',
-                    text: '¡No has seleccionado ningún transportista!',
+                    text: '¡El registro está a salvo!',
                     icon: 'error',
                     timer: 3000,
                     timerProgressBar: true,

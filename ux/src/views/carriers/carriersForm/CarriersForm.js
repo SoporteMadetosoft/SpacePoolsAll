@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
-import { useForm } from 'react-hook-form'
 
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
+import { Form } from 'reactstrap'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 
@@ -46,7 +42,7 @@ export const CarriersForm = () => {
 
     const realFilePath = form.filePath ? form.filePath : filePath
 
-    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
+    const { normalForm, formValidator } = useSelector(state => state)
 
     //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
@@ -126,13 +122,7 @@ export const CarriersForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <label className="control-label">Nº Transportista</label>
-                        <input
-                            className={`form-control`}
-                            name="carrierCode"
-                            value={carrierCode}
-                            readOnly
-                        />
+                        <Input name="carrierCode" label="Nº Transportista" readonly='readonly' />
                     </div>
                     <div className="col-md-4">
                         <Input name="name" label="Nombre" />

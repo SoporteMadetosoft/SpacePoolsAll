@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
-import { useForm } from 'react-hook-form'
 
 import axios from 'axios'
 
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
-import ReactSelect from 'react-select'
+import { Form } from 'reactstrap'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 
@@ -40,15 +35,6 @@ const formSchema = {
     frame: { validations: [validator.isRequired] }
 }
 
-const placeholderStyles = {
-    placeholder: (defaultStyles) => {
-        return {
-            ...defaultStyles,
-            FontSize: '5px'
-        }
-    }
-}
-
 export const TrailersForm = () => {
 
     let { trailerCode } = useSelector(state => state.normalForm)
@@ -63,21 +49,12 @@ export const TrailersForm = () => {
 
     const realFilePath = form.filePath ? form.filePath : filePath
 
-    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
+    const { normalForm, formValidator } = useSelector(state => state)
 
     //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
-    const { observations, model } = normalForm
+    const { observations } = normalForm
 
-    const { Brand, Model } = selectReducer
-
-    const valueModel = normalForm['model'] ? deconstructSelect(normalForm['model']) : ''
-    let brandValue
-    if (id && model) {
-        if (model.idBrand !== undefined) {
-            brandValue = model && deconstructSelect(model.idBrand)
-        }
-    }
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'Brand'))
         dispatch(startAddSelectOptions('Model', 'Model'))
@@ -87,20 +64,21 @@ export const TrailersForm = () => {
         dispatch(setSchema(formSchema))
     }, [])
 
+    const handleSelectChange = ({ value, label }) => {
+        dispatch(handleChangeController('model', { id: value, name: label }))
+    }
 
     const handleLoadModels = async (obj) => {
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/brandModel/selectByIdBrand/${obj.value}`)
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/model/selectByIdBrand/${obj.value}`)
         dispatch(addSelectOptions('Model', data.map(option => ({ label: option.name, value: option.id }))))
         dispatch(handleChangeController('model', ''))
+        handleSelectChange('brand', obj)
     }
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
-    const handleSelectChange = ({ value, label }) => {
-        dispatch(handleChangeController('model', { id: value, name: label }))
-    }
 
     const preSubmit = (filePath2) => {
         return new Promise(async (resolve, reject) => {
@@ -150,7 +128,7 @@ export const TrailersForm = () => {
                     idStatus: exceptionController(value.idStatus),
                     model: exceptionController(value.model),
                     filePath: filePath2,
-                    idMatricula : exceptionController(value.idMatrucula),
+                    idMatricula: exceptionController(value.idMatrucula),
                     frame: exceptionController(value.frame)
                 }
 
@@ -176,7 +154,7 @@ export const TrailersForm = () => {
                     </div>
                     <div className="col-md-3">
 
-                        <Select required="true" name="idMatricula" label="Matrícula del remolque" endpoint="Trailers" />
+                        <Input required="true" name="plate" label="Matrícula del remolque" />
                     </div>
                     <div className="col-md-3">
                         <Input required="true" name="frame" label="Número de bastidor" />
@@ -185,10 +163,23 @@ export const TrailersForm = () => {
                         <Input name="policyNumber" label="Número de poliza" />
                     </div>
                     <div className="col-md-3">
-                        <Select required="true" name="marca" label="Marca" endpoint="Brand" />
+                        <Select
+                            required="true"
+                            name="brand"
+                            label="Marca"
+                            onSelect={(obj) => {
+                                handleLoadModels(obj)
+                            }}
+                            endpoint="Brand"
+                        />
                     </div>
                     <div className="col-md-3">
-                        <Select required="true" name="model" label="Modelo" endpoint="Model" />
+                        <Select
+                            required="true"
+                            name="model"
+                            label="Modelo"
+                            endpoint="Model"
+                        />
                     </div>
 
                     <div className="col-md-3">

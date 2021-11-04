@@ -9,7 +9,7 @@ import { Plus, X } from 'react-feather'
 import Select from 'react-select'
 
 const formStructure = {
-    idColor :'',
+    idColor: '',
     stock: ''
 }
 
@@ -25,7 +25,7 @@ export const ColorRepeater = () => {
     const increaseCount = () => {
         dispatch(addRepeaterRegister('color', formStructure))
     }
-    
+
     useEffect(() => {
         dispatch(startAddSelectOptions('Colors', 'colorsOpt'))
     }, [])
@@ -57,7 +57,7 @@ const ColorsForm = ({ position }) => {
     const { normalForm, selectReducer } = useSelector(state => state)
     const { colorsOpt } = selectReducer
     const { idColor,
-            stock } = normalForm.color[position]
+        stock } = normalForm.color[position]
 
     const SelectValue = idColor ? deconstructSelect(idColor) : null
 
@@ -65,15 +65,15 @@ const ColorsForm = ({ position }) => {
         dispatch(removeRepeaterRegister('color', position))
     }
 
-     const handleInputChange = ({ target }) => {
-         const obj = {
-             name: target.name,
-             value: target.value
-         }
+    const handleInputChange = ({ target }) => {
+        const obj = {
+            name: target.name,
+            value: target.value
+        }
 
-         dispatch(
-             editRepeaterRegister('color', position, obj)
-         )
+        dispatch(
+            editRepeaterRegister('color', position, obj)
+        )
     }
 
     const handleSelectChange = (key, element) => {
@@ -91,7 +91,7 @@ const ColorsForm = ({ position }) => {
     return (
 
         <div className="row border-bottom pb-1 mt-1 mx-1">
-            <div className="col-md-2">
+            <div className="col-md-5">
                 <label className="control-label">Colores</label>
                 <Select
                     name="idColor"
@@ -100,7 +100,7 @@ const ColorsForm = ({ position }) => {
                     value={SelectValue}
                 />
             </div>
-            <div className="col-md-2">
+            <div className="col-md-5">
                 <label className="control-label">Stock</label>
                 <input
                     type="text"
@@ -109,7 +109,7 @@ const ColorsForm = ({ position }) => {
                     onChange={handleInputChange}
                     value={stock} />
             </div>
-            <div className="col-md-1">
+            <div className="col-md-2">
                 <Button.Ripple className='btn-icon form-control mt-2 btn-sm' color='danger' outline onClick={decreaseCount}>
                     <X size={14} />
                 </Button.Ripple>

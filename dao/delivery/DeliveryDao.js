@@ -6,6 +6,7 @@ const StatusDao = require("../global/StatusDao");
 const OrderDao = require("../order/OrderDao");
 const CustomerDataDao = require("../order/CustomerDataDao");
 const CarrierDao = require("../carrier/CarrierDao");
+const VehicleDao = require("../vehicles/VehicleDao");
 
 class DeliveryDao extends GenericDao {
     constructor() {
@@ -15,12 +16,14 @@ class DeliveryDao extends GenericDao {
         this.OrderDao = new OrderDao()
         this.CustomerDataDao = new CustomerDataDao()
         this.CarrierDao = new CarrierDao()
+        this.VehicleDao = new VehicleDao()
     }
 
     async mountObj(data) {
         const carrier = await this.CarrierDao.findById(data.idCarrier);
         const order = await this.OrderDao.mountObj(await this.OrderDao.findOrderById(data.idOrder));
         const pool = await this.OrderDao.PoolDao.findById(order.idPool.id);
+        const vehicle = await this.VehicleDao.findByCarrierId(data.idCarrier);
 
         const obj = {
             ...data,
@@ -29,7 +32,8 @@ class DeliveryDao extends GenericDao {
             productionDate: this.datetimeToEuropeDate(new Date(order.productionDate)),
             deliveryDate: this.datetimeToEuropeDate(new Date(order.deliveryDate)),
             idPool: pool,
-            idCarrier: carrier
+            idCarrier: carrier,
+            idVehicle: vehicle
         }
 
         return obj

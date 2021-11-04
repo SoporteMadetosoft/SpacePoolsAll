@@ -6,6 +6,7 @@ const globalEndpoints = {
     Status: '/global/status',
     ProductionStatus: '/global/productionStatus',
     PurchaseStatus: '/global/purchaseStatus',
+    Show: '/global/show',
     PayDay: '/global/payday'
 }
 
@@ -23,7 +24,7 @@ const setupEndpoints = {
     VendorType: '/setup/vendors/type',
 
     Brand: '/setup/vehicles/brand',
-    Model: '/setup/vehicles/brandModel',
+    Model: '/setup/vehicles/model',
 
     Place: '/setup/items/place',
     Colors: '/setup/items/colors'

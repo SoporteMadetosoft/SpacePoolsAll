@@ -48,5 +48,17 @@ class VehicleDao extends SetupDao {
 
         return new Vehicle(list)
     }
+
+    findByCarrierId(idCarrier) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT * FROM vehicles WHERE idCarrier = ?', [idCarrier], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(await this.mountObj(result[0]))
+                }
+            })
+        })
+    }
 }
 module.exports = VehicleDao

@@ -93,6 +93,8 @@ exports.update = async (req, res) => {
         const item = req.body.form
         const colors = req.body.form.colors
 
+        colors.length !== 0 && (item.stock = 0)
+
         delete item.color
         delete item.colors
 

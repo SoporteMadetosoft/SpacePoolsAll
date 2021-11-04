@@ -20,9 +20,6 @@ import { ContactsRepeater } from './ContactsRepeater'
 import { CustomerDocForm } from './CustomerDocForm'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 
-
-
-
 const formSchema = {
     comercialName: { validations: [validator.isRequired] },
     email: { validations: [validator.isEmail] },
@@ -44,8 +41,6 @@ export const CustomersForm = () => {
 
     const { normalForm } = useSelector(state => state)
     const { formValidator } = useSelector(state => state)
-
-    //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { observations } = normalForm
 
@@ -94,11 +89,11 @@ export const CustomersForm = () => {
         e.preventDefault()
 
         const errors = validate(formValidator.schema, normalForm)
-       
+
 
         if (Object.keys(errors).length !== 0) {
             dispatch(setErrors(errors))
-            
+
         } else {
             const filePath2 = MkDir('Customers', realFilePath)
 
@@ -119,7 +114,7 @@ export const CustomersForm = () => {
                     idLanguage: exceptionController(value.idLanguage),
                     filePath: filePath2,
                     addresses: value.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType), defaultAddress: address.defaultAddress === true ? 1 : 0 })),
-                contacts: value.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department), defaultContact: contact.defaultContact === true ? 1 : 0 }))
+                    contacts: value.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department), defaultContact: contact.defaultContact === true ? 1 : 0 }))
                 }
                 save('Customers', id, prettyForm)
                 dispatch(handleCleanUp())
@@ -141,19 +136,15 @@ export const CustomersForm = () => {
                             value={customerCode}
                             readOnly
                         />
-
                     </div>
                     <div className="col-md-4">
                         <Input name="comercialName" label="Nombre" />
                     </div>
                     <div className="col-md-2">
-                        
-                        <Input  id="CIF" name="CIF" type="text" value={normalForm['CIF']} placeholder="C.I.F." onChange={handleInputChange} label="C.I.F" />
+                        <Input id="CIF" name="CIF" type="text" value={normalForm['CIF']} placeholder="C.I.F." onChange={handleInputChange} label="C.I.F" />
                     </div>
                     <div className="col-md-4">
-
                         <Input name="socialReason" label="Razón social" />
-
                     </div>
                     <div className="col-md-2">
                         <Input name="phone" label="Teléfono" />

@@ -4,7 +4,6 @@ const StatusDao = require("./global/StatusDao");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const RoleDao = require("./role/RoleDao");
-const saltRounds = 10;
 
 class AuthDao {
     db = dbCon
@@ -81,42 +80,3 @@ class AuthDao {
 }
 
 module.exports = AuthDao
-
-
-    // ,
-                //     {
-                //         action: 'insert',
-                //         subject: 'customers'
-                //     },
-                //     {
-                //         action: 'update',
-                //         subject: 'customers'
-                //     },
-                //     {
-                //         action: 'delete',
-                //         subject: 'customers'
-                //     },
-                //     {
-                //         action: 'actions',
-                //         subject: 'customers'
-                //     },
-                //     {
-                //         action: 'read',
-                //         subject: 'carriers'
-                //     },
-                //     {
-                //         action: 'insert',
-                //         subject: 'carriers'
-                //     },
-                //     {
-                //         action: 'update',
-                //         subject: 'carriers'
-                //     },
-                //     {
-                //         action: 'delete',
-                //         subject: 'carriers'
-                //     },
-                //     {
-                //         action: 'actions',
-                //         subject: 'carriers'
-                //     }

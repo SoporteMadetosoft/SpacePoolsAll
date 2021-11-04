@@ -96,13 +96,15 @@ export default class JwtService {
     return axios.post(this.jwtConfig.loginEndpoint, ...args)
   }
 
-  register(...args) {
-    return axios.post(this.jwtConfig.registerEndpoint, ...args)
-  }
+  // register(...args) {
+  //   return axios.post(this.jwtConfig.registerEndpoint, ...args)
+  // }
 
   refreshToken() {
+    console.log(this.jwtConfig.refreshEndpoint)
     return axios.post(this.jwtConfig.refreshEndpoint, {
-      refreshToken: this.getRefreshToken()
+      refreshToken: this.getRefreshToken(),
+      userData: localStorage.getItem('userData')
     })
   }
 }

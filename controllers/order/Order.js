@@ -81,6 +81,7 @@ exports.insert = async (req, res) => {
         delete order.customerData
         delete order.canvas
         delete order.baseItems
+
         const insert = await orderDao.insert(order)
 
         const customerData2 = {
@@ -92,7 +93,7 @@ exports.insert = async (req, res) => {
         orderDao.multipleAccess(extraItems, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
         orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
         orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, insert.insertId, 'idOrder')
-        orderDao.multipleAccess(canvas, canvasDao, insert.insertId, 'idOrder')
+        // orderDao.multipleAccess(canvas, canvasDao, insert.insertId, 'idOrder')
 
         res.json({ ok: true })
     } catch (error) {

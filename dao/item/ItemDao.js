@@ -6,6 +6,7 @@ const ProductFamilyDao = require("../item/ProductFamilyDao");
 const ItemTypeDao = require("../global/ItemTypeDao");
 const VendorDao = require("../vendor/VendorDao");
 const ItemsColorsDao = require("./ItemColorsDao");
+const ShowDao = require("../global/ShowDao");
 
 //const PurchaseItemsDao = require("../purchase/ItemDao");
 
@@ -17,6 +18,7 @@ class ItemDao extends GenericDao {
         this.ItemTypeDao = new ItemTypeDao()
         this.VendorDao = new VendorDao()
         this.ItemsColorsDao = new ItemsColorsDao()
+        this.ShowDao = new ShowDao()
 
     }
 
@@ -75,26 +77,26 @@ class ItemDao extends GenericDao {
         const colorName = await this.ItemsColorsDao.findByItemId(data.id)
         const item = {
             ...data,
-            idVendor: await this.VendorDao.findById(data.idVendor),
+            idVendor: data.idVendor !== null ? await this.VendorDao.findById(data.idVendor) : null,
             itemType: await this.ItemTypeDao.findById(data.itemType),
             idFamily: await this.ProductFamilyDao.findById(data.idFamily),
             idPlace: await this.ProductPlaceDao.findById(data.idPlace),
-                color : colorName !== undefined ? colorName : ''
+            show: await this.ShowDao.findById(data.show),
+            color: colorName !== undefined ? colorName : ''
         }
         return new Item(item)
     }
 
     async mountList(data) {
         const rs = await this.findReservedStock(data.id)
-        const stock = await this.totalStock(data.id)
+        const st = await this.totalStock(data.id)
         const list = {
             ...data,
             reserveStock: rs !== null ? rs : 0,
-            stock : stock !== null ? stock : 0
+            stock: st.stock !== null ? st.stock : 0
         }
 
-        const { id, itemCode, name, description, reserveStock, stock} = list
-        //const nObj = { id: id, itemCode: itemCode, name: name, description: description, colorName, stock, stock: stock, reserveStock: reserveStock }
+        const { id, itemCode, name, description, reserveStock, stock } = list
         const nObj = { id, itemCode, name, description, reserveStock, stock }
         return nObj
     }
@@ -130,7 +132,7 @@ class ItemDao extends GenericDao {
     updateStock(action, id, quantity) {
         // console.log(`UPDATE item SET stock = stock ${action} ${quantity} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
-            this.db.query(`UPDATE item SET stock = stock ${action} ? WHERE id = ?`, [quantity, id], (err, result) => {
+            this.db.query(`UPDATE item_colors SET stock = stock ${action} ? WHERE id = ?`, [quantity, id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -154,11 +156,11 @@ class ItemDao extends GenericDao {
 
     totalStock(idItem) {
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT sum(stock) FROM item_colors WHERE idItem = ?`, [idItem], (err, result) => {
+            this.db.query(`SELECT SUM(stock) AS stock FROM item_colors WHERE idItem = ?`, [idItem], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    resolve(result[0].reserveStock)
+                    resolve(result[0])
                 }
             })
         })

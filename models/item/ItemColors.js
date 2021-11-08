@@ -3,12 +3,12 @@ class ItemColors {
 
     constructor({
         id,
-        idItem,
-        idColor
+        idColor,
+        stock
     }) {
-        this.id = id
-        this.idItem = idItem
+        this.id = id 
         this.idColor = idColor
+        this.stock = stock
     }
     get table() {
         return this.#table;

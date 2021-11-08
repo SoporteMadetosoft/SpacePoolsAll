@@ -11,6 +11,7 @@ class Role {
         Trailers,
         Pools,
         Items,
+        ItemColors,
         Family,
         Purchases,
         Orders,
@@ -42,6 +43,7 @@ class Role {
         this.Trailers = Trailers
         this.Pools = Pools
         this.Items = Items
+        this.ItemColors = ItemColors
         this.Family = Family
         this.Purchases = Purchases
         this.Orders = Orders

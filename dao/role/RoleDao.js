@@ -21,6 +21,7 @@ class RoleDao extends GenericDao {
             Trailers: JSON.parse(data.Trailers.toString()),
             Pools: JSON.parse(data.Pools.toString()),
             Items: JSON.parse(data.Items.toString()),
+            ItemColors: JSON.parse(data.ItemColors.toString()),
             Family: JSON.parse(data.Family.toString()),
             Purchases: JSON.parse(data.Purchases.toString()),
             Orders: JSON.parse(data.Orders.toString()),

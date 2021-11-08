@@ -53,9 +53,9 @@ export const ItemsColorForm = () => {
                  stock: exceptionController(form.stock)
             }
 
-            save('Colors', id, prettyForm)
+            save('ItemColors', id, prettyForm)
             dispatch(handleCleanUp())
-            history.push('/items/colors')
+            history.push('/items/itemColors')
         }
     }
 

@@ -1,33 +1,32 @@
-
-import { ItemsColorScreenList } from '../../../views/items/itemColors/ItemColorsScreemList'
-import { ItemsColorsFormScreen } from '../../../views/items/itemColors/ItemsColorFormScreem'
+import {ItemsColorScreenList} from '../../../views/items/itemColors/ItemColorsScreemList'
+import {ItemsColorsFormScreen} from '../../../views/items/itemColors/ItemsColorFormScreem'
 
 const ColorsRoutes = [
     {
-        path: '/items/colors',
+        path: '/items/itemColors',
         exact: true,
         component: () => <ItemsColorScreenList titulo="Artículos Colores" />,
         meta: {
             action: 'read',
-            resource: 'colors'
+            resource: 'itemColors'
         }
     },
     {
-        path: '/items/colors/add',
+        path: '/items/itemColors/add',
         exact: true,
         component: () => <ItemsColorsFormScreen />,
         meta: {
             action: 'insert',
-            resource: 'colors'
+            resource: 'itemColors'
         }
     },
     {
-        path: '/items/colors/edit/:id',
+        path: '/items/itemColors/edit/:id',
         exact: true,
         component: () => <ItemsColorsFormScreen />,
         meta: {
             action: 'update',
-            resource: 'colors'
+            resource: 'itemColors'
         }
     }
 ]

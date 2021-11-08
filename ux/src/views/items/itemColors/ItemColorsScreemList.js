@@ -8,10 +8,6 @@ import { cleanFormValidator } from "../../../redux/actions/formValidator"
 import { handleCleanForm } from "../../../redux/actions/normalForm"
 import { itemsColorsList } from "../../../fixed/items/itemsColors/itemsColorsList"
 
-
-
-
-
 export const ItemsColorScreenList = ({ titulo }) => {
 
     const dispatch = useDispatch()

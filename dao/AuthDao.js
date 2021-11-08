@@ -46,8 +46,7 @@ class AuthDao {
         delete role.name
         delete role.productionStatus
 
-        const accessToken = jwt.sign({ id: data.id }, process.env.JWT_SECRET)
-        const refreshToken = jwt.sign({ id: data.id }, process.env.JWT_SECRET_REFRESH)
+        const accessToken = jwt.sign({ id: data.id }, process.env.JWT_SECRET, { expiresIn: '30m' })
         // ability: [{action: 'manage', subject: 'all'}]
         const user = {
             userData: {
@@ -56,8 +55,7 @@ class AuthDao {
                 ability: this.tratarRole(role),
                 productionStatus
             },
-            accessToken,
-            refreshToken
+            accessToken: accessToken.replace(/['"]+/g, '')
         }
         return user
     }

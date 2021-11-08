@@ -48,7 +48,14 @@ export const handleSetAllCanvas = (data) => ({
 
 export const getCItemsByOrderId = (endPoint, id) => {
     return async (dispatch, getState) => {
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/canvas/list/${id}`)
+        const token = localStorage.getItem('accessToken')
+
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/canvas/list/${id}`, {
+            headers: {
+                'Content-type': 'application/json',
+                'x-token': token
+            }
+        })
 
         const newItemsList = []
         data.forEach((element, index) => {

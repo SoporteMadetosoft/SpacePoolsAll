@@ -61,8 +61,6 @@ exports.insert = async (req, res) => {
     try {
         /** INSERT COLOR AND STOCK */
         const insert = await itemsColorsDao.insert(req.body.form)
-
-
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
@@ -75,12 +73,12 @@ exports.update = async (req, res) => {
     try {
         /** UPDATE COLOR STOCK  */
         const color = req.body.form
-        if (color.id === color.parent) {
+        if (color.id === color.stock) {
             return res.status(500).send()
         }
-        if (color.parent === null) {
+        if (color.stock === null) {
             await itemsColorsDao.setParentNullById(color.id)
-            delete color.parent
+            delete color.stock
         }
         itemsColorsDao.update(color)
 

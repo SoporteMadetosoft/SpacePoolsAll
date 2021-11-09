@@ -13,7 +13,6 @@ import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/acti
 
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
-import { ColorRepeater } from './ColorRepeater'
 
 const formSchema = {
     itemType: { validations: [validator.isRequired] },
@@ -138,15 +137,6 @@ export const ItemForm = () => {
                             value={description}
                             onChange={handleInputChange}
                         />
-                    </div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-md-6">
-                    <div className="card">
-                        <div className="card-body">
-                            <ColorRepeater />
-                        </div>
                     </div>
                 </div>
             </div>

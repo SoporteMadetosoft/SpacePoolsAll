@@ -1,28 +1,30 @@
 const ItemColors = require("../../models/item/ItemColors");
 const GenericDao = require("../GenericDao");
+const ColorsDao = require("../setup/item/ColorsDao")
 
 class ItemsColorsDao extends GenericDao {
     constructor() {
         super(ItemColors)
-        //this.ColorsDao = new ColorsDao()
+        this.ColorsDao = new ColorsDao()
     }
 
     async mountObj(data) {
         const itemColors = {
             ...data,
+           // idcolor : await this.ColorsDao.findById(data.idcolor)
         }
         return new ItemColors(itemColors)
     }
     
 
     async mountList(data) {
-        let itemColor = await this.findAllColors(data.id)
+        let nc = await this.ColorsDao.findById(data.idcolor);
         const list = {
-            ...data,
-            id: itemColor
+            ...data, 
+            name : nc != undefined ? nc.name : '' 
         }
-        const { id, idColor, stock } = list
-        const nObj = {id, idColor, stock}
+        const {id, idcolor, stock, name} = list
+        const nObj = {id, idcolor, stock, name}
         return nObj
     }
 
@@ -66,26 +68,19 @@ class ItemsColorsDao extends GenericDao {
         })
     }
 
-    findAllColors(idNode) {
+    findAllColors(id) {
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT * FROM item_color_colors `, async (err, result) => {
+            this.db.query(`SELECT * FROM setup_colors WHERE id = ?`,[id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    let treeData = [{
-                        value: null,
-                        label: 'Nadie'
-                    }]
-                    for (const res of result) {
-                        if (parseInt(idNode) !== res.id) {
-                            treeData.push({
-                                value: res.id,
-                                label: `${res.id} - ${res.name}`,
-                                children: await this.findChilds(res.id, idNode)
-                            })
-                        }
-                    }
-                    resolve(treeData)
+                    // let colorList = []
+                    // for (const color of result){
+                    //     colorList.push({
+
+                    //     })
+                    // }
+                    resolve('')
                 }
             });
         })
@@ -101,6 +96,7 @@ class ItemsColorsDao extends GenericDao {
                     let colorList = []
                     for (const color of result) {
                         colorList.push({
+                            id : color.id,
                             idColor: await this.mountColor(color),
                             stock: color.stock
                         })

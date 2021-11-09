@@ -2,11 +2,12 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Repeater from '@components/repeater'
 import { Button } from 'reactstrap'
-import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
-import { startAddSelectOptions } from '../../../redux/actions/selects'
-import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+
 import { Plus, X } from 'react-feather'
 import Select from 'react-select'
+import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../../redux/actions/normalForm'
+import { startAddSelectOptions } from '../../../../redux/actions/selects'
+import { constructSelect, deconstructSelect } from '../../../../utility/helpers/deconstructSelect'
 
 const formStructure = {
     idColor: '',

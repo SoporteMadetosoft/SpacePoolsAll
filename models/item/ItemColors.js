@@ -1,13 +1,13 @@
 class ItemColors {
-    #table = 'item_colors'
+    #table = 'item_color_colors'
 
     constructor({
         id,
-        idColor,
+        idcolor,
         stock
     }) {
-        this.id = id 
-        this.idColor = idColor
+        this.id = id
+        this.idcolor = idcolor 
         this.stock = stock
     }
     get table() {

@@ -20,7 +20,7 @@ export const itemsColorsList = [
     },
     {
         name: 'Color',
-        selector: 'idcolor',
+        selector: 'name',
         sortable: true,
         searchable: true,
         minWidth: '100px'
@@ -48,15 +48,15 @@ export const itemsColorsList = [
                             <MoreVertical size={15} />
                         </DropdownToggle>
                         <DropdownMenu right>
-                            {ability.can('update', 'colors') && (
-                                <Link to={`./colors/edit/${row.id}`}>
+                            {ability.can('update', 'itemColors') && (
+                                <Link to={`./itemColors/edit/${row.id}`}>
                                     <DropdownItem tag='a' href='/' className='w-100'>
                                         <FileText size={15} />
                                         <span className='align-middle ml-50'>Detalles</span>
                                     </DropdownItem>
                                 </Link>
                             )}
-                            {ability.can('delete', 'colors') && (
+                            {ability.can('delete', 'itemColors') && (
                                 <Link onClick={(e) => {
                                     dispatch(startDeleteRegister(row.id))
                                 }}>

@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
-import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
-import { Input } from '../../../components/form/inputs/Input'
-import { Select } from '../../../components/form/inputs/Select'
-import { handleCleanUp } from '../../../redux/actions/fileUpload'
-import { GetSetNextId, handleChangeController } from '../../../redux/actions/normalForm'
-import { save } from '../../../utility/helpers/Axios/save'
-import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { Form } from 'reactstrap'
-import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 
-import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
-import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+
+
+import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
+import { Input } from '../../../../components/form/inputs/Input'
+import { Select } from '../../../../components/form/inputs/Select'
+import { handleCleanUp } from '../../../../redux/actions/fileUpload'
+import { setErrors, setSchema } from '../../../../redux/actions/formValidator'
+
+import { ColorRepeater } from './ColorRepeater'
+import { GetSetNextId, handleChangeController } from '../../../../redux/actions/normalForm'
+import { startAddSelectOptions, startAddSelectStatus } from '../../../../redux/actions/selects'
+import { validate, validator } from '../../../../utility/formValidator/ValidationTypes'
+import { save } from '../../../../utility/helpers/Axios/save'
+import { exceptionController } from '../../../../utility/helpers/undefinedExceptionController'
+
 
 const formSchema = {
     itemType: { validations: [validator.isRequired] },
@@ -22,7 +27,7 @@ const formSchema = {
 
 }
 
-export const ItemForm = () => {
+export const ItemsColorForm = () => {
 
     let { itemCode } = useSelector(state => state.normalForm)
 
@@ -140,7 +145,16 @@ export const ItemForm = () => {
                     </div>
                 </div>
             </div>
+            <div className="row">
+                <div className="col-md-6">
+                    <div className="card">
+                        <div className="card-body">
+                            <ColorRepeater />
+                        </div>
+                    </div>
+                </div>
+            </div>
             <ActionButtons />
         </Form>
-    )
+    )   
 }

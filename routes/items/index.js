@@ -3,6 +3,7 @@ const { validarJWT } = require('../../middleware/validarJWT');
 
 const ControllerProductFamily = require('../../controllers/item/ProductFamily');
 const ControllerItem = require('../../controllers/item/Item');
+const ControllerItemColor = require('../../controllers/item/ItemColor')
 
 
 const router = express.Router();
@@ -24,5 +25,13 @@ router.delete('/item/delete/:id', validarJWT, ControllerItem.delete);
 router.post('/item/find', validarJWT, ControllerItem.listByID);
 router.get('/item/findnid', validarJWT, ControllerItem.findNId)
 router.get('/item/selectByIdItem/:id', validarJWT, ControllerItem.selectByIdItem);
+
+router.get('/itemColors/list',ControllerItemColor.list);
+router.post('/itemColors/select', ControllerItemColor.select);
+router.post('/itemColors/insert', ControllerItemColor.insert);
+router.put('/itemColors/update', ControllerItemColor.update);
+router.delete('/itemColors/delete/:id', ControllerItemColor.delete);
+router.post('/itemColors/find', ControllerItemColor.listByID);
+router.get('/itemColors/findnid', ControllerItemColor.findNId)
 
 module.exports = router;

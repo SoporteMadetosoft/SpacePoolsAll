@@ -54,6 +54,7 @@ export const endPoints = {
     Delivery: '/delivery',
     Items: '/items/item',
     Family: '/items/productFamily',
+    ItemColors : '/items/itemColors',
     Productions: '/production',
     Calendar: '/calendar',
     Users: '/users',

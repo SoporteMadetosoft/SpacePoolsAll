@@ -1,3 +1,5 @@
+// import * as mime from 'react-native-mime-types';
+const mime = require('mime-types')
 const fs = require('fs');
 const FileType = require('file-type');
 
@@ -43,6 +45,7 @@ class FileManagerDao {
     }
 
     getDocumentsInfo(filePath) {
+        
         return new Promise((resolve, reject) => {
             try {
                 if (filePath !== null) {
@@ -58,19 +61,18 @@ class FileManagerDao {
                                 doc = await this.dao.findByFilePath(`/public/${filePath}/${filename}`)
                             }
 
-                            if (doc.length === 0) {
-
-                                // const { mime: filetype } = await FileType.fromFile(`${__dirname}/../../public/${filePath}/${filename}`);
+                            if (doc.length === 0) {                                
+                                const  filetype  = mime.lookup(`${__dirname}/../../public/${filePath}/${filename}`)                              
                                 const { size: filesize } = fs.statSync(`${__dirname}/../../public/${filePath}/${filename}`);
                                 doc = {
                                     name: '',
                                     filename,
                                     filesize: this.helperFileSize(filesize),
-                                    filetype: '',
-                                    // filetype: this.helperMime(filetype),
+                                    filetype: this.helperMime(filetype),
                                     url: `/public/${filePath}/${filename}`
                                 }
                             }
+                            
                             documents.push(doc);
 
                         }

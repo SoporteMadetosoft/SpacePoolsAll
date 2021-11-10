@@ -78,6 +78,7 @@ exports.update = async (req, res) => {
 
         delete trailer.documents
         delete trailer.repairs
+        delete trailer.brand
 
         await trailerDao.update(trailer)
 

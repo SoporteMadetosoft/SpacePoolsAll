@@ -27,9 +27,10 @@ import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 
 
+
 const formSchema = {
-    idMatricula: { validations: [validator.isRequired] },
-    marca: { validations: [validator.isRequired] },
+    plate: { validations: [validator.isRequired] },
+    brand: { validations: [validator.isRequired] },
     model: { validations: [validator.isRequired] },
     idStatus: { validations: [validator.isRequired] },
     frame: { validations: [validator.isRequired] }
@@ -42,7 +43,6 @@ export const TrailersForm = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
-
     const [file, setFile] = useState('')
     const { upload, filePath } = useSelector(state => state.fileUpload)
     const form = useSelector(state => state.normalForm)
@@ -53,13 +53,8 @@ export const TrailersForm = () => {
 
     //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
-    const { observations, model } = normalForm
-
-    if (id && model) {
-        if (model.idBrand !== undefined) {
-            brandValue = model && deconstructSelect(model.idBrand)
-        }
-    }
+    const { observations } = normalForm
+    
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'Brand'))
         dispatch(startAddSelectOptions('Model', 'Model'))
@@ -172,9 +167,9 @@ export const TrailersForm = () => {
                             required="true"
                             name="brand"
                             label="Marca"
-                            onSelect={(obj) => {
-                                handleLoadModels(obj)
-                            }}
+                            // onSelect={(obj) => {
+                            //     handleLoadModels(obj)
+                            // }}
                             endpoint="Brand"
                         />
                     </div>

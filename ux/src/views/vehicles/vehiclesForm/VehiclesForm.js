@@ -37,8 +37,8 @@ import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 const formSchema = {
 
     plate: { validations: [validator.isRequired] },
-    numeroBastidor: { validations: [validator.isRequired] },
-    marca: { validations: [validator.isRequired] },
+    frameNumber: { validations: [validator.isRequired] },
+    brand: { validations: [validator.isRequired] },
     model: { validations: [validator.isRequired] },
     idStatus: { validations: [validator.isRequired] },
     idCarrier: { validations: [validator.isRequired] }
@@ -106,11 +106,7 @@ export const VechiclesForm = () => {
         dispatch(setSchema(formSchema))
     }, [])
 
-    if (id && model) {
-        if (model.idBrand !== undefined) {
-            brandValue = model && deconstructSelect(model.idBrand)
-        }
-    }
+  
 
     const preSubmit = (filePath2) => {
         return new Promise(async (resolve, reject) => {
@@ -163,8 +159,8 @@ export const VechiclesForm = () => {
                     idTrailer: exceptionController(value.idTrailer),
                     filePath: filePath2,
                     plate: exceptionController(value.plate),
-                    numeroBastidor: exceptionController(value.numeroBastidor),
-                    marca: exceptionController(value.numeroBastidor)
+                    numeroBastidor: exceptionController(value.numeroBastidor)
+                    // brand: exceptionController(value.brand)
                 }
 
                 save('Vehicles', id, prettyForm)
@@ -193,7 +189,7 @@ export const VechiclesForm = () => {
 
                     </div>
                     <div className="col-md-3">
-                        <Input required="true" type="text" name="numeroBastidor" label="Número de bastidor" />
+                        <Input required="true" type="text" name="frameNumber" label="Número de bastidor" />
 
                     </div>
                     <div className="col-md-3">
@@ -218,9 +214,9 @@ export const VechiclesForm = () => {
                             required="true"
                             name="brand"
                             label="Marca"
-                            onSelect={(obj) => {
-                                handleLoadModels(obj)
-                            }}
+                            // onSelect={(obj) => {
+                            //     handleLoadModels(obj)
+                            // }}
                             endpoint="Brand"
                         />
                     </div>

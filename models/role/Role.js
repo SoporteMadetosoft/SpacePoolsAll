@@ -31,7 +31,8 @@ class Role {
         Brand,
         Model,
         Place,
-        Colors
+        Colors,
+        Alerts
     }) {
         this.id = id
         this.name = name
@@ -63,6 +64,7 @@ class Role {
         this.Model = Model
         this.Place = Place
         this.Colors = Colors
+        this.Alerts = Alerts
     }
     get table() {
         return this.#table;

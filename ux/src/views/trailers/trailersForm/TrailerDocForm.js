@@ -3,11 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
-
 import { handleChangeUpload, handleLoadDocuments, saveFiles } from '../../../redux/actions/fileUpload'
 import { CustomMiniTable } from '../../../components/datatable/CustomMiniTable'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
-import { handleStartEditing } from '../../../redux/actions/normalForm'
 import { FileContext } from '../../../utility/context/FileContext'
 import { trailersDocs } from '../../../fixed/vehicles/trailers/trailersDocs'
 
@@ -24,12 +22,8 @@ export const TrailerDocForm = () => {
 
     useEffect(() => {
         if (upload === 0) {
+            dispatch(handleLoadDocuments('FileManager', realFilePath))
 
-            if (!id) {
-                dispatch(handleLoadDocuments('FileManager', realFilePath))
-            } else {
-                dispatch(handleStartEditing('Trailers', id))
-            }
         }
     }, [upload])
 
@@ -48,6 +42,7 @@ export const TrailerDocForm = () => {
 
         const filePath2 = await MkDir('Trailers', realFilePath)
         realFilePath = filePath2 ? filePath2 : filePath
+        // dispatch(handleChangeController('filePath', realFilePath))
 
         dispatch(await saveFiles('FileManager', realFilePath, file))
     }

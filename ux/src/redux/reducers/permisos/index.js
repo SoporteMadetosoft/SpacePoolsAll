@@ -29,7 +29,8 @@ const initialState = {
     Brand: { read: true, insert: true, update: true, delete: true },
     Model: { read: true, insert: true, update: true, delete: true },
     Place: { read: true, insert: true, update: true, delete: true },
-    Colors: { read: true, insert: true, update: true, delete: true }
+    Colors: { read: true, insert: true, update: true, delete: true },
+    Alerts: { read: true, insert: true, update: true, delete: true }
 }
 
 const permisosReducer = (state = initialState, action) => {

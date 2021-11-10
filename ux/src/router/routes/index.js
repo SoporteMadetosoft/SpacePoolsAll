@@ -21,6 +21,10 @@ import UsersRoutes from './users/Users'
 import RolesRoutes from './roles/Roles'
 import { getUserData } from '../../utility/Utils'
 
+import AlertsRoutes from './alerts/Alerts'
+import ColorsRoutes from './colors/Colors'
+
+
 // ** Document title
 const TemplateTitle = '%s - SpacePools'
 
@@ -42,6 +46,7 @@ const Routes = [
   ...PoolsRoutes,
   ...PurchasesRoutes,
   ...ItemsRoutes,
+  ...ColorsRoutes,
   ...FamilyRoutes,
   ...OrdersRoutes,
   ...DeliveryRoutes,
@@ -51,7 +56,8 @@ const Routes = [
   ...CalendarRoutes,
   ...TaxesRoutes,
   ...UsersRoutes,
-  ...RolesRoutes
+  ...RolesRoutes,
+  ...AlertsRoutes
 ]
 
 export { DefaultRoute, TemplateTitle, Routes }

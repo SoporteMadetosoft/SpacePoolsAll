@@ -23,13 +23,8 @@ export const VehicleDocForm = () => {
     let realFilePath = formFilePath ? formFilePath : filePath
 
     useEffect(() => {
-        if (upload === 0) {
-
-            if (!id) {
+        if (upload === 0) {           
                 dispatch(handleLoadDocuments('FileManager', realFilePath))
-            } else {
-                dispatch(handleStartEditing('Vehicles', id))
-            }
         }
     }, [upload])
 

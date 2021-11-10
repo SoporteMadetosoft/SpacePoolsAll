@@ -6,6 +6,7 @@ class Vehicles {
         id,
         idCarrier,
         idTrailer,
+        brand,
         model,
         vehicleCode,
         plate,
@@ -26,6 +27,7 @@ class Vehicles {
         this.id = id
         this.idCarrier = idCarrier
         this.idTrailer = idTrailer
+        this.brand = brand
         this.model = model
         this.vehicleCode = vehicleCode
         this.plate = plate

@@ -12,25 +12,22 @@ export const handleLogin = data => {
       type: types.login,
       data,
       config,
-      [config.storageTokenKeyName]: data[config.storageTokenKeyName],
-      [config.storageRefreshTokenKeyName]: data[config.storageRefreshTokenKeyName]
+      [config.storageTokenKeyName]: data[config.storageTokenKeyName]
     })
 
     // ** Add to user, accessToken & refreshToken to localStorage
     localStorage.setItem('userData', JSON.stringify(data))
     localStorage.setItem(config.storageTokenKeyName, JSON.stringify(data.accessToken))
-    localStorage.setItem(config.storageRefreshTokenKeyName, JSON.stringify(data.refreshToken))
   }
 }
 
 // ** Handle User Logout
 export const handleLogout = () => {
   return dispatch => {
-    dispatch({ type: types.logout, [config.storageTokenKeyName]: null, [config.storageRefreshTokenKeyName]: null })
+    dispatch({ type: types.logout, [config.storageTokenKeyName]: null })
 
     // ** Remove user, accessToken & refreshToken from localStorage
     localStorage.removeItem('userData')
     localStorage.removeItem(config.storageTokenKeyName)
-    localStorage.removeItem(config.storageRefreshTokenKeyName)
   }
 }

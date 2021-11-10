@@ -11,30 +11,15 @@ import { exceptionController } from '../../../utility/helpers/undefinedException
 import { Form } from 'reactstrap'
 import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 
-import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
-import { undoMultiSelect } from '../../../utility/helpers/undoMultiSelect'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
-
-// const ValidationSchema = yup.object().shape({
-//     valueType: yup.string().required()
-// })
 
 const formSchema = {
     itemType: { validations: [validator.isRequired] },
     idVendor: { validations: [validator.isRequired] },
     idFamily: { validations: [validator.isRequired] },
-    idPlace: {validations: [validator.isRequired]}
+    idPlace: { validations: [validator.isRequired] }
 
-}
-
-const placeholderStyles = {
-    placeholder: (defaultStyles) => {
-        return {
-            ...defaultStyles,
-            FontSize: '5px'
-        }
-    }
 }
 
 export const ItemForm = () => {
@@ -47,14 +32,9 @@ export const ItemForm = () => {
 
     const form = useSelector(state => state.normalForm)
 
-    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
-
-    // const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+    const { normalForm, formValidator } = useSelector(state => state)
 
     const { description } = normalForm
-    const { ItemType } = selectReducer
-
-    const valueType = normalForm['itemType'] ? deconstructSelect(normalForm['itemType']) : ''
 
     useEffect(() => {
         dispatch(startAddSelectOptions('ItemType', 'ItemType'))
@@ -68,13 +48,6 @@ export const ItemForm = () => {
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
-
-    }
-
-    const handleSelectChange = ({ value, label }) => {
-        dispatch(handleChangeController('itemType', { id: value, name: label }))
-        //  dispatch(handleChangeController('valueType', value))
-
     }
 
     const submit = async (e) => {
@@ -92,13 +65,13 @@ export const ItemForm = () => {
                 itemType: exceptionController(form.itemType),
                 idFamily: exceptionController(form.idFamily),
                 idPlace: exceptionController(form.idPlace),
-                idColor: undoMultiSelect(form.idColor, 'idColor')
+                show: exceptionController(form.show),
+                colors: form.color.map(color => ({ ...color, idColor: exceptionController(color.idColor) }))
             }
             save('Items', id, prettyForm)
             dispatch(handleCleanUp())
             history.push('/items')
         }
-
     }
 
     return (
@@ -129,14 +102,15 @@ export const ItemForm = () => {
                     <div className="col-md-3">
                         <Select name="idPlace" label="Ubicación" endpoint="Place" />
                     </div>
-                    <div className="col-md-3">
-                        <Select name="idColor" label="Colores" endpoint="Colors" isMulti={true} />
-                    </div>
+                    {
+                        (normalForm.color && normalForm.color.length === 0) && (
+                            <div className="col-md-3">
+                                <Input type="number" name="stock" label="Stock" />
+                            </div>
+                        )
+                    }
                     <div className="col-md-3">
                         <Input type="number" name="minimumStock" label="Stock mínimo" />
-                    </div>
-                    <div className="col-md-3">
-                        <Input type="number" name="stock" label="Stock" />
                     </div>
                     <div className="col-md-3">
                         <Input type="number" name="priceVATout" label="Precio sin IVA" />
@@ -150,7 +124,9 @@ export const ItemForm = () => {
                     <div className="col-md-3">
                         <Input type="number" name="maximumCost" label="Coste máximo" />
                     </div>
-
+                    <div className="col-md-3">
+                        <Select name="show" label="Mostrar en albaran" endpoint="Show" />
+                    </div>
 
                     <div className="col-md-12">
                         <label className="control-label">Descripción</label>

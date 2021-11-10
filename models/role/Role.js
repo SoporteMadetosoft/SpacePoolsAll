@@ -11,6 +11,7 @@ class Role {
         Trailers,
         Pools,
         Items,
+        ItemColors,
         Family,
         Purchases,
         Orders,
@@ -31,7 +32,8 @@ class Role {
         Brand,
         Model,
         Place,
-        Colors
+        Colors,
+        Alerts
     }) {
         this.id = id
         this.name = name
@@ -42,6 +44,7 @@ class Role {
         this.Trailers = Trailers
         this.Pools = Pools
         this.Items = Items
+        this.ItemColors = ItemColors
         this.Family = Family
         this.Purchases = Purchases
         this.Orders = Orders
@@ -63,6 +66,7 @@ class Role {
         this.Model = Model
         this.Place = Place
         this.Colors = Colors
+        this.Alerts = Alerts
     }
     get table() {
         return this.#table;

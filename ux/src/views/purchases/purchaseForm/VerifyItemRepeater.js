@@ -62,7 +62,14 @@ const ItemsForm = ({ position }) => {
             itemType: obj.value,
             idVendor: idVendor ? idVendor['id'] : null
         }
-        const { data: { data } } = await axios.post(`${process.env.REACT_APP_HOST_URI}/items/item/listItems`, { nObj })
+        const token = localStorage.getItem('accessToken')
+
+        const { data: { data } } = await axios.post(`${process.env.REACT_APP_HOST_URI}/items/item/listItems`, { nObj }, {
+            headers: {
+                'Content-type': 'application/json',
+                'x-token': token
+            }
+        })
         dispatch(addSelectionOnNormalForm('itemsOpt', data.map(option => ({ label: option.name, value: option.id })), 'items', position))
     }
 

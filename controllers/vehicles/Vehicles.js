@@ -55,6 +55,7 @@ exports.insert = async (req, res) => {
 
         delete vehicle.documents
         delete vehicle.repairs
+        
 
         const insert = await vehicleDao.insert(vehicle)
 
@@ -76,6 +77,7 @@ exports.update = async (req, res) => {
 
         delete vehicle.documents
         delete vehicle.repairs
+        delete vehicle.brand
 
 
         await vehicleDao.update(vehicle)

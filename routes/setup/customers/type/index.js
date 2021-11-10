@@ -4,14 +4,16 @@
 */
 
 const express = require('express');
+const { validarJWT } = require('../../../../middleware/validarJWT');
+
 const router = express.Router();
 
 const ControllerType = require('../../../../controllers/setup/customers/CustomerType');
 
-router.get('/list', ControllerType.list);
-router.post('/insert', ControllerType.insert);
-router.put('/update', ControllerType.update);
-router.delete('/delete/:id', ControllerType.delete);
-router.post('/find', ControllerType.listByID);
+router.get('/list', validarJWT, ControllerType.list);
+router.post('/insert', validarJWT, ControllerType.insert);
+router.put('/update', validarJWT, ControllerType.update);
+router.delete('/delete/:id', validarJWT, ControllerType.delete);
+router.post('/find', validarJWT, ControllerType.listByID);
 
 module.exports = router;

@@ -87,18 +87,6 @@ class ProductionDao extends GenericDao {
         })
     }
 
-    switchStart(id) {
-        return new Promise((resolve, reject) => {
-            this.db.query('UPDATE production SET isStarted = (CASE isStarted WHEN 1 THEN 0 ELSE 1 END) WHERE id = ?', [id], async (err, result) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    resolve('')
-                }
-            })
-        })
-    }
-
 }
 
 module.exports = ProductionDao

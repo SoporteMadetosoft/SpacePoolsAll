@@ -1,6 +1,6 @@
 
 import Swal from "sweetalert2"
-const object = {}
+
 export const handleSelectCarrier = async (Carriers) => {
 
     const carr = Carriers.reduce(

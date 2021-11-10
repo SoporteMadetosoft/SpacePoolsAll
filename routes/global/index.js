@@ -14,6 +14,7 @@ router.use('/fileManager', require('./fileManager'));
 router.use('/itemType', require('./itemType'));
 router.use('/productionStatus', require('./productionStatus'));
 router.use('/purchaseStatus', require('./purchaseStatus'));
+router.use('/show', require('./show'));
 
 
 module.exports = router;

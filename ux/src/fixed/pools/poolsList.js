@@ -7,7 +7,7 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 import Badge from "reactstrap/lib/Badge"
-import { changeToEuro } from "../../utility/helpers/converterEuros"
+import { setCurrency } from "../../utility/helpers/setCurrency"
 import { useContext } from "react"
 import { AbilityContext } from '@src/utility/context/Can'
 
@@ -64,7 +64,7 @@ export const poolsList = [
         cell: row => {
             return (
                 <div>
-                    <span>{changeToEuro(row.cost)}</span>
+                    <span>{setCurrency(row.cost)}</span>
                 </div>
             )
         }

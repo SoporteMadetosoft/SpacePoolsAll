@@ -41,14 +41,6 @@ export const OrderFormScreen = () => {
         dispatch(catchAndSetPrice())
     }, [form])
 
-    useEffect(() => {
-        if (normalForm.id === undefined) {
-            dispatch(GetSetNextId("Orders", 'orderCode'))
-
-        } else orderCode = normalForm.id
-    }, [])
-
-
     const title = (id) ? 'Editar Pedido' : 'Añadir Pedido'
     const customerName = form.ordercod ? form.idOrder : title
 

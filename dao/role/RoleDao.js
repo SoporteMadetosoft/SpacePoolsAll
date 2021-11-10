@@ -21,6 +21,7 @@ class RoleDao extends GenericDao {
             Trailers: JSON.parse(data.Trailers.toString()),
             Pools: JSON.parse(data.Pools.toString()),
             Items: JSON.parse(data.Items.toString()),
+            ItemColors: JSON.parse(data.ItemColors.toString()),
             Family: JSON.parse(data.Family.toString()),
             Purchases: JSON.parse(data.Purchases.toString()),
             Orders: JSON.parse(data.Orders.toString()),
@@ -41,7 +42,8 @@ class RoleDao extends GenericDao {
             Brand: JSON.parse(data.Brand.toString()),
             Model: JSON.parse(data.Model.toString()),
             Place: JSON.parse(data.Place.toString()),
-            Colors: JSON.parse(data.Colors.toString())
+            Colors: JSON.parse(data.Colors.toString()),
+            Alerts: JSON.parse(data.Alerts.toString())
         }
         return role
     }

@@ -16,6 +16,8 @@ import { save } from '../../../utility/helpers/Axios/save'
 import { handleCleanUp } from '../../../redux/actions/fileUpload'
 import { Form } from 'reactstrap'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
+import { validateProduction } from '../../../utility/helpers/Axios/validateProduction'
+import Swal from 'sweetalert2'
 
 const formSchema = {
     idCustomer: { validations: [validator.isRequired] },
@@ -34,7 +36,7 @@ export const OrderForm = () => {
 
     const { normalForm, formValidator, canvasReducer } = useSelector(state => state)
 
-    const { observations } = normalForm
+    const { observations, orderCode } = normalForm
 
     const orderDate2 = normalForm['orderDate'] ? normalForm['orderDate'] : ''
     const productionDate = normalForm['productionDate'] ? normalForm['productionDate'] : ''
@@ -53,8 +55,7 @@ export const OrderForm = () => {
 
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Orders", 'orderCode'))
-
-        } else orderCode = normalForm.id
+        }
         dispatch(setSchema(formSchema))
 
         if (normalForm.price) {
@@ -103,13 +104,28 @@ export const OrderForm = () => {
                     extraRaws: value.extraRaws.map(eR => ({ idItem: eR.idItem.id, quantity: eR.quantity, idColor: exceptionController(eR.idColor) })),
                     canvas: canvasReducer.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, rotation: el.rotation }))
                 }
+                delete prettyForm.canvasItems
                 delete prettyForm.deliveryAddress
                 delete prettyForm.phone
                 delete prettyForm.email
 
-                save('Orders', id, prettyForm)
-                dispatch(handleCleanUp())
-                history.push('/orders')
+                const vp = await validateProduction('Orders', { productionDate: prettyForm.productionDate, idPool: prettyForm.idPool })
+                if (vp === true) {
+                    save('Orders', id, prettyForm)
+                    dispatch(handleCleanUp())
+                    history.push('/orders')
+                } else {
+                    Swal.fire({
+                        title: '¡Error!',
+                        text: 'Ya has alcanzado el número máximo de fabricaciones simultáneas para esa piscina ese día',
+                        icon: 'error',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        }
+                    })
+                }
             })
         }
     }
@@ -119,7 +135,13 @@ export const OrderForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <Input name="orderCode" label="Nº Pedido" readonly={'readonly'} />
+                        <label className="control-label">Nº Order</label>
+                        <input
+                            className={`form-control`}
+                            name="orderCode"
+                            value={orderCode}
+                            readOnly
+                        />
                     </div>
                     <div className="col-md-4">
                         <Select

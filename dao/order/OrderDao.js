@@ -1,9 +1,6 @@
-// import { changeToEuro } from "../../ux/src/utility/helpers/converterEuros"
-
 const Order = require("../../models/order/Order");
 const GenericDao = require("../GenericDao");
 
-// const ProductionDao = require("../production/ProductionDao");
 const PoolDao = require("../pool/PoolDao");
 const CustomerDao = require("../customer/CustomerDao");
 const CustomerDataDao = require("../order/CustomerDataDao");
@@ -23,7 +20,6 @@ class OrderDao extends GenericDao {
         this.BaseItemDao = new BaseItemDao()
         this.TaxesDao = new TaxesDao()
         this.CanvasDao = new CanvasDao()
-
     }
 
     async mountObj(data) {
@@ -83,6 +79,7 @@ class OrderDao extends GenericDao {
             deliveryDate: newDliveryDate,
             price: price,
             state: state,
+            idProductionStatus: await this.getProductionState(data.id),
             idCustomer: idCustomer
         }
         return nObj
@@ -152,6 +149,37 @@ class OrderDao extends GenericDao {
                 } else {
                     await this.updateItemStock(id)
                     resolve('')
+                }
+            })
+        })
+    }
+    getProductionState(id) {
+        // console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT idProductionStatus FROM production WHERE idOrder = ?', [id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(result[0].idProductionStatus)
+                }
+            })
+        })
+    }
+
+    validarOrderPoolProduction(date, pool) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT COUNT(id) as numProductions FROM production p WHERE p.idOrder IN (SELECT id FROM orders WHERE productionDate = ? AND idPool = ?) AND p.idProductionStatus < 5', [date, pool], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    const { numProductions } = result[0]
+                    const { simultaneousFabrications } = await this.PoolDao.findPoolById(pool)
+
+                    let ok = true
+                    if (numProductions === simultaneousFabrications) {
+                        ok = false
+                    }
+                    resolve(ok)
                 }
             })
         })

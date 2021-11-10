@@ -58,7 +58,14 @@ export const handleGetForm = () => {
 
 export const GetSetNextId = (endPoint, name) => {
     return async (dispatch) => {
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/findnid`)
+        const token = localStorage.getItem('accessToken') || ''
+
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/findnid`, {
+            headers: {
+                'Content-type': 'application/json',
+                'x-token': token
+            }
+        })
         dispatch(handleChangeController(name, data[0].AUTO_INCREMENT))
     }
 }

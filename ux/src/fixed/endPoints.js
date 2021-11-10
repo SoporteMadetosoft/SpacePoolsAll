@@ -6,6 +6,7 @@ const globalEndpoints = {
     Status: '/global/status',
     ProductionStatus: '/global/productionStatus',
     PurchaseStatus: '/global/purchaseStatus',
+    Show: '/global/show',
     PayDay: '/global/payday'
 }
 
@@ -38,11 +39,13 @@ export const endPoints = {
     Customers: '/customers',
     Vendors: '/vendors',
     CustomerData: '/customerData',
+    Notification: '/notification',
 
     Carriers: '/carriers',
     Vehicles: '/vehicles',
     VRepair: '/vehicles/repair',
     Trailers: '/trailers',
+    Alerts: '/alerts',
     TRepair: '/trailers/repair',
 
     Purchases: '/purchases',
@@ -53,6 +56,7 @@ export const endPoints = {
     Delivery: '/delivery',
     Items: '/items/item',
     Family: '/items/productFamily',
+    ItemColors : '/items/itemColors',
     Productions: '/production',
     Calendar: '/calendar',
     Users: '/users',

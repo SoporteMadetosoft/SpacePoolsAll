@@ -29,18 +29,16 @@ export const ItemsFamilyForm = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const form = useSelector(state => state.normalForm)
-    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
+    const { normalForm, formValidator } = useSelector(state => state)
 
-    //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
-    const handleInputChange = ({ target }) => {
-        dispatch(handleChangeController(target.name, target.value))
-    }
-
+   
+    
     useEffect(() => {
+        console.log(normalForm.id)
         if (!id) {
-            dispatch(GetSetNextId("Family", 'id'))
-        } else id = normalForm.id
+            dispatch(GetSetNextId('Family', 'id'))
+        } 
         dispatch(setSchema(formSchema))
     }, [])
 
@@ -53,10 +51,10 @@ export const ItemsFamilyForm = () => {
             dispatch(setErrors(errors))
 
         } else {
+            console.log(form.parent)
             const prettyForm = {
-                ...form,
-                parent: exceptionController(form.parent),
-                name : exceptionController(form.name)
+                ...form
+               
             }
 
             save('Family', id, prettyForm)
@@ -77,6 +75,7 @@ export const ItemsFamilyForm = () => {
                             name="id"
                             value={normalForm.id}
                             readOnly
+                            
                         />
                     </div>
                     <div className="col-md-5">

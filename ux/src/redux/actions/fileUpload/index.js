@@ -66,7 +66,7 @@ export const handleLoadDocuments = (endpoint, filePath) => {
                         const obj = { 
                             ...document,
                             expiration: comun[0] !== undefined ? comun[0].expiration : '',
-                            name: comun[0] !== undefined ? comun[0].name : '',
+                            name: comun[0] !== undefined ? comun[0].name : ''
 
                         }
                         

@@ -14,19 +14,19 @@ export default [
         icon: <Circle size={12} />,
         navLink: '/items'
       },
-      {
-        id: 'colors',
-        title: 'Artículos Colores',
-        icon: <Circle size={12} />,
-        navLink: '/items/colors'
-      },
+      // {
+      //   id: 'colors',
+      //   title: 'Artículos Colores',
+      //   icon: <Circle size={12} />,
+      //   navLink: '/items/colors'
+      // },
       {
         id: 'family',
         title: 'Familias',
         icon: <Circle size={12} />,
         navLink: '/items/family'
       }
-      
+
     ]
   }
 

@@ -1,7 +1,7 @@
-class Alert{
+class Alert {
     #table = 'alert'
 
-    constructor ({
+    constructor({
         id,
         message,
         date,
@@ -15,7 +15,7 @@ class Alert{
 
     }
 
-    get table(){
+    get table() {
         return this.#table
     }
 

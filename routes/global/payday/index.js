@@ -4,10 +4,12 @@
 */
 
 const express = require('express');
+const { validarJWT } = require('../../../middleware/validarJWT');
+
 const ControllerPayDay = require('../../../controllers/global/PayDay');
 
 const router = express.Router();
 
-router.get('/list', ControllerPayDay.list);
+router.get('/list', validarJWT, ControllerPayDay.list);
 
 module.exports = router;

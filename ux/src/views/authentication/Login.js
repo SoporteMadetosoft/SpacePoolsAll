@@ -77,7 +77,7 @@ const Login = props => {
               }
             })
           } else {
-            const data = { ...res.data.data.userData, accessToken: res.data.data.accessToken, refreshToken: res.data.data.refreshToken }
+            const data = { ...res.data.data.userData, accessToken: res.data.data.accessToken }
             dispatch(handleLogin(data))
             ability.update(res.data.data.userData.ability)
             history.push(getHomeRouteForLoggedInUser(data.role))

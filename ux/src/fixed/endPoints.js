@@ -6,6 +6,7 @@ const globalEndpoints = {
     Status: '/global/status',
     ProductionStatus: '/global/productionStatus',
     PurchaseStatus: '/global/purchaseStatus',
+    Show: '/global/show',
     PayDay: '/global/payday'
 }
 
@@ -55,6 +56,7 @@ export const endPoints = {
     Delivery: '/delivery',
     Items: '/items/item',
     Family: '/items/productFamily',
+    ItemColors : '/items/itemColors',
     Productions: '/production',
     Calendar: '/calendar',
     Users: '/users',

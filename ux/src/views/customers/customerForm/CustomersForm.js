@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
-import { useForm } from 'react-hook-form'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-
 import { Form } from 'reactstrap'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
-
 import { FileContext } from '../../../utility/context/FileContext'
-
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
 import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
@@ -25,9 +19,6 @@ import { AddressesRepeater } from './AddressesRepeater'
 import { ContactsRepeater } from './ContactsRepeater'
 import { CustomerDocForm } from './CustomerDocForm'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
-
-
-
 
 const formSchema = {
     comercialName: { validations: [validator.isRequired] },
@@ -50,8 +41,6 @@ export const CustomersForm = () => {
 
     const { normalForm } = useSelector(state => state)
     const { formValidator } = useSelector(state => state)
-
-    //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { observations } = normalForm
 
@@ -147,19 +136,15 @@ export const CustomersForm = () => {
                             value={customerCode}
                             readOnly
                         />
-
                     </div>
                     <div className="col-md-4">
                         <Input name="comercialName" label="Nombre" />
                     </div>
                     <div className="col-md-2">
-
                         <Input id="CIF" name="CIF" type="text" value={normalForm['CIF']} placeholder="C.I.F." onChange={handleInputChange} label="C.I.F" />
                     </div>
                     <div className="col-md-4">
-
                         <Input name="socialReason" label="Razón social" />
-
                     </div>
                     <div className="col-md-2">
                         <Input name="phone" label="Teléfono" />

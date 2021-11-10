@@ -93,7 +93,7 @@ exports.insert = async (req, res) => {
         orderDao.multipleAccess(extraItems, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
         orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
         orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, insert.insertId, 'idOrder')
-        orderDao.multipleAccess(canvas, canvasDao, insert.insertId, 'idOrder')
+        // orderDao.multipleAccess(canvas, canvasDao, insert.insertId, 'idOrder')
 
         res.json({ ok: true })
     } catch (error) {
@@ -166,4 +166,20 @@ exports.switchState = async (req, res) => {
         return res.status(500).send(error);
     }
 
+}
+
+exports.validate = async (req, res) => {
+    console.log('validar')
+    try {
+        const { productionDate, idPool } = req.body.form
+
+        res.json({
+            ok: true,
+            data: await orderDao.validarOrderPoolProduction(productionDate, idPool)
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
 }

@@ -1,5 +1,6 @@
 // ** React Imports
-import { Suspense, useContext, lazy } from 'react'
+import { Suspense, useContext, lazy, useRef } from 'react'
+import IdleTimer from 'react-idle-timer'
 
 // ** Utils
 import { isUserLoggedIn } from '@utils'
@@ -20,6 +21,8 @@ import { DefaultRoute, Routes } from './routes'
 // ** Layouts
 import BlankLayout from '@layouts/BlankLayout'
 import VerticalLayout from '@src/components/layouts/VerticalLayout'
+import { useDispatch } from 'react-redux'
+import { handleLogout } from '../views/authentication/redux/actions'
 // import HorizontalLayout from '@src/layouts/HorizontalLayout'
 
 const Router = () => {
@@ -185,6 +188,9 @@ const Router = () => {
     })
   }
 
+  const idleRef = useRef(null)
+  const dispatch = useDispatch()
+
   return (
     <AppRouter basename={process.env.REACT_APP_BASENAME}>
       <Switch>
@@ -206,7 +212,13 @@ const Router = () => {
             </Layouts.BlankLayout>
           )}
         />
-        {ResolveRoutes()}
+        <IdleTimer
+          ref={idleRef}
+          timeout={3600000}
+          onIdle={() => dispatch(handleLogout())}
+        >
+          {ResolveRoutes()}
+        </IdleTimer>
 
         {/* NotFound Error page */}
         <Route path='*' component={Error} />

@@ -9,8 +9,8 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRepairRegister } from "../../../redux/actions/custom"
 
 import { Link } from "react-router-dom"
-import { datetimeToEuropeDate } from "../../../utility/helpers/dates"
-import { changeToEuro } from "../../../utility/helpers/converterEuros"
+import { datetimeToEuropeDate } from "../../../utility/helpers/datetimeToEuropeDate"
+import { setCurrency } from "../../../utility/helpers/setCurrency"
 
 import { useContext } from "react"
 import { AbilityContext } from '@src/utility/context/Can'
@@ -66,7 +66,7 @@ export const tRepairList = [
         cell: row => {
             return (
                 <div>
-                    <span>{changeToEuro(row.cost)}</span>
+                    <span>{setCurrency(row.cost)}</span>
                 </div>
             )
         }

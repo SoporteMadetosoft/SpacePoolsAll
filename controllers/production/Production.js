@@ -36,17 +36,6 @@ exports.listByID = async (req, res) => {
     }
 }
 
-exports.switchStart = async (req, res) => {
-    const id = parseInt(req.params.id, 10)
-    try {
-        await productionDao.switchStart(id)
-        res.json({ ok: true })
-    } catch (error) {
-        console.log(error)
-        return res.status(500).send(error);
-    }
-
-}
 
 exports.delete = async (req, res) => {
     const id = parseInt(req.params.id, 10)

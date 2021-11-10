@@ -1,6 +1,6 @@
 const ItemColors = require("../../models/item/ItemColors");
-const ColorsDao = require("../setup/item/ColorsDao");
 const GenericDao = require("../GenericDao");
+const ColorsDao = require("../setup/item/ColorsDao")
 
 class ItemsColorsDao extends GenericDao {
     constructor() {
@@ -9,28 +9,97 @@ class ItemsColorsDao extends GenericDao {
     }
 
     async mountObj(data) {
-        return new ItemColors(data)
+        const itemColors = {
+            ...data,
+           // idcolor : await this.ColorsDao.findById(data.idcolor)
+        }
+        return new ItemColors(itemColors)
+    }
+    
+
+    async mountList(data) {
+        let nc = await this.ColorsDao.findById(data.idcolor);
+        const list = {
+            ...data, 
+            name : nc != undefined ? nc.name : '' 
+        }
+        const {id, idcolor, stock, name} = list
+        const nObj = {id, idcolor, stock, name}
+        return nObj
     }
 
-    async mountColor(data) {
-        const { name } = await this.ColorsDao.findById(data.idColor)
-        const color = {
-            id: data.idColor,
-            name
-        }
-        return color
+
+    findChilds(id, idNode) {
+        return new Promise((resolve, reject) => {
+            this.db.query(`SELECT * FROM item_color_colors WHERE stock = ?`, id, async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    if (result.length > 0) {
+                        let childs = []
+                        for (const res of result) {
+                            if (parseInt(idNode) !== res.id) {
+                                childs.push({
+                                    value: res.id,
+                                    label: `${res.id} - ${res.name}`,
+                                    children: await this.findChilds(res.id, idNode)
+                                })
+                            }
+                        }
+                        resolve(childs)
+                    } else {
+                        resolve('')
+                    }
+                }
+            });
+        })
+    }
+
+    setStockNullById(id) {
+
+        return new Promise((resolve, reject) => {
+            this.db.query(`UPDATE item_color_colors SET stock = null WHERE id = ?`, id, async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve('')
+                }
+            });
+        })
+    }
+
+    findAllColors(id) {
+        return new Promise((resolve, reject) => {
+            this.db.query(`SELECT * FROM setup_colors WHERE id = ?`,[id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    // let colorList = []
+                    // for (const color of result){
+                    //     colorList.push({
+
+                    //     })
+                    // }
+                    resolve('')
+                }
+            });
+        })
     }
 
     findByItemId(id) {
         // console.log(`SELECT idColor FROM item_colors WHERE idItem = ${id}`)
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT idColor FROM item_colors WHERE idItem = ?', [id], async (err, result) => {
+            this.db.query('SELECT * FROM item_color_colors WHERE idcolor = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    const colorList = []
+                    let colorList = []
                     for (const color of result) {
-                        colorList.push(await this.mountColor(color))
+                        colorList.push({
+                            id : color.id,
+                            idColor: await this.mountColor(color),
+                            stock: color.stock
+                        })
                     }
                     resolve(colorList)
                 }

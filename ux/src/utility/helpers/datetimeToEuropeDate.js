@@ -1,3 +1,4 @@
+
 export const datetimeToEuropeDate = (date) => {
     if (date !== null) {
         let month = date.getMonth() + 1

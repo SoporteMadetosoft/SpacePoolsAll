@@ -54,7 +54,7 @@ export const TrailersForm = () => {
     //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const { observations } = normalForm
-    
+
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'Brand'))
         dispatch(startAddSelectOptions('Model', 'Model'))
@@ -69,7 +69,14 @@ export const TrailersForm = () => {
     }
 
     const handleLoadModels = async (obj) => {
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/model/selectByIdBrand/${obj.value}`)
+        const token = localStorage.getItem('accessToken') || ''
+
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/model/selectByIdBrand/${obj.value}`, {
+            headers: {
+                'Content-type': 'application/json',
+                'x-token': token
+            }
+        })
         dispatch(addSelectOptions('Model', data.map(option => ({ label: option.name, value: option.id }))))
         dispatch(handleChangeController('model', ''))
         handleSelectChange('brand', obj)

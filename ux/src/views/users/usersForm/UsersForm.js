@@ -104,8 +104,14 @@ export const UsersForm = () => {
                     dispatch(handleChangeController('password', ''))
                     dispatch(handleChangeController('confirmPassword', ''))
                 }
+                const token = localStorage.getItem('accessToken') || ''
 
-                const { data } = await axios.post(`${process.env.REACT_APP_HOST_URI}${endPoints['Users']}/checkUser`, { username: normalForm.login })
+                const { data } = await axios.post(`${process.env.REACT_APP_HOST_URI}${endPoints['Users']}/checkUser`, { username: normalForm.login }, {
+                    headers: {
+                        'Content-type': 'application/json',
+                        'x-token': token
+                    }
+                })
                 if (data.ok === false) {
                     error = '¡Este usuario ya está introducido!'
                     dispatch(handleChangeController('login', ''))

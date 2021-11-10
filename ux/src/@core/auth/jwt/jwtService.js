@@ -33,8 +33,8 @@ export default class JwtService {
     // ** Add request/response interceptor
     axios.interceptors.response.use(
       response => response,
-      error => {
-        // ** const { config, response: { status } } = error
+      async error => {
+        // ** const { config, response: { status } } = error)
         const { config, response } = error
         const originalRequest = config
 
@@ -47,21 +47,35 @@ export default class JwtService {
 
               // ** Update accessToken in localStorage
               this.setToken(r.data.accessToken)
-              this.setRefreshToken(r.data.refreshToken)
-
               this.onAccessTokenFetched(r.data.accessToken)
             })
           }
-          const retryOriginalRequest = new Promise(resolve => {
-            this.addSubscriber(accessToken => {
+          return await new Promise(resolve => {
+            this.addSubscriber(async (accessToken) => {
               // ** Make sure to assign accessToken according to your response.
               // ** Check: https://pixinvent.ticksy.com/ticket/2413870
               // ** Change Authorization header
               originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`
-              resolve(this.axios(originalRequest))
+              if (originalRequest.method === 'get' || originalRequest.method === 'delete') {
+                resolve(await axios[originalRequest.method](originalRequest.url, {
+                  headers: {
+                    'Content-type': 'application/json',
+                    'x-token': accessToken
+                  }
+                }
+                ))
+              } else {
+                resolve(await axios[originalRequest.method](originalRequest.url, originalRequest.data, {
+                  headers: {
+                    'Content-type': 'application/json',
+                    'x-token': accessToken
+                  }
+                }
+                ))
+              }
+
             })
           })
-          return retryOriginalRequest
         }
         return Promise.reject(error)
       }
@@ -80,29 +94,24 @@ export default class JwtService {
     return localStorage.getItem(this.jwtConfig.storageTokenKeyName)
   }
 
-  getRefreshToken() {
-    return localStorage.getItem(this.jwtConfig.storageRefreshTokenKeyName)
-  }
-
   setToken(value) {
     localStorage.setItem(this.jwtConfig.storageTokenKeyName, value)
-  }
-
-  setRefreshToken(value) {
-    localStorage.setItem(this.jwtConfig.storageRefreshTokenKeyName, value)
   }
 
   login(...args) {
     return axios.post(this.jwtConfig.loginEndpoint, ...args)
   }
 
-  register(...args) {
-    return axios.post(this.jwtConfig.registerEndpoint, ...args)
-  }
+  // register(...args) {
+  //   return axios.post(this.jwtConfig.registerEndpoint, ...args)
+  // }
 
-  refreshToken() {
-    return axios.post(this.jwtConfig.refreshEndpoint, {
-      refreshToken: this.getRefreshToken()
+  async refreshToken() {
+    const { data } = await axios.post(this.jwtConfig.refreshEndpoint, {
+      userData: localStorage.getItem('userData')
     })
+    const token = data
+
+    return token
   }
 }

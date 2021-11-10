@@ -4,7 +4,6 @@ const StatusDao = require("./global/StatusDao");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const RoleDao = require("./role/RoleDao");
-const saltRounds = 10;
 
 class AuthDao {
     db = dbCon
@@ -47,8 +46,7 @@ class AuthDao {
         delete role.name
         delete role.productionStatus
 
-        const accessToken = jwt.sign({ id: data.id }, process.env.JWT_SECRET)
-        const refreshToken = jwt.sign({ id: data.id }, process.env.JWT_SECRET_REFRESH)
+        const accessToken = jwt.sign({ id: data.id }, process.env.JWT_SECRET, { expiresIn: '30m' })
         // ability: [{action: 'manage', subject: 'all'}]
         const user = {
             userData: {
@@ -57,8 +55,7 @@ class AuthDao {
                 ability: this.tratarRole(role),
                 productionStatus
             },
-            accessToken,
-            refreshToken
+            accessToken: accessToken.replace(/['"]+/g, '')
         }
         return user
     }
@@ -81,42 +78,3 @@ class AuthDao {
 }
 
 module.exports = AuthDao
-
-
-    // ,
-                //     {
-                //         action: 'insert',
-                //         subject: 'customers'
-                //     },
-                //     {
-                //         action: 'update',
-                //         subject: 'customers'
-                //     },
-                //     {
-                //         action: 'delete',
-                //         subject: 'customers'
-                //     },
-                //     {
-                //         action: 'actions',
-                //         subject: 'customers'
-                //     },
-                //     {
-                //         action: 'read',
-                //         subject: 'carriers'
-                //     },
-                //     {
-                //         action: 'insert',
-                //         subject: 'carriers'
-                //     },
-                //     {
-                //         action: 'update',
-                //         subject: 'carriers'
-                //     },
-                //     {
-                //         action: 'delete',
-                //         subject: 'carriers'
-                //     },
-                //     {
-                //         action: 'actions',
-                //         subject: 'carriers'
-                //     }

@@ -1,8 +1,8 @@
-import { handleConfirmCancel } from '@helpers/handleConfirmCancel'
+import { handleDeleteConfirmation } from '@helpers/handleDeleteConfirmation'
 import { loadFiles } from "../../../utility/helpers/Axios/loadFiles"
 import { fileUploadTypes } from "../../types/fileUpload/types"
 import { uploadFile } from "../../../utility/helpers/Axios/uploadFile"
-import { eraseFile } from '../../../utility/helpers/Axios/deleteFile'
+import { deleteFile } from '../../../utility/helpers/Axios/deleteFile'
 import { addRepeaterRegister, handleCleanSection, removeRepeaterRegister } from '../normalForm'
 import { types } from "@redux/types/types"
 
@@ -23,7 +23,7 @@ export const handleCleanUp = () => ({
 
 export const startDeleteFile = (position, url, id) => {
     return async (dispatch) => {
-        const respuesta = await handleConfirmCancel()
+        const respuesta = await handleDeleteConfirmation()
         if (respuesta === true) {
             dispatch(removeRepeaterRegister('documents', position))
             dispatch({

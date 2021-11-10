@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { GetSetNextId } from '../../../redux/actions/normalForm'
-import { datetimeToEuropeDate } from "../../../utility/helpers/dates"
+import { datetimeToEuropeDate } from "../../../utility/helpers/datetimeToEuropeDate"
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { VerifyItemsRepeater } from './VerifyItemRepeater'

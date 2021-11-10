@@ -4,10 +4,12 @@
 */
 
 const express = require('express');
+const { validarJWT } = require('../../../middleware/validarJWT');
+
 const ControllerPurchaseStatus = require('../../../controllers/global/PurchaseStatus');
 
 const router = express.Router();
 
-router.get('/list', ControllerPurchaseStatus.list);
+router.get('/list', validarJWT, ControllerPurchaseStatus.list);
 
 module.exports = router;

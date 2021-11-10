@@ -2,6 +2,7 @@ const db = require('../dao/Connection.js');
 const bcrypt = require('bcrypt');
 
 const AuthDao = require('../dao/AuthDao.js');
+const { GenerarJWT } = require('../helpers/GenerarJWT.js');
 const saltRounds = 10;
 
 const authDao = new AuthDao()
@@ -42,5 +43,28 @@ exports.register = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
+        return res.json({
+            ok: false,
+            data: error
+        });
+    }
+}
+
+exports.refreshToken = async (req, res) => {
+    try {
+        const { id } = req.body.userData
+        res.json({
+            ok: true,
+            data: {
+                accessToken: await GenerarJWT(id, process.env.JWT_SECRET)
+            }
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.json({
+            ok: false,
+            data: error
+        });
     }
 }

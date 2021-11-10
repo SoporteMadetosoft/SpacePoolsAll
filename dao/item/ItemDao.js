@@ -101,20 +101,6 @@ class ItemDao extends GenericDao {
         return nObj
     }
 
-    findNameById(id) {
-        // console.log(`SELECT name FROM item WHERE id = ${id}`)
-        return new Promise((resolve, reject) => {
-            this.db.query('SELECT name FROM item WHERE id = ?', [id], async (err, result) => {
-                if (err) {
-                    reject(err)
-                } else {
-
-                    resolve(result[0].name)
-                }
-            });
-        })
-    }
-
     findOneFieldById(field, id) {
         return new Promise((resolve, reject) => {
             this.db.query('SELECT ?? FROM item WHERE id = ?', [field, id], (err, result) => {

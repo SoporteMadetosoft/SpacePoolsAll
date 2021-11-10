@@ -53,8 +53,8 @@ export const RolesForm = () => {
             Brand: JSON.stringify(permisosReducer.Brand),
             Model: JSON.stringify(permisosReducer.Model),
             Place: JSON.stringify(permisosReducer.Place),
-            Colors: JSON.stringify(permisosReducer.Colors),
-            Alerts: JSON.stringify(permisosReducer.Alerts)
+            Colors: JSON.stringify(permisosReducer.Colors)
+            // Alerts: JSON.stringify(permisosReducer.Alerts)
         }
         save('Roles', id, prettyForm)
         history.push('/roles')
@@ -114,7 +114,7 @@ export const RolesForm = () => {
                                 <Permiso name='Modelos' id='Model' />
                                 <Permiso name='Ubicaciones' id='Place' />
                                 <Permiso name='Colores' id='Colors' />
-                                <Permiso name='Alertas' id='Alerts' />
+                                {/* <Permiso name='Alertas' id='Alerts' /> */}
                             </tbody>
                         </Table>
                     </div>

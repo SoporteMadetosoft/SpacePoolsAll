@@ -226,10 +226,12 @@
     "static/media/vuexy-login-bg.jpg": "/static/media/vuexy-login-bg.640b7b14.jpg"
   },
   "entrypoints": [
+
     "static/js/runtime-main.a976e48a.js",
     "static/css/6.cfa759b8.chunk.css",
     "static/js/6.c57be7bb.chunk.js",
     "static/css/main.07074322.chunk.css",
     "static/js/main.bde29549.chunk.js"
+
   ]
 }

@@ -58,20 +58,19 @@ export const handleLoadDocuments = (endpoint, filePath) => {
             const data = await loadFiles(endpoint, filePath)
             const oldDocuments = getState().normalForm.documents
             dispatch(handleCleanSection('documents'))
-        
+
             data.map(
-                document =>  {
-                        const comun  = oldDocuments.filter((od) => ( od.url === document.url))
+                document => {
+                    const comun = oldDocuments.filter((od) => (od.url === document.url))
 
-                        const obj = { 
-                            ...document,
-                            expiration: comun[0] !== undefined ? comun[0].expiration : '',
-                            name: comun[0] !== undefined ? comun[0].name : ''
-
-                        }
-                        
-                        dispatch(addRepeaterRegister('documents', obj))
+                    const obj = {
+                        ...document,
+                        expiration: comun[0] !== undefined ? comun[0].expiration : '',
+                        name: comun[0] !== undefined ? comun[0].name : ''
                     }
+
+                    dispatch(addRepeaterRegister('documents', obj))
+                }
             )
         }
     }

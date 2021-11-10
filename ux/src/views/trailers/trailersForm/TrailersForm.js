@@ -135,7 +135,6 @@ export const TrailersForm = () => {
                     idStatus: exceptionController(value.idStatus),
                     model: exceptionController(value.model),
                     filePath: filePath2,
-                    idMatricula: exceptionController(value.idMatrucula),
                     frame: exceptionController(value.frame)
                 }
 

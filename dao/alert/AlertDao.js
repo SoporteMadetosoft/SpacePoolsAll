@@ -25,14 +25,14 @@ class AlertDao extends GenericDao {
 
     async listNotification() {
         const d = new Date()
-        const fechaActual = await this.datetimeToDate(new Date(d))    
+        const fechaActual = await this.datetimeToDate(new Date(d))
         var fechaLimite = await this.datetimeToDate(new Date(new Date(fechaActual).setMonth(new Date(fechaActual).getMonth() + 1)))
 
         // console.log(fechaActual, fechaLimite)
-        
 
-        var newDateActual = "'"+fechaActual.toLocaleString()+"'"
-        var newDateLimite = "'"+fechaLimite.toLocaleString()+"'"
+
+        var newDateActual = "'" + fechaActual.toLocaleString() + "'"
+        var newDateLimite = "'" + fechaLimite.toLocaleString() + "'"
         // console.log(newDateActual,newDateLimite)
 
 

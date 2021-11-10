@@ -95,12 +95,12 @@ const DocumentsForm = ({ position }) => {
                 />
             </div>
             <div className="col-md-1">
-                {/* <button 
+                <button 
                     name={`url`} 
                     className="btn btn-primary"
                 > 
                     <FontAwesomeIcon icon={ faCloudDownloadAlt } /> 
-                </button> */}
+                </button>
             </div>
             <div className="col-md-1">
                 <Button.Ripple color='danger' outline onClick={ handleDeleteDocument }>

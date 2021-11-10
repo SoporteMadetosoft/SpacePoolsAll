@@ -8,7 +8,7 @@ import { handleChangeUpload, handleLoadDocuments, saveFiles } from '../../../red
 import { CustomMiniTable } from '../../../components/datatable/CustomMiniTable'
 import { FileContext } from '../../../utility/context/FileContext'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
-import { handleStartEditing } from '../../../redux/actions/normalForm'
+import { handleChangeController, handleStartEditing } from '../../../redux/actions/normalForm'
 import { customerDocs } from '../../../fixed/customers/customerDocs'
 
 export const CustomerDocForm = () => {
@@ -20,15 +20,12 @@ export const CustomerDocForm = () => {
     const { upload, filePath } = useSelector(state => state.fileUpload)
     const { filePath: formFilePath, documents: data } = useSelector(state => state.normalForm)
 
-    let realFilePath = formFilePath ? formFilePath : filePath
+    let realFilePath = formFilePath !== null ? formFilePath : filePath
 
     useEffect(() => {
         if (upload === 0) {
-            if (!id) {
-                dispatch(handleLoadDocuments('FileManager', realFilePath))
-            } else {
-                dispatch(handleStartEditing('Customers', id))
-            }
+            dispatch(handleLoadDocuments('FileManager', realFilePath))                
+           
         }
     }, [upload])
 
@@ -47,6 +44,7 @@ export const CustomerDocForm = () => {
 
         const filePath2 = await MkDir('Customers', realFilePath)
         realFilePath = filePath2 ? filePath2 : filePath
+        // dispatch(handleChangeController('filePath', realFilePath ))
 
         dispatch(await saveFiles('FileManager', realFilePath, file))
     }

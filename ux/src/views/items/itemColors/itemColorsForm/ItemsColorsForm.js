@@ -46,7 +46,7 @@ export const ItemsColorForm = () => {
         dispatch(startAddSelectStatus('Vendors', 'Vendors', 'comercialName'))
 
         if (normalForm.id === undefined) {
-            dispatch(GetSetNextId("Items", 'itemCode'))
+            dispatch(GetSetNextId("ItemColors", 'itemCode'))
         } else itemCode = normalForm.id
         dispatch(setSchema(formSchema))
     }, [])
@@ -75,7 +75,7 @@ export const ItemsColorForm = () => {
             }
             save('Items', id, prettyForm)
             dispatch(handleCleanUp())
-            history.push('/items')
+            history.push('/items/itemColors')
         }
     }
 
@@ -107,13 +107,6 @@ export const ItemsColorForm = () => {
                     <div className="col-md-3">
                         <Select name="idPlace" label="Ubicación" endpoint="Place" />
                     </div>
-                    {
-                        (normalForm.color && normalForm.color.length === 0) && (
-                            <div className="col-md-3">
-                                <Input type="number" name="stock" label="Stock" />
-                            </div>
-                        )
-                    }
                     <div className="col-md-3">
                         <Input type="number" name="minimumStock" label="Stock mínimo" />
                     </div>

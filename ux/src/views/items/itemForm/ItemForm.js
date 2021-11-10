@@ -13,6 +13,7 @@ import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/acti
 
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+import { ColorRepeater } from '../itemColors/itemColorsForm/ColorRepeater'
 
 const formSchema = {
     itemType: { validations: [validator.isRequired] },
@@ -102,13 +103,10 @@ export const ItemForm = () => {
                     <div className="col-md-3">
                         <Select name="idPlace" label="Ubicación" endpoint="Place" />
                     </div>
-                    {
-                        (normalForm.color && normalForm.color.length === 0) && (
-                            <div className="col-md-3">
-                                <Input type="number" name="stock" label="Stock" />
-                            </div>
-                        )
-                    }
+                    <div className="col-md-3">
+                        <Input type="number" name="stock" label="Stock" />
+                    </div>
+
                     <div className="col-md-3">
                         <Input type="number" name="minimumStock" label="Stock mínimo" />
                     </div>

@@ -74,7 +74,7 @@ class ItemDao extends GenericDao {
 
 
     async mountObj(data) {
-        const colorName = await this.ItemsColorsDao.findByItemId(data.id)
+       // const colorName = await this.ItemsColorsDao.findByItemId(data.id)
         const item = {
             ...data,
             idVendor: data.idVendor !== null ? await this.VendorDao.findById(data.idVendor) : null,
@@ -82,7 +82,7 @@ class ItemDao extends GenericDao {
             idFamily: await this.ProductFamilyDao.findById(data.idFamily),
             idPlace: await this.ProductPlaceDao.findById(data.idPlace),
             show: await this.ShowDao.findById(data.show),
-            color: colorName !== undefined ? colorName : ''
+            //color: colorName !== undefined ? colorName : ''
         }
         return new Item(item)
     }

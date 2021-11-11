@@ -1,8 +1,8 @@
-const ItemsColorsDao = require('../../dao/item/ItemColorsDao')
+//const ItemsColorsDao = require('../../dao/item/ItemColorsDao')
 const ItemDao = require('../../dao/item/ItemDao')
 
 const itemDao = new ItemDao()
-const itemsColorsDao = new ItemsColorsDao()
+//const itemsColorsDao = new ItemsColorsDao()
 
 
 exports.list = async (req, res) => {
@@ -69,7 +69,7 @@ exports.insert = async (req, res) => {
     try {
         /** INSERT ITEM */
         const item = req.body.form
-        const colors = req.body.form.colors
+       // const colors = req.body.form.colors
 
         delete item.color
         delete item.colors
@@ -77,7 +77,7 @@ exports.insert = async (req, res) => {
 
         const insert = await itemDao.insert(item)
 
-        itemDao.multipleAccess(colors, itemsColorsDao, insert.insertId, 'idItem')
+       // itemDao.multipleAccess(colors, itemsColorsDao, insert.insertId, 'idItem')
 
         res.json({ ok: true })
     } catch (error) {
@@ -100,7 +100,7 @@ exports.update = async (req, res) => {
 
         await itemDao.update(item)
 
-        itemDao.multipleAccess(colors, itemsColorsDao, item.id, 'idItem')
+        //itemDao.multipleAccess(colors, itemsColorsDao, item.id, 'idItem')
 
         res.json({ ok: true })
     } catch (error) {

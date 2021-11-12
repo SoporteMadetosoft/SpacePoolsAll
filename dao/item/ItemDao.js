@@ -5,7 +5,7 @@ const ProductPlaceDao = require("../setup/item/PlaceDao");
 const ProductFamilyDao = require("../item/ProductFamilyDao");
 const ItemTypeDao = require("../global/ItemTypeDao");
 const VendorDao = require("../vendor/VendorDao");
-const ItemsColorsDao = require("./ItemColorsDao");
+//const ItemsColorsDao = require("./ItemColorsDao");
 const ShowDao = require("../global/ShowDao");
 
 //const PurchaseItemsDao = require("../purchase/ItemDao");
@@ -17,7 +17,7 @@ class ItemDao extends GenericDao {
         this.ProductPlaceDao = new ProductPlaceDao()
         this.ItemTypeDao = new ItemTypeDao()
         this.VendorDao = new VendorDao()
-        this.ItemsColorsDao = new ItemsColorsDao()
+        //this.ItemsColorsDao = new ItemsColorsDao()
         this.ShowDao = new ShowDao()
 
     }

@@ -82,14 +82,14 @@ exports.insert = async (req, res) => {
     try {
         /** INSERT COLOR AND STOCK */
         const item = req.body.form
-        const colors = req.body.form.colors
+        const colors = req.body.form.color
 
         delete item.color
-        delete item.colors
 
         const insert = await itemsColorsDao.insert(item)
 
-        itemsColorsDao.multipleAccess(colors, itemsColorStockDao , insert.inserId, 'idItem')
+        itemsColorsDao.multipleAccess(colors, itemsColorsDao.ItemColorStockDao , insert.insertId, 'idItem')
+        
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
@@ -102,16 +102,14 @@ exports.update = async (req, res) => {
     try {
         /** UPDATE COLOR STOCK  */
         const item = req.body.form
-        const colors = req.body.form.colors
-
-        colors.length !== 0 && (item.stock = 0)
+        const colors = req.body.form.color
 
         delete item.color
-        delete item.colors
 
         await itemsColorsDao.update(item)
 
-        itemsColorsDao.multipleAccess(colors, itemsColorsDao, item.id, 'idItem')
+       console.log(colors)
+        itemsColorsDao.multipleAccess(colors, itemsColorStockDao, item.id, 'idItem')
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)
@@ -128,5 +126,20 @@ exports.findNId = async (req, res) => {
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)
+    }
+
+}
+
+exports.selectByIdItem = async (req, res) => {
+    const id = parseInt(req.params.id, 10)
+
+    try {
+        res.json({
+            ok: true,
+            data: await ItemColorStockDao.findByItemId(id)
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
     }
 }

@@ -66,8 +66,8 @@ export const ItemForm = () => {
                 itemType: exceptionController(form.itemType),
                 idFamily: exceptionController(form.idFamily),
                 idPlace: exceptionController(form.idPlace),
-                show: exceptionController(form.show),
-                colors: form.color.map(color => ({ ...color, idColor: exceptionController(color.idColor) }))
+                show: exceptionController(form.show)
+                //colors: form.color.map(color => ({ ...color, idColor: exceptionController(color.idColor) }))
             }
             save('Items', id, prettyForm)
             dispatch(handleCleanUp())

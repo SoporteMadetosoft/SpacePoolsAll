@@ -1,5 +1,4 @@
 const ItemColorStockDao = require('../../dao/item/ItemColorStockDao')
-
 const itemsColorStockDao = new ItemColorStockDao()
 
 
@@ -60,7 +59,7 @@ exports.delete = async (req, res) => {
 
 exports.insert = async (req, res) => {
     try {
-        /** INSERT PRODUCT FAMILY */
+        /** INSERT COLOR STOCK */
         const insert = await itemsColorStockDao.insert(req.body.form)
 
 

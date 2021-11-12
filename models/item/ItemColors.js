@@ -1,5 +1,5 @@
 class ItemColors {
-    #table = 'item'
+    #table = 'item2'
     color = []
 
     constructor({

@@ -18,7 +18,7 @@ export default [
         id: 'colors',
         title: 'Artículos Colores',
         icon: <Circle size={12} />,
-        navLink: '/items/colors'
+        navLink: '/items/itemColors'
       },
       {
         id: 'family',

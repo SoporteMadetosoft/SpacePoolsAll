@@ -18,7 +18,7 @@ export const ItemsColorsFormScreen = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(handleStartEditing('Items', id))
+            dispatch(handleStartEditing('ItemColors', id))
         }
         dispatch(initNormalForm(structureForm))
     }, [initNormalForm])

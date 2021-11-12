@@ -1,6 +1,6 @@
 class ItemColors {
-    color = []
     #table = 'item'
+    color = []
 
     constructor({
         id,

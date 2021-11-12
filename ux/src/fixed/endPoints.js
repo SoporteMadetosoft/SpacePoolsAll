@@ -39,11 +39,13 @@ export const endPoints = {
     Customers: '/customers',
     Vendors: '/vendors',
     CustomerData: '/customerData',
+    Notification: '/notification',
 
     Carriers: '/carriers',
     Vehicles: '/vehicles',
     VRepair: '/vehicles/repair',
     Trailers: '/trailers',
+    Alerts: '/alerts',
     TRepair: '/trailers/repair',
 
     Purchases: '/purchases',

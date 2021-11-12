@@ -19,6 +19,7 @@ exports.list = async (req, res) => {
 }
 
 exports.listItems = async (req, res) => {
+
     const { itemType, idVendor } = req.body.nObj
     let result
     if (idVendor === null) {

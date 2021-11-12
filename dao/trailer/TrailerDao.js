@@ -44,7 +44,7 @@ class TrailerDao extends SetupDao {
             ITVdate: this.datetimeToEuropeDate(data.ITVdate),
             repairs: await this.RepairDao.findByTrailerId(data.id),
             model: model != undefined ? model.name : '',
-            brand: brand != undefined ? brand.name : '',
+            brand: brand != undefined ? brand.name : ''
         }
 
         return new Trailer(list)

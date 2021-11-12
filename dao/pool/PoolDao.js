@@ -27,7 +27,7 @@ class PoolDao extends GenericDao {
         const status = await this.StatusDao.findById(data.idStatus)
         const list = {
             ...data,
-            
+
             idStatus: status != undefined ? status.id : ''
         }
         return new Pool(list)
@@ -35,7 +35,7 @@ class PoolDao extends GenericDao {
 
     findPoolById(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM pool WHERE Id = ?', [id], (err, result) => {
+            this.db.query('SELECT * FROM pool WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -47,7 +47,7 @@ class PoolDao extends GenericDao {
 
     findPoolNameBy(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT fabricationName FROM pool WHERE Id = ?', [id], (err, result) => {
+            this.db.query('SELECT fabricationName FROM pool WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

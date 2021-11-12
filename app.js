@@ -71,6 +71,8 @@ app.use('/calendar', require('./routes/calendar'));
 //Roles Routes
 app.use('/roles', require('./routes/role'));
 //-------------------------------------------------------
+//Alerts Routes
+app.use('/alerts', require('./routes/alerts'))
 
 // app.get('*', (req, res) => {
 //   res.sendFile(path.join(__dirname + '/ux/build/index.html'));

@@ -26,7 +26,7 @@ export default [
         icon: <Circle size={12} />,
         navLink: '/items/family'
       }
-      
+
     ]
   }
 

@@ -4,6 +4,8 @@ import { fileUploadTypes } from "../../types/fileUpload/types"
 import { uploadFile } from "../../../utility/helpers/Axios/uploadFile"
 import { deleteFile } from '../../../utility/helpers/Axios/deleteFile'
 import { addRepeaterRegister, handleCleanSection, removeRepeaterRegister } from '../normalForm'
+import { types } from "@redux/types/types"
+
 
 export const handleChangeUpload = (upload) => ({
     type: fileUploadTypes.SetUpload,
@@ -19,12 +21,16 @@ export const handleCleanUp = () => ({
     type: fileUploadTypes.CleanUp
 })
 
-export const startDeleteFile = (position, url) => {
+export const startDeleteFile = (position, url, id) => {
     return async (dispatch) => {
         const respuesta = await handleDeleteConfirmation()
         if (respuesta === true) {
             dispatch(removeRepeaterRegister('documents', position))
-            await deleteFile(url, 'FileManager')
+            dispatch({
+                type: types.delete,
+                payload: id
+            })
+            await eraseFile(url, 'FileManager')
         }
     }
 }
@@ -47,14 +53,24 @@ export const saveFiles = async (endpoint, filePath, files) => {
 }
 
 export const handleLoadDocuments = (endpoint, filePath) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         if (filePath !== null) {
             const data = await loadFiles(endpoint, filePath)
+            const oldDocuments = getState().normalForm.documents
             dispatch(handleCleanSection('documents'))
+
             data.map(
-                document => (
-                    dispatch(addRepeaterRegister('documents', document))
-                )
+                document => {
+                    const comun = oldDocuments.filter((od) => (od.url === document.url))
+
+                    const obj = {
+                        ...document,
+                        expiration: comun[0] !== undefined ? comun[0].expiration : '',
+                        name: comun[0] !== undefined ? comun[0].name : ''
+                    }
+
+                    dispatch(addRepeaterRegister('documents', obj))
+                }
             )
         }
     }

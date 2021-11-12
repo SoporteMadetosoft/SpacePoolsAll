@@ -50,8 +50,8 @@ const data = {
 const jwtConfig = {
   secret: 'dd5f3089-40c3-403d-af14-d0c228b05cb4',
   refreshTokenSecret: '7c4c1c50-3230-45bf-9eae-c9b2e401c767',
-  expireTime: '10m',
-  refreshTokenExpireTime: '10m'
+  expireTime: '1m',
+  refreshTokenExpireTime: '1m'
 }
 
 mock.onPost('/jwt/login').reply(request => {
@@ -150,7 +150,7 @@ mock.onPost('/jwt/refresh-token').reply(request => {
 
     const userData = { ...data.users.find(user => user.id === id) }
 
-    const newAccessToken = jwt.sign({ id: userData.id }, jwtConfig.secret, { expiresIn: jwtConfig.expiresIn })
+    const newAccessToken = jwt.sign({ id: userData.id }, jwtConfig.secret, { expiresIn: jwtConfig.expireTime })
     const newRefreshToken = jwt.sign({ id: userData.id }, jwtConfig.refreshTokenSecret, {
       expiresIn: jwtConfig.refreshTokenExpireTime
     })

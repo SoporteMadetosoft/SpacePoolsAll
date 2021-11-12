@@ -167,3 +167,19 @@ exports.switchState = async (req, res) => {
     }
 
 }
+
+exports.validate = async (req, res) => {
+    console.log('validar')
+    try {
+        const { productionDate, idPool } = req.body.form
+
+        res.json({
+            ok: true,
+            data: await orderDao.validarOrderPoolProduction(productionDate, idPool)
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}

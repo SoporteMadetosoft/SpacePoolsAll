@@ -7,6 +7,9 @@ import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { Link } from "react-router-dom"
 import { editRepeaterRegister } from "../../../redux/actions/normalForm"
 import { startDeleteFile } from "../../../redux/actions/fileUpload"
+import { AbilityContext } from '@src/utility/context/Can'
+import { useContext } from "react"
+
 
 export const vehiclesDocs = [
     {
@@ -106,6 +109,7 @@ export const vehiclesDocs = [
         cell: (row, index) => {
 
             const dispatch = useDispatch()
+            const ability = useContext(AbilityContext)
 
             return (
                 <div className='d-flex'>
@@ -120,14 +124,16 @@ export const vehiclesDocs = [
                                     <span className='align-middle ml-50'>Ver archivo</span>
                                 </DropdownItem>
                             </Link>
+                            
                             <Link onClick={(e) => {
-                                dispatch(startDeleteFile(index, row.url))
+                                dispatch(startDeleteFile(index, row.url, row.id))
                             }}>
                                 <DropdownItem tag='a' href='/' className='w-100'>
                                     <Trash size={15} />
                                     <span className='align-middle ml-50'>Eliminar</span>
                                 </DropdownItem>
                             </Link>
+                            
                         </DropdownMenu>
                     </UncontrolledDropdown>
                 </div>

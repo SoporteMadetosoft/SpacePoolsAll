@@ -110,9 +110,9 @@ export const ordersList = [
     width: '150px',
     searchable: true,
     cell: row => {
-
       const dispatch = useDispatch()
       const proceso_prod = row.state
+      const idProductionStatus = row.idProductionStatus
 
       const ability = useContext(AbilityContext)
 
@@ -131,7 +131,7 @@ export const ordersList = [
                   </DropdownItem>
                 </Link>
               )}
-              {ability.can('actions', 'orders') && proceso_prod === 1 && <Link onClick={(e) => {
+              {ability.can('actions', 'orders') && idProductionStatus >= 5 && <Link onClick={(e) => {
                 dispatch(startSelectDriver({ idOrder: row.id, idCustomer: row.idCustomer }, 'Delivery'))
               }}>
                 <DropdownItem tag='a' href='/' className='w-100'>

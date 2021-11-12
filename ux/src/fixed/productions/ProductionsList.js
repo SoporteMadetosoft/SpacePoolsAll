@@ -37,7 +37,10 @@ function renderSwitch(param) {
 
     case 6:
       return (<><Badge color='light-success'>Acabado</Badge></>)
-
+    case 7:
+      return (<><Badge color='light-success'>Finalizado</Badge></>)
+    case 8:
+      return (<><Badge color='light-success'>Control de calidad</Badge></>)
     default:
       return (<><Badge color='light-dark'>En cola</Badge></>)
 
@@ -104,7 +107,7 @@ export const ProductionsList = [
       const dispatch = useDispatch()
       return (
         <div className="d-flex justify-content-start">
-          {proceso_prod >= 2 && proceso_prod <= 5 ?
+          {proceso_prod >= 2 && proceso_prod <= 7 ?
             (
               <Link onClick={() => {
                 save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus - 1 })
@@ -118,13 +121,20 @@ export const ProductionsList = [
 
           {renderSwitch(proceso_prod)}
 
-          {proceso_prod < 6 ?
+          {proceso_prod < 8 ?
             (
               <Link onClick={() => {
                 save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus + 1 })
                 dispatch(startLoadingTableProduction('Productions'))
-                if ((row.idProductionStatus + 1) === 6) {
-                  axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.idOrder, state: 1 })
+                if ((row.idProductionStatus + 1) === 8) {
+                  const token = localStorage.getItem('accessToken')
+
+                  axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.idOrder, state: 1 }, {
+                    headers: {
+                      'Content-type': 'application/json',
+                      'x-token': token
+                    }
+                  })
                 }
               }}>
                 <Badge color='light-dark' className="ml-1"><ChevronRight size={15} /></Badge>

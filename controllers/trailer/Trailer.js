@@ -56,6 +56,7 @@ exports.insert = async (req, res) => {
 
         delete trailer.documents
         delete trailer.repairs
+        delete trailer.brand
 
         const insert = await trailerDao.insert(trailer)
 

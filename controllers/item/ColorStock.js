@@ -60,9 +60,7 @@ exports.delete = async (req, res) => {
 
 exports.insert = async (req, res) => {
     try {
-        /** INSERT PRODUCT FAMILY */
         const insert = await itemsColorStockDao.insert(req.body.form)
-
 
         res.json({ ok: true })
     } catch (error) {

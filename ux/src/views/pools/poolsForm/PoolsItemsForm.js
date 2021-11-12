@@ -121,11 +121,12 @@ const ItemsForm = ({ position }) => {
                 <ReactSelect
                     placeholder="Artículo"
                     name="idItem"
-                    value={SelectValue}
+                    // value={SelectValue}
                     options={Items}
                     onChange={(obj) => {
                         handleLoadColors(obj)
-                    }} />
+                    }}
+                         />
             </div>
 
             <div className="col-md-3">
@@ -135,7 +136,7 @@ const ItemsForm = ({ position }) => {
                     name="idColor"
                     options={colores}
                     onChange={(value) => { handleSelectChange('idColor', value) }}
-                    value={SelectColor}
+                    // value={SelectColor}
                 />
             </div>
             <div className="col-md-3">

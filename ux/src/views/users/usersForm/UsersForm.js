@@ -18,11 +18,19 @@ import { toast } from 'react-toastify'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 
-const formSchema = {
+const formSchemaUser = {
     login: { validations: [validator.isRequired] },
     fullname: { validations: [validator.isRequired] },
     idRole: { validations: [validator.isRequired] },
     idStatus: { validations: [validator.isRequired] }
+}
+const formSchemaNoUser = {
+    login: { validations: [validator.isRequired] },
+    fullname: { validations: [validator.isRequired] },
+    idRole: { validations: [validator.isRequired] },
+    idStatus: { validations: [validator.isRequired] },
+    confirmPassword: { validations: [validator.isRequired]},
+    password: { validations: [validator.isRequired]}
 }
 
 export const UsersForm = () => {
@@ -37,8 +45,14 @@ export const UsersForm = () => {
     const pass = normalForm.password ? normalForm.password : ''
 
     useEffect(() => {
-        dispatch(setSchema(formSchema))
-    }, [])
+
+        if ( id === undefined) {
+            dispatch(setSchema(formSchemaNoUser))
+        } else {
+            dispatch(setSchema(formSchemaUser))
+        }
+
+    }, [id])
 
     const SuccessProgressToast = () => (
         <>

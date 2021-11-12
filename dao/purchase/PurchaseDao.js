@@ -29,7 +29,7 @@ class PurchaseDao extends GenericDao {
         const vendor = await this.VendorDao.findVendorById(data.idVendor)
         const list = {
             ...data,
-            idVendor: vendor != undefined ? vendor.comercialName : ''
+            idVendor: vendor !== undefined ? vendor.comercialName : ''
         }
 
         const { id, idStatus, purchaseCode, idVendor, purchaseDate, deliveryDate, observations } = list
@@ -37,7 +37,7 @@ class PurchaseDao extends GenericDao {
         const newPurchaseDate = this.datetimeToEuropeDate(purchaseDate)
         const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)
 
-        const nObj = { id: id, idStatus: idStatus, idVendor: idVendor, purchaseCode: purchaseCode, purchaseDate: newPurchaseDate, observations: observations, deliveryDate: newDeliveryDate }
+        const nObj = { id: id, idStatus: idStatus, idVendor: idVendor,  purchaseCode: purchaseCode, purchaseDate: newPurchaseDate, observations: observations, deliveryDate: newDeliveryDate }
         return nObj
     }
 

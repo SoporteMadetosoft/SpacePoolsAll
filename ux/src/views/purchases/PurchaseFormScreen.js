@@ -19,7 +19,7 @@ const structureForm = {
 }
 const formSchema = {
     idVendor: { validations: [validator.isRequired] },
-    purchaseDate: { validations: [validator.isEmail] },
+    purchaseDate: { validations: [validator.isRequired] },
     deliveryDate: { validations: [validator.isRequired] }
 }
 

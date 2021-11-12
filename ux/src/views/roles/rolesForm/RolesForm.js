@@ -33,6 +33,7 @@ export const RolesForm = () => {
             Trailers: JSON.stringify(permisosReducer.Trailers),
             Pools: JSON.stringify(permisosReducer.Pools),
             Items: JSON.stringify(permisosReducer.Items),
+            ItemColors: JSON.stringify(permisosReducer.ItemColors),
             Family: JSON.stringify(permisosReducer.Family),
             Purchases: JSON.stringify(permisosReducer.Purchases),
             Orders: JSON.stringify(permisosReducer.Orders),
@@ -53,8 +54,8 @@ export const RolesForm = () => {
             Brand: JSON.stringify(permisosReducer.Brand),
             Model: JSON.stringify(permisosReducer.Model),
             Place: JSON.stringify(permisosReducer.Place),
-            Colors: JSON.stringify(permisosReducer.Colors)
-            // Alerts: JSON.stringify(permisosReducer.Alerts)
+            Colors: JSON.stringify(permisosReducer.Colors),
+            Alerts: JSON.stringify(permisosReducer.Alerts)
         }
         save('Roles', id, prettyForm)
         history.push('/roles')
@@ -93,6 +94,7 @@ export const RolesForm = () => {
                                 <Permiso name='Remolques' id='Trailers' actions='1' />
                                 <Permiso name='Piscinas' id='Pools' />
                                 <Permiso name='Artículos' id='Items' />
+                                <Permiso name='Artículos con colores' id='ItemColors' />
                                 <Permiso name='Familias' id='Family' />
                                 <Permiso name='Compras' id='Purchases' actions='1' />
                                 <Permiso name='Pedidos' id='Orders' actions='1' />
@@ -114,7 +116,7 @@ export const RolesForm = () => {
                                 <Permiso name='Modelos' id='Model' />
                                 <Permiso name='Ubicaciones' id='Place' />
                                 <Permiso name='Colores' id='Colors' />
-                                {/* <Permiso name='Alertas' id='Alerts' /> */}
+                                <Permiso name='Alertas' id='Alerts' />
                             </tbody>
                         </Table>
                     </div>

@@ -171,11 +171,15 @@ export const handleFillCustomerData = (idCustomer) => {
         const customerData = await getFormData("Customers", idCustomer)
         customerData['addresses'].map(
             elements => {
+
                 if (elements.addressType.id === 1) {
                     dispatch(handleChangeController('deliveryAddress', `${elements.address}, ${elements.population}`))
+                } else {
+                    dispatch(handleChangeController('deliveryAddress', ''))
                 }
             }
         )
+
         dispatch(handleChangeController('phone', customerData['phone']))
         dispatch(handleChangeController('email', customerData['email']))
 

@@ -8,6 +8,7 @@ import { CustomMiniTable } from '../../../components/datatable/CustomMiniTable'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
 import { FileContext } from '../../../utility/context/FileContext'
 import { trailersDocs } from '../../../fixed/vehicles/trailers/trailersDocs'
+import { handleChangeController } from '../../../redux/actions/normalForm'
 
 export const TrailerDocForm = () => {
 
@@ -42,7 +43,7 @@ export const TrailerDocForm = () => {
 
         const filePath2 = await MkDir('Trailers', realFilePath)
         realFilePath = filePath2 ? filePath2 : filePath
-        // dispatch(handleChangeController('filePath', realFilePath))
+         dispatch(handleChangeController('filePath', realFilePath))
 
         dispatch(await saveFiles('FileManager', realFilePath, file))
     }

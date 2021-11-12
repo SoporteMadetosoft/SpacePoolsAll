@@ -9,6 +9,7 @@ const initialState = {
     Trailers: { read: true, insert: true, update: true, delete: true, actions: true },
     Pools: { read: true, insert: true, update: true, delete: true },
     Items: { read: true, insert: true, update: true, delete: true },
+    ItemColors: { read: true, insert: true, update: true, delete: true },
     Family: { read: true, insert: true, update: true, delete: true },
     Purchases: { read: true, insert: true, update: true, delete: true, actions: true },
     Orders: { read: true, insert: true, update: true, delete: true, actions: true },

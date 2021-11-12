@@ -19,7 +19,6 @@ export const CarrierScreenList = ({ titulo }) => {
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Carriers'))
-
         dispatch(cleanFormValidator())
 
     }, [])

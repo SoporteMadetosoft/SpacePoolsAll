@@ -16,21 +16,28 @@ export const itemsColorsList = [
         sortable: true,
         searchable: true,
         minWidth: '50px',
-        width: '10%'
+        width: '8%'
     },
     {
-        name: 'Color',
+        name: 'Nombre',
         selector: 'name',
         sortable: true,
         searchable: true,
-        minWidth: '100px'
+        width: '45%'
     },
     {
-        name: 'Stock',
+        name: 'Stock reservado',
+        selector: 'reserveStock',
+        sortable: true,
+        searchable: true,
+        width: '20%'
+    },
+    {
+        name: 'Stock en almacén',
         selector: 'stock',
         sortable: true,
         searchable: true,
-        minWidth: '100px'
+        width: '20%'
     },
     {
         name: 'Acciones',

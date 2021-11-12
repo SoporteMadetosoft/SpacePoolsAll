@@ -29,7 +29,6 @@ export const ItemsFamilyForm = () => {
     const { normalForm, formValidator } = useSelector(state => state)
     
     useEffect(() => {
-        console.log(normalForm.id)
         if (!id) {
             dispatch(GetSetNextId('Family', 'id'))
         } 
@@ -45,7 +44,6 @@ export const ItemsFamilyForm = () => {
             dispatch(setErrors(errors))
 
         } else {
-            console.log(form.parent)
             const prettyForm = {
                 ...form
                

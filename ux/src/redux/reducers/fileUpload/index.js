@@ -3,7 +3,7 @@ import { fileUploadTypes } from "../../types/fileUpload/types"
 // ** Initial State
 const initialState = {
     filePath: null,
-    upload: null
+    upload: 0
 }
 
 const fileUpload = (state = initialState, action) => {

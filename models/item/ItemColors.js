@@ -1,4 +1,5 @@
 class ItemColors {
+
     #table = 'item2'
     color = []
 

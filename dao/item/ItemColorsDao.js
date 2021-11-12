@@ -1,13 +1,15 @@
 const ItemColors = require("../../models/item/ItemColors");
 const GenericDao = require("../GenericDao");
+
 //const ColorsDao = require("../setup/item/ColorsDao")
+
 const ProductFamilyDao = require("../item/ProductFamilyDao");
 const ProductPlaceDao = require("../setup/item/PlaceDao")
 const ItemTypeDao = require("../global/ItemTypeDao");
 const VendorDao = require("../vendor/VendorDao");
 const ShowDao = require("../global/ShowDao");
-const ItemColorStockDao = require("../../dao/item/ItemColorStockDao")
 
+const ItemColorStockDao = require("../../dao/item/ItemColorStockDao")
 
 class ItemsColorsDao extends GenericDao {
     constructor() {
@@ -15,8 +17,10 @@ class ItemsColorsDao extends GenericDao {
         this.ProductFamilyDao = new ProductFamilyDao()
         this.ProductPlaceDao = new ProductPlaceDao()
         this.ItemTypeDao = new ItemTypeDao()
+
         //this.ColorsDao = new ColorsDao()
         this.ItemColorStockDao = new ItemColorStockDao()
+
         this.VendorDao = new VendorDao()
         this.ShowDao = new ShowDao()
     }
@@ -54,6 +58,7 @@ class ItemsColorsDao extends GenericDao {
 
     findByItemType(itemType) {
         return new Promise((resolve, reject) => {
+
             this.db.query('SELECT * FROM item2 WHERE itemType = ?', [itemType], async (err, result) => {
                 if (err) {
                     reject(err)
@@ -71,7 +76,9 @@ class ItemsColorsDao extends GenericDao {
 
     findByItemTypeAndVendor(itemType, idVendor) {
         return new Promise((resolve, reject) => {
+
             this.db.query('SELECT * FROM item2 WHERE itemType = ? AND idVendor = ?', [itemType, idVendor], async (err, result) => {
+
                 if (err) {
                     reject(err)
                 } else {
@@ -162,27 +169,10 @@ class ItemsColorsDao extends GenericDao {
         })
     }
 
-    findAllColors(id) {
-        return new Promise((resolve, reject) => {
-            this.db.query(`SELECT * FROM setup_colors WHERE id = ?`,[id], async (err, result) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    // let colorList = []
-                    // for (const color of result){
-                    //     colorList.push({
-
-                    //     })
-                    // }
-                    resolve('')
-                }
-            });
-        })
-    }
-
     findByItemId(id) {
         console.log(`SELECT idColor FROM item_colors WHERE idItem = ${id}`)
         return new Promise((resolve, reject) => {
+
             this.db.query('SELECT * FROM item_colors WHERE idcolor = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
@@ -190,7 +180,6 @@ class ItemsColorsDao extends GenericDao {
                     let colorList = []
                     for (const color of result) {
                         colorList.push({
-                            id : color.id,
                             idColor: await this.mountColor(color),
                             stock: color.stock
                         })

@@ -1,6 +1,8 @@
 const ItemColorsStock = require("../../models/item/ItemColorStock")
 const GenericDao = require("../GenericDao");
+
 const ColorsDao = require("../setup/item/ColorsDao");
+
 
 class ItemColorStockDao extends GenericDao {
     constructor() {
@@ -16,6 +18,7 @@ class ItemColorStockDao extends GenericDao {
         }
 
         return colorStock
+
     }
 
     async mountList(data) {
@@ -45,7 +48,6 @@ class ItemColorStockDao extends GenericDao {
             })
         })
     }
-
 }
 
 module.exports = ItemColorStockDao

@@ -82,6 +82,7 @@ exports.insert = async (req, res) => {
     try {
         /** INSERT COLOR AND STOCK */
         const item = req.body.form
+
         const colors = req.body.form.color
 
         delete item.color
@@ -102,6 +103,7 @@ exports.update = async (req, res) => {
     try {
         /** UPDATE COLOR STOCK  */
         const item = req.body.form
+
         const colors = req.body.form.color
 
         delete item.color

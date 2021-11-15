@@ -1,19 +1,27 @@
-const ExtraItem = require("../../models/order/ExtraItem");
+const ExtraItemColor = require("../../models/order/ExtraItemColor");
 const GenericDao = require("../GenericDao");
 
 const ItemDao = require("../item/ItemDao");
 
-class ExtraItemDao extends GenericDao {
+class ExtraItemColorDao extends GenericDao {
     constructor() {
-        super(ExtraItem);
+        super(ExtraItemColor);
         this.ItemDao = new ItemDao()
     }
 
     async mountObj(data) {
+        const colData = await this.ItemDao.ItemsColorsDao.findByItemId(data.idItem)
+        const colores = colData.map(el => ({
+            label: el.name,
+            value: el.id
+        }))
+        const selectedColor = await this.ItemDao.ItemsColorsDao.ColorsDao.findById(data.idColor)
         const extraItem = {
             ...data,
             idItem: await this.ItemDao.findById(data.idItem),
             coste: await this.ItemDao.findOneFieldById("cost", data.idItem),
+            idColor: selectedColor.id !== undefined ? selectedColor : '',
+            colores: colores
         }
 
         return extraItem
@@ -31,7 +39,7 @@ class ExtraItemDao extends GenericDao {
 
     findByOrderId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM orders_extra_items WHERE idOrder = ?', [id], async (err, result) => {
+            this.db.query('SELECT * FROM orders_extra_item_colors WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -50,7 +58,7 @@ class ExtraItemDao extends GenericDao {
 
     async getItemsByTypeAndOrder(idOrder, itemType) {
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT * FROM orders_extra_items WHERE idOrder = ?`, [idOrder], async (err, result) => {
+            this.db.query(`SELECT * FROM orders_extra_item_colors WHERE idOrder = ?`, [idOrder], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -58,6 +66,7 @@ class ExtraItemDao extends GenericDao {
                     for (const data of result) {
                         const item = await this.ItemDao.findByItemTypeAndId(data.idItem, itemType)
                         if (item[0]) {
+                            console.log(item[0]['itemType'].id)
                             if (item[0]['itemType'].id === itemType) {
                                 ItemList.push(await this.mountObj(data))
                             }
@@ -72,7 +81,7 @@ class ExtraItemDao extends GenericDao {
 
     countItemById(id, idOrder) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT id FROM orders_extra_items WHERE idItem = ? and idOrder = ?', [id, idOrder], (err, result) => {
+            this.db.query('SELECT id FROM orders_extra_item_colors WHERE idItem = ? and idOrder = ?', [id, idOrder], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -84,4 +93,4 @@ class ExtraItemDao extends GenericDao {
 
 }
 
-module.exports = ExtraItemDao
+module.exports = ExtraItemColorDao

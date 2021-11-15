@@ -89,12 +89,8 @@ const ItemsForm = ({ position }) => {
             name: key,
             value: el
         }
-        dispatch(
-            editRepeaterRegister('extraRawColors', position, obj)
-        )
-        dispatch(
-            handleSearchOutID2('RawColors', position, 'extraRawColors', "extraRawColors")
-        )
+        dispatch(editRepeaterRegister('extraRawColors', position, obj))
+        dispatch(handleSearchOutID2('RawColors', position, 'extraRawColors', "extraRawColors"))
     }
 
     const handleLoadColors = async (obj) => {

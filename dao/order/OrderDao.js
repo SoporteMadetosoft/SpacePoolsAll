@@ -7,8 +7,8 @@ const CustomerDataDao = require("../order/CustomerDataDao");
 const ExtraItemDao = require("../order/ExtraItemDao");
 const BaseItemDao = require("../order/BaseItemDao")
 const TaxesDao = require("../setup/general/TaxDao");
-const CanvasDao = require("../order/CanvasDao")
-
+const CanvasDao = require("../order/CanvasDao");
+const ExtraItemColorDao = require("./ExtraItemColorDao");
 
 class OrderDao extends GenericDao {
     constructor() {
@@ -17,6 +17,7 @@ class OrderDao extends GenericDao {
         this.CustomerDao = new CustomerDao()
         this.CustomerDataDao = new CustomerDataDao()
         this.ExtraItemDao = new ExtraItemDao()
+        this.ExtraItemColorDao = new ExtraItemColorDao()
         this.BaseItemDao = new BaseItemDao()
         this.TaxesDao = new TaxesDao()
         this.CanvasDao = new CanvasDao()
@@ -27,9 +28,11 @@ class OrderDao extends GenericDao {
         const order = {
             ...data,
             customerData: await this.CustomerDataDao.findByOrderId(data.id),
-            // extraItems: await this.ExtraItemDao.getItemsByTypeAndOrder(data.id, 2),
-            // extraRaws: await this.ExtraItemDao.getItemsByTypeAndOrder(data.id, 1),
-            // baseItems: await this.BaseItemDao.findByOrderId(data.id),
+            extraItems: await this.ExtraItemDao.getItemsByTypeAndOrder(data.id, 2),
+            extraItemColors: await this.ExtraItemColorDao.getItemsByTypeAndOrder(data.id, 2),
+            extraRaws: await this.ExtraItemDao.getItemsByTypeAndOrder(data.id, 1),
+            extraRawColors: await this.ExtraItemColorDao.getItemsByTypeAndOrder(data.id, 1),
+            baseItems: await this.BaseItemDao.findByOrderId(data.id),
             orderDate: this.datetimeToDate(data.orderDate),
             productionDate: this.datetimeToDate(data.productionDate),
             deliveryDate: this.datetimeToDate(data.deliveryDate),
@@ -132,6 +135,15 @@ class OrderDao extends GenericDao {
                 } else {
                     for (const res of result) {
                         await this.ExtraItemDao.ItemDao.updateStock('-', res['idItem'], res['quantity'])
+                    }
+                }
+            })
+            await this.db.query('SELECT * FROM `orders_extra_item_colors` WHERE idOrder = ?', [id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    for (const res of result) {
+                        await this.ExtraItemColorDao.ItemDao.ItemsColorsDao.updateStock('-', res['idItem'], res['idColor'], res['quantity'])
                     }
                 }
             })

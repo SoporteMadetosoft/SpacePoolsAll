@@ -149,5 +149,5 @@ export const ItemsColorForm = () => {
             </div>
             <ActionButtons />
         </Form>
-    )   
+    )
 }

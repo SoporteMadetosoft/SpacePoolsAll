@@ -101,9 +101,11 @@ export const OrderForm = () => {
                     idPool: exceptionController(value.idPool),
                     idTax: exceptionController(value.idTax),
                     idCustomer: exceptionController(value.idCustomer),
-                    baseItems: value.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity, idColor: exceptionController(bI.idColor) })),
-                    extraItems: value.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity, idColor: exceptionController(eI.idColor) })),
-                    extraRaws: value.extraRaws.map(eR => ({ idItem: eR.idItem.id, quantity: eR.quantity, idColor: exceptionController(eR.idColor) })),
+                    baseItems: value.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity })),
+                    extraItems: value.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity })),
+                    extraRaws: value.extraRaws.map(eR => ({ idItem: eR.idItem.id, quantity: eR.quantity })),
+                    extraItemColors: value.extraItemColors.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity, idColor: exceptionController(eI.idColor) })),
+                    extraRawColors: value.extraRawColors.map(eR => ({ idItem: eR.idItem.id, quantity: eR.quantity, idColor: exceptionController(eR.idColor) })),
                     canvas: canvasReducer.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, rotation: el.rotation }))
                 }
                 delete prettyForm.canvasItems
@@ -113,9 +115,10 @@ export const OrderForm = () => {
 
                 const vp = await validateProduction('Orders', { productionDate: prettyForm.productionDate, idPool: prettyForm.idPool })
                 if (vp === true) {
+
                     save('Orders', id, prettyForm)
-                    dispatch(handleCleanUp())
-                    history.push('/orders')
+                    // dispatch(handleCleanUp())
+                    // history.push('/orders')
                 } else {
                     Swal.fire({
                         title: '¡Error!',

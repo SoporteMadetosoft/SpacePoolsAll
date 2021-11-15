@@ -19,7 +19,9 @@ class Order {
         price,
         idTax,
         extraItems = [],
+        extraItemColors = [],
         extraRaws = [],
+        extraRawColors = [],
         customerData = [],
         production = [],
         baseItems = [],
@@ -37,7 +39,9 @@ class Order {
         this.price = price
         this.idTax = idTax
         this.extraItems = extraItems
+        this.extraItemColors = extraItemColors
         this.extraRaws = extraRaws
+        this.extraRawColors = extraRawColors
         this.customerData = customerData
         this.production = production
         this.baseItems = baseItems

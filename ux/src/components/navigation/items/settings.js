@@ -16,7 +16,7 @@ export default [
       },
       {
         id: 'colors',
-        title: 'Artículos Colores',
+        title: 'Artículos con color',
         icon: <Circle size={12} />,
         navLink: '/items/itemColors'
       },

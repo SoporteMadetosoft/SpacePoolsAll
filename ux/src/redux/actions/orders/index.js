@@ -70,7 +70,7 @@ export const handleCalculateTotalCost = (column1, column2, isPool) => {
 
 export const handleSearchOutID2 = (endpoint, position, arr, arrCalcu1, arrCalcu2) => {
     return async (dispatch, getState) => {
-        const { idItem, idCanvasItem } = getState().normalForm[arr][position]
+        const { idItem } = getState().normalForm[arr][position]
 
         if (idItem !== undefined) {
             const { cost } = await getFormData(endpoint, idItem.id)

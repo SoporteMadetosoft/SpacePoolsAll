@@ -94,7 +94,7 @@ class ProductFamilyDao extends GenericDao {
     }
 
     async mountList(data) {
-        const { name: parentName } = await this.findById(data.parent)
+        const parentName = await this.findById(data.parent)
         const list = {
             ...data,
             parent: parentName !== undefined ? parentName : 'Nadie'
@@ -102,7 +102,6 @@ class ProductFamilyDao extends GenericDao {
         const nObj = list
         return nObj
     }
-
 }
 
 module.exports = ProductFamilyDao

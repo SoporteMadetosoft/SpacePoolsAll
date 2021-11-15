@@ -5,7 +5,7 @@ class ProductFamilyDao extends GenericDao {
 
     constructor() {
         super(ProductFamily);
-         }
+    }
 
     findAllFamily(idNode) {
         return new Promise((resolve, reject) => {
@@ -86,7 +86,6 @@ class ProductFamilyDao extends GenericDao {
 
 
     async mountObj(data) {
-        console.log(data)
         const productFamily = {
             ...data,
         }

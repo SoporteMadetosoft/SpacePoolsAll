@@ -8,7 +8,7 @@ class ItemColorStockDao extends GenericDao {
     constructor() {
         super(ItemColorsStock);
         this.ColorDao = new ColorsDao()
-         }
+    }
 
     async mountObj(data) {
         const objColor = await this.ColorDao.findById(data.idColor)
@@ -25,15 +25,15 @@ class ItemColorStockDao extends GenericDao {
         //const { name: parentName } = await this.findById(data.parent)
         const list = {
             ...data,
-           // parent: parentName ? parentName : 'Nadie'
+            // parent: parentName ? parentName : 'Nadie'
         }
-        const { id,idItem, idColor, stock }= list
+        const { id, idItem, idColor, stock } = list
         const nObj = { id, idItem, idColor, stock }
         return nObj
     }
 
     findByItemId(id) {
-        console.log(`SELECT idColor FROM item_colors WHERE idItem = ${id}`)
+        // console.log(`SELECT idColor FROM item_colors WHERE idItem = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM item_colors WHERE idItem = ?', [id], async (err, result) => {
                 if (err) {

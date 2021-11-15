@@ -28,11 +28,11 @@ export const PoolsItemsForm = () => {
     const count = items ? items.length : 0
 
     const increaseCount = () => {
-        dispatch(addRepeaterRegister('items', formStructure))
+        dispatch(addRepeaterRegister('itemColor', formStructure))
     }
 
     useEffect(() => {
-        dispatch(startAddSelectPoolItems('Items', 'Items', 'name', 2))
+        dispatch(startAddSelectPoolItems('ItemColors', 'Items', 'name', 2))
     }, [])
 
     return (
@@ -69,7 +69,7 @@ const ItemsForm = ({ position }) => {
     const SelectColor = idColor.name ? deconstructSelect(idColor) : null
 
     const decreaseCount = () => {
-        dispatch(removeRepeaterRegister('items', position))
+        dispatch(removeRepeaterRegister('itemColor', position))
         dispatch(handleCalculateTotalCost("items", "raws"))
     }
 
@@ -126,7 +126,7 @@ const ItemsForm = ({ position }) => {
                     onChange={(obj) => {
                         handleLoadColors(obj)
                     }}
-                         />
+                />
             </div>
 
             <div className="col-md-3">
@@ -136,7 +136,7 @@ const ItemsForm = ({ position }) => {
                     name="idColor"
                     options={colores}
                     onChange={(value) => { handleSelectChange('idColor', value) }}
-                    // value={SelectColor}
+                // value={SelectColor}
                 />
             </div>
             <div className="col-md-3">

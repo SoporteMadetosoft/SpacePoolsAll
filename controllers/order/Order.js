@@ -169,7 +169,6 @@ exports.switchState = async (req, res) => {
 }
 
 exports.validate = async (req, res) => {
-    console.log('validar')
     try {
         const { productionDate, idPool } = req.body.form
 

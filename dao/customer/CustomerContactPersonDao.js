@@ -9,6 +9,7 @@ class CustomerContactPersonDao extends GenericDao {
     }
 
     findByCustomerId(id) {
+        console.log(`SELECT * FROM customers_contact WHERE idCustomer = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM customers_contact WHERE idCustomer = ?', [id], async (err, result) => {
                 if (err) {

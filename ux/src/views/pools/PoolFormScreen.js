@@ -8,7 +8,9 @@ import { PoolsForm } from './poolsForm/PoolsForm'
 
 const structureForm = {
     items: [],
-    raws: []
+    itemColor: [],
+    raws: [],
+    rawColor: []
 }
 
 export const PoolFormScreen = () => {

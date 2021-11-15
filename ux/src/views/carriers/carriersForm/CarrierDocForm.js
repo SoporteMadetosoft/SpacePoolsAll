@@ -23,7 +23,7 @@ export const CarrierDocForm = () => {
     let realFilePath = formFilePath ? formFilePath : filePath
 
     useEffect(() => {
-        if (upload === 0) {
+        if (upload === 0 && realFilePath !== undefined) {
 
             if (!id) {
                 dispatch(handleLoadDocuments('FileManager', realFilePath))

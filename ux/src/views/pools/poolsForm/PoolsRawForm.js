@@ -37,7 +37,7 @@ export const PoolsRawForm = () => {
 
     return (
         <>
-            <h1 className="card-title">Materias primas</h1>
+            <h1 className="card-title">Materias primas con color</h1>
 
             <Repeater count={count}>
 

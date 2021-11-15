@@ -4,7 +4,6 @@ const fileManagerDao = new FileManagerDao();
 
 exports.create = async (req, res) => {
     try {
-        console.log(req.body.filePath)
         await fileManagerDao.createFile(req.body.filePath)
         res.json({ ok: true })
     } catch (error) {

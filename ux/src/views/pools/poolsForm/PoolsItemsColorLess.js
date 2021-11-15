@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import ReactSelect from 'react-select'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
-import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+import { constructSelect } from '../../../utility/helpers/deconstructSelect'
 import { startAddSelectPoolItems } from '../../../redux/actions/selects'
 import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/actions/orders'
+import axios from 'axios'
 
 const formStructure = {
     idItem: '',
@@ -16,16 +17,16 @@ const formStructure = {
     coste: 0
 }
 
-export const ExtraItemsRepeater = () => {
+export const PoolsItemsColorLess = () => {
 
     const dispatch = useDispatch()
     const formValues = useSelector(state => state.normalForm)
-    const { extraItems } = formValues
+    const { items } = formValues
 
-    const count = extraItems ? extraItems.length : 0
+    const count = items ? items.length : 0
 
     const increaseCount = () => {
-        dispatch(addRepeaterRegister('extraItems', formStructure))
+        dispatch(addRepeaterRegister('items', formStructure))
     }
 
     useEffect(() => {
@@ -34,7 +35,7 @@ export const ExtraItemsRepeater = () => {
 
     return (
         <>
-            <h1 className="card-title">Productos extras sin color</h1>
+            <h1 className="card-title">Artículos sin color</h1>
 
             <Repeater count={count}>
 
@@ -61,13 +62,11 @@ const ItemsForm = ({ position }) => {
 
     const { normalForm, selectReducer } = useSelector(state => state)
     const { Items } = selectReducer
-    const { idItem, quantity } = normalForm.extraItems[position]
-    const SelectValue = idItem ? deconstructSelect(idItem) : null
-
+    const { quantity } = normalForm.items[position]
 
     const decreaseCount = () => {
-        dispatch(removeRepeaterRegister('extraItems', position))
-        dispatch(handleCalculateTotalCost("extraItems", ""))
+        dispatch(removeRepeaterRegister('items', position))
+        dispatch(handleCalculateTotalCost("items", "raws"))
     }
 
     const handleInputChange = ({ target }) => {
@@ -75,9 +74,10 @@ const ItemsForm = ({ position }) => {
             name: target.name,
             value: target.value
         }
-        dispatch(editRepeaterRegister('extraItems', position, obj))
-        dispatch(handleSearchOutID2('Items', position, 'extraItems', "extraItems"))
+        dispatch(editRepeaterRegister('items', position, obj))
+        dispatch(handleSearchOutID2('Items', position, 'items', 'raws', 'items'))
     }
+
 
     const handleSelectChange = (key, element) => {
         const el = constructSelect(element)
@@ -85,27 +85,47 @@ const ItemsForm = ({ position }) => {
             name: key,
             value: el
         }
-        dispatch(
-            editRepeaterRegister('extraItems', position, obj)
-        )
-        dispatch(
-            handleSearchOutID2('Items', position, 'extraItems', "extraItems")
-        )
+        dispatch(editRepeaterRegister('items', position, obj))
+        dispatch(handleSearchOutID2('Items', position, 'items', 'raws', 'items'))
     }
 
+    const handleLoadColors = async (obj) => {
+        const token = localStorage.getItem('accessToken') || ''
+
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/item/selectByIdItem/${obj.value}`, {
+            headers: {
+                'Content-type': 'application/json',
+                'x-token': token
+            }
+        })
+        const colors = data.map(option => ({ label: option.name, value: option.id }))
+        const objFinal = {
+            name: 'colores',
+            value: colors
+        }
+        dispatch(editRepeaterRegister('items', position, objFinal))
+        handleSelectChange('idItem', obj)
+    }
+
+
     return (
+
+
         <div className="row border-bottom pb-1">
             <div className="col-md-5">
                 <label className="control-label">Artículo</label>
                 <ReactSelect
                     placeholder="Artículo"
                     name="idItem"
-                    value={SelectValue}
+                    // value={SelectValue}
                     options={Items}
                     onChange={(obj) => {
-                        handleSelectChange('idItem', obj)
-                    }} />
+                        handleLoadColors(obj)
+                    }}
+                />
             </div>
+
+
             <div className="col-md-5">
                 <label className="control-label">Cantidad</label>
 

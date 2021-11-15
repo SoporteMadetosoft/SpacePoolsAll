@@ -39,8 +39,7 @@ const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
     const { normalForm } = useSelector(state => state)
-    const { name, colores, idColor, quantity } = normalForm.baseItems[position]
-    const SelectColor = idColor.name ? deconstructSelect(idColor) : null
+    const { name, quantity } = normalForm.baseItems[position]
 
 
     const decreaseCount = () => {
@@ -56,16 +55,6 @@ const ItemsForm = ({ position }) => {
         dispatch(editRepeaterRegister('baseItems', position, obj))
     }
 
-    const handleSelectChange = (key, element) => {
-        const el = constructSelect(element)
-        const obj = {
-            name: key,
-            value: el
-        }
-        dispatch(editRepeaterRegister('baseItems', position, obj))
-    }
-
-
     return (
 
         <div className="row border-bottom pb-1">
@@ -77,17 +66,6 @@ const ItemsForm = ({ position }) => {
                     className="form-control"
                     value={name}
                     readOnly />
-            </div>
-
-            <div className="col-md-3">
-                <label className="control-label">Color</label>
-                <ReactSelect
-                    placeholder="Color"
-                    name="idColor"
-                    options={colores}
-                    onChange={(value) => { handleSelectChange('idColor', value) }}
-                    value={SelectColor}
-                />
             </div>
 
             <div className="col-md-3">

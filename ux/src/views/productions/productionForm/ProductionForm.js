@@ -60,6 +60,10 @@ export const ProductionForm = () => {
                         <h6> {pool} </h6>
                     </div>
                     <div className="col-md-2">
+                        <label className="control-label">Color</label>
+                        <h6> {idColor} </h6>
+                    </div>
+                    <div className="col-md-2">
                         <label className="control-label">IVA</label>
                         <h6> {tax} </h6>
                     </div>

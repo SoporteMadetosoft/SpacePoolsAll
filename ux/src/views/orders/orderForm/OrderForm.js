@@ -26,7 +26,8 @@ const formSchema = {
     idPool: { validations: [validator.isRequired] },
     orderDate: { validations: [validator.isRequired] },
     productionDate: { validations: [validator.isRequired] },
-    deliveryDate: { validations: [validator.isRequired] }
+    deliveryDate: { validations: [validator.isRequired] },
+    idColor : {validations: [validator.isRequired]}
 }
 
 export const OrderForm = () => {
@@ -100,6 +101,7 @@ export const OrderForm = () => {
                     },
                     idPool: exceptionController(value.idPool),
                     idTax: exceptionController(value.idTax),
+                    idColor : exceptionController(value.idColor),
                     idCustomer: exceptionController(value.idCustomer),
                     baseItems: value.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity, idColor: exceptionController(bI.idColor) })),
                     extraItems: value.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity, idColor: exceptionController(eI.idColor) })),
@@ -176,6 +178,9 @@ export const OrderForm = () => {
                             endpoint='Pools'
                             labelName='fabricationName'
                         />
+                    </div>
+                    <div className="col-md-2">
+                        <Select name="idColor" label="Colores" endpoint="Colors"/>
                     </div>
                     <div className="col-md-2">
                         <Select

@@ -62,7 +62,6 @@ export const PoolsForm = () => {
 
         if (Object.keys(errors).length !== 0) {
             dispatch(setErrors(errors))
-            console.log('error')
         } else {
 
             const form2 = dispatch(handleGetForm())
@@ -134,10 +133,7 @@ export const PoolsForm = () => {
                             name="cost"
                             value={price}
                             readOnly
-
-
                         />
-
                     </div>
                 </div>
             </div>

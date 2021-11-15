@@ -57,7 +57,7 @@ class PoolItemsDao extends GenericDao {
             value: el.id
         }))
 
-        const selectedColor = await this.ItemsColorsDao.ColorsDao.findById(data.idColor)
+        const selectedColor = await this.ItemsColorsDao.findById(data.idColor)
 
         const poolItems = {
             id: data.id,

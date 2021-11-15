@@ -1,8 +1,8 @@
-//const ItemsColorsDao = require('../../dao/item/ItemColorsDao')
+const ItemsColorsDao = require('../../dao/item/ItemColorsDao')
 const ItemDao = require('../../dao/item/ItemDao')
 
 const itemDao = new ItemDao()
-//const itemsColorsDao = new ItemsColorsDao()
+const itemsColorsDao = new ItemsColorsDao()
 
 
 exports.list = async (req, res) => {

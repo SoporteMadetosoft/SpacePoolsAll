@@ -29,7 +29,7 @@ class ItemsColorsDao extends GenericDao {
         const colorName = await this.ItemColorStockDao.findByItemId(data.id)
         const itemColors = {
             ...data,
-           // idcolor : await this.ColorsDao.findById(data.idcolor)
+            // idcolor : await this.ColorsDao.findById(data.idcolor)
             idVendor: data.idVendor !== null ? await this.VendorDao.findById(data.idVendor) : null,
             itemType: await this.ItemTypeDao.findById(data.itemType),
             idFamily: await this.ProductFamilyDao.findById(data.idFamily),
@@ -39,14 +39,14 @@ class ItemsColorsDao extends GenericDao {
         }
         return new ItemColors(itemColors)
     }
-    
+
 
     async mountList(data) {
         const rs = await this.findReservedStock(data.id)
         const st = await this.totalStock(data.id)
         //const na = await this.findNameById(data.itemCode)
         const list = {
-            ...data, 
+            ...data,
             reserveStock: rs !== null ? rs : 0,
             stock: st.stock !== null ? st.stock : 0,
             //name : na.name !== undefined ? na.name : ''
@@ -93,7 +93,7 @@ class ItemsColorsDao extends GenericDao {
         })
     }
 
-    findNameById(idItem){
+    findNameById(idItem) {
         return new Promise((resolve, reject) => {
             this.db.query(`SELECT SUM(stock) AS stock FROM item_colors WHERE idItem = ?`, [idItem], (err, result) => {
                 if (err) {
@@ -170,7 +170,7 @@ class ItemsColorsDao extends GenericDao {
     }
 
     findByItemId(id) {
-        console.log(`SELECT idColor FROM item_colors WHERE idItem = ${id}`)
+        // console.log(`SELECT idColor FROM item_colors WHERE idItem = ${id}`)
         return new Promise((resolve, reject) => {
 
             this.db.query('SELECT * FROM item_colors WHERE idcolor = ?', [id], async (err, result) => {

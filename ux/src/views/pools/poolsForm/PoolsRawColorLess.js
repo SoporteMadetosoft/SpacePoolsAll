@@ -6,16 +6,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import ReactSelect from 'react-select'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
-import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
-import { startAddSelectOptions, startAddSelectPoolItems } from '../../../redux/actions/selects'
+import { constructSelect } from '../../../utility/helpers/deconstructSelect'
+import { startAddSelectPoolItems } from '../../../redux/actions/selects'
 import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/actions/orders'
 import axios from 'axios'
 
 
 const formStructure = {
     idItem: '',
-    idColor: '',
-    colores: '',
     quantity: '1',
     coste: 0
 }
@@ -64,9 +62,7 @@ const ItemsForm = ({ position }) => {
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
     const { Raws } = selectReducer
-    const { idItem, colores, idColor, quantity } = normalForm.raws[position]
-    const SelectValue = idItem.name ? deconstructSelect(idItem) : null
-    const SelectColor = idColor.name ? deconstructSelect(idColor) : null
+    const { quantity } = normalForm.raws[position]
 
 
     const decreaseCount = () => {
@@ -116,7 +112,7 @@ const ItemsForm = ({ position }) => {
     return (
 
         <div className="row border-bottom pb-1">
-            <div className="col-md-4">
+            <div className="col-md-5">
                 <label className="control-label">Materia prima</label>
                 <ReactSelect
                     placeholder="Materia prima"
@@ -125,20 +121,11 @@ const ItemsForm = ({ position }) => {
                     onChange={(obj) => {
                         handleLoadColors(obj)
                     }}
-                    // value={SelectValue}
+                // value={SelectValue}
                 />
             </div>
-            <div className="col-md-3">
-                <label className="control-label">Color</label>
-                <ReactSelect
-                    placeholder="Color"
-                    name="idColor"
-                    options={colores}
-                    onChange={(value) => { handleSelectChange('idColor', value) }}
-                    // value={SelectColor}
-                />
-            </div>
-            <div className="col-md-3">
+
+            <div className="col-md-5">
                 <label className="control-label">Cantidad</label>
                 <input
                     type="number"

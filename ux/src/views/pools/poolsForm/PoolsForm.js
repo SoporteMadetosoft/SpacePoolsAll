@@ -3,6 +3,8 @@ import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 import { PoolsItemsForm } from './PoolsItemsForm'
 import { PoolsRawForm } from './PoolsRawForm'
+import { PoolsItemsColorLess } from './PoolsItemsColorLess'
+import { PoolsRawColorLess } from './PoolsRawColorLess'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect } from 'react'
 import { handleCalculateTotalCost } from '../../../redux/actions/orders'
@@ -152,6 +154,23 @@ export const PoolsForm = () => {
                     <div className="card">
                         <div className=" card-body row px-3">
                             <PoolsRawForm />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-md-6">
+
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <PoolsItemsColorLess />
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-6">
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <PoolsRawColorLess />
                         </div>
                     </div>
                 </div>

@@ -20,7 +20,7 @@ const formStructure = {
     coste: 0
 }
 
-export const PoolsRawForm = () => {
+export const PoolsRawColorLess = () => {
 
     const dispatch = useDispatch()
     const formValues = useSelector(state => state.normalForm)
@@ -37,7 +37,7 @@ export const PoolsRawForm = () => {
 
     return (
         <>
-            <h1 className="card-title">Materias primas con color</h1>
+            <h1 className="card-title">Materias primas sin color</h1>
 
             <Repeater count={count}>
 

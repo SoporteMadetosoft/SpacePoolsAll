@@ -20,10 +20,7 @@ import DeliveryRoutes from './delivery/Delivery'
 import UsersRoutes from './users/Users'
 import RolesRoutes from './roles/Roles'
 import { getUserData } from '../../utility/Utils'
-
-import AlertsRoutes from './alerts/Alerts'
 import ColorsRoutes from './colors/Colors'
-
 
 // ** Document title
 const TemplateTitle = '%s - SpacePools'

@@ -30,7 +30,7 @@ export const startDeleteFile = (position, url, id) => {
                 type: types.delete,
                 payload: id
             })
-            await eraseFile(url, 'FileManager')
+            await deleteFile( 'FileManager', url)
         }
     }
 }

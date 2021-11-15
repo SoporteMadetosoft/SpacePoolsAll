@@ -6,11 +6,8 @@ import { Input } from '../../../components/form/inputs/Input'
 import { SelectArbol } from '../../../components/form/inputs/SelectArbol'
 import { handleCleanUp } from '../../../redux/actions/fileUpload'
 import { save } from '../../../utility/helpers/Axios/save'
-import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from "yup"
-import { useForm } from 'react-hook-form'
-import { GetSetNextId, handleChangeController } from '../../../redux/actions/normalForm'
+import { Form } from 'reactstrap'
+import { GetSetNextId } from '../../../redux/actions/normalForm'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
@@ -29,18 +26,12 @@ export const ItemsFamilyForm = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const form = useSelector(state => state.normalForm)
-    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
-
-    //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
-
-    const handleInputChange = ({ target }) => {
-        dispatch(handleChangeController(target.name, target.value))
-    }
-
+    const { normalForm, formValidator } = useSelector(state => state)
+    
     useEffect(() => {
         if (!id) {
-            dispatch(GetSetNextId("Family", 'id'))
-        } else id = normalForm.id
+            dispatch(GetSetNextId('Family', 'id'))
+        } 
         dispatch(setSchema(formSchema))
     }, [])
 
@@ -54,9 +45,8 @@ export const ItemsFamilyForm = () => {
 
         } else {
             const prettyForm = {
-                ...form,
-                parent: exceptionController(form.parent),
-                name : exceptionController(form.name)
+                ...form
+               
             }
 
             save('Family', id, prettyForm)
@@ -77,11 +67,12 @@ export const ItemsFamilyForm = () => {
                             name="id"
                             value={normalForm.id}
                             readOnly
+                            
                         />
                     </div>
                     <div className="col-md-5">
                         <Input required="true" name="name" label="Nombre" endpoint="Family" />
-                        
+
                     </div>
                     <div className="col-md-5">
                         <SelectArbol name="parent" label="Padre" endpoint="Family" />

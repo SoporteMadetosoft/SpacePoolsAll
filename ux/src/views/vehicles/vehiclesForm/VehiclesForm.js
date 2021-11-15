@@ -1,38 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
-
 import axios from 'axios'
-
 import { Form } from 'reactstrap'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
-
 import { FileContext } from '../../../utility/context/FileContext'
-
 import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
 import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
 import { addSelectOptions, startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
-import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
 import { uploadFile } from '../../../utility/helpers/Axios/uploadFile'
 import { save } from '../../../utility/helpers/Axios/save'
 import { SwalUploadAndSave } from '../../../utility/helpers/SwalUploadAndSave'
 import { loadFiles } from '../../../utility/helpers/Axios/loadFiles'
-
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { VehicleDocForm } from './VehicleDocForm'
-
 import '../styles/form.css'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 
-// const ValidationSchema = yup.object().shape({
-//     plate: yup.string().required(),
-//     frameNumber: yup.string().required(),
-//     valueCarrier: yup.string().required()
-// })
 
 const formSchema = {
 
@@ -165,9 +153,7 @@ export const VechiclesForm = () => {
                     idCarrier: exceptionController(value.idCarrier),
                     idTrailer: exceptionController(value.idTrailer),
                     filePath: filePath2,
-                    plate: exceptionController(value.plate),
-                    numeroBastidor: exceptionController(value.numeroBastidor)
-                    // brand: exceptionController(value.brand)
+                    brand: exceptionController(value.brand)
                 }
 
                 save('Vehicles', id, prettyForm)

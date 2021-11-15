@@ -4,9 +4,11 @@ import { useParams } from 'react-router-dom'
 import BreadCrumbs from '@components/breadcrumbs'
 
 import { handleStartEditing, initNormalForm } from '../../../redux/actions/normalForm'
-import { ColorRepeater, ItemsColorForm } from './itemColorsForm/ItemsColorsForm'
+import { ItemsColorForm } from './itemColorsForm/ItemsColorsForm'
 
-const structureForm = {}
+const structureForm = {
+    color:[]
+}
 
 export const ItemsColorsFormScreen = () => {
 

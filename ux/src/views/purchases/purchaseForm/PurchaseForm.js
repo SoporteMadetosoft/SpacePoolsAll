@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { GetSetNextId, handleChangeController, handleCleanSection } from '../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController, handleCleanSection, handleSelectChange } from '../../../redux/actions/normalForm'
 import { ItemsRepeater } from './ItemsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
@@ -38,7 +38,7 @@ export const PurchaseForm = () => {
     const { Vendors } = selectReducer
 
     useEffect(() => {
-        // dispatch(startAddSelectOptions('Vendors', 'Vendors', 'comercialName'))
+        dispatch(startAddSelectOptions('Vendors', 'Vendors', 'comercialName'))
         dispatch(startAddSelectStatus('Vendors', 'Vendors', 'comercialName'))
     }, [])
 
@@ -67,11 +67,12 @@ export const PurchaseForm = () => {
                         />
                     </div>
                     <div className="col-md-4">
+                    {/* <Select required="true" name="idVendor" label="Proveedor" endpoint="Vendors" labelName="comercialName" /> */}
                         <Select
                             name="idVendor"
                             label="Proveedor"
-                            styles={placeholderStyles}
                             endpoint='Vendors'
+                            labelName="comercialName"
                         />
                     </div>
                     <div className="col-md-3">

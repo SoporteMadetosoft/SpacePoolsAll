@@ -5,7 +5,7 @@ const ProductPlaceDao = require("../setup/item/PlaceDao");
 const ProductFamilyDao = require("../item/ProductFamilyDao");
 const ItemTypeDao = require("../global/ItemTypeDao");
 const VendorDao = require("../vendor/VendorDao");
-const ItemsColorsDao = require("./ItemColorsDao");
+//const ItemsColorsDao = require("./ItemColorsDao");
 const ShowDao = require("../global/ShowDao");
 
 //const PurchaseItemsDao = require("../purchase/ItemDao");
@@ -17,7 +17,7 @@ class ItemDao extends GenericDao {
         this.ProductPlaceDao = new ProductPlaceDao()
         this.ItemTypeDao = new ItemTypeDao()
         this.VendorDao = new VendorDao()
-        this.ItemsColorsDao = new ItemsColorsDao()
+        //this.ItemsColorsDao = new ItemsColorsDao()
         this.ShowDao = new ShowDao()
 
     }
@@ -74,7 +74,7 @@ class ItemDao extends GenericDao {
 
 
     async mountObj(data) {
-        const colorName = await this.ItemsColorsDao.findByItemId(data.id)
+       // const colorName = await this.ItemsColorsDao.findByItemId(data.id)
         const item = {
             ...data,
             idVendor: data.idVendor !== null ? await this.VendorDao.findById(data.idVendor) : null,
@@ -82,7 +82,7 @@ class ItemDao extends GenericDao {
             idFamily: await this.ProductFamilyDao.findById(data.idFamily),
             idPlace: await this.ProductPlaceDao.findById(data.idPlace),
             show: await this.ShowDao.findById(data.show),
-            color: colorName !== undefined ? colorName : ''
+            //color: colorName !== undefined ? colorName : ''
         }
         return new Item(item)
     }
@@ -99,20 +99,6 @@ class ItemDao extends GenericDao {
         const { id, itemCode, name, description, reserveStock, stock } = list
         const nObj = { id, itemCode, name, description, reserveStock, stock }
         return nObj
-    }
-
-    findNameById(id) {
-        // console.log(`SELECT name FROM item WHERE id = ${id}`)
-        return new Promise((resolve, reject) => {
-            this.db.query('SELECT name FROM item WHERE id = ?', [id], async (err, result) => {
-                if (err) {
-                    reject(err)
-                } else {
-
-                    resolve(result[0].name)
-                }
-            });
-        })
     }
 
     findOneFieldById(field, id) {

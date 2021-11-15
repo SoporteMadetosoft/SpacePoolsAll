@@ -13,6 +13,7 @@ import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/acti
 
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+import { ColorRepeater } from '../itemColors/itemColorsForm/ColorRepeater'
 
 const formSchema = {
     itemType: { validations: [validator.isRequired] },
@@ -65,8 +66,8 @@ export const ItemForm = () => {
                 itemType: exceptionController(form.itemType),
                 idFamily: exceptionController(form.idFamily),
                 idPlace: exceptionController(form.idPlace),
-                show: exceptionController(form.show),
-                colors: form.color.map(color => ({ ...color, idColor: exceptionController(color.idColor) }))
+                show: exceptionController(form.show)
+                //colors: form.color.map(color => ({ ...color, idColor: exceptionController(color.idColor) }))
             }
             save('Items', id, prettyForm)
             dispatch(handleCleanUp())
@@ -102,13 +103,10 @@ export const ItemForm = () => {
                     <div className="col-md-3">
                         <Select name="idPlace" label="Ubicación" endpoint="Place" />
                     </div>
-                    {
-                        (normalForm.color && normalForm.color.length === 0) && (
-                            <div className="col-md-3">
-                                <Input type="number" name="stock" label="Stock" />
-                            </div>
-                        )
-                    }
+                    <div className="col-md-3">
+                        <Input type="number" name="stock" label="Stock" />
+                    </div>
+
                     <div className="col-md-3">
                         <Input type="number" name="minimumStock" label="Stock mínimo" />
                     </div>

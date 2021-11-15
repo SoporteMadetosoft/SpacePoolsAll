@@ -37,7 +37,7 @@ export const PoolsItemsForm = () => {
 
     return (
         <>
-            <h1 className="card-title">Artículos</h1>
+            <h1 className="card-title">Artículos con color</h1>
 
             <Repeater count={count}>
 

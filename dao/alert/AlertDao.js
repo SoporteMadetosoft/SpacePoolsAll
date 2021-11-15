@@ -35,7 +35,7 @@ class AlertDao extends GenericDao {
 
 
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT * FROM alerts WHERE date BETWEEN ${newDateActual} AND ${newDateLimite} AND isDone = '0'`, async (err, result) => {
+            this.db.query(`SELECT * FROM alerts WHERE date BETWEEN ${newDateActual} AND ${newDateLimite} AND isDone = 0`, async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

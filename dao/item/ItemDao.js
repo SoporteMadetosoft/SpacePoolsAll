@@ -74,7 +74,7 @@ class ItemDao extends GenericDao {
 
 
     async mountObj(data) {
-       // const colorName = await this.ItemsColorsDao.findByItemId(data.id)
+        // const colorName = await this.ItemsColorsDao.findByItemId(data.id)
         const item = {
             ...data,
             idVendor: data.idVendor !== null ? await this.VendorDao.findById(data.idVendor) : null,

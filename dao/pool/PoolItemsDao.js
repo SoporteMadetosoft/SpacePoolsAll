@@ -51,13 +51,6 @@ class PoolItemsDao extends GenericDao {
 
     async mountObj(data) {
         const { name, cost } = await this.ItemDao.findById(data.idItem)
-        const colData = await this.ItemsColorsDao.findByItemId(data.idItem)
-        const colores = colData.map(el => ({
-            label: el.name,
-            value: el.id
-        }))
-
-        const selectedColor = await this.ItemsColorsDao.findById(data.idColor)
 
         const poolItems = {
             id: data.id,
@@ -65,8 +58,6 @@ class PoolItemsDao extends GenericDao {
                 name: name,
                 id: data.idItem
             },
-            idColor: selectedColor.id !== undefined ? selectedColor : '',
-            colores: colores,
             quantity: data.quantity,
             coste: cost
         }

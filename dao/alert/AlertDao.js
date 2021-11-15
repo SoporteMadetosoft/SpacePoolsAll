@@ -28,16 +28,14 @@ class AlertDao extends GenericDao {
         const fechaActual = await this.datetimeToDate(new Date(d))
         var fechaLimite = await this.datetimeToDate(new Date(new Date(fechaActual).setMonth(new Date(fechaActual).getMonth() + 1)))
 
-        // console.log(fechaActual, fechaLimite)
 
 
         var newDateActual = "'" + fechaActual.toLocaleString() + "'"
         var newDateLimite = "'" + fechaLimite.toLocaleString() + "'"
-        // console.log(newDateActual,newDateLimite)
 
 
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT * FROM alert WHERE date BETWEEN ${newDateActual} AND ${newDateLimite}`, async (err, result) => {
+            this.db.query(`SELECT * FROM alerts WHERE date BETWEEN ${newDateActual} AND ${newDateLimite} AND isDone = 0`, async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

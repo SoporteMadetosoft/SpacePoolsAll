@@ -52,9 +52,13 @@ exports.insert = async (req, res) => {
         /** INSERT VEHICLE */
         const vehicle = req.body.form
         const documents = req.body.form.documents
-
+        const numBastidor = req.body.numBastidor
+        
         delete vehicle.documents
         delete vehicle.repairs
+        delete vehicle.brand
+        delete vehicle.numBastidor
+
         
 
         const insert = await vehicleDao.insert(vehicle)
@@ -74,10 +78,12 @@ exports.update = async (req, res) => {
         /**UPDATE VEHICLE */
         const vehicle = req.body.form
         const documents = req.body.form.documents
+        const numBastidor = req.body.numBastidor
 
         delete vehicle.documents
         delete vehicle.repairs
         delete vehicle.brand
+        delete vehicle.numBastidor
 
 
         await vehicleDao.update(vehicle)

@@ -1,5 +1,5 @@
 class Alert {
-    #table = 'alert'
+    #table = 'alerts'
 
     constructor({
         id,

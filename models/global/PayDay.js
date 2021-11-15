@@ -1,7 +1,7 @@
 const Setup = require('../setup/Setup')
 
 class PayDay extends Setup {
-    #table = 'global_payDay'
+    #table = 'global_payday'
     constructor(param) {
         super(param)
     }

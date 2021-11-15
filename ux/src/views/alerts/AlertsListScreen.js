@@ -21,6 +21,6 @@ export const AlertsListScreen = ({ titulo }) => {
     }, [])
 
     return (
-        <CustomDataTable title={titulo} columns={alertsList} data={data} />
+        <CustomDataTable title={titulo} columns={alertsList} data={data} add={0} />
     )
 }

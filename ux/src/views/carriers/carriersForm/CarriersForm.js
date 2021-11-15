@@ -44,7 +44,6 @@ export const CarriersForm = () => {
 
     const { normalForm, formValidator } = useSelector(state => state)
 
-    //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
@@ -101,16 +100,14 @@ export const CarriersForm = () => {
             await preSubmit(filePath2)
 
             const form2 = dispatch(handleGetForm())
-
             form2.then(async (value) => {
                 const prettyForm = {
                     ...value,
                     idUser: exceptionController(value.idUser),
                     idStatus: exceptionController(value.idStatus),
-                    filePath: filePath2,
-                    NIF: exceptionController(value.NIF)
+                    filePath: filePath2
                 }
-                await save('Carriers', id, prettyForm)
+                 save('Carriers', id, prettyForm)
                 dispatch(handleCleanUp())
                 history.push('/porters/carriers')
             })

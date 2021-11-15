@@ -8,6 +8,7 @@ import { CustomDataTable } from '@cc/datatable/CustomDataTable'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { handleCleanForm } from '../../redux/actions/normalForm'
 import { usersList } from '../../fixed/users/usersList'
+import { cleanFormValidator } from '../../redux/actions/formValidator'
 
 export const UsersListScreen = ({ titulo }) => {
 
@@ -17,6 +18,7 @@ export const UsersListScreen = ({ titulo }) => {
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Users'))
+        dispatch(cleanFormValidator())   
     }, [])
     return (
         <CustomDataTable title={titulo} columns={usersList} data={data} />

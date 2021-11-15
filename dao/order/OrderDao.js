@@ -27,9 +27,9 @@ class OrderDao extends GenericDao {
         const order = {
             ...data,
             customerData: await this.CustomerDataDao.findByOrderId(data.id),
-            extraItems: await this.ExtraItemDao.getItemsByTypeAndOrder(data.id, 2),
-            extraRaws: await this.ExtraItemDao.getItemsByTypeAndOrder(data.id, 1),
-            baseItems: await this.BaseItemDao.findByOrderId(data.id),
+            // extraItems: await this.ExtraItemDao.getItemsByTypeAndOrder(data.id, 2),
+            // extraRaws: await this.ExtraItemDao.getItemsByTypeAndOrder(data.id, 1),
+            // baseItems: await this.BaseItemDao.findByOrderId(data.id),
             orderDate: this.datetimeToDate(data.orderDate),
             productionDate: this.datetimeToDate(data.productionDate),
             deliveryDate: this.datetimeToDate(data.deliveryDate),
@@ -47,7 +47,6 @@ class OrderDao extends GenericDao {
             email: await this.CustomerDataDao.findOneFieldById("email", data.id)
 
         }
-        // console.log(order2)
         return order2
     }
 

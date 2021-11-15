@@ -7,16 +7,12 @@ import ReactSelect from 'react-select'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
-import { startAddSelectOptions, startAddSelectPoolItems } from '../../../redux/actions/selects'
+import { startAddSelectPoolItems } from '../../../redux/actions/selects'
 import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/actions/orders'
-import { deleteCanvasElement, prepareCanvasItemForm } from '../../../redux/actions/canvas'
-import axios from 'axios'
 
 const formStructure = {
     idItem: '',
-    idColor: '',
-    colores: '',
-    cantidad: '1',
+    quantity: '1',
     coste: 0
 }
 
@@ -38,7 +34,7 @@ export const ExtraItemsRepeater = () => {
 
     return (
         <>
-            <h1 className="card-title">Productos Extras</h1>
+            <h1 className="card-title">Productos extras sin color</h1>
 
             <Repeater count={count}>
 
@@ -65,29 +61,23 @@ const ItemsForm = ({ position }) => {
 
     const { normalForm, selectReducer } = useSelector(state => state)
     const { Items } = selectReducer
-    const { idItem, colores, idColor, quantity } = normalForm.extraItems[position]
+    const { idItem, quantity } = normalForm.extraItems[position]
     const SelectValue = idItem ? deconstructSelect(idItem) : null
-    const SelectColor = idColor.name ? deconstructSelect(idColor) : null
 
 
     const decreaseCount = () => {
-        //  dispatch(deleteCanvasElement(position))
         dispatch(removeRepeaterRegister('extraItems', position))
         dispatch(handleCalculateTotalCost("extraItems", ""))
-
     }
 
     const handleInputChange = ({ target }) => {
-        //cantidad (obj.name), items(key), position (position)
         const obj = {
             name: target.name,
             value: target.value
         }
         dispatch(editRepeaterRegister('extraItems', position, obj))
         dispatch(handleSearchOutID2('Items', position, 'extraItems', "extraItems"))
-        // dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
     }
-
 
     const handleSelectChange = (key, element) => {
         const el = constructSelect(element)
@@ -101,32 +91,11 @@ const ItemsForm = ({ position }) => {
         dispatch(
             handleSearchOutID2('Items', position, 'extraItems', "extraItems")
         )
-        //  dispatch(prepareCanvasItemForm('Items', position, 'extraItems'))
-    }
-
-    const handleLoadColors = async (obj) => {
-        const token = localStorage.getItem('accessToken') || ''
-
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/item/selectByIdItem/${obj.value}`, {
-            headers: {
-                'Content-type': 'application/json',
-                'x-token': token
-            }
-        })
-        const colors = data.map(option => ({ label: option.name, value: option.id }))
-        const objFinal = {
-            name: 'colores',
-            value: colors
-        }
-        dispatch(editRepeaterRegister('extraItems', position, objFinal))
-        handleSelectChange('idItem', obj)
     }
 
     return (
-
-
         <div className="row border-bottom pb-1">
-            <div className="col-md-4">
+            <div className="col-md-5">
                 <label className="control-label">Artículo</label>
                 <ReactSelect
                     placeholder="Artículo"
@@ -134,20 +103,10 @@ const ItemsForm = ({ position }) => {
                     value={SelectValue}
                     options={Items}
                     onChange={(obj) => {
-                        handleLoadColors(obj)
+                        handleSelectChange('idItem', obj)
                     }} />
             </div>
-            <div className="col-md-3">
-                <label className="control-label">Color</label>
-                <ReactSelect
-                    placeholder="Color"
-                    name="idColor"
-                    options={colores}
-                    onChange={(value) => { handleSelectChange('idColor', value) }}
-                    value={SelectColor}
-                />
-            </div>
-            <div className="col-md-3">
+            <div className="col-md-5">
                 <label className="control-label">Cantidad</label>
 
                 <input

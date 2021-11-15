@@ -37,7 +37,7 @@ export const PoolsRawForm = () => {
 
     return (
         <>
-            <h1 className="card-title">Materias primas</h1>
+            <h1 className="card-title">Materias primas con color</h1>
 
             <Repeater count={count}>
 
@@ -125,7 +125,7 @@ const ItemsForm = ({ position }) => {
                     onChange={(obj) => {
                         handleLoadColors(obj)
                     }}
-                    value={SelectValue}
+                    // value={SelectValue}
                 />
             </div>
             <div className="col-md-3">
@@ -135,7 +135,7 @@ const ItemsForm = ({ position }) => {
                     name="idColor"
                     options={colores}
                     onChange={(value) => { handleSelectChange('idColor', value) }}
-                    value={SelectColor}
+                    // value={SelectColor}
                 />
             </div>
             <div className="col-md-3">

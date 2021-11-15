@@ -184,25 +184,25 @@ export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) =>
               </DropdownMenu>
             </UncontrolledButtonDropdown>
             {
-              repa !== '' ? (
+              repa !== '' && (
                 <Link to='#' onClick={() => { history.push(`${repa}`) }}>
                   <Button className='ml-2' color='secondary' outline>
                     <ArrowLeft size={15} />
                     <span className='align-middle ml-50'>Atrás</span>
                   </Button>
                 </Link>
-              ) : null
+              )
             }
             {
 
-              add === 1 && (can && ability.can('insert', can)) ? (
+              add === 1 && (can && ability.can('insert', can)) && (
                 <Link to={`${useLocation().pathname}/add`}>
                   <Button className='ml-2' color='primary'>
                     <Plus size={15} />
                     <span className='align-middle ml-50'>Añadir {title}</span>
                   </Button>
                 </Link>
-              ) : null
+              )
             }
 
           </div>

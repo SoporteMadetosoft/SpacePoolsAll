@@ -76,7 +76,6 @@ const PreviewCard = () => {
     dispatch(handleChangeController('signature', sigCanvas.getTrimmedCanvas().toDataURL('image/png')))
   }
 
-  console.log(vehicle.idTrailer)
 
   return (
     <Card className='invoice-preview-card'>

@@ -60,7 +60,6 @@ export const ItemForm = () => {
             dispatch(setErrors(errors))
 
         } else {
-            console.log(form.itemType)
             const prettyForm = {
                 ...form,
                 idVendor: exceptionController(form.idVendor),

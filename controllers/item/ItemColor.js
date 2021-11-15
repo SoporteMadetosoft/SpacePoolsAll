@@ -154,11 +154,10 @@ exports.findNId = async (req, res) => {
 
 exports.selectByIdItem = async (req, res) => {
     const id = parseInt(req.params.id, 10)
-
     try {
         res.json({
             ok: true,
-            data: await ItemColorStockDao.findByItemId(id)
+            data: await itemsColorsDao.findByItemId(id)
         })
     } catch (error) {
         console.log(error)

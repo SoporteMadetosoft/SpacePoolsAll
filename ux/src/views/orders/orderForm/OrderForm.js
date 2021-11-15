@@ -18,6 +18,8 @@ import { Form } from 'reactstrap'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { validateProduction } from '../../../utility/helpers/Axios/validateProduction'
 import Swal from 'sweetalert2'
+import { ExtraItemColorsRepeater } from './ExtraItemColorsRepeater'
+import { ExtraRawColorsRepeater } from './ExtraRawColorsRepeater'
 
 const formSchema = {
     idCustomer: { validations: [validator.isRequired] },
@@ -243,6 +245,16 @@ export const OrderForm = () => {
                     <div className="card">
                         <div className=" card-body row px-3">
                             <ExtraRawsRepeater />
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ExtraItemColorsRepeater />
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ExtraRawColorsRepeater />
                         </div>
                     </div>
                 </div>

@@ -34,5 +34,6 @@ router.put('/itemColors/update', ControllerItemColor.update);
 router.delete('/itemColors/delete/:id', ControllerItemColor.delete);
 router.post('/itemColors/find', ControllerItemColor.listByID);
 router.get('/itemColors/findnid', ControllerItemColor.findNId)
+router.get('/itemColors/selectByIdItem/:id', validarJWT, ControllerItemColor.selectByIdItem);
 
 module.exports = router;

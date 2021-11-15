@@ -22,7 +22,7 @@ export const TrailerDocForm = () => {
     let realFilePath = formFilePath ? formFilePath : filePath
 
     useEffect(() => {
-        if (upload === 0) {
+        if (upload === 0 && realFilePath !== undefined) {
             dispatch(handleLoadDocuments('FileManager', realFilePath))
 
         }
@@ -43,7 +43,7 @@ export const TrailerDocForm = () => {
 
         const filePath2 = await MkDir('Trailers', realFilePath)
         realFilePath = filePath2 ? filePath2 : filePath
-         dispatch(handleChangeController('filePath', realFilePath))
+        dispatch(handleChangeController('filePath', realFilePath))
 
         dispatch(await saveFiles('FileManager', realFilePath, file))
     }

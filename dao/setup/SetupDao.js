@@ -14,12 +14,7 @@ class SetupDao extends GenericDao {
     }
 
     async mountObj(data) {
-
-        const setup = {
-            ...data
-        }
-
-        return new this.object(setup)
+        return new this.object(data)
     }
 
     async mountList(data) {

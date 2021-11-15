@@ -13,7 +13,9 @@ import { catchAndSetPrice } from '../../redux/actions/orders'
 const structureForm = {
     baseItems: [],
     extraRaws: [],
-    extraItems: []
+    extraRawColors: [],
+    extraItems: [],
+    extraItemColors: []
 
 }
 
@@ -21,7 +23,6 @@ export const OrderFormScreen = () => {
 
     const { id } = useParams()
     const dispatch = useDispatch()
-    const { normalForm } = useSelector(state => state)
     const form = useSelector(state => state.normalForm)
 
     useEffect(() => {

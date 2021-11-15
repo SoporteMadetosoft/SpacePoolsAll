@@ -23,9 +23,8 @@ export const CustomerDocForm = () => {
     let realFilePath = formFilePath !== null ? formFilePath : filePath
 
     useEffect(() => {
-        if (upload === 0) {
-            dispatch(handleLoadDocuments('FileManager', realFilePath))                
-           
+        if (upload === 0 && realFilePath !== undefined) {
+            dispatch(handleLoadDocuments('FileManager', realFilePath))
         }
     }, [upload])
 

@@ -45,7 +45,7 @@ class FileManagerDao {
     }
 
     getDocumentsInfo(filePath) {
-        
+
         return new Promise((resolve, reject) => {
             try {
                 if (filePath !== null) {
@@ -61,8 +61,8 @@ class FileManagerDao {
                                 doc = await this.dao.findByFilePath(`/public/${filePath}/${filename}`)
                             }
 
-                            if (doc.length === 0) {                                
-                                const  filetype  = mime.lookup(`${__dirname}/../../public/${filePath}/${filename}`)                              
+                            if (doc.length === 0) {
+                                const filetype = mime.lookup(`${__dirname}/../../public/${filePath}/${filename}`)
                                 const { size: filesize } = fs.statSync(`${__dirname}/../../public/${filePath}/${filename}`);
                                 doc = {
                                     name: '',
@@ -72,7 +72,7 @@ class FileManagerDao {
                                     url: `/public/${filePath}/${filename}`
                                 }
                             }
-                            
+
                             documents.push(doc);
 
                         }

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ReactSelect from 'react-select'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
-import { constructSelect } from '../../../utility/helpers/deconstructSelect'
+import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { startAddSelectPoolItems } from '../../../redux/actions/selects'
 import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/actions/orders'
 import axios from 'axios'
@@ -64,8 +64,9 @@ const ItemsForm = ({ position }) => {
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
     const { RawsColors } = selectReducer
-    const { colores, quantity } = normalForm.rawColor[position]
-
+    const { colores, quantity, idItem, idColor } = normalForm.rawColor[position]
+    const SelectValue = idItem.name ? deconstructSelect(idItem) : null
+    const SelectColor = idColor.name ? deconstructSelect(idColor) : null
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('rawColor', position))
@@ -80,7 +81,6 @@ const ItemsForm = ({ position }) => {
         }
         dispatch(editRepeaterRegister('rawColor', position, obj))
         dispatch(handleSearchOutID2('Items', position, 'rawColor', 'rawColor', 'items'))
-        // dispatch(handleCalculateTotalCost("items", "raws",1))
     }
 
 
@@ -97,13 +97,13 @@ const ItemsForm = ({ position }) => {
     const handleLoadColors = async (obj) => {
         const token = localStorage.getItem('accessToken') || ''
 
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/item/selectByIdItem/${obj.value}`, {
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/itemColors/selectByIdItem/${obj.value}`, {
             headers: {
                 'Content-type': 'application/json',
                 'x-token': token
             }
         })
-        const colors = data.map(option => ({ label: option.name, value: option.id }))
+        const colors = data.map(option => ({ label: option.idColor.name, value: option.idColor.id }))
         const objFinal = {
             name: 'colores',
             value: colors
@@ -123,7 +123,7 @@ const ItemsForm = ({ position }) => {
                     onChange={(obj) => {
                         handleLoadColors(obj)
                     }}
-                // value={SelectValue}
+                    value={SelectValue}
                 />
             </div>
             <div className="col-md-3">
@@ -133,7 +133,7 @@ const ItemsForm = ({ position }) => {
                     name="idColor"
                     options={colores}
                     onChange={(value) => { handleSelectChange('idColor', value) }}
-                    // value={SelectColor}
+                    value={SelectColor}
                 />
             </div>
 

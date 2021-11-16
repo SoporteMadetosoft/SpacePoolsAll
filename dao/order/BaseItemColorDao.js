@@ -1,24 +1,24 @@
-const BaseItem = require('../../models/order/BaseItem')
+const BaseItemColor = require('../../models/order/BaseItemColor');
 const GenericDao = require("../GenericDao");
-const ItemDao = require("../item/ItemDao")
+const ItemsColorsDao = require('../item/ItemColorsDao');
 
-class BaseItemDao extends GenericDao {
+class BaseItemColorDao extends GenericDao {
     constructor() {
-        super(BaseItem)
-        this.ItemDao = new ItemDao()
+        super(BaseItemColor)
+        this.ItemsColorsDao = new ItemsColorsDao()
     }
 
     async mountObj(data) {
         const baseItem = {
             ...data,
         }
-        let baseItem2 = new BaseItem(baseItem)
+        let baseItem2 = new BaseItemColor(baseItem)
 
         baseItem2 = {
             ...baseItem2,
-            name: await this.ItemDao.findOneFieldById("name", data.idItem),
-            coste: await this.ItemDao.findOneFieldById("cost", data.idItem),
-            show: await this.ItemDao.findOneFieldById("show", data.idItem)
+            name: await this.ItemsColorsDao.findOneFieldById("name", data.idItem),
+            coste: await this.ItemsColorsDao.findOneFieldById("cost", data.idItem),
+            show: await this.ItemsColorsDao.findOneFieldById("show", data.idItem)
         }
         return baseItem2
     }
@@ -40,4 +40,4 @@ class BaseItemDao extends GenericDao {
         })
     }
 }
-module.exports = BaseItemDao
+module.exports = BaseItemColorDao

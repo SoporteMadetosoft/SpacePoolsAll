@@ -64,13 +64,7 @@ exports.insert = async (req, res) => {
     try {
 
         const order = req.body.form
-        const extraItems = req.body.form.extraItems
-        const extraItemColors = req.body.form.extraItemColors
-        const extraRaws = req.body.form.extraRaws
-        const extraRawColors = req.body.form.extraRawColors
-        const customerData = req.body.form.customerData
-        const baseItems = req.body.form.baseItems
-        const canvas = req.body.form.canvas
+        const { extraItems, extraItemColors, extraRaws, extraRawColors, customerData, baseItems, baseItemColors, canvas } = req.body.form
 
         delete order.production
         delete order.extraItems
@@ -80,9 +74,10 @@ exports.insert = async (req, res) => {
         delete order.customerData
         delete order.canvas
         delete order.baseItems
+        delete order.baseItemColors
         delete order.extraRawColors
         delete order.extraItemColors
-        
+
         const insert = await orderDao.insert(order)
 
         const customerData2 = {
@@ -96,6 +91,7 @@ exports.insert = async (req, res) => {
         orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
         orderDao.multipleAccess(extraRawColors, orderDao.ExtraItemColorDao, insert.insertId, 'idOrder')
         orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, insert.insertId, 'idOrder')
+        orderDao.multipleAccess(baseItemColors, orderDao.BaseItemColorDao, insert.insertId, 'idOrder')
         orderDao.multipleAccess(canvas, canvasDao, insert.insertId, 'idOrder')
 
         res.json({ ok: true })
@@ -110,18 +106,19 @@ exports.update = (req, res) => {
     try {
 
         const order = req.body.form
-        const extraItems = req.body.form.extraItems
-        const extraRaws = req.body.form.extraRaws
-        const customerData = req.body.form.customerData
-        const baseItems = req.body.form.baseItems
-        const canvas = req.body.form.canvas
+        const { extraItems, extraItemColors, extraRaws, extraRawColors, customerData, baseItems, baseItemColors, canvas } = req.body.form
 
         delete order.production
         delete order.extraItems
+        delete order.extraItemColors
         delete order.extraRaws
+        delete order.extraRawColors
         delete order.customerData
         delete order.canvas
         delete order.baseItems
+        delete order.baseItemColors
+        delete order.extraRawColors
+        delete order.extraItemColors
 
         orderDao.update(order)
 
@@ -132,8 +129,11 @@ exports.update = (req, res) => {
         customerDataDao.update(customerData2)
 
         orderDao.multipleAccess(extraItems, orderDao.ExtraItemDao, order.id, 'idOrder')
+        orderDao.multipleAccess(extraItemColors, orderDao.ExtraItemColorDao, order.id, 'idOrder')
         orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, order.id, 'idOrder')
+        orderDao.multipleAccess(extraRawColors, orderDao.ExtraItemColorDao, order.id, 'idOrder')
         orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, order.id, 'idOrder')
+        orderDao.multipleAccess(baseItemColors, orderDao.BaseItemColorDao, order.id, 'idOrder')
         orderDao.multipleAccess(canvas, canvasDao, order.id, 'idOrder')
 
 
@@ -171,7 +171,7 @@ exports.switchState = async (req, res) => {
 }
 
 exports.select = async (req, res) => {
-    
+
     try {
         res.json({
             ok: true,

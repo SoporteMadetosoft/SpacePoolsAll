@@ -4,18 +4,19 @@ import { useSelector } from 'react-redux'
 
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
-export const ExtraItemsRepeater = () => {
+export const ExtraItemColorsRepeater = () => {
 
     const formValues = useSelector(state => state.normalForm)
-    const { extraItems } = formValues['orderData'] ? formValues['orderData'] : ''
+    const { extraItemColors } = formValues['orderData'] ? formValues['orderData'] : ''
 
-    const count = extraItems ? extraItems.length : 0
+    const count = extraItemColors ? extraItemColors.length : 0
 
     return (
         <>
-            <h1 className="card-title">Productos extras sin color</h1>
+            <h1 className="card-title">Productos extras con color</h1>
 
             <Repeater count={count}>
+
                 {i => {
                     const Tag = 'div'
                     return (
@@ -24,6 +25,7 @@ export const ExtraItemsRepeater = () => {
                         </Tag>
                     )
                 }}
+
             </Repeater>
         </>
     )
@@ -32,7 +34,7 @@ export const ExtraItemsRepeater = () => {
 const ItemsForm = ({ position }) => {
 
     const { normalForm } = useSelector(state => state)
-    const { idItem, quantity } = normalForm['orderData'] ? normalForm['orderData'].extraItems[position] : ''
+    const { idItem, quantity } = normalForm['orderData'] ? normalForm['orderData'].extraItemColors[position] : ''
     const SelectValue = idItem ? deconstructSelect(idItem) : ''
 
     return (

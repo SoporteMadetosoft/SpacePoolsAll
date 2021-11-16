@@ -15,7 +15,6 @@ class ExtraItemDao extends GenericDao {
             idItem: await this.ItemDao.findById(data.idItem),
             coste: await this.ItemDao.findOneFieldById("cost", data.idItem),
         }
-
         return extraItem
     }
 

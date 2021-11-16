@@ -2,10 +2,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect } from 'react'
 import { ItemsRepeater } from './ItemsRepeater'
 import { ExtraItemsRepeater } from './ExtraItemsRepeater'
-import { Select } from '../../../components/form/inputs/Select'
 
 import { ProductionCanvas } from './ProductionCanvas'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
+import { ExtraRawsRepeater } from './ExtraRawsRepeater'
+import { ExtraItemColorsRepeater } from './ExtraItemColorsRepeater'
+import { ExtraRawColorsRepeater } from './ExtraRawColorsRepeater'
+import { datetimeToEuropeDate } from '../../../utility/helpers/datetimeToEuropeDate'
 
 export const ProductionForm = () => {
     const dispatch = useDispatch()
@@ -21,10 +24,12 @@ export const ProductionForm = () => {
     const tax = normalForm['orderData'] ? normalForm['orderData']['idTax'].name : ''
     const price = normalForm['orderData'] ? normalForm['orderData'].price : ''
     const orderDate = normalForm['orderData'] ? normalForm['orderData'].orderDate : ''
+    const productionDate = normalForm['orderData'] ? normalForm['orderData'].productionDate : ''
     const deliveryDate = normalForm['orderData'] ? normalForm['orderData'].deliveryDate : ''
     const deliverySchedulerStart = normalForm['orderData'] ? normalForm['orderData'].deliverySchedulerStart : ''
     const deliverySchedulerEnd = normalForm['orderData'] ? normalForm['orderData'].deliverySchedulerEnd : ''
     const observations = normalForm['orderData'] ? normalForm['orderData'].observations : ''
+    const color = normalForm['orderData'] ? normalForm['orderData']['idColor'].name : ''
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Pools', 'poolsOpt', 'fabricationName'))
@@ -60,6 +65,10 @@ export const ProductionForm = () => {
                         <h6> {pool} </h6>
                     </div>
                     <div className="col-md-2">
+                        <label className="control-label">Color</label>
+                        <h6> {color} </h6>
+                    </div>
+                    <div className="col-md-2">
                         <label className="control-label">IVA</label>
                         <h6> {tax} </h6>
                     </div>
@@ -69,12 +78,16 @@ export const ProductionForm = () => {
                     </div>
 
                     <div className="col-md-2">
-                        <label className="control-label">Fecha de Pedido</label>
-                        <h6> {orderDate} </h6>
+                        <label className="control-label">Fecha de pedido</label>
+                        <h6> {datetimeToEuropeDate(new Date(orderDate))} </h6>
                     </div>
                     <div className="col-md-2">
-                        <label className="control-label">Fecha de Entrega</label>
-                        <h6> {deliveryDate} </h6>
+                        <label className="control-label">Fecha de producción</label>
+                        <h6> {datetimeToEuropeDate(new Date(productionDate))} </h6>
+                    </div>
+                    <div className="col-md-2">
+                        <label className="control-label">Fecha de entrega</label>
+                        <h6> {datetimeToEuropeDate(new Date(deliveryDate))} </h6>
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">Inicio de Horario de entrega</label>
@@ -98,12 +111,26 @@ export const ProductionForm = () => {
                             <ItemsRepeater />
                         </div>
                     </div>
-
                 </div>
                 <div className="col-md-6">
                     <div className="card">
                         <div className=" card-body row px-3">
                             <ExtraItemsRepeater />
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ExtraRawsRepeater />
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ExtraItemColorsRepeater />
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ExtraRawColorsRepeater />
                         </div>
                     </div>
                 </div>

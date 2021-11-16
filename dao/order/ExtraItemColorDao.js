@@ -1,25 +1,24 @@
 const ExtraItemColor = require("../../models/order/ExtraItemColor");
 const GenericDao = require("../GenericDao");
-
-const ItemDao = require("../item/ItemDao");
+const ItemsColorsDao = require("../item/ItemColorsDao");
 
 class ExtraItemColorDao extends GenericDao {
     constructor() {
         super(ExtraItemColor);
-        this.ItemDao = new ItemDao()
+        this.ItemsColorsDao = new ItemsColorsDao()
     }
 
     async mountObj(data) {
-        const colData = await this.ItemDao.ItemsColorsDao.findByItemId(data.idItem)
+        const colData = await this.ItemsColorsDao.findByItemId(data.idItem)
         const colores = colData.map(el => ({
             label: el.name,
             value: el.id
         }))
-        const selectedColor = await this.ItemDao.ItemsColorsDao.ColorsDao.findById(data.idColor)
+        const selectedColor = await this.ItemsColorsDao.ColorsDao.findById(data.idColor)
         const extraItem = {
             ...data,
-            idItem: await this.ItemDao.findById(data.idItem),
-            coste: await this.ItemDao.findOneFieldById("cost", data.idItem),
+            idItem: await this.ItemsColorsDao.findById(data.idItem),
+            coste: await this.ItemsColorsDao.findOneFieldById("cost", data.idItem),
             idColor: selectedColor.id !== undefined ? selectedColor : '',
             colores: colores
         }
@@ -50,7 +49,6 @@ class ExtraItemColorDao extends GenericDao {
                         customerData.push(ovj)
                     }
                     resolve(customerData)
-                    // resolve(result[0])
                 }
             })
         })
@@ -64,14 +62,12 @@ class ExtraItemColorDao extends GenericDao {
                 } else {
                     let ItemList = []
                     for (const data of result) {
-                        const item = await this.ItemDao.findByItemTypeAndId(data.idItem, itemType)
+                        const item = await this.ItemsColorsDao.findByItemTypeAndId(data.idItem, itemType)
                         if (item[0]) {
-                            console.log(item[0]['itemType'].id)
                             if (item[0]['itemType'].id === itemType) {
                                 ItemList.push(await this.mountObj(data))
                             }
                         }
-                        //ItemList.push(await this.mountObj(data))
                     }
                     resolve(ItemList)
                 }

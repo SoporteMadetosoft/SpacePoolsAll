@@ -70,6 +70,7 @@ exports.insert = async (req, res) => {
         const extraRawColors = req.body.form.extraRawColors
         const customerData = req.body.form.customerData
         const baseItems = req.body.form.baseItems
+        const canvas = req.body.form.canvas
 
         delete order.production
         delete order.extraItems
@@ -95,6 +96,7 @@ exports.insert = async (req, res) => {
         orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
         orderDao.multipleAccess(extraRawColors, orderDao.ExtraItemColorDao, insert.insertId, 'idOrder')
         orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, insert.insertId, 'idOrder')
+        orderDao.multipleAccess(canvas, canvasDao, insert.insertId, 'idOrder')
 
         res.json({ ok: true })
     } catch (error) {
@@ -166,6 +168,20 @@ exports.switchState = async (req, res) => {
         return res.status(500).send(error);
     }
 
+}
+
+exports.select = async (req, res) => {
+    
+    try {
+        res.json({
+            ok: true,
+            data: await customerDao.findAllStatus()
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
 }
 
 exports.validate = async (req, res) => {

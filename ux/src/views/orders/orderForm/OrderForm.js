@@ -26,10 +26,13 @@ const formSchema = {
     idPool: { validations: [validator.isRequired] },
     orderDate: { validations: [validator.isRequired] },
     productionDate: { validations: [validator.isRequired] },
-    deliveryDate: { validations: [validator.isRequired] }
+    deliveryDate: { validations: [validator.isRequired] },
+    idColor : {validations: [validator.isRequired]}
 }
 
 export const OrderForm = () => {
+    let {orderCode} =  useSelector(state => state.normalForm)
+
     const { id } = useParams()
     const history = useHistory()
     const { price } = useSelector(state => state.ordersReducer)
@@ -38,7 +41,7 @@ export const OrderForm = () => {
 
     const { normalForm, formValidator, canvasReducer } = useSelector(state => state)
 
-    const { observations, orderCode } = normalForm
+    const { observations } = normalForm
 
     const orderDate2 = normalForm['orderDate'] ? normalForm['orderDate'] : ''
     const productionDate = normalForm['productionDate'] ? normalForm['productionDate'] : ''
@@ -57,14 +60,9 @@ export const OrderForm = () => {
 
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Orders", 'orderCode'))
-        }
+        } else orderCode = normalForm.id
         dispatch(setSchema(formSchema))
-
-        if (normalForm.price) {
-            //  price = normalForm.price
-            //  dispatch(handleAddCost(price))
-        }
-    }, [formSchema])
+    }, [])
 
     const preparePrice = () => {
         dispatch(handleCalculateTotalCost("extraItems", ""))
@@ -100,6 +98,7 @@ export const OrderForm = () => {
                     },
                     idPool: exceptionController(value.idPool),
                     idTax: exceptionController(value.idTax),
+                    idColor : exceptionController(value.idColor),
                     idCustomer: exceptionController(value.idCustomer),
                     baseItems: value.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity })),
                     extraItems: value.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity })),
@@ -117,8 +116,8 @@ export const OrderForm = () => {
                 if (vp === true) {
 
                     save('Orders', id, prettyForm)
-                    // dispatch(handleCleanUp())
-                    // history.push('/orders')
+                    dispatch(handleCleanUp())
+                    history.push('/orders')
                 } else {
                     Swal.fire({
                         title: '¡Error!',
@@ -179,6 +178,9 @@ export const OrderForm = () => {
                             endpoint='Pools'
                             labelName='fabricationName'
                         />
+                    </div>
+                    <div className="col-md-2">
+                        <Select name="idColor" label="Colores" endpoint="Colors"/>
                     </div>
                     <div className="col-md-2">
                         <Select

@@ -109,6 +109,5 @@ export const setInitialCanvas = () => {
             }
             dispatch(addCanvasElement("elements", newItem, index))
         })
-        //dispatch(handleCleanCanvas())
     }
 }

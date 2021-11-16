@@ -26,7 +26,6 @@ class ItemColorStockDao extends GenericDao {
     }
 
     findByItemId(id) {
-        // console.log(`SELECT idColor FROM item_colors WHERE idItem = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM item_colors WHERE idItem = ?', [id], async (err, result) => {
                 if (err) {

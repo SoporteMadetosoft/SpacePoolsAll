@@ -30,6 +30,7 @@ class BaseItemDao extends GenericDao {
             colores: colores,
             show: await this.ItemDao.findOneFieldById("show", data.idItem)
         }
+        console.log(baseItem2)
         return baseItem2
     }
 

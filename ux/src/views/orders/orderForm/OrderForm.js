@@ -31,6 +31,8 @@ const formSchema = {
 }
 
 export const OrderForm = () => {
+    let {orderCode} =  useSelector(state => state.normalForm)
+
     const { id } = useParams()
     const history = useHistory()
     const { price } = useSelector(state => state.ordersReducer)
@@ -39,7 +41,7 @@ export const OrderForm = () => {
 
     const { normalForm, formValidator, canvasReducer } = useSelector(state => state)
 
-    const { observations, orderCode } = normalForm
+    const { observations } = normalForm
 
     const orderDate2 = normalForm['orderDate'] ? normalForm['orderDate'] : ''
     const productionDate = normalForm['productionDate'] ? normalForm['productionDate'] : ''
@@ -58,14 +60,9 @@ export const OrderForm = () => {
 
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Orders", 'orderCode'))
-        }
+        } else orderCode = normalForm.id
         dispatch(setSchema(formSchema))
-
-        if (normalForm.price) {
-            //  price = normalForm.price
-            //  dispatch(handleAddCost(price))
-        }
-    }, [formSchema])
+    }, [])
 
     const preparePrice = () => {
         dispatch(handleCalculateTotalCost("extraItems", ""))

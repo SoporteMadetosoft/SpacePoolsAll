@@ -49,23 +49,17 @@ function renderSwitch(param) {
 }
 
 export const ProductionsList = [
-  {
-    name: 'Nº',
-    selector: 'id',
-    sortable: true,
-    searchable: true,
-    width: '8%'
-  },
-  {
-    name: 'Nº Pedido',
-    selector: 'orderCode',
-    sortable: true,
-    searchable: true,
-    width: '8%'
-  },
+
   {
     name: 'Piscina',
     selector: 'pool',
+    sortable: true,
+    searchable: true,
+    width: '15%'
+  },
+  {
+    name: 'Color',
+    selector: 'color',
     sortable: true,
     searchable: true,
     width: '15%'
@@ -81,13 +75,6 @@ export const ProductionsList = [
     name: 'Fecha de Entrega',
     selector: 'deliveryDate',
     sortable: true,
-    searchable: true,
-    width: '14%'
-  },
-  {
-    name: 'Horario de entrega',
-    selector: 'deliveryTime',
-    searchable: true,
     searchable: true,
     width: '14%'
   },

@@ -6,6 +6,7 @@ import { Select } from '../../../components/form/inputs/Select'
 
 import { ProductionCanvas } from './ProductionCanvas'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
+import { Home } from 'react-feather'
 
 export const ProductionForm = () => {
     const dispatch = useDispatch()
@@ -25,6 +26,7 @@ export const ProductionForm = () => {
     const deliverySchedulerStart = normalForm['orderData'] ? normalForm['orderData'].deliverySchedulerStart : ''
     const deliverySchedulerEnd = normalForm['orderData'] ? normalForm['orderData'].deliverySchedulerEnd : ''
     const observations = normalForm['orderData'] ? normalForm['orderData'].observations : ''
+    const color = normalForm['orderData'] ? normalForm['orderData']['idColor'].name : ''
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Pools', 'poolsOpt', 'fabricationName'))
@@ -61,7 +63,7 @@ export const ProductionForm = () => {
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">Color</label>
-                        <h6> {idColor} </h6>
+                        <h6> {color} </h6>
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">IVA</label>

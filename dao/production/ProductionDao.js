@@ -1,13 +1,15 @@
 const Production = require("../../models/production/Production");
 const GenericDao = require("../GenericDao");
 const OrderDao = require("../order/OrderDao")
-const PoolDao = require("../pool/PoolDao")
+const PoolDao = require("../pool/PoolDao");
+const ColorsDao = require("../setup/item/ColorsDao");
 
 class ProductionDao extends GenericDao {
     constructor() {
         super(Production);
         this.OrderDao = new OrderDao()
         this.PoolDao = new PoolDao()
+        this.ColorsDao = new ColorsDao()
     }
 
     async mountObj(data) {
@@ -22,6 +24,7 @@ class ProductionDao extends GenericDao {
     async mountList(data) {
         const order = await this.OrderDao.findOrderById(data.idOrder);
         const pool = await this.PoolDao.findPoolById(order.idPool);
+        const color = await this.ColorsDao.findColorById(order.idColor);
         const list = {
             ...data,
             orderCode: order != undefined ? order.orderCode : '',
@@ -30,9 +33,10 @@ class ProductionDao extends GenericDao {
             deliverySchedulerStart: order != undefined ? order.deliverySchedulerStart : '',
             deliverySchedulerEnd: order != undefined ? order.deliverySchedulerEnd : '',
             observations: order != undefined ? order.observations : '',
-            pools: pool != undefined ? pool.fabricationName : ''
+            pools: pool != undefined ? pool.fabricationName : '',
+            colors : color !=undefined ? color.name : ''
         }
-        const { id, idOrder, orderCode, pools, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd, observations, isStarted, idProductionStatus } = list
+        const { id, idOrder, orderCode, pools, colors, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd, observations, isStarted, idProductionStatus } = list
 
         const newOrderDate = this.datetimeToEuropeDate(orderDate)
         const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)
@@ -47,7 +51,8 @@ class ProductionDao extends GenericDao {
             deliveryTime: deliverySchedulerStart + " - " + deliverySchedulerEnd,
             observations: observations,
             isStarted: isStarted,
-            idProductionStatus: idProductionStatus
+            idProductionStatus: idProductionStatus,
+            color : colors 
         }
         return nObj
     }

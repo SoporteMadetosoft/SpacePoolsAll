@@ -7,7 +7,8 @@ const CustomerDataDao = require("../order/CustomerDataDao");
 const ExtraItemDao = require("../order/ExtraItemDao");
 const BaseItemDao = require("../order/BaseItemDao")
 const TaxesDao = require("../setup/general/TaxDao");
-const CanvasDao = require("../order/CanvasDao")
+const CanvasDao = require("../order/CanvasDao");
+const ColorsDao = require("../setup/item/ColorsDao");
 
 
 class OrderDao extends GenericDao {
@@ -20,6 +21,7 @@ class OrderDao extends GenericDao {
         this.BaseItemDao = new BaseItemDao()
         this.TaxesDao = new TaxesDao()
         this.CanvasDao = new CanvasDao()
+        this.ColorsDao = new ColorsDao()
     }
 
     async mountObj(data) {
@@ -37,6 +39,7 @@ class OrderDao extends GenericDao {
             idTax: { id: data.idTax, name: (await this.TaxesDao.findTaxNameBy(data.idTax)) },
             idCustomer: { id: data.idCustomer, comercialName: (await this.CustomerDao.findCustomerNameBy(data.idCustomer)) },
             canvasItems: await this.CanvasDao.findByOrderId(data.id),
+            idColor :{ id: data.idColor, name: (await this.ColorsDao.findColorNameBy(data.idColor)) }
         }
 
         let order2 = new Order(order)

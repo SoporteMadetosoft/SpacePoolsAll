@@ -7,7 +7,7 @@ import { handleStartEditing, initNormalForm } from '../../../redux/actions/norma
 import { ItemsColorForm } from './itemColorsForm/ItemsColorsForm'
 
 const structureForm = {
-    color:[]
+    color: []
 }
 
 export const ItemsColorsFormScreen = () => {
@@ -23,13 +23,13 @@ export const ItemsColorsFormScreen = () => {
         dispatch(initNormalForm(structureForm))
     }, [initNormalForm])
 
-    const titulo = (id) ? 'Editar Artículo Colores' : 'Añadir Artículo Colores'
+    const titulo = (id) ? 'Editar Artícul con color' : 'Añadir Artícul con color'
     const customerName = (form.name) ? form.name : titulo
 
 
     return (
         <>
-            <BreadCrumbs breadCrumbTitle={customerName} breadCrumbParent='Artículo Colores' breadCrumbActive={titulo} />
+            <BreadCrumbs breadCrumbTitle={customerName} breadCrumbParent='Artículos con color' breadCrumbActive={titulo} />
             <ItemsColorForm />
         </>
     )

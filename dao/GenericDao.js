@@ -13,7 +13,7 @@ class GenericDao {
     findById(id) {
         // console.log(`SELECT * FROM ${this.auxModel.table} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
-            if (id != null || id != undefined) {
+            if (id != null && id != undefined && id !== null && id !== undefined) {
                 this.db.query(`SELECT * FROM ?? WHERE id = ?`, [this.auxModel.table, id], async (err, result) => {
                     if (err) {
                         reject(err)

@@ -1,13 +1,9 @@
 const OrderDao = require('../../dao/order/OrderDao')
-const ExtraItemDao = require('../../dao/order/ExtraItemDao')
 const CustomerDataDao = require('../../dao/order/CustomerDataDao')
-const BaseItemsDao = require('../../dao/order/BaseItemDao')
 const CanvasDao = require('../../dao/order/CanvasDao')
 
 const orderDao = new OrderDao()
-const extraItemDao = new ExtraItemDao()
 const customerDataDao = new CustomerDataDao()
-const baseItemsDao = new BaseItemsDao()
 const canvasDao = new CanvasDao()
 
 exports.list = async (req, res) => {
@@ -68,16 +64,18 @@ exports.insert = async (req, res) => {
     try {
 
         const order = req.body.form
-        const production = req.body.form.production
         const extraItems = req.body.form.extraItems
+        const extraItemColors = req.body.form.extraItemColors
         const extraRaws = req.body.form.extraRaws
+        const extraRawColors = req.body.form.extraRawColors
         const customerData = req.body.form.customerData
         const baseItems = req.body.form.baseItems
-        const canvas = req.body.form.canvas
 
         delete order.production
         delete order.extraItems
+        delete order.extraItemColors
         delete order.extraRaws
+        delete order.extraRawColors
         delete order.customerData
         delete order.canvas
         delete order.baseItems
@@ -91,9 +89,10 @@ exports.insert = async (req, res) => {
         await customerDataDao.insert(customerData2)
 
         orderDao.multipleAccess(extraItems, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
+        orderDao.multipleAccess(extraItemColors, orderDao.ExtraItemColorDao, insert.insertId, 'idOrder')
         orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
+        orderDao.multipleAccess(extraRawColors, orderDao.ExtraItemColorDao, insert.insertId, 'idOrder')
         orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, insert.insertId, 'idOrder')
-        // orderDao.multipleAccess(canvas, canvasDao, insert.insertId, 'idOrder')
 
         res.json({ ok: true })
     } catch (error) {
@@ -107,7 +106,6 @@ exports.update = (req, res) => {
     try {
 
         const order = req.body.form
-        const production = req.body.form.production
         const extraItems = req.body.form.extraItems
         const extraRaws = req.body.form.extraRaws
         const customerData = req.body.form.customerData

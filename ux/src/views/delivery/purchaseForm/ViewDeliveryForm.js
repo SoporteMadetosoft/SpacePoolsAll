@@ -8,6 +8,9 @@ import { ProductionCanvas } from '../../productions/productionForm/ProductionCan
 import '@styles/base/pages/app-invoice.scss'
 import { ViewItemsRepeater } from './ViewItemRepeater'
 import { ItemsRepeater } from '../../productions/productionForm/ItemsRepeater'
+import { ExtraRawsRepeater } from '../../productions/productionForm/ExtraRawsRepeater'
+import { ExtraItemColorsRepeater } from '../../productions/productionForm/ExtraItemColorsRepeater'
+import { ExtraRawColorsRepeater } from '../../productions/productionForm/ExtraRawColorsRepeater'
 
 
 export const ViewDeliveryForm = () => {
@@ -27,32 +30,10 @@ export const ViewDeliveryForm = () => {
     const price = normalForm['orderData'] ? normalForm['orderData'].price : ''
     const orderDate = normalForm ? normalForm.orderDate : ''
     const deliveryDate = normalForm ? normalForm.deliveryDate : ''
+    const productionDate = normalForm ? normalForm.productionDate : ''
     const deliverySchedulerStart = normalForm['orderData'] ? normalForm['orderData'].deliverySchedulerStart : ''
     const deliverySchedulerEnd = normalForm['orderData'] ? normalForm['orderData'].deliverySchedulerEnd : ''
     const observations = normalForm['orderData'] ? normalForm['orderData'].observations : ''
-
-    const deliveryInvoiceData = {
-        customer: {
-            name: cn,
-            address: deliveryAddress,
-            phone,
-            email
-        },
-        deliveryDate,
-        idCarrier: {
-            name: carrier.name,
-            nif: carrier.NIF
-        },
-        piscina: {
-            name: poolName,
-            price: poolPrice
-        },
-        baseItems: normalForm.baseItems,
-        extraItems: normalForm.extraItems,
-        tax,
-        total: price,
-        observations
-    }
 
     return (
         <>
@@ -96,6 +77,10 @@ export const ViewDeliveryForm = () => {
                         <h6> {orderDate} </h6>
                     </div>
                     <div className="col-md-2">
+                        <label className="control-label">Fecha de producción</label>
+                        <h6> {productionDate} </h6>
+                    </div>
+                    <div className="col-md-2">
                         <label className="control-label">Fecha de Entrega</label>
                         <h6> {deliveryDate} </h6>
                     </div>
@@ -126,6 +111,21 @@ export const ViewDeliveryForm = () => {
                     <div className="card">
                         <div className=" card-body row px-3">
                             <ExtraItemsRepeater />
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ExtraRawsRepeater />
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ExtraItemColorsRepeater />
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ExtraRawColorsRepeater />
                         </div>
                     </div>
                 </div>

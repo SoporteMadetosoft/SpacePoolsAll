@@ -117,8 +117,8 @@ export const OrderForm = () => {
                 if (vp === true) {
 
                     save('Orders', id, prettyForm)
-                    // dispatch(handleCleanUp())
-                    // history.push('/orders')
+                    dispatch(handleCleanUp())
+                    history.push('/orders')
                 } else {
                     Swal.fire({
                         title: '¡Error!',

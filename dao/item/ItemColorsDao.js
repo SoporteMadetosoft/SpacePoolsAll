@@ -67,6 +67,24 @@ class ItemsColorsDao extends GenericDao {
         })
     }
 
+
+    findByItemTypeAndId(id, itemType) {
+        // console.log(`SELECT * FROM item WHERE id = ${id} AND itemType = ${itemType}`)
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT * FROM item2 WHERE id = ? AND itemType = ?', [id, itemType], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    let objList = []
+                    for (const res of result) {
+                        objList.push(await this.mountObj(res))
+                    }
+                    resolve(objList)
+                }
+            });
+        })
+    }
+
     findByItemTypeAndVendor(itemType, idVendor) {
         return new Promise((resolve, reject) => {
 
@@ -123,7 +141,6 @@ class ItemsColorsDao extends GenericDao {
     }
 
     updateStock(action, id, idColor, quantity) {
-        // console.log(`UPDATE item SET stock = stock ${action} ${quantity} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query(`UPDATE item_colors SET stock = stock ${action} ? WHERE idItem = ? AND idColor = ?`, [quantity, id, idColor], (err, result) => {
                 if (err) {
@@ -175,8 +192,21 @@ class ItemsColorsDao extends GenericDao {
         })
     }
 
+    findOneFieldById(field, id) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT ?? FROM item2 WHERE id = ?', [field, id], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    if (result !== undefined) {
+                        resolve(result[0][field])
+                    }
+                }
+            })
+        })
+    }
+
     findByItemId(id) {
-        // console.log(`SELECT idColor FROM item_colors WHERE idItem = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM item_colors WHERE idItem = ?', [id], async (err, result) => {
                 if (err) {

@@ -30,7 +30,10 @@ const PreviewCard = () => {
   const poolPrice = normalForm['idPool'] !== undefined ? normalForm['idPool'].price : ''
   const tax = normalForm['orderData'] !== undefined ? normalForm['orderData']['idTax'].name : ''
   const base = normalForm['orderData'] !== undefined ? normalForm['orderData']['baseItems'] : ''
-  const extra = normalForm['orderData'] !== undefined ? normalForm['orderData']['extraItems'] : ''
+  const extraItems = normalForm['orderData'] !== undefined ? normalForm['orderData']['extraItems'] : ''
+  const extraItemColors = normalForm['orderData'] !== undefined ? normalForm['orderData']['extraItemColors'] : ''
+  const extraRaws = normalForm['orderData'] !== undefined ? normalForm['orderData']['extraRaws'] : ''
+  const extraRawColors = normalForm['orderData'] !== undefined ? normalForm['orderData']['extraRawColors'] : ''
 
   const price = normalForm['orderData'] ? normalForm['orderData'].price : ''
   const deliveryDate = normalForm ? normalForm.deliveryDate : ''
@@ -57,7 +60,10 @@ const PreviewCard = () => {
       price: poolPrice
     },
     baseItems: base,
-    extraItems: extra,
+    extraItems,
+    extraItemColors,
+    extraRaws,
+    extraRawColors,
     tax,
     total: price,
     observations
@@ -157,16 +163,16 @@ const PreviewCard = () => {
 
           <tr className='border-bottom'>
             <td className='py-1'>
-              <p className='card-text font-weight-bold mb-25'>{data.piscina.name}</p>
+              <p className='card-text font-weight-bold mb-50'>{data.piscina.name}</p>
               {
-                (data['baseItems'] !== undefined && data['baseItems'] !== '') ? data['baseItems'].map(obj => {
+                (data['baseItems'] !== undefined && data['baseItems'] !== '') && data['baseItems'].map(obj => {
                   return (
                     (obj.show === 2 &&
                       (<p className='card-text text-nowrap'>
-                        - {obj.name} {obj.idColor.name !== undefined ? (`(${obj.idColor.name})`) : null}
+                        - {obj.name} {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
                       </p>))
                   )
-                }) : ''
+                })
               }
             </td>
             {/* <td className='py-1'>
@@ -184,25 +190,77 @@ const PreviewCard = () => {
           </tr>
 
           {
-            (data['extraItems'] !== undefined && data['extraItems'] !== '') ? data['extraItems'].map(obj => {
+            (data['extraItems'] !== undefined && data['extraItems'] !== '') && data['extraItems'].map(obj => {
               return (
-                <tr className='border-bottom'>
-                  <td className='py-1'>
-                    <p className='card-text font-weight-bold mb-50'>{obj.idItem.name}</p>
-                    <p className='card-text text-nowrap'>
+                (obj.idItem.show.id === 2 &&
+                  (
+                    <tr className='border-bottom'>
+                      <td className='py-1'>
+                        <p className='card-text text-nowrap'>
+                          - {obj.idItem.name}
+                        </p>
+                        {/* <p className='card-text text-nowrap'>
                       {obj.idColor.name}
-                    </p>
-                  </td>
-                  <td className='py-1'>{(obj.coste * 1).toFixed(2)}€</td>
+                    </p> */}
+                      </td>
+                      {/* <td className='py-1'>{(obj.coste * 1).toFixed(2)}€</td>
                   <td className='py-1'>{data.tax}%</td>
                   <td className='py-1'>
                     <span className='font-weight-bold'>{obj.quantity}</span>
                   </td>
-                  <td className='py-1'>{((obj.coste * obj.quantity) * (1 + (data.tax / 100))).toFixed(2)}€</td>
-                </tr>
-
+                  <td className='py-1'>{((obj.coste * obj.quantity) * (1 + (data.tax / 100))).toFixed(2)}€</td> */}
+                    </tr>
+                  ))
               )
-            }) : ''
+            })
+          }
+          {
+            (data['extraRaws'] !== undefined && data['extraRaws'] !== '') && data['extraRaws'].map(obj => {
+              return (
+                (obj.idItem.show.id === 2 &&
+                  (
+                    <tr className='border-bottom'>
+                      <td className='py-1'>
+                        <p className='card-text text-nowrap'>
+                          - {obj.idItem.name}
+                        </p>
+                      </td>
+                    </tr>
+                  )
+                ))
+            })
+          }
+          {
+            (data['extraItemColors'] !== undefined && data['extraItemColors'] !== '') && data['extraItemColors'].map(obj => {
+              return (
+                (obj.idItem.show.id === 2 &&
+                  (
+                    <tr className='border-bottom'>
+                      <td className='py-1'>
+                        <p className='card-text text-nowrap'>
+                          - {obj.idItem.name} {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
+                        </p>
+                      </td>
+                    </tr>
+                  )
+                ))
+            })
+          }
+          {
+            (data['extraRawColors'] !== undefined && data['extraRawColors'] !== '') && data['extraRawColors'].map(obj => {
+              return (
+                (obj.idItem.show.id === 2 &&
+                  (
+                    <tr className='border-bottom'>
+                      <td className='py-1'>
+                        <p className='card-text text-nowrap'>
+                          - {obj.idItem.name} {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
+                        </p>
+                      </td>
+                    </tr>
+                  )
+                ))
+            })
           }
 
         </tbody>

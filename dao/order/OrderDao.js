@@ -42,6 +42,8 @@ class OrderDao extends GenericDao {
             canvasItems: await this.CanvasDao.findByOrderId(data.id),
         }
 
+        console.log(order.baseItems)
+
         let order2 = new Order(order)
         order2 = {
             ...order2,

@@ -67,7 +67,7 @@ export const PurchaseForm = () => {
                         />
                     </div>
                     <div className="col-md-4">
-                    {/* <Select required="true" name="idVendor" label="Proveedor" endpoint="Vendors" labelName="comercialName" /> */}
+                        {/* <Select required="true" name="idVendor" label="Proveedor" endpoint="Vendors" labelName="comercialName" /> */}
                         <Select
                             name="idVendor"
                             label="Proveedor"

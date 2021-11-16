@@ -65,8 +65,8 @@ const ItemsForm = ({ position }) => {
     const { normalForm, selectReducer } = useSelector(state => state)
     const { Items } = selectReducer
     const { idItem, colores, idColor, quantity } = normalForm.items[position]
-    const SelectValue = idItem.name ? deconstructSelect(idItem) : null
-    const SelectColor = idColor.name ? deconstructSelect(idColor) : null
+    // const SelectValue = idItem.name ? deconstructSelect(idItem) : null
+    // const SelectColor = idColor.name ? deconstructSelect(idColor) : null
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('itemColor', position))

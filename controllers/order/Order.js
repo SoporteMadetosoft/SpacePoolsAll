@@ -166,6 +166,20 @@ exports.switchState = async (req, res) => {
 
 }
 
+exports.select = async (req, res) => {
+    
+    try {
+        res.json({
+            ok: true,
+            data: await customerDao.findAllStatus()
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 exports.validate = async (req, res) => {
     try {
         const { productionDate, idPool } = req.body.form

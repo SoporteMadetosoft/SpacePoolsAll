@@ -62,7 +62,7 @@ class GenericDao {
     }
 
     findAllId(id, foreign) {
-        // console.log(`SELECT id FROM ${this.auxModel.table} WHERE ${foreign} = ${id}`)
+         console.log(`SELECT id FROM ${this.auxModel.table} WHERE ${foreign} = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT id FROM ?? WHERE ?? = ?', [this.auxModel.table, foreign, id], async (err, result) => {
                 if (err) {
@@ -92,7 +92,7 @@ class GenericDao {
     }
 
     insert(params) {
-        // console.log(`INSERT INTO ${this.auxModel.table} (${Object.keys(params)}) VALUES  (${Object.values(params)})`)
+        console.log(`INSERT INTO ${this.auxModel.table} (${Object.keys(params)}) VALUES  (${Object.values(params)})`)
         Object.keys(params).forEach((k) => { if (params[k] === '') { params[k] = null } })
         return new Promise((resolve, reject) => {
             this.db.query(`INSERT INTO ?? (??) VALUES  (?)`, [this.auxModel.table, Object.keys(params), Object.values(params)], async (err, result) => {

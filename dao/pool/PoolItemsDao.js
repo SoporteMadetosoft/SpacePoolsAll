@@ -1,4 +1,4 @@
-const PoolItems = require("../../models/pool/PoolItems");
+const PoolItems = require("../../models/pool/PoolExtraItems");
 const GenericDao = require("../GenericDao");
 const ItemsColorsDao = require("../item/ItemColorsDao");
 const ItemDao = require("../item/ItemDao");

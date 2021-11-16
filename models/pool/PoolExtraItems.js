@@ -1,4 +1,4 @@
-class PoolItems {
+class PoolExtraItems {
     #table = 'pool_items'
 
     constructor({ id, idPool, idItem, quantity }) {
@@ -11,4 +11,4 @@ class PoolItems {
         return this.#table;
     }
 }
-module.exports = PoolItems
+module.exports = PoolExtraItems

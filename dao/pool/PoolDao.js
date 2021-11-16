@@ -4,12 +4,14 @@ const GenericDao = require("../GenericDao");
 const PoolItemsDao = require("./PoolItemsDao");
 //const PoolRawsDao = require("./PoolItemsDao")
 const StatusDao = require("../global/StatusDao");
+const ExtraItemColorDao = require("./ExtraItemColorDao");
 
 class PoolDao extends GenericDao {
     constructor() {
         super(Pool);
         this.StatusDao = new StatusDao()
         this.PoolItemsDao = new PoolItemsDao()
+        this.ExtraItemColorDao = new ExtraItemColorDao()
     }
 
     async mountObj(data) {

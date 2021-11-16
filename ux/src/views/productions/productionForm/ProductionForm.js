@@ -29,6 +29,7 @@ export const ProductionForm = () => {
     const deliverySchedulerStart = normalForm['orderData'] ? normalForm['orderData'].deliverySchedulerStart : ''
     const deliverySchedulerEnd = normalForm['orderData'] ? normalForm['orderData'].deliverySchedulerEnd : ''
     const observations = normalForm['orderData'] ? normalForm['orderData'].observations : ''
+    const color = normalForm['orderData'] ? normalForm['orderData']['idColor'].name : ''
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Pools', 'poolsOpt', 'fabricationName'))
@@ -62,6 +63,10 @@ export const ProductionForm = () => {
                     <div className="col-md-2">
                         <label className="control-label">Piscina</label>
                         <h6> {pool} </h6>
+                    </div>
+                    <div className="col-md-2">
+                        <label className="control-label">Color</label>
+                        <h6> {color} </h6>
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">IVA</label>

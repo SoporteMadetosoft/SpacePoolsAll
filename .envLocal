@@ -5,5 +5,5 @@ DB_NAME = alphasfp
 DB_USER = alphasfp
 DB_PASS = BTVSWS8.8R-.IzoK
 ORIGIN = http://localhost:3000
-PORT = 6757
+PORT = 5000
 FAST_REFRESH = false

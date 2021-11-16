@@ -8,7 +8,7 @@ const ColorsRoutes = [
         component: () => <ItemsColorScreenList titulo="Artículos con color" />,
         meta: {
             action: 'read',
-            resource: 'colors'
+            resource: 'itemColors'
         }
     },
     {

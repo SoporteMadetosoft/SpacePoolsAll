@@ -4,13 +4,31 @@ import CustomInput from 'reactstrap/lib/CustomInput'
 import { Select } from '../../../components/form/inputs/Select'
 import { SwitchPermission, SwitchPermissionAll } from '../../../redux/actions/permisos'
 
-export const Permiso = ({ name, id, actions }) => {
+export const Permiso = ({ name, id, add = 1, edit = 1, del = 1, actions = 1 }) => {
 
     const dispatch = useDispatch()
     const permisos = useSelector(state => state.permisosReducer)
 
     let manage = false
-    if (permisos[id]['read'] === true && permisos[id]['insert'] === true && permisos[id]['update'] === true && permisos[id]['delete'] === true) {
+    let perm = 0
+    const total = 1 + add + edit + del + actions
+    if (permisos[id]['read'] === true) {
+        perm += 1
+    }
+    if (permisos[id]['insert'] === true) {
+        perm += 1
+    }
+    if (permisos[id]['update'] === true) {
+        perm += 1
+    }
+    if (permisos[id]['delete'] === true) {
+        perm += 1
+    }
+    if (permisos[id]['actions'] === true) {
+        perm += 1
+    }
+
+    if (perm === total) {
         manage = true
     }
 
@@ -26,11 +44,32 @@ export const Permiso = ({ name, id, actions }) => {
         <tr>
             <td style={{ width: '2%' }}><CustomInput type='checkbox' checked={manage} onChange={(e) => handleChangeAllPermission(e, id)} id={`${id}-0`} /></td>
             <td>{name}</td>
-            <td><CustomInput type='checkbox' checked={permisos[id]['read']} onChange={(e) => handleChangeSinglePermission(e, id, 'read')} id={`${id}-1`} /></td>
-            <td><CustomInput type='checkbox' checked={permisos[id]['insert']} onChange={(e) => handleChangeSinglePermission(e, id, 'insert')} id={`${id}-2`} /></td>
-            <td><CustomInput type='checkbox' checked={permisos[id]['update']} onChange={(e) => handleChangeSinglePermission(e, id, 'update')} id={`${id}-3`} /></td>
-            <td><CustomInput type='checkbox' checked={permisos[id]['delete']} onChange={(e) => handleChangeSinglePermission(e, id, 'delete')} id={`${id}-4`} /></td>
-            {actions ?
+            <td>
+                <CustomInput type='checkbox' checked={permisos[id]['read']} onChange={(e) => handleChangeSinglePermission(e, id, 'read')} id={`${id}-1`} />
+            </td>
+            <td>
+                {add === 1 &&
+                    (
+                        <CustomInput type='checkbox' checked={permisos[id]['insert']} onChange={(e) => handleChangeSinglePermission(e, id, 'insert')} id={`${id}-2`} />
+                    )
+                }
+            </td>
+            <td>
+                {edit === 1 &&
+                    (
+                        <CustomInput type='checkbox' checked={permisos[id]['update']} onChange={(e) => handleChangeSinglePermission(e, id, 'update')} id={`${id}-3`} />
+                    )
+                }
+            </td>
+            <td>
+                {del === 1 &&
+                    (
+                        <CustomInput type='checkbox' checked={permisos[id]['delete']} onChange={(e) => handleChangeSinglePermission(e, id, 'delete')} id={`${id}-4`} />
+                    )
+                }
+            </td>
+
+            {actions === 1 ?
                 (
                     <>
                         <td>

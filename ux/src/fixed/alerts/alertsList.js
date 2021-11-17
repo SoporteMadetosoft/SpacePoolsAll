@@ -4,10 +4,6 @@ import DropdownMenu from "reactstrap/lib/DropdownMenu"
 import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 
-
-
-
-
 export const alertsList = [
 
   {

@@ -8,7 +8,6 @@ class AlertDao extends GenericDao {
 
     }
 
-
     async mountList(data) {
 
         const newDate = this.datetimeToEuropeDate(new Date(data.date))

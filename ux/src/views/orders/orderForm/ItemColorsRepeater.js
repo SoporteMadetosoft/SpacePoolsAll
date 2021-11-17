@@ -45,7 +45,7 @@ const ItemsForm = ({ position }) => {
 
     const decreaseCount = () => {
         dispatch(handleLessPrice(position))
-        dispatch(removeRepeaterRegister('baseItems', position))
+        dispatch(removeRepeaterRegister('baseItemColors', position))
     }
 
     const handleInputChange = ({ target }) => {
@@ -53,7 +53,7 @@ const ItemsForm = ({ position }) => {
             name: target.name,
             value: target.value
         }
-        dispatch(editRepeaterRegister('baseItems', position, obj))
+        dispatch(editRepeaterRegister('baseItemColors', position, obj))
     }
 
     const handleSelectChange = (key, element) => {

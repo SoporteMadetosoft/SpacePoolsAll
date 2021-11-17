@@ -48,8 +48,6 @@ class OrderDao extends GenericDao {
             idColor: { id: data.idColor, name: (await this.ColorsDao.findColorNameBy(data.idColor)) }
         }
 
-        // console.log(order.baseItems)
-
         let order2 = new Order(order)
         order2 = {
             ...order2,

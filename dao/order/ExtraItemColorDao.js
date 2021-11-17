@@ -22,7 +22,6 @@ class ExtraItemColorDao extends GenericDao {
             idColor: selectedColor.id !== undefined ? selectedColor : '',
             colores: colores
         }
-
         return extraItem
     }
 

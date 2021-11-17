@@ -9,6 +9,7 @@ import { ExtraRawsRepeater } from './ExtraRawsRepeater'
 import { ExtraItemColorsRepeater } from './ExtraItemColorsRepeater'
 import { ExtraRawColorsRepeater } from './ExtraRawColorsRepeater'
 import { datetimeToEuropeDate } from '../../../utility/helpers/datetimeToEuropeDate'
+import { ItemColorsRepeater } from './ItemColorsRepeater'
 
 export const ProductionForm = () => {
     const dispatch = useDispatch()
@@ -109,6 +110,11 @@ export const ProductionForm = () => {
                     <div className="card">
                         <div className=" card-body row px-3">
                             <ItemsRepeater />
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ItemColorsRepeater />
                         </div>
                     </div>
                 </div>

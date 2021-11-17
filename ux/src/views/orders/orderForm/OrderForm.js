@@ -116,10 +116,9 @@ export const OrderForm = () => {
 
                 const vp = await validateProduction('Orders', { productionDate: prettyForm.productionDate, idPool: prettyForm.idPool })
                 if (vp === true) {
-                    console.log(prettyForm)
                     save('Orders', id, prettyForm)
-                    // dispatch(handleCleanUp())
-                    // history.push('/orders')
+                    dispatch(handleCleanUp())
+                    history.push('/orders')
                 } else {
                     Swal.fire({
                         title: '¡Error!',

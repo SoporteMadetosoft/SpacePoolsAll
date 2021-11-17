@@ -30,6 +30,7 @@ const PreviewCard = () => {
   const poolPrice = normalForm['idPool'] !== undefined ? normalForm['idPool'].price : ''
   const tax = normalForm['orderData'] !== undefined ? normalForm['orderData']['idTax'].name : ''
   const base = normalForm['orderData'] !== undefined ? normalForm['orderData']['baseItems'] : ''
+  const baseItemColors = normalForm['orderData'] !== undefined ? normalForm['orderData']['baseItemColors'] : ''
   const extraItems = normalForm['orderData'] !== undefined ? normalForm['orderData']['extraItems'] : ''
   const extraItemColors = normalForm['orderData'] !== undefined ? normalForm['orderData']['extraItemColors'] : ''
   const extraRaws = normalForm['orderData'] !== undefined ? normalForm['orderData']['extraRaws'] : ''
@@ -60,6 +61,7 @@ const PreviewCard = () => {
       price: poolPrice
     },
     baseItems: base,
+    baseItemColors,
     extraItems,
     extraItemColors,
     extraRaws,
@@ -168,7 +170,18 @@ const PreviewCard = () => {
                 (data['baseItems'] !== undefined && data['baseItems'] !== '') && data['baseItems'].map(obj => {
                   return (
                     (obj.show === 2 &&
-                      (<p className='card-text text-nowrap'>
+                      (<p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
+                        - {obj.name}
+                      </p>))
+                  )
+                })
+              }
+
+              {
+                (data['baseItemColors'] !== undefined && data['baseItemColors'] !== '') && data['baseItemColors'].map(obj => {
+                  return (
+                    (obj.show === 2 &&
+                      (<p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
                         - {obj.name} {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
                       </p>))
                   )
@@ -196,19 +209,10 @@ const PreviewCard = () => {
                   (
                     <tr className='border-bottom'>
                       <td className='py-1'>
-                        <p className='card-text text-nowrap'>
+                        <p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
                           - {obj.idItem.name}
                         </p>
-                        {/* <p className='card-text text-nowrap'>
-                      {obj.idColor.name}
-                    </p> */}
                       </td>
-                      {/* <td className='py-1'>{(obj.coste * 1).toFixed(2)}€</td>
-                  <td className='py-1'>{data.tax}%</td>
-                  <td className='py-1'>
-                    <span className='font-weight-bold'>{obj.quantity}</span>
-                  </td>
-                  <td className='py-1'>{((obj.coste * obj.quantity) * (1 + (data.tax / 100))).toFixed(2)}€</td> */}
                     </tr>
                   ))
               )
@@ -221,7 +225,7 @@ const PreviewCard = () => {
                   (
                     <tr className='border-bottom'>
                       <td className='py-1'>
-                        <p className='card-text text-nowrap'>
+                        <p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
                           - {obj.idItem.name}
                         </p>
                       </td>
@@ -237,7 +241,7 @@ const PreviewCard = () => {
                   (
                     <tr className='border-bottom'>
                       <td className='py-1'>
-                        <p className='card-text text-nowrap'>
+                        <p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
                           - {obj.idItem.name} {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
                         </p>
                       </td>
@@ -253,7 +257,7 @@ const PreviewCard = () => {
                   (
                     <tr className='border-bottom'>
                       <td className='py-1'>
-                        <p className='card-text text-nowrap'>
+                        <p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
                           - {obj.idItem.name} {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
                         </p>
                       </td>

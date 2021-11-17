@@ -43,7 +43,7 @@ export const endPoints = {
     Trailers: '/trailers',
     Alerts: '/alerts',
     TRepair: '/trailers/repair',
-
+    AlertStock: '/alertsStock',
     Purchases: '/purchases',
 
     Pools: '/pools',

@@ -11,6 +11,7 @@ const CanvasDao = require("../order/CanvasDao");
 const ExtraItemColorDao = require("./ExtraItemColorDao");
 const ColorsDao = require("../setup/item/ColorsDao");
 const BaseItemColorDao = require("./BaseItemColorDao");
+const NotificationDropdown = require("../notificationDropDown/notificationDropDownDao")
 
 class OrderDao extends GenericDao {
     constructor() {
@@ -25,6 +26,7 @@ class OrderDao extends GenericDao {
         this.TaxesDao = new TaxesDao()
         this.CanvasDao = new CanvasDao()
         this.ColorsDao = new ColorsDao()
+        this.NotificationDropdown = new NotificationDropdown()
     }
 
     async mountObj(data) {
@@ -199,6 +201,60 @@ class OrderDao extends GenericDao {
                     resolve(ok)
                 }
             })
+        })
+    }
+
+    comprobarStockMinimo(idOrder) {
+        return new Promise(async (resolve, reject) => {
+            const baseItems = await this.BaseItemDao.findByOrderId(idOrder)
+            const extraItems = await this.ExtraItemDao.findByOrderId(idOrder)
+
+
+            baseItems.map(async (item) => {
+                const stock = await this.BaseItemDao.ItemDao.findOneFieldById("stock", item.id)
+                const minimumStock = await this.BaseItemDao.ItemDao.findOneFieldById("minimumStock", item.id)
+                const reserved = await this.BaseItemDao.ItemDao.findReservedStock(item.id)
+
+                    (stock - reserved) <= minimumStock && await this.NotificationDropDownDao()
+
+            })
+            extraItems.map(async (item) => {
+                const stock = await this.ExtraItemDao.ItemDao.findOneFieldById("stock", item.id)
+                const minimumStock = await this.ExtraItemDao.ItemDao.findOneFieldById("minimumStock", item.id)
+                const reserved = await this.ExtraItemDao.ItemDao.findReservedStock(item.id)
+
+                    (stock - reserved) <= minimumStock && await this.NotificationDropDownDao()
+
+            })
+
+            const baseItemColors = await this.BaseItemColorDao.findByOrderId(idOrder)
+            const extraItemColors = await this.ExtraItemColorDao.findByOrderId(idOrder)
+
+            baseItemColors.map(async (item) => {
+                const stock = await this.BaseItemColorDao.ItemsColorsDao.findOneFieldById("stock", item.id)
+                const minimumStock = await this.BaseItemColorDao.ItemsColorsDao.findOneFieldById("minimumStock", item.id)
+                const reserved = await this.BaseItemColorsDao.baseItemColors.findOneFieldById(item.id)
+
+                    (stock - reserved) <= minimumStock && await this.NotificationDropDownDao()
+
+
+
+            })
+
+            extraItemColors.map( async (item) => {
+                const stock = await this.ExtraItemColorDao.ItemsColorsDao.findOneFieldById("stock", item.id)
+                const minimumStock = await this.ExtraItemColorDao.ItemsColorsDao.findOneFieldById("minimumStock", item.id)
+                const reserved = await this.ExtraItemColorDao.baseItemColors.findOneFieldById(item.id)
+
+                    (stock - reserved) <= minimumStock && await this.NotificationDropDownDao()
+
+
+
+            })
+
+
+
+            resolve('')
         })
     }
 }

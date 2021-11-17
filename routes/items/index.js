@@ -25,6 +25,7 @@ router.delete('/item/delete/:id', validarJWT, ControllerItem.delete);
 router.post('/item/find', validarJWT, ControllerItem.listByID);
 router.get('/item/findnid', validarJWT, ControllerItem.findNId)
 router.get('/item/selectByIdItem/:id', validarJWT, ControllerItem.selectByIdItem);
+router.get('/item/comprobacionSTock', ControllerItem.comprobacionStock);
 
 router.get('/itemColors/list', ControllerItemColor.list);
 router.post('/itemColors/listItems', validarJWT, ControllerItemColor.listItems);

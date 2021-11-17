@@ -6,36 +6,38 @@ import { useDispatch, useSelector } from 'react-redux'
 import ReactSelect from 'react-select'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
-import { constructSelect } from '../../../utility/helpers/deconstructSelect'
+import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { startAddSelectPoolItems } from '../../../redux/actions/selects'
 import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/actions/orders'
 import axios from 'axios'
 
+
 const formStructure = {
     idItem: '',
+    idColor: '',
+    colores: '',
     quantity: '1',
     coste: 0
 }
 
-export const PoolsItemsColorLess = () => {
+export const PoolsRawColor = () => {
 
     const dispatch = useDispatch()
     const formValues = useSelector(state => state.normalForm)
-    const { items } = formValues
-
-    const count = items ? items.length : 0
+    const { rawColor } = formValues
+    const count = rawColor ? rawColor.length : 0
 
     const increaseCount = () => {
-        dispatch(addRepeaterRegister('items', formStructure))
+        dispatch(addRepeaterRegister('rawColor', formStructure))
     }
 
     useEffect(() => {
-        dispatch(startAddSelectPoolItems('Items', 'Items', 'name', 2))
+        dispatch(startAddSelectPoolItems('ItemColors', 'RawsColors', 'name', 1))
     }, [])
 
     return (
         <>
-            <h1 className="card-title">Artículos sin color</h1>
+            <h1 className="card-title">Materias con color</h1>
 
             <Repeater count={count}>
 
@@ -45,6 +47,7 @@ export const PoolsItemsColorLess = () => {
                         <Tag key={i} >
                             <ItemsForm position={i} />
                         </Tag>
+
                     )
                 }}
 
@@ -59,14 +62,16 @@ export const PoolsItemsColorLess = () => {
 const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
-
     const { normalForm, selectReducer } = useSelector(state => state)
-    const { Items } = selectReducer
-    const { quantity } = normalForm.items[position]
+    const { RawsColors } = selectReducer
+    const { colores, quantity, idItem, idColor } = normalForm.rawColor[position]
+    const SelectValue = idItem.name ? deconstructSelect(idItem) : null
+    const SelectColor = idColor.name ? deconstructSelect(idColor) : null
 
     const decreaseCount = () => {
-        dispatch(removeRepeaterRegister('items', position))
-        dispatch(handleCalculateTotalCost("items", "raws"))
+        dispatch(removeRepeaterRegister('rawColor', position))
+        dispatch(handleCalculateTotalCost("items", "rawColor"))
+
     }
 
     const handleInputChange = ({ target }) => {
@@ -74,8 +79,8 @@ const ItemsForm = ({ position }) => {
             name: target.name,
             value: target.value
         }
-        dispatch(editRepeaterRegister('items', position, obj))
-        dispatch(handleSearchOutID2('Items', position, 'items', 'raws', 'items'))
+        dispatch(editRepeaterRegister('rawColor', position, obj))
+        dispatch(handleSearchOutID2('Items', position, 'rawColor', 'rawColor', 'items'))
     }
 
 
@@ -85,50 +90,55 @@ const ItemsForm = ({ position }) => {
             name: key,
             value: el
         }
-        dispatch(editRepeaterRegister('items', position, obj))
-        dispatch(handleSearchOutID2('Items', position, 'items', 'raws', 'items'))
+        dispatch(editRepeaterRegister('rawColor', position, obj))
+        dispatch(handleSearchOutID2('Items', position, 'rawColor', 'rawColor', 'items'))
     }
 
     const handleLoadColors = async (obj) => {
         const token = localStorage.getItem('accessToken') || ''
 
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/item/selectByIdItem/${obj.value}`, {
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/itemColors/selectByIdItem/${obj.value}`, {
             headers: {
                 'Content-type': 'application/json',
                 'x-token': token
             }
         })
-        const colors = data.map(option => ({ label: option.name, value: option.id }))
+        const colors = data.map(option => ({ label: option.idColor.name, value: option.idColor.id }))
         const objFinal = {
             name: 'colores',
             value: colors
         }
-        dispatch(editRepeaterRegister('items', position, objFinal))
+        dispatch(editRepeaterRegister('rawColor', position, objFinal))
         handleSelectChange('idItem', obj)
     }
-
-
     return (
 
-
         <div className="row border-bottom pb-1">
-            <div className="col-md-5">
-                <label className="control-label">Artículo</label>
+            <div className="col-md-4">
+                <label className="control-label">Materia prima</label>
                 <ReactSelect
-                    placeholder="Artículo"
+                    placeholder="Materia prima"
                     name="idItem"
-                    // value={SelectValue}
-                    options={Items}
+                    options={RawsColors}
                     onChange={(obj) => {
                         handleLoadColors(obj)
                     }}
+                    value={SelectValue}
+                />
+            </div>
+            <div className="col-md-3">
+                <label className="control-label">Color</label>
+                <ReactSelect
+                    placeholder="Color"
+                    name="idColor"
+                    options={colores}
+                    onChange={(value) => { handleSelectChange('idColor', value) }}
+                    value={SelectColor}
                 />
             </div>
 
-
-            <div className="col-md-5">
+            <div className="col-md-3">
                 <label className="control-label">Cantidad</label>
-
                 <input
                     type="number"
                     name="quantity"
@@ -136,14 +146,14 @@ const ItemsForm = ({ position }) => {
                     onChange={handleInputChange}
                     value={quantity} />
             </div>
+
             <div className="col-md-2 ">
                 <Button.Ripple className='btn-icon form-control mt-2 btn-sm' color='danger' outline onClick={decreaseCount}>
                     <X size={14} />
                 </Button.Ripple>
             </div>
-        </div >
+
+        </div>
 
     )
-
-
 }

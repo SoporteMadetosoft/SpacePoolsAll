@@ -47,16 +47,20 @@ exports.insert = async (req, res) => {
     try {
         /** INSERT POOL */
         const pool = req.body.form
-        const items = req.body.form.items
-        const raws = req.body.form.raws
+        const { items, raws, itemColor, rawColor } = req.body.form
 
         const allItems = [...items, ...raws]
+        const allItems2 = [...itemColor, ...rawColor]
 
         delete pool.items
+        delete pool.itemColor
         delete pool.raws
+        delete pool.rawColor
 
         const insert = await poolDao.insert(pool)
+
         poolDao.multipleAccess(allItems, poolDao.PoolItemsDao, insert.insertId, 'idPool')
+        poolDao.multipleAccess(allItems2, poolDao.ExtraItemColorDao, insert.insertId, 'idPool')
 
         res.json({ ok: true })
     } catch (error) {
@@ -70,16 +74,20 @@ exports.update = async (req, res) => {
     try {
         /** UPDATE POOL */
         const pool = req.body.form
-        const { items, raws } = req.body.form
+        const { items, raws, itemColor, rawColor } = req.body.form
 
         const allItems = [...items, ...raws]
+        const allItems2 = [...itemColor, ...rawColor]
 
         delete pool.items
+        delete pool.itemColor
         delete pool.raws
-        delete pool.allItems
+        delete pool.rawColor
 
         await poolDao.update(pool)
+
         poolDao.multipleAccess(allItems, poolDao.PoolItemsDao, pool.id, 'idPool')
+        poolDao.multipleAccess(allItems2, poolDao.ExtraItemColorDao, pool.id, 'idPool')
 
         res.json({ ok: true })
     } catch (error) {

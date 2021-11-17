@@ -22,19 +22,14 @@ function renderSwitch(param) {
   switch (param) {
     case 1:
       return (<><Badge color='light-secondary'>Pintura</Badge></>)
-
     case 2:
       return (<><Badge color='light-dark'>Laminar 1</Badge></>)
-
     case 3:
       return (<><Badge color='light-dark'>Laminar 2</Badge></>)
-
     case 4:
       return (<><Badge color='light-info'>Montaje</Badge></>)
-
     case 5:
       return (<><Badge color='light-primary'>Proyectado</Badge></>)
-
     case 6:
       return (<><Badge color='light-success'>Acabado</Badge></>)
     case 7:
@@ -43,13 +38,17 @@ function renderSwitch(param) {
       return (<><Badge color='light-success'>Control de calidad</Badge></>)
     default:
       return (<><Badge color='light-dark'>En cola</Badge></>)
-
   }
-
 }
 
 export const ProductionsList = [
-
+  {
+    name: 'Nº',
+    selector: 'id',
+    sortable: true,
+    searchable: true,
+    width: '8%'
+  },
   {
     name: 'Piscina',
     selector: 'pool',
@@ -69,26 +68,26 @@ export const ProductionsList = [
     selector: 'orderDate',
     sortable: true,
     searchable: true,
-    width: '14%'
+    width: '12%'
   },
   {
     name: 'Fecha de Entrega',
     selector: 'deliveryDate',
     sortable: true,
     searchable: true,
-    width: '14%'
+    width: '12%'
   },
   {
     name: 'Observaciones',
     selector: 'observations',
     searchable: true,
     searchable: true,
-    width: '11%'
+    width: '19%'
   },
   {
     name: 'Estado',
     sortable: true,
-    width: '12%',
+    width: '15%',
     cell: row => {
       const proceso_prod = row.idProductionStatus
       const dispatch = useDispatch()
@@ -137,7 +136,7 @@ export const ProductionsList = [
   },
   {
     name: '',
-    width: '2%',
+    width: '5%',
     cell: row => {
 
       const dispatch = useDispatch()

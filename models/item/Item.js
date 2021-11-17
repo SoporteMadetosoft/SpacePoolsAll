@@ -18,6 +18,7 @@ class Item {
         stock,
         itemType,
         description,
+        show,
         imgUrl,
         color = []
     }) {
@@ -35,6 +36,7 @@ class Item {
         this.stock = stock
         this.itemType = itemType
         this.description = description
+        this.show = show
         this.imgUrl = imgUrl
         this.color = color
     }

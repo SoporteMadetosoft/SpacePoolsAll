@@ -9,7 +9,6 @@ import { GetSetNextId, handleGetForm, handleStartEditing, initNormalForm } from 
 import { save } from '../../utility/helpers/Axios/save'
 import { PurchaseForm } from './purchaseForm/PurchaseForm'
 import { exceptionController } from '../../utility/helpers/undefinedExceptionController'
-import { startAddSelectStatus } from '../../redux/actions/selects'
 import { handleCleanUp } from '../../redux/actions/fileUpload'
 import { validate, validator } from '../../utility/formValidator/ValidationTypes'
 import { setErrors, setSchema } from '../../redux/actions/formValidator'
@@ -32,7 +31,6 @@ export const PurchaseFormScreen = () => {
     const form = useSelector(state => state.normalForm)
 
     useEffect(() => {
-        // dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
         if (id) {
             dispatch(handleStartEditing('Purchases', id))
         }

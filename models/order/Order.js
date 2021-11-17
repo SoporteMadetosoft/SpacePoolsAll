@@ -26,6 +26,7 @@ class Order {
         customerData = [],
         production = [],
         baseItems = [],
+        baseItemColors = [],
         canvasItems = [],
     }) {
         this.id = id
@@ -47,6 +48,7 @@ class Order {
         this.customerData = customerData
         this.production = production
         this.baseItems = baseItems
+        this.baseItemColors = baseItemColors
         this.canvasItems = canvasItems
     }
     get table() {

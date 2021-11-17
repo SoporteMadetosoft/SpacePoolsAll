@@ -15,7 +15,7 @@ const formStructure = {
     idItem: '',
     idColor: '',
     colores: '',
-    quantity: '1',
+    quantity: 1,
     coste: 0
 }
 

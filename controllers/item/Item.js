@@ -53,6 +53,21 @@ exports.listByID = async (req, res) => {
         return res.status(500).send(error);
     }
 }
+exports.comprobacionStock = async (req, res) => {
+    const { idItem } = req.body.nObj
+    console.log(idItem)
+
+    try {
+        res.json({
+            ok: true,
+            data: await itemDao.comprobacionStock(idItem)
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
 
 exports.delete = async (req, res) => {
     const id = parseInt(req.params.id, 10)

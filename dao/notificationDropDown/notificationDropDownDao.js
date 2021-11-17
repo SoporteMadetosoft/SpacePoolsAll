@@ -1,20 +1,9 @@
-const Item = require("../../models/item/Item");
 const GenericDao = require("../GenericDao");
 
-const ProductPlaceDao = require("../setup/item/PlaceDao");
-const ProductFamilyDao = require("../item/ProductFamilyDao");
-const ItemTypeDao = require("../global/ItemTypeDao");
-const VendorDao = require("../vendor/VendorDao");
-const ShowDao = require("../global/ShowDao");
 
-class ItemDao extends GenericDao {
+class NotificationDropdown extends GenericDao {
     constructor() {
-        super(Item);
-        this.ProductFamilyDao = new ProductFamilyDao()
-        this.ProductPlaceDao = new ProductPlaceDao()
-        this.ItemTypeDao = new ItemTypeDao()
-        this.VendorDao = new VendorDao()
-        this.ShowDao = new ShowDao()
+        
 
     }
 
@@ -168,7 +157,7 @@ class ItemDao extends GenericDao {
     }
 }
 
-module.exports = ItemDao
+module.exports = NotificationDropdown
 
 
 // CREATE VIEW reserveStock AS SELECT 

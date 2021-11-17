@@ -118,11 +118,14 @@ class ItemsColorsDao extends GenericDao {
 
     findReservedStock(idItem) {
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT (cantidadBase+cantidadExtra) as reserveStock FROM reserveStock WHERE IDITEM = ?`, [idItem], (err, result) => {
+            this.db.query(`SELECT SUM(cantidadBase) AS cantidadBase, SUM(cantidadExtra) AS cantidadExtra FROM reservestockcolor WHERE IDITEM = ?`, [idItem], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    resolve(result[0].reserveStock)
+                    const cantidadBase = result[0].cantidadBase
+                    const cantidadExtra = result[0].cantidadExtra
+
+                    resolve(cantidadBase + cantidadExtra)
                 }
             })
         })
@@ -233,3 +236,11 @@ class ItemsColorsDao extends GenericDao {
 
 }
 module.exports = ItemsColorsDao
+
+
+// CREATE VIEW reserveStockColor AS SELECT
+//  	i.id as IDITEM,
+//     ic.idColor as IDCOLOR,
+//     (SELECT SUM(quantity) FROM orders_base_item_colors WHERE idOrder IN(SELECT id FROM orders WHERE state = '0') AND idItem = i.id AND idColor = ic.idColor) as cantidadBase,
+//     (SELECT SUM(quantity) FROM orders_extra_item_colors WHERE idOrder IN(SELECT id FROM orders WHERE state = '0') AND idItem = i.id AND idColor = ic.idColor) as cantidadExtra
+// FROM item2 i, item_colors ic WHERE i.id = ic.idItem;

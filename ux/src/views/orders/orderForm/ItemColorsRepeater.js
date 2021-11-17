@@ -3,21 +3,23 @@ import { X } from 'react-feather'
 import { Button } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import React from 'react'
+import ReactSelect from 'react-select'
 
 import { editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { handleLessPrice } from '../../../redux/actions/orders'
+import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
-export const ItemsRepeater = () => {
+export const ItemColorsRepeater = () => {
 
     const formValues = useSelector(state => state.normalForm)
 
-    const { baseItems } = formValues
+    const { baseItemColors } = formValues
 
-    const count = baseItems ? baseItems.length : 0
+    const count = baseItemColors ? baseItemColors.length : 0
 
     return (
         <>
-            <h1 className="card-title mb-2">Productos base</h1>
+            <h1 className="card-title mb-2">Productos base con color</h1>
             <Repeater count={count}>
 
                 {i => {
@@ -37,12 +39,13 @@ const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
     const { normalForm } = useSelector(state => state)
-    const { name, quantity } = normalForm.baseItems[position]
+    const { name, quantity, colores, idColor } = normalForm.baseItemColors[position]
+    const SelectColor = idColor.name ? deconstructSelect(idColor) : null
 
 
     const decreaseCount = () => {
         dispatch(handleLessPrice(position))
-        dispatch(removeRepeaterRegister('baseItems', position))
+        dispatch(removeRepeaterRegister('baseItemColors', position))
     }
 
     const handleInputChange = ({ target }) => {
@@ -50,13 +53,22 @@ const ItemsForm = ({ position }) => {
             name: target.name,
             value: target.value
         }
-        dispatch(editRepeaterRegister('baseItems', position, obj))
+        dispatch(editRepeaterRegister('baseItemColors', position, obj))
+    }
+
+    const handleSelectChange = (key, element) => {
+        const el = constructSelect(element)
+        const obj = {
+            name: key,
+            value: el
+        }
+        dispatch(editRepeaterRegister('baseItemColors', position, obj))
     }
 
     return (
 
         <div className="row border-bottom pb-1">
-            <div className="col-md-5">
+            <div className="col-md-4">
                 <label className="control-label">Producto</label>
                 <input
                     type="text"
@@ -66,7 +78,18 @@ const ItemsForm = ({ position }) => {
                     readOnly />
             </div>
 
-            <div className="col-md-5">
+            <div className="col-md-3">
+                <label className="control-label">Color</label>
+                <ReactSelect
+                    placeholder="Color"
+                    name="idColor"
+                    options={colores}
+                    onChange={(value) => { handleSelectChange('idColor', value) }}
+                    value={SelectColor}
+                />
+            </div>
+
+            <div className="col-md-3">
                 <label className="control-label">Cantidad</label>
                 <input
                     type="text"

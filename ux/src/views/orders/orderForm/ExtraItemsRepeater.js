@@ -12,7 +12,7 @@ import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/act
 
 const formStructure = {
     idItem: '',
-    quantity: '1',
+    quantity: 1,
     coste: 0
 }
 

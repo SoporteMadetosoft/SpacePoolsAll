@@ -78,7 +78,6 @@ export const PoolsForm = () => {
                 save('Pools', id, prettyForm)
                 dispatch(handleCleanUp())
                 history.push('/pools')
-
             })
         }
     }

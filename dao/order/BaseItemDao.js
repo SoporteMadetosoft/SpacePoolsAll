@@ -5,7 +5,7 @@ const ItemDao = require("../item/ItemDao")
 class BaseItemDao extends GenericDao {
     constructor() {
         super(BaseItem)
-        this.ItemDao = new ItemDao
+        this.ItemDao = new ItemDao()
     }
 
     async mountObj(data) {
@@ -14,23 +14,12 @@ class BaseItemDao extends GenericDao {
         }
         let baseItem2 = new BaseItem(baseItem)
 
-        const colData = await this.ItemDao.ItemsColorsDao.findByItemId(data.idItem)
-        const colores = colData.map(el => ({
-            label: el.name,
-            value: el.id
-        }))
-        const selectedColor = await this.ItemDao.ItemsColorsDao.ColorsDao.findById(data.idColor)
-
-
         baseItem2 = {
             ...baseItem2,
-            name: await this.ItemDao.findNameById(data.idItem),
+            name: await this.ItemDao.findOneFieldById("name", data.idItem),
             coste: await this.ItemDao.findOneFieldById("cost", data.idItem),
-            idColor: selectedColor.id !== undefined ? selectedColor : '',
-            colores: colores,
             show: await this.ItemDao.findOneFieldById("show", data.idItem)
         }
-        console.log(baseItem2)
         return baseItem2
     }
 

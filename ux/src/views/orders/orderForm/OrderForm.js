@@ -20,6 +20,7 @@ import { validateProduction } from '../../../utility/helpers/Axios/validateProdu
 import Swal from 'sweetalert2'
 import { ExtraItemColorsRepeater } from './ExtraItemColorsRepeater'
 import { ExtraRawColorsRepeater } from './ExtraRawColorsRepeater'
+import { ItemColorsRepeater } from './ItemColorsRepeater'
 
 const formSchema = {
     idCustomer: { validations: [validator.isRequired] },
@@ -27,11 +28,11 @@ const formSchema = {
     orderDate: { validations: [validator.isRequired] },
     productionDate: { validations: [validator.isRequired] },
     deliveryDate: { validations: [validator.isRequired] },
-    idColor : {validations: [validator.isRequired]}
+    idColor: { validations: [validator.isRequired] }
 }
 
 export const OrderForm = () => {
-    let {orderCode} =  useSelector(state => state.normalForm)
+    let { orderCode } = useSelector(state => state.normalForm)
 
     const { id } = useParams()
     const history = useHistory()
@@ -98,9 +99,10 @@ export const OrderForm = () => {
                     },
                     idPool: exceptionController(value.idPool),
                     idTax: exceptionController(value.idTax),
-                    idColor : exceptionController(value.idColor),
+                    idColor: exceptionController(value.idColor),
                     idCustomer: exceptionController(value.idCustomer),
                     baseItems: value.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity })),
+                    baseItemColors: value.baseItemColors.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity, idColor: exceptionController(bI.idColor) })),
                     extraItems: value.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity })),
                     extraRaws: value.extraRaws.map(eR => ({ idItem: eR.idItem.id, quantity: eR.quantity })),
                     extraItemColors: value.extraItemColors.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity, idColor: exceptionController(eI.idColor) })),
@@ -114,7 +116,6 @@ export const OrderForm = () => {
 
                 const vp = await validateProduction('Orders', { productionDate: prettyForm.productionDate, idPool: prettyForm.idPool })
                 if (vp === true) {
-
                     save('Orders', id, prettyForm)
                     dispatch(handleCleanUp())
                     history.push('/orders')
@@ -180,7 +181,7 @@ export const OrderForm = () => {
                         />
                     </div>
                     <div className="col-md-2">
-                        <Select name="idColor" label="Colores" endpoint="Colors"/>
+                        <Select name="idColor" label="Colores" endpoint="Colors" />
                     </div>
                     <div className="col-md-2">
                         <Select
@@ -237,6 +238,11 @@ export const OrderForm = () => {
                     <div className="card">
                         <div className=" card-body row px-3">
                             <ItemsRepeater />
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ItemColorsRepeater />
                         </div>
                     </div>
 

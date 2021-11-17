@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import React, { useEffect } from 'react'
 
-export const ItemsRepeater = () => {
+export const ItemColorsRepeater = () => {
 
     const dispatch = useDispatch()
     const formValues = useSelector(state => state.normalForm)
 
-    const { baseItems } = formValues['orderData'] ? formValues['orderData'] : ''
-    const count = baseItems ? baseItems.length : 0
+    const { baseItemColors } = formValues['orderData'] ? formValues['orderData'] : ''
+    const count = baseItemColors ? baseItemColors.length : 0
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Items', 'idOpt'))
@@ -38,12 +38,12 @@ const ItemsForm = ({ position }) => {
 
     const { normalForm } = useSelector(state => state)
 
-    const { name, quantity } = normalForm['orderData'] ? normalForm['orderData'].baseItems[position] : ''
+    const { name, quantity, idColor } = normalForm['orderData'] ? normalForm['orderData'].baseItemColors[position] : ''
 
     return (
 
         <div className="row border-bottom pb-1">
-            <div className="col-md-6">
+            <div className="col-md-4">
                 <label className="control-label">Producto</label>
                 <input
                     type="text"
@@ -52,8 +52,16 @@ const ItemsForm = ({ position }) => {
                     value={name}
                     readOnly />
             </div>
-
-            <div className="col-md-6">
+            <div className="col-md-4">
+                <label className="control-label">Color</label>
+                <input
+                    type="text"
+                    name="color"
+                    className="form-control"
+                    value={idColor.name}
+                    readOnly />
+            </div>
+            <div className="col-md-4">
                 <label className="control-label">Cantidad</label>
                 <input
                     type="text"

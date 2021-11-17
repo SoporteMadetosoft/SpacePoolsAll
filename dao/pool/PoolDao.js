@@ -19,8 +19,11 @@ class PoolDao extends GenericDao {
             ...data,
             idStatus: await this.StatusDao.findById(data.idStatus),
             items: await this.PoolItemsDao.getItemsByTypeAndPool(data.id, 2),
+            itemColor: await this.ExtraItemColorDao.getItemsByTypeAndPool(data.id, 2),
             raws: await this.PoolItemsDao.getItemsByTypeAndPool(data.id, 1),
-            allItems: await this.PoolItemsDao.getItemsByIdPool(data.id)
+            rawColor: await this.ExtraItemColorDao.getItemsByTypeAndPool(data.id, 1),
+            baseItems: await this.PoolItemsDao.getItemsByIdPool(data.id),
+            baseItemColors: await this.ExtraItemColorDao.getItemsByIdPool(data.id)
         }
         return pool
     }

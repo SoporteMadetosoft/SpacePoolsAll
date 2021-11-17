@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ReactSelect from 'react-select'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
-import { constructSelect } from '../../../utility/helpers/deconstructSelect'
+import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { startAddSelectPoolItems } from '../../../redux/actions/selects'
 import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/actions/orders'
 import axios from 'axios'
@@ -64,7 +64,10 @@ const ItemsForm = ({ position }) => {
 
     const { normalForm, selectReducer } = useSelector(state => state)
     const { ItemsColors } = selectReducer
-    const { colores, quantity } = normalForm.itemColor[position]
+    const { colores, quantity, idItem, idColor } = normalForm.itemColor[position]
+    const SelectValue = idItem.name ? deconstructSelect(idItem) : null
+    const SelectColor = idColor.name ? deconstructSelect(idColor) : null
+
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('itemColor', position))
@@ -94,13 +97,14 @@ const ItemsForm = ({ position }) => {
     const handleLoadColors = async (obj) => {
         const token = localStorage.getItem('accessToken') || ''
 
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/item/selectByIdItem/${obj.value}`, {
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/itemColors/selectByIdItem/${obj.value}`, {
             headers: {
                 'Content-type': 'application/json',
                 'x-token': token
             }
         })
-        const colors = data.map(option => ({ label: option.name, value: option.id }))
+
+        const colors = data.map(option => ({ label: option.idColor.name, value: option.idColor.id }))
         const objFinal = {
             name: 'colores',
             value: colors
@@ -119,7 +123,7 @@ const ItemsForm = ({ position }) => {
                 <ReactSelect
                     placeholder="Artículo"
                     name="idItem"
-                    // value={SelectValue}
+                    value={SelectValue}
                     options={ItemsColors}
                     onChange={(obj) => {
                         handleLoadColors(obj)
@@ -133,7 +137,7 @@ const ItemsForm = ({ position }) => {
                     name="idColor"
                     options={colores}
                     onChange={(value) => { handleSelectChange('idColor', value) }}
-                    // value={SelectColor}
+                    value={SelectColor}
                 />
             </div>
 

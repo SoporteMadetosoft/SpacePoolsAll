@@ -64,10 +64,9 @@ const ItemsForm = ({ position }) => {
     const { normalForm, selectReducer } = useSelector(state => state)
     const { Items } = selectReducer
 
-    const { quantity } = normalForm.items[position]
+    const { quantity, idItem } = normalForm.items[position]
 
-    // const SelectValue = idItem.name ? deconstructSelect(idItem) : null
-    // const SelectColor = idColor.name ? deconstructSelect(idColor) : null
+    const SelectValue = idItem.name ? deconstructSelect(idItem) : null
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('items', position))
@@ -94,19 +93,14 @@ const ItemsForm = ({ position }) => {
         dispatch(handleSearchOutID2('Items', position, 'items', 'raws', 'items'))
     }
 
-
-
-
     return (
-
-
         <div className="row border-bottom pb-1">
             <div className="col-md-5">
                 <label className="control-label">Artículo</label>
                 <ReactSelect
                     placeholder="Artículo"
                     name="idItem"
-                    // value={SelectValue}
+                    value={SelectValue}
                     options={Items}
                     onChange={(obj) => {
                         handleSelectChange('idItem', obj)

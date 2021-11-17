@@ -62,8 +62,8 @@ const ItemsForm = ({ position }) => {
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
     const { Raws } = selectReducer
-    const { quantity } = normalForm.raws[position]
-    // const SelectValue = idItem.name ? deconstructSelect(idItem) : null
+    const { quantity, idItem } = normalForm.raws[position]
+    const SelectValue = idItem.name ? deconstructSelect(idItem) : null
     // const SelectColor = idColor.name ? deconstructSelect(idColor) : null
 
 
@@ -94,7 +94,7 @@ const ItemsForm = ({ position }) => {
         dispatch(handleSearchOutID2('Items', position, 'raws', 'raws', 'items'))
     }
 
-    
+
     return (
 
         <div className="row border-bottom pb-1">
@@ -107,10 +107,10 @@ const ItemsForm = ({ position }) => {
                     onChange={(obj) => {
                         handleSelectChange('idItem', obj)
                     }}
-                    // value={SelectValue}
+                    value={SelectValue}
                 />
             </div>
-           
+
             <div className="col-md-5">
                 <label className="control-label">Cantidad</label>
                 <input

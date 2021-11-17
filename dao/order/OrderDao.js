@@ -9,6 +9,8 @@ const BaseItemDao = require("../order/BaseItemDao")
 const TaxesDao = require("../setup/general/TaxDao");
 const CanvasDao = require("../order/CanvasDao");
 const ExtraItemColorDao = require("./ExtraItemColorDao");
+const ColorsDao = require("../setup/item/ColorsDao");
+const BaseItemColorDao = require("./BaseItemColorDao");
 
 class OrderDao extends GenericDao {
     constructor() {
@@ -19,6 +21,7 @@ class OrderDao extends GenericDao {
         this.ExtraItemDao = new ExtraItemDao()
         this.ExtraItemColorDao = new ExtraItemColorDao()
         this.BaseItemDao = new BaseItemDao()
+        this.BaseItemColorDao = new BaseItemColorDao()
         this.TaxesDao = new TaxesDao()
         this.CanvasDao = new CanvasDao()
         this.ColorsDao = new ColorsDao()
@@ -34,6 +37,7 @@ class OrderDao extends GenericDao {
             extraRaws: await this.ExtraItemDao.getItemsByTypeAndOrder(data.id, 1),
             extraRawColors: await this.ExtraItemColorDao.getItemsByTypeAndOrder(data.id, 1),
             baseItems: await this.BaseItemDao.findByOrderId(data.id),
+            baseItemColors: await this.BaseItemColorDao.findByOrderId(data.id),
             orderDate: this.datetimeToDate(data.orderDate),
             productionDate: this.datetimeToDate(data.productionDate),
             deliveryDate: this.datetimeToDate(data.deliveryDate),
@@ -41,10 +45,8 @@ class OrderDao extends GenericDao {
             idTax: { id: data.idTax, name: (await this.TaxesDao.findTaxNameBy(data.idTax)) },
             idCustomer: { id: data.idCustomer, comercialName: (await this.CustomerDao.findCustomerNameBy(data.idCustomer)) },
             canvasItems: await this.CanvasDao.findByOrderId(data.id),
-            idColor :{ id: data.idColor, name: (await this.ColorsDao.findColorNameBy(data.idColor)) }
+            idColor: { id: data.idColor, name: (await this.ColorsDao.findColorNameBy(data.idColor)) }
         }
-
-        console.log(order.baseItems)
 
         let order2 = new Order(order)
         order2 = {

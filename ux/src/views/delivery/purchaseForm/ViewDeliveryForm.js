@@ -11,6 +11,7 @@ import { ItemsRepeater } from '../../productions/productionForm/ItemsRepeater'
 import { ExtraRawsRepeater } from '../../productions/productionForm/ExtraRawsRepeater'
 import { ExtraItemColorsRepeater } from '../../productions/productionForm/ExtraItemColorsRepeater'
 import { ExtraRawColorsRepeater } from '../../productions/productionForm/ExtraRawColorsRepeater'
+import { ItemColorsRepeater } from '../../productions/productionForm/ItemColorsRepeater'
 
 
 export const ViewDeliveryForm = () => {
@@ -105,7 +106,11 @@ export const ViewDeliveryForm = () => {
                             <ItemsRepeater />
                         </div>
                     </div>
-
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ItemColorsRepeater />
+                        </div>
+                    </div>
                 </div>
                 <div className="col-md-6">
                     <div className="card">

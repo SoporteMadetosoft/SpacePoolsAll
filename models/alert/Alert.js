@@ -11,8 +11,6 @@ class Alert {
         this.message = message
         this.date = date
         this.isDone = isDone
-
-
     }
 
     get table() {

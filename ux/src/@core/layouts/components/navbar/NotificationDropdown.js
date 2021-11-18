@@ -1,18 +1,14 @@
 // ** React Imports
 import { Fragment, useEffect, useState } from 'react'
 
-// ** Custom Components
-import Avatar from '@components/avatar'
-
 // ** Third Party Components
 import classnames from 'classnames'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { Bell, X, Check, AlertTriangle } from 'react-feather'
+import { Bell } from 'react-feather'
 import {
   Button,
   Badge,
   Media,
-  CustomInput,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
@@ -63,6 +59,7 @@ const NotificationDropdown = () => {
             </Media>
           )
         })}
+
       </PerfectScrollbar>
     )
   }

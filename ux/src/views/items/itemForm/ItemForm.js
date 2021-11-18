@@ -13,7 +13,6 @@ import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/acti
 
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
-import { ColorRepeater } from '../itemColors/itemColorsForm/ColorRepeater'
 
 const formSchema = {
     itemType: { validations: [validator.isRequired] },
@@ -67,13 +66,14 @@ export const ItemForm = () => {
                 idFamily: exceptionController(form.idFamily),
                 idPlace: exceptionController(form.idPlace),
                 show: exceptionController(form.show)
-                //colors: form.color.map(color => ({ ...color, idColor: exceptionController(color.idColor) }))
             }
             save('Items', id, prettyForm)
             dispatch(handleCleanUp())
             history.push('/items')
         }
     }
+
+    console.log(itemCode)
 
     return (
         <Form onSubmit={submit}>

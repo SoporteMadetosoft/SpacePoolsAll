@@ -28,11 +28,7 @@ const setupEndpoints = {
 
     Place: '/setup/items/place',
     Colors: '/setup/items/colors'
-
-
 }
-
-
 
 export const endPoints = {
 
@@ -47,7 +43,7 @@ export const endPoints = {
     Trailers: '/trailers',
     Alerts: '/alerts',
     TRepair: '/trailers/repair',
-
+    AlertStock: '/alertsStock',
     Purchases: '/purchases',
 
     Pools: '/pools',
@@ -61,6 +57,7 @@ export const endPoints = {
     Calendar: '/calendar',
     Users: '/users',
     Roles: '/roles',
+    Logs: '/logs',
 
     ...globalEndpoints,
     ...setupEndpoints

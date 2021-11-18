@@ -86,13 +86,15 @@ exports.insert = async (req, res) => {
         }
         await customerDataDao.insert(customerData2)
 
-        orderDao.multipleAccess(extraItems, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
-        orderDao.multipleAccess(extraItemColors, orderDao.ExtraItemColorDao, insert.insertId, 'idOrder')
-        orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
-        orderDao.multipleAccess(extraRawColors, orderDao.ExtraItemColorDao, insert.insertId, 'idOrder')
-        orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, insert.insertId, 'idOrder')
-        orderDao.multipleAccess(baseItemColors, orderDao.BaseItemColorDao, insert.insertId, 'idOrder')
-        orderDao.multipleAccess(canvas, canvasDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(extraItems, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(extraItemColors, orderDao.ExtraItemColorDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(extraRawColors, orderDao.ExtraItemColorDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(baseItemColors, orderDao.BaseItemColorDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(canvas, canvasDao, insert.insertId, 'idOrder')
+
+        await orderDao.comprobarStockMinimo(order.id)
 
         res.json({ ok: true })
     } catch (error) {
@@ -101,7 +103,7 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
     try {
 
@@ -120,7 +122,7 @@ exports.update = (req, res) => {
         delete order.extraRawColors
         delete order.extraItemColors
 
-        orderDao.update(order)
+        await orderDao.update(order)
 
         const customerData2 = {
             ...customerData,
@@ -128,14 +130,15 @@ exports.update = (req, res) => {
         }
         customerDataDao.update(customerData2)
 
-        orderDao.multipleAccess(extraItems, orderDao.ExtraItemDao, order.id, 'idOrder')
-        orderDao.multipleAccess(extraItemColors, orderDao.ExtraItemColorDao, order.id, 'idOrder')
-        orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, order.id, 'idOrder')
-        orderDao.multipleAccess(extraRawColors, orderDao.ExtraItemColorDao, order.id, 'idOrder')
-        orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, order.id, 'idOrder')
-        orderDao.multipleAccess(baseItemColors, orderDao.BaseItemColorDao, order.id, 'idOrder')
-        orderDao.multipleAccess(canvas, canvasDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(extraItems, orderDao.ExtraItemDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(extraItemColors, orderDao.ExtraItemColorDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(extraRawColors, orderDao.ExtraItemColorDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(baseItemColors, orderDao.BaseItemColorDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(canvas, canvasDao, order.id, 'idOrder')
 
+        await orderDao.comprobarStockMinimo(order.id)
 
         res.json({ ok: true })
     } catch (error) {

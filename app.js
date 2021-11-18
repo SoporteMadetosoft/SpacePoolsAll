@@ -73,7 +73,9 @@ app.use('/roles', require('./routes/role'));
 //-------------------------------------------------------
 //Alerts Routes
 app.use('/alerts', require('./routes/alerts'))
-
+//-------------------------------------------------------
+//Log Routes
+app.use('/logs', require('./routes/logs'))
 // app.get('*', (req, res) => {
 //   res.sendFile(path.join(__dirname + '/ux/build/index.html'));
 // });

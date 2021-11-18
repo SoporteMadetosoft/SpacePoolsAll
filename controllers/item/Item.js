@@ -23,7 +23,7 @@ exports.listItems = async (req, res) => {
     const { itemType, idVendor } = req.body.nObj
     let result
     if (idVendor === null) {
-        result = await itemDao.findByItemType(itemType, idVendor)
+        result = await itemDao.findByItemType(itemType)
     } else {
         result = await itemDao.findByItemTypeAndVendor(itemType, idVendor)
     }
@@ -53,6 +53,21 @@ exports.listByID = async (req, res) => {
         return res.status(500).send(error);
     }
 }
+exports.comprobacionStock = async (req, res) => {
+    const { idItem } = req.body.nObj
+    console.log(idItem)
+
+    try {
+        res.json({
+            ok: true,
+            data: await itemDao.comprobacionStock(idItem)
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
 
 exports.delete = async (req, res) => {
     const id = parseInt(req.params.id, 10)
@@ -70,15 +85,8 @@ exports.insert = async (req, res) => {
     try {
         /** INSERT ITEM */
         const item = req.body.form
-        // const colors = req.body.form.colors
 
-        delete item.color
-        delete item.colors
-
-
-        const insert = await itemDao.insert(item)
-
-        // itemDao.multipleAccess(colors, itemsColorsDao, insert.insertId, 'idItem')
+        await itemDao.insert(item)
 
         res.json({ ok: true })
     } catch (error) {
@@ -92,16 +100,8 @@ exports.update = async (req, res) => {
     try {
         /** UPDATE ITEM */
         const item = req.body.form
-        const colors = req.body.form.colors
-
-        colors.length !== 0 && (item.stock = 0)
-
-        delete item.color
-        delete item.colors
 
         await itemDao.update(item)
-
-        //itemDao.multipleAccess(colors, itemsColorsDao, item.id, 'idItem')
 
         res.json({ ok: true })
     } catch (error) {

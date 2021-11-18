@@ -1,5 +1,6 @@
 import axios from "axios"
 import { endPoints } from "@fixed/endPoints"
+import { saveLog } from "./saveLog"
 
 export const deleteRecord = async (id, endPoint) => {
     const token = localStorage.getItem('accessToken') || ''
@@ -11,5 +12,7 @@ export const deleteRecord = async (id, endPoint) => {
             'x-token': token
         }
     })
+
+    await saveLog(endPoint, 2)
 
 }

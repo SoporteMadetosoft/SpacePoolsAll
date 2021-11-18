@@ -5,9 +5,7 @@ let status;
 class AlertDao extends GenericDao {
     constructor() {
         super(Alert);
-
     }
-
 
     async mountList(data) {
 
@@ -17,10 +15,25 @@ class AlertDao extends GenericDao {
             message: data.message,
             date: newDate,
             isDone: data.isDone
-
         }
-
         return nObj
+    }
+
+    hasItemAlert(id) {
+        //console.log(`SELECT * FROM ${this.auxModel.table} WHERE id = ${id}`)
+        return new Promise((resolve, reject) => {
+            this.db.query(`SELECT * FROM alerts WHERE idItem = ? AND isDone = 0`, [id], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    let has = false
+                    for (const res of result) {
+                        has = true
+                    }
+                    resolve(has)
+                }
+            })
+        })
     }
 
     async listNotification() {

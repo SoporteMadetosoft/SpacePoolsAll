@@ -132,6 +132,7 @@ class ItemsColorsDao extends GenericDao {
     }
 
     totalStock(idItem) {
+        // console.log(`SELECT SUM(stock) AS stock FROM item_colors WHERE idItem = ${idItem}`)
         return new Promise((resolve, reject) => {
             this.db.query(`SELECT SUM(stock) AS stock FROM item_colors WHERE idItem = ?`, [idItem], (err, result) => {
                 if (err) {
@@ -202,7 +203,6 @@ class ItemsColorsDao extends GenericDao {
                 if (err) {
                     reject(err)
                 } else {
-                    // console.log(result)
                     if (result !== undefined) {
                         resolve(result[0][field])
                     }

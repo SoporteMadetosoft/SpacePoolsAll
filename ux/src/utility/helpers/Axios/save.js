@@ -1,9 +1,9 @@
 import axios from "axios"
 import { endPoints } from "@fixed/endPoints"
+import { saveLog } from "./saveLog"
 
 export const save = async (endPoint, id = null, form) => {
     const token = localStorage.getItem('accessToken') || ''
-
     if (id) {
 
         console.log(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/update`)
@@ -13,6 +13,9 @@ export const save = async (endPoint, id = null, form) => {
                 'x-token': token
             }
         })
+
+        await saveLog(endPoint, 1)
+
     } else {
 
         console.log(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/insert`)
@@ -22,7 +25,7 @@ export const save = async (endPoint, id = null, form) => {
                 'x-token': token
             }
         })
-
+        await saveLog(endPoint, 0)
     }
 
 }

@@ -43,7 +43,8 @@ class RoleDao extends GenericDao {
             Model: JSON.parse(data.Model.toString()),
             Place: JSON.parse(data.Place.toString()),
             Colors: JSON.parse(data.Colors.toString()),
-            Alerts: JSON.parse(data.Alerts.toString())
+            Alerts: JSON.parse(data.Alerts.toString()),
+            Logs: JSON.parse(data.Logs.toString())
         }
         return role
     }

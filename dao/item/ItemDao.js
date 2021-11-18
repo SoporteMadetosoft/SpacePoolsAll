@@ -15,7 +15,6 @@ class ItemDao extends GenericDao {
         this.ItemTypeDao = new ItemTypeDao()
         this.VendorDao = new VendorDao()
         this.ShowDao = new ShowDao()
-
     }
 
     findByItemType(itemType) {
@@ -83,11 +82,9 @@ class ItemDao extends GenericDao {
 
     async mountList(data) {
         const rs = await this.findReservedStock(data.id)
-        const st = await this.totalStock(data.id)
         const list = {
             ...data,
-            reserveStock: rs !== null ? rs : 0,
-            stock: st.stock !== null ? st.stock : 0
+            reserveStock: rs !== null ? rs : 0
         }
 
         const { id, itemCode, name, description, reserveStock, stock } = list
@@ -121,6 +118,7 @@ class ItemDao extends GenericDao {
         })
     }
 
+
     findReservedStock(idItem) {
         return new Promise((resolve, reject) => {
             this.db.query(`SELECT cantidadBase, cantidadExtra FROM reserveStock WHERE IDITEM = ?`, [idItem], (err, result) => {
@@ -136,17 +134,6 @@ class ItemDao extends GenericDao {
         })
     }
 
-    totalStock(idItem) {
-        return new Promise((resolve, reject) => {
-            this.db.query(`SELECT SUM(stock) AS stock FROM item_colors WHERE idItem = ?`, [idItem], (err, result) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    resolve(result[0])
-                }
-            })
-        })
-    }
 }
 
 module.exports = ItemDao

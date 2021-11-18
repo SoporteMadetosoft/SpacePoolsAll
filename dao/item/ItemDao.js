@@ -15,7 +15,6 @@ class ItemDao extends GenericDao {
         this.ItemTypeDao = new ItemTypeDao()
         this.VendorDao = new VendorDao()
         this.ShowDao = new ShowDao()
-
     }
 
     findByItemType(itemType) {
@@ -83,11 +82,9 @@ class ItemDao extends GenericDao {
 
     async mountList(data) {
         const rs = await this.findReservedStock(data.id)
-        const st = await this.totalStock(data.id)
         const list = {
             ...data,
-            reserveStock: rs !== null ? rs : 0,
-            stock: st.stock !== null ? st.stock : 0
+            reserveStock: rs !== null ? rs : 0
         }
 
         const { id, itemCode, name, description, reserveStock, stock } = list
@@ -121,51 +118,22 @@ class ItemDao extends GenericDao {
         })
     }
 
+
     findReservedStock(idItem) {
-        return (
+        return new Promise((resolve, reject) => {
             this.db.query(`SELECT cantidadBase, cantidadExtra FROM reserveStock WHERE IDITEM = ?`, [idItem], (err, result) => {
                 if (err) {
-                    (err)
+                    reject(err)
                 } else {
                     const cantidadBase = result[0].cantidadBase
                     const cantidadExtra = result[0].cantidadExtra
 
-                    return (cantidadBase + cantidadExtra)
-                }
-            })
-        )
-        
-    }
-
-    totalStock(idItem) {
-        return new Promise((resolve, reject) => {
-            this.db.query(`SELECT SUM(stock) AS stock FROM item_colors WHERE idItem = ?`, [idItem], (err, result) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    resolve(result[0])
+                    resolve(cantidadBase + cantidadExtra)
                 }
             })
         })
     }
 
-     comprobacionStock(idItem) {
-        const stockResta = this.findReservedStock(idItem)
-        console.log(stockResta)
-        
-        // this.db.query(`UPDATE item SET stock = stock - ${stockResta} WHERE idItem = ${idItem}`)
-        // console.log(`UPDATE item SET stock = stock - ${stockResta} WHERE idItem = ${idItem}`)
-  
-        return new Promise((resolve, reject) => {
-            this.db.query(`SELECT stock, name FROM item WHERE id = ? AND stock <= minimumStock`, [idItem], (err, result) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    resolve(result[0])
-                }
-            })
-        })
-    }
 }
 
 module.exports = ItemDao

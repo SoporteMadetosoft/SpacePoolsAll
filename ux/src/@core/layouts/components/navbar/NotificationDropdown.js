@@ -1,18 +1,14 @@
 // ** React Imports
 import { Fragment, useEffect, useState } from 'react'
 
-// ** Custom Components
-import Avatar from '@components/avatar'
-
 // ** Third Party Components
 import classnames from 'classnames'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { Bell, X, Check, AlertTriangle } from 'react-feather'
+import { Bell } from 'react-feather'
 import {
   Button,
   Badge,
   Media,
-  CustomInput,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
@@ -63,25 +59,7 @@ const NotificationDropdown = () => {
             </Media>
           )
         })}
-        {notificationStock.length !== undefined && notificationStock.map((item, index) => {
-          return (
-            <Media
-              className={classnames('d-flex')}
-            >
 
-              <Fragment>
-                <Media left>
-
-                </Media>
-                <Media className="font-weight-bolder black" body>
-                  {item.title}
-                  <small className='notification-text'>{item.subtitle}</small>
-                </Media>
-              </Fragment>
-
-            </Media>
-          )
-        })}
       </PerfectScrollbar>
     )
   }
@@ -90,8 +68,8 @@ const NotificationDropdown = () => {
     <UncontrolledDropdown tag='li' className='dropdown-notification nav-item mr-25'>
       <DropdownToggle tag='a' className='nav-link' href='/' onClick={e => e.preventDefault()}>
         <Bell size={21} />
-        {notification.length >= 1 || notificationStock.length >= 1 ? <Badge pill color='danger' className='badge-up'>
-          {notification.length + notificationStock.length}
+        {notification.length >= 1 ? <Badge pill color='danger' className='badge-up'>
+          {notification.length}
         </Badge> : ''}
       </DropdownToggle>
       <DropdownMenu tag='ul' right className='dropdown-menu-media mt-0'>
@@ -99,7 +77,7 @@ const NotificationDropdown = () => {
           <DropdownItem className='d-flex' tag='div' header>
             <h4 className='notification-title mb-0 mr-auto'>Notifications</h4>
             <Badge tag='div' color='light-primary' pill>
-              {notification.length + notificationStock.length}
+              {notification.length}
             </Badge>
           </DropdownItem>
         </li>

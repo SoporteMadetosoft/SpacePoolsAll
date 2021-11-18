@@ -1,5 +1,6 @@
 import axios from "axios"
 import { endPoints } from "@fixed/endPoints"
+import { saveLog } from "./saveLog"
 
 export const verify = async (endPoint, id = null, form) => {
     const token = localStorage.getItem('accessToken') || ''
@@ -11,5 +12,6 @@ export const verify = async (endPoint, id = null, form) => {
             'x-token': token
         }
     })
+    await saveLog(endPoint, 3)
 
 }

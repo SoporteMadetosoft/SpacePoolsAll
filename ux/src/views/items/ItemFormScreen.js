@@ -5,11 +5,8 @@ import BreadCrumbs from '@components/breadcrumbs'
 
 import { handleStartEditing, initNormalForm } from '../../redux/actions/normalForm'
 import { ItemForm } from './itemForm/ItemForm'
-import { startAddSelectStatus } from '../../redux/actions/selects'
 
-const structureForm = {
-    color:[]
-}
+const structureForm = {}
 
 export const ItemFormScreen = () => {
 
@@ -18,8 +15,8 @@ export const ItemFormScreen = () => {
     const form = useSelector(state => state.normalForm)
 
     useEffect(() => {
-       //dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
-        
+        //dispatch(startAddSelectStatus('Vendors','Vendors','comercialName'))
+
         if (id) {
             dispatch(handleStartEditing('Items', id))
         }

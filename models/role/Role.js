@@ -33,7 +33,8 @@ class Role {
         Model,
         Place,
         Colors,
-        Alerts
+        Alerts,
+        Logs
     }) {
         this.id = id
         this.name = name
@@ -67,6 +68,7 @@ class Role {
         this.Place = Place
         this.Colors = Colors
         this.Alerts = Alerts
+        this.Logs = Logs
     }
     get table() {
         return this.#table;

@@ -28,11 +28,7 @@ const setupEndpoints = {
 
     Place: '/setup/items/place',
     Colors: '/setup/items/colors'
-
-
 }
-
-
 
 export const endPoints = {
 
@@ -61,6 +57,7 @@ export const endPoints = {
     Calendar: '/calendar',
     Users: '/users',
     Roles: '/roles',
+    Logs: '/logs',
 
     ...globalEndpoints,
     ...setupEndpoints

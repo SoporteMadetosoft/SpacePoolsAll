@@ -20,10 +20,9 @@ import DeliveryRoutes from './delivery/Delivery'
 import UsersRoutes from './users/Users'
 import RolesRoutes from './roles/Roles'
 import { getUserData } from '../../utility/Utils'
-
-import AlertsRoutes from './alerts/Alerts'
 import ColorsRoutes from './colors/Colors'
-
+import AlertsRoutes from './alerts/Alerts'
+import LogsRoutes from './Logs/Logs'
 
 // ** Document title
 const TemplateTitle = '%s - SpacePools'
@@ -57,7 +56,8 @@ const Routes = [
   ...TaxesRoutes,
   ...UsersRoutes,
   ...RolesRoutes,
-  ...AlertsRoutes
+  ...AlertsRoutes,
+  ...LogsRoutes
 ]
 
 export { DefaultRoute, TemplateTitle, Routes }

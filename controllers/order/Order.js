@@ -1,13 +1,9 @@
 const OrderDao = require('../../dao/order/OrderDao')
-const ExtraItemDao = require('../../dao/order/ExtraItemDao')
 const CustomerDataDao = require('../../dao/order/CustomerDataDao')
-const BaseItemsDao = require('../../dao/order/BaseItemDao')
 const CanvasDao = require('../../dao/order/CanvasDao')
 
 const orderDao = new OrderDao()
-const extraItemDao = new ExtraItemDao()
 const customerDataDao = new CustomerDataDao()
-const baseItemsDao = new BaseItemsDao()
 const canvasDao = new CanvasDao()
 
 exports.list = async (req, res) => {
@@ -68,19 +64,19 @@ exports.insert = async (req, res) => {
     try {
 
         const order = req.body.form
-        const production = req.body.form.production
-        const extraItems = req.body.form.extraItems
-        const extraRaws = req.body.form.extraRaws
-        const customerData = req.body.form.customerData
-        const baseItems = req.body.form.baseItems
-        const canvas = req.body.form.canvas
+        const { extraItems, extraItemColors, extraRaws, extraRawColors, customerData, baseItems, baseItemColors, canvas } = req.body.form
 
         delete order.production
         delete order.extraItems
+        delete order.extraItemColors
         delete order.extraRaws
+        delete order.extraRawColors
         delete order.customerData
         delete order.canvas
         delete order.baseItems
+        delete order.baseItemColors
+        delete order.extraRawColors
+        delete order.extraItemColors
 
         const insert = await orderDao.insert(order)
 
@@ -90,10 +86,15 @@ exports.insert = async (req, res) => {
         }
         await customerDataDao.insert(customerData2)
 
-        orderDao.multipleAccess(extraItems, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
-        orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
-        orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, insert.insertId, 'idOrder')
-        // orderDao.multipleAccess(canvas, canvasDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(extraItems, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(extraItemColors, orderDao.ExtraItemColorDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(extraRawColors, orderDao.ExtraItemColorDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(baseItemColors, orderDao.BaseItemColorDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(canvas, canvasDao, insert.insertId, 'idOrder')
+
+        await orderDao.comprobarStockMinimo(order.id)
 
         res.json({ ok: true })
     } catch (error) {
@@ -102,26 +103,26 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
     try {
 
         const order = req.body.form
-        const production = req.body.form.production
-        const extraItems = req.body.form.extraItems
-        const extraRaws = req.body.form.extraRaws
-        const customerData = req.body.form.customerData
-        const baseItems = req.body.form.baseItems
-        const canvas = req.body.form.canvas
+        const { extraItems, extraItemColors, extraRaws, extraRawColors, customerData, baseItems, baseItemColors, canvas } = req.body.form
 
         delete order.production
         delete order.extraItems
+        delete order.extraItemColors
         delete order.extraRaws
+        delete order.extraRawColors
         delete order.customerData
         delete order.canvas
         delete order.baseItems
+        delete order.baseItemColors
+        delete order.extraRawColors
+        delete order.extraItemColors
 
-        orderDao.update(order)
+        await orderDao.update(order)
 
         const customerData2 = {
             ...customerData,
@@ -129,11 +130,15 @@ exports.update = (req, res) => {
         }
         customerDataDao.update(customerData2)
 
-        orderDao.multipleAccess(extraItems, orderDao.ExtraItemDao, order.id, 'idOrder')
-        orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, order.id, 'idOrder')
-        orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, order.id, 'idOrder')
-        orderDao.multipleAccess(canvas, canvasDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(extraItems, orderDao.ExtraItemDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(extraItemColors, orderDao.ExtraItemColorDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(extraRaws, orderDao.ExtraItemDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(extraRawColors, orderDao.ExtraItemColorDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(baseItemColors, orderDao.BaseItemColorDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(canvas, canvasDao, order.id, 'idOrder')
 
+        await orderDao.comprobarStockMinimo(order.id)
 
         res.json({ ok: true })
     } catch (error) {
@@ -166,6 +171,20 @@ exports.switchState = async (req, res) => {
         return res.status(500).send(error);
     }
 
+}
+
+exports.select = async (req, res) => {
+
+    try {
+        res.json({
+            ok: true,
+            data: await customerDao.findAllStatus()
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
 }
 
 exports.validate = async (req, res) => {

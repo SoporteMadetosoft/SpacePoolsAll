@@ -31,7 +31,6 @@ const formSchema = {
 }
 
 export const CarriersForm = () => {
-    let { carrierCode } = useSelector(state => state.normalForm)
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -43,11 +42,6 @@ export const CarriersForm = () => {
     const realFilePath = form.filePath ? form.filePath : filePath
 
     const { normalForm, formValidator } = useSelector(state => state)
-
-
-    const handleInputChange = ({ target }) => {
-        dispatch(handleChangeController(target.name, target.value))
-    }
 
     useEffect(() => {
         if (normalForm.id === undefined) {
@@ -107,7 +101,7 @@ export const CarriersForm = () => {
                     idStatus: exceptionController(value.idStatus),
                     filePath: filePath2
                 }
-                 save('Carriers', id, prettyForm)
+                save('Carriers', id, prettyForm)
                 dispatch(handleCleanUp())
                 history.push('/porters/carriers')
             })

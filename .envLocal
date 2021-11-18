@@ -1,8 +1,9 @@
-JWT_SECRET = }7->cZ]Yex~X
+JWT_SECRET = sdfsddfadgdfg
+JWT_SECRET_REFRESH = afdghjkhdassdf
 
-DB_HOST = 192.168.64.2
+DB_HOST = 192.168.0.53
 DB_NAME = alphasfp
-DB_USER = alphasfp3
+DB_USER = alphasfp
 DB_PASS = BTVSWS8.8R-.IzoK
 ORIGIN = http://localhost:3000
 PORT = 6757

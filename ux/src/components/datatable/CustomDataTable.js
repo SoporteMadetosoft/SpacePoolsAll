@@ -125,35 +125,36 @@ export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) =>
   // ** Converts table to CSV
   function convertArrayOfObjectsToCSV(array) {
     let result
+    if (array.length > 0) {
+      const columnDelimiter = ','
+      const lineDelimiter = '\n'
+      const keys = Object.keys(data[0])
 
-    const columnDelimiter = ','
-    const lineDelimiter = '\n'
-    const keys = Object.keys(data[0])
-
-    result = ''
-    result += keys.join(columnDelimiter)
-    result += lineDelimiter
-
-    array.forEach(item => {
-      let ctr = 0
-      keys.forEach(key => {
-        if (ctr > 0) result += columnDelimiter
-
-        result += item[key]
-
-        ctr++
-      })
+      result = ''
+      result += keys.join(columnDelimiter)
       result += lineDelimiter
-    })
 
-    return result
+      array.forEach(item => {
+        let ctr = 0
+        keys.forEach(key => {
+          if (ctr > 0) result += columnDelimiter
+
+          result += item[key]
+
+          ctr++
+        })
+        result += lineDelimiter
+      })
+
+      return result
+    }
   }
 
   // ** Downloads CSV
   function downloadCSV(array) {
     const link = document.createElement('a')
     let csv = convertArrayOfObjectsToCSV(array)
-    if (csv === null) return
+    if (csv === null || csv === undefined) return
 
     const filename = 'export.csv'
 

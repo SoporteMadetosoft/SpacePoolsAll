@@ -15,7 +15,7 @@ const formStructure = {
     idItem: '',
     idColor: '',
     colores: '',
-    quantity: '1',
+    quantity: 1,
     coste: 0
 }
 
@@ -89,12 +89,8 @@ const ItemsForm = ({ position }) => {
             name: key,
             value: el
         }
-        dispatch(
-            editRepeaterRegister('extraRawColors', position, obj)
-        )
-        dispatch(
-            handleSearchOutID2('RawColors', position, 'extraRawColors', "extraRawColors")
-        )
+        dispatch(editRepeaterRegister('extraRawColors', position, obj))
+        dispatch(handleSearchOutID2('RawColors', position, 'extraRawColors', "extraRawColors"))
     }
 
     const handleLoadColors = async (obj) => {

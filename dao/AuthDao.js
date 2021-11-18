@@ -18,6 +18,7 @@ class AuthDao {
                 reject('controller Auth->Login(): Los campos estan vacios');
             }
             this.db.query('SELECT id, fullname as fullName, phone, email, password, idRole, idStatus FROM users WHERE login = ? ', [email], async (err, result) => {
+                console.log(typeof result)
                 if (result.length === 0) {
                     reject('El usuario o contraseña es incorrecto');
                 } else {

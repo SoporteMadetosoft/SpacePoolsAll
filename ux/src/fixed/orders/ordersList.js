@@ -18,55 +18,54 @@ export const ordersList = [
     selector: 'id',
     sortable: true,
     searchable: true,
-    minWidth: '50px',
-    width: '5%'
+    width: '8%'
   },
   {
     name: 'cliente',
     selector: 'customerName',
     sortable: true,
     searchable: true,
-    minWidth: '200px'
+    width: '15%'
   },
   {
     name: 'Teléfono',
     selector: 'customerPhone',
     searchable: true,
-    minWidth: '200px'
+    width: '10%'
   },
   {
     name: 'correo Electrónico',
     selector: 'customerEmail',
     searchable: true,
-    minWidth: '200px'
+    width: '15%'
   },
   {
     name: 'Fecha de entrega',
     selector: 'deliveryDate',
     sortable: true,
     searchable: true,
-    minWidth: '200px'
+    width: '8%'
   },
   {
     name: 'horario de entrega',
     selector: 'deliveryTime',
     searchable: true,
     searchable: true,
-    minWidth: '200px'
+    width: '12%'
   },
   {
     name: 'Fecha de pedido',
     selector: 'orderDate',
     sortable: true,
     searchable: true,
-    minWidth: '200px'
+    width: '8%'
   },
   {
     name: 'precio',
     selector: 'price',
     sortable: true,
     searchable: true,
-    minWidth: '200px',
+    width: '10%',
     cell: row => {
       return (
         <div>
@@ -79,13 +78,12 @@ export const ordersList = [
     name: 'Estado',
     sortable: true,
     searchable: true,
-    width: '8%',
+    width: '10%',
     cell: row => {
       const proceso_prod = row.state
 
       return (
         <>
-
           {proceso_prod === 1 ?
             (<Badge color='light-success'>
               Finalizado
@@ -94,24 +92,16 @@ export const ordersList = [
             (<Badge color='light-danger'>
               En proceso
             </Badge>)
-
           }
-
-
         </>
-
       )
     }
   },
-
-
   {
-    name: 'Acciones',
-    width: '150px',
+    width: '5%',
     searchable: true,
     cell: row => {
       const dispatch = useDispatch()
-      const proceso_prod = row.state
       const idProductionStatus = row.idProductionStatus
 
       const ability = useContext(AbilityContext)

@@ -7,7 +7,6 @@ import { startLoadingTable } from '@redux/actions/custom'
 import { handleCleanForm } from '../../redux/actions/normalForm'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-import { cleanFormValidator } from '../../redux/actions/formValidator'
 
 export const AlertsListScreen = ({ titulo }) => {
 
@@ -17,7 +16,6 @@ export const AlertsListScreen = ({ titulo }) => {
     useEffect(() => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Alerts'))
-        // dispatch(cleanFormValidator())
     }, [])
 
     return (

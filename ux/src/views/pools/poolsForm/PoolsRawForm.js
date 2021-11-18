@@ -14,8 +14,6 @@ import axios from 'axios'
 
 const formStructure = {
     idItem: '',
-    idColor: '',
-    colores: '',
     quantity: '1',
     coste: 0
 }
@@ -37,7 +35,7 @@ export const PoolsRawForm = () => {
 
     return (
         <>
-            <h1 className="card-title">Materias primas con color</h1>
+            <h1 className="card-title">Materias primas sin color</h1>
 
             <Repeater count={count}>
 
@@ -64,9 +62,9 @@ const ItemsForm = ({ position }) => {
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
     const { Raws } = selectReducer
-    const { idItem, colores, idColor, quantity } = normalForm.raws[position]
+    const { quantity, idItem } = normalForm.raws[position]
     const SelectValue = idItem.name ? deconstructSelect(idItem) : null
-    const SelectColor = idColor.name ? deconstructSelect(idColor) : null
+    // const SelectColor = idColor.name ? deconstructSelect(idColor) : null
 
 
     const decreaseCount = () => {
@@ -96,49 +94,24 @@ const ItemsForm = ({ position }) => {
         dispatch(handleSearchOutID2('Items', position, 'raws', 'raws', 'items'))
     }
 
-    const handleLoadColors = async (obj) => {
-        const token = localStorage.getItem('accessToken') || ''
 
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/item/selectByIdItem/${obj.value}`, {
-            headers: {
-                'Content-type': 'application/json',
-                'x-token': token
-            }
-        })
-        const colors = data.map(option => ({ label: option.name, value: option.id }))
-        const objFinal = {
-            name: 'colores',
-            value: colors
-        }
-        dispatch(editRepeaterRegister('raws', position, objFinal))
-        handleSelectChange('idItem', obj)
-    }
     return (
 
         <div className="row border-bottom pb-1">
-            <div className="col-md-4">
+            <div className="col-md-5">
                 <label className="control-label">Materia prima</label>
                 <ReactSelect
                     placeholder="Materia prima"
                     name="idItem"
                     options={Raws}
                     onChange={(obj) => {
-                        handleLoadColors(obj)
+                        handleSelectChange('idItem', obj)
                     }}
-                    // value={SelectValue}
+                    value={SelectValue}
                 />
             </div>
-            <div className="col-md-3">
-                <label className="control-label">Color</label>
-                <ReactSelect
-                    placeholder="Color"
-                    name="idColor"
-                    options={colores}
-                    onChange={(value) => { handleSelectChange('idColor', value) }}
-                    // value={SelectColor}
-                />
-            </div>
-            <div className="col-md-3">
+
+            <div className="col-md-5">
                 <label className="control-label">Cantidad</label>
                 <input
                     type="number"

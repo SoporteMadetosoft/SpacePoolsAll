@@ -20,16 +20,20 @@ import { validateProduction } from '../../../utility/helpers/Axios/validateProdu
 import Swal from 'sweetalert2'
 import { ExtraItemColorsRepeater } from './ExtraItemColorsRepeater'
 import { ExtraRawColorsRepeater } from './ExtraRawColorsRepeater'
+import { ItemColorsRepeater } from './ItemColorsRepeater'
 
 const formSchema = {
     idCustomer: { validations: [validator.isRequired] },
     idPool: { validations: [validator.isRequired] },
     orderDate: { validations: [validator.isRequired] },
     productionDate: { validations: [validator.isRequired] },
-    deliveryDate: { validations: [validator.isRequired] }
+    deliveryDate: { validations: [validator.isRequired] },
+    idColor: { validations: [validator.isRequired] }
 }
 
 export const OrderForm = () => {
+    let { orderCode } = useSelector(state => state.normalForm)
+
     const { id } = useParams()
     const history = useHistory()
     const { price } = useSelector(state => state.ordersReducer)
@@ -38,7 +42,7 @@ export const OrderForm = () => {
 
     const { normalForm, formValidator, canvasReducer } = useSelector(state => state)
 
-    const { observations, orderCode } = normalForm
+    const { observations } = normalForm
 
     const orderDate2 = normalForm['orderDate'] ? normalForm['orderDate'] : ''
     const productionDate = normalForm['productionDate'] ? normalForm['productionDate'] : ''
@@ -57,14 +61,9 @@ export const OrderForm = () => {
 
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Orders", 'orderCode'))
-        }
+        } else orderCode = normalForm.id
         dispatch(setSchema(formSchema))
-
-        if (normalForm.price) {
-            //  price = normalForm.price
-            //  dispatch(handleAddCost(price))
-        }
-    }, [formSchema])
+    }, [])
 
     const preparePrice = () => {
         dispatch(handleCalculateTotalCost("extraItems", ""))
@@ -100,10 +99,14 @@ export const OrderForm = () => {
                     },
                     idPool: exceptionController(value.idPool),
                     idTax: exceptionController(value.idTax),
+                    idColor: exceptionController(value.idColor),
                     idCustomer: exceptionController(value.idCustomer),
-                    baseItems: value.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity, idColor: exceptionController(bI.idColor) })),
-                    extraItems: value.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity, idColor: exceptionController(eI.idColor) })),
-                    extraRaws: value.extraRaws.map(eR => ({ idItem: eR.idItem.id, quantity: eR.quantity, idColor: exceptionController(eR.idColor) })),
+                    baseItems: value.baseItems.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity })),
+                    baseItemColors: value.baseItemColors.map(bI => ({ idItem: bI.idItem, quantity: bI.quantity, idColor: exceptionController(bI.idColor) })),
+                    extraItems: value.extraItems.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity })),
+                    extraRaws: value.extraRaws.map(eR => ({ idItem: eR.idItem.id, quantity: eR.quantity })),
+                    extraItemColors: value.extraItemColors.map(eI => ({ idItem: eI.idItem.id, quantity: eI.quantity, idColor: exceptionController(eI.idColor) })),
+                    extraRawColors: value.extraRawColors.map(eR => ({ idItem: eR.idItem.id, quantity: eR.quantity, idColor: exceptionController(eR.idColor) })),
                     canvas: canvasReducer.elements.map(el => ({ id: el.id, idElemento: el.idElemento, name: el.name, x: el.x, y: el.y, rotation: el.rotation }))
                 }
                 delete prettyForm.canvasItems
@@ -178,6 +181,9 @@ export const OrderForm = () => {
                         />
                     </div>
                     <div className="col-md-2">
+                        <Select name="idColor" label="Colores" endpoint="Colors" />
+                    </div>
+                    <div className="col-md-2">
                         <Select
                             name="idTax"
                             label="IVA"
@@ -232,6 +238,11 @@ export const OrderForm = () => {
                     <div className="card">
                         <div className=" card-body row px-3">
                             <ItemsRepeater />
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className=" card-body row px-3">
+                            <ItemColorsRepeater />
                         </div>
                     </div>
 

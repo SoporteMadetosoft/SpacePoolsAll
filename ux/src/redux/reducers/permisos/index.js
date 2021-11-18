@@ -14,8 +14,8 @@ const initialState = {
     Purchases: { read: true, insert: true, update: true, delete: true, actions: true },
     Orders: { read: true, insert: true, update: true, delete: true, actions: true },
     Delivery: { read: true, insert: true, update: true, delete: true, actions: true },
-    Production: { read: true, insert: true, update: true, delete: true, actions: true },
-    Calendar: { read: true, insert: true, update: true, delete: true },
+    Production: { read: true, update: true, delete: true, actions: true },
+    Calendar: { read: true },
     Users: { read: true, insert: true, update: true, delete: true },
     Roles: { read: true, insert: true, update: true, delete: true },
     PaymentMethods: { read: true, insert: true, update: true, delete: true },
@@ -31,7 +31,8 @@ const initialState = {
     Model: { read: true, insert: true, update: true, delete: true },
     Place: { read: true, insert: true, update: true, delete: true },
     Colors: { read: true, insert: true, update: true, delete: true },
-    Alerts: { read: true, insert: true, update: true, delete: true }
+    Alerts: { read: true, delete: true },
+    Logs: { read: true }
 }
 
 const permisosReducer = (state = initialState, action) => {

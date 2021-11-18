@@ -2,12 +2,10 @@ import Repeater from '@components/repeater'
 import { X } from 'react-feather'
 import { Button } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import ReactSelect from 'react-select'
 import React from 'react'
 
 import { editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { handleLessPrice } from '../../../redux/actions/orders'
-import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 
 export const ItemsRepeater = () => {
 
@@ -19,7 +17,7 @@ export const ItemsRepeater = () => {
 
     return (
         <>
-            <h1 className="card-title mb-2">Productos Por Defecto</h1>
+            <h1 className="card-title mb-2">Productos base</h1>
             <Repeater count={count}>
 
                 {i => {
@@ -39,8 +37,7 @@ const ItemsForm = ({ position }) => {
 
     const dispatch = useDispatch()
     const { normalForm } = useSelector(state => state)
-    const { name, colores, idColor, quantity } = normalForm.baseItems[position]
-    const SelectColor = idColor.name ? deconstructSelect(idColor) : null
+    const { name, quantity } = normalForm.baseItems[position]
 
 
     const decreaseCount = () => {
@@ -56,20 +53,10 @@ const ItemsForm = ({ position }) => {
         dispatch(editRepeaterRegister('baseItems', position, obj))
     }
 
-    const handleSelectChange = (key, element) => {
-        const el = constructSelect(element)
-        const obj = {
-            name: key,
-            value: el
-        }
-        dispatch(editRepeaterRegister('baseItems', position, obj))
-    }
-
-
     return (
 
         <div className="row border-bottom pb-1">
-            <div className="col-md-4">
+            <div className="col-md-5">
                 <label className="control-label">Producto</label>
                 <input
                     type="text"
@@ -79,18 +66,7 @@ const ItemsForm = ({ position }) => {
                     readOnly />
             </div>
 
-            <div className="col-md-3">
-                <label className="control-label">Color</label>
-                <ReactSelect
-                    placeholder="Color"
-                    name="idColor"
-                    options={colores}
-                    onChange={(value) => { handleSelectChange('idColor', value) }}
-                    value={SelectColor}
-                />
-            </div>
-
-            <div className="col-md-3">
+            <div className="col-md-5">
                 <label className="control-label">Cantidad</label>
                 <input
                     type="text"
@@ -107,6 +83,5 @@ const ItemsForm = ({ position }) => {
                 </Button.Ripple>
             </div>
         </div>
-
     )
 }

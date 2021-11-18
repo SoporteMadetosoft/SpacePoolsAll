@@ -10,20 +10,11 @@ class ExtraItemDao extends GenericDao {
     }
 
     async mountObj(data) {
-        const colData = await this.ItemDao.ItemsColorsDao.findByItemId(data.idItem)
-        const colores = colData.map(el => ({
-            label: el.name,
-            value: el.id
-        }))
-        const selectedColor = await this.ItemDao.ItemsColorsDao.ColorsDao.findById(data.idColor)
         const extraItem = {
             ...data,
             idItem: await this.ItemDao.findById(data.idItem),
             coste: await this.ItemDao.findOneFieldById("cost", data.idItem),
-            idColor: selectedColor.id !== undefined ? selectedColor : '',
-            colores: colores
         }
-
         return extraItem
     }
 

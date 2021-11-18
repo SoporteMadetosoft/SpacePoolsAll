@@ -5,10 +5,7 @@ const ProductPlaceDao = require("../setup/item/PlaceDao");
 const ProductFamilyDao = require("../item/ProductFamilyDao");
 const ItemTypeDao = require("../global/ItemTypeDao");
 const VendorDao = require("../vendor/VendorDao");
-//const ItemsColorsDao = require("./ItemColorsDao");
 const ShowDao = require("../global/ShowDao");
-
-//const PurchaseItemsDao = require("../purchase/ItemDao");
 
 class ItemDao extends GenericDao {
     constructor() {
@@ -17,9 +14,7 @@ class ItemDao extends GenericDao {
         this.ProductPlaceDao = new ProductPlaceDao()
         this.ItemTypeDao = new ItemTypeDao()
         this.VendorDao = new VendorDao()
-        //this.ItemsColorsDao = new ItemsColorsDao()
         this.ShowDao = new ShowDao()
-
     }
 
     findByItemType(itemType) {
@@ -74,26 +69,22 @@ class ItemDao extends GenericDao {
 
 
     async mountObj(data) {
-        // const colorName = await this.ItemsColorsDao.findByItemId(data.id)
         const item = {
             ...data,
             idVendor: data.idVendor !== null ? await this.VendorDao.findById(data.idVendor) : null,
             itemType: await this.ItemTypeDao.findById(data.itemType),
             idFamily: await this.ProductFamilyDao.findById(data.idFamily),
             idPlace: await this.ProductPlaceDao.findById(data.idPlace),
-            show: await this.ShowDao.findById(data.show),
-            //color: colorName !== undefined ? colorName : ''
+            show: await this.ShowDao.findById(data.show)
         }
         return new Item(item)
     }
 
     async mountList(data) {
         const rs = await this.findReservedStock(data.id)
-        const st = await this.totalStock(data.id)
         const list = {
             ...data,
-            reserveStock: rs !== null ? rs : 0,
-            stock: st.stock !== null ? st.stock : 0
+            reserveStock: rs !== null ? rs : 0
         }
 
         const { id, itemCode, name, description, reserveStock, stock } = list
@@ -116,7 +107,6 @@ class ItemDao extends GenericDao {
     }
 
     updateStock(action, id, quantity) {
-        // console.log(`UPDATE item SET stock = stock ${action} ${quantity} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query(`UPDATE item_colors SET stock = stock ${action} ? WHERE id = ?`, [quantity, id], (err, result) => {
                 if (err) {
@@ -128,29 +118,22 @@ class ItemDao extends GenericDao {
         })
     }
 
+
     findReservedStock(idItem) {
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT (cantidadBase+cantidadExtra) as reserveStock FROM reserveStock WHERE IDITEM = ?`, [idItem], (err, result) => {
+            this.db.query(`SELECT cantidadBase, cantidadExtra FROM reserveStock WHERE IDITEM = ?`, [idItem], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    resolve(result[0].reserveStock)
+                    const cantidadBase = result[0].cantidadBase
+                    const cantidadExtra = result[0].cantidadExtra
+
+                    resolve(cantidadBase + cantidadExtra)
                 }
             })
         })
     }
 
-    totalStock(idItem) {
-        return new Promise((resolve, reject) => {
-            this.db.query(`SELECT SUM(stock) AS stock FROM item_colors WHERE idItem = ?`, [idItem], (err, result) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    resolve(result[0])
-                }
-            })
-        })
-    }
 }
 
 module.exports = ItemDao
@@ -158,6 +141,6 @@ module.exports = ItemDao
 
 // CREATE VIEW reserveStock AS SELECT 
 // 	i.id as IDITEM,
-//     (SELECT SUM(quantity) FROM orders_base_items WHERE idOrder IN (SELECT id FROM orders WHERE state = '0') AND idItem = IDITEM) as cantidadBase,
-//     (SELECT SUM(quantity) FROM orders_extra_items WHERE idOrder IN (SELECT id FROM orders WHERE state = '0') AND idItem = IDITEM) as cantidadExtra
+//     (SELECT SUM(quantity) FROM orders_base_items WHERE idOrder IN (SELECT id FROM orders WHERE state = '0') AND idItem = i.id) as cantidadBase,
+//     (SELECT SUM(quantity) FROM orders_extra_items WHERE idOrder IN (SELECT id FROM orders WHERE state = '0') AND idItem = i.id) as cantidadExtra
 // FROM item i

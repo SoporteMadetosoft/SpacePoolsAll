@@ -1,14 +1,14 @@
-import {ItemsColorScreenList} from '../../../views/items/itemColors/ItemColorsScreemList'
-import {ItemsColorsFormScreen} from '../../../views/items/itemColors/ItemsColorFormScreem'
+import { ItemsColorScreenList } from '../../../views/items/itemColors/ItemColorsScreemList'
+import { ItemsColorsFormScreen } from '../../../views/items/itemColors/ItemsColorFormScreen'
 
 const ColorsRoutes = [
     {
         path: '/items/itemColors',
         exact: true,
-        component: () => <ItemsColorScreenList titulo="Artículos Colores" />,
+        component: () => <ItemsColorScreenList titulo="Artículos con color" />,
         meta: {
             action: 'read',
-            resource: 'colors'
+            resource: 'itemColors'
         }
     },
     {

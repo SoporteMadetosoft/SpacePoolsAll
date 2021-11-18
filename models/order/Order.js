@@ -18,11 +18,15 @@ class Order {
         observations,
         price,
         idTax,
+        idColor,
         extraItems = [],
+        extraItemColors = [],
         extraRaws = [],
+        extraRawColors = [],
         customerData = [],
         production = [],
         baseItems = [],
+        baseItemColors = [],
         canvasItems = [],
     }) {
         this.id = id
@@ -36,11 +40,15 @@ class Order {
         this.observations = observations
         this.price = price
         this.idTax = idTax
+        this.idColor = idColor
         this.extraItems = extraItems
+        this.extraItemColors = extraItemColors
         this.extraRaws = extraRaws
+        this.extraRawColors = extraRawColors
         this.customerData = customerData
         this.production = production
         this.baseItems = baseItems
+        this.baseItemColors = baseItemColors
         this.canvasItems = canvasItems
     }
     get table() {

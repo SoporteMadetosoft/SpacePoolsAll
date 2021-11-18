@@ -70,7 +70,7 @@ export const handleCalculateTotalCost = (column1, column2, isPool) => {
 
 export const handleSearchOutID2 = (endpoint, position, arr, arrCalcu1, arrCalcu2) => {
     return async (dispatch, getState) => {
-        const { idItem, idCanvasItem } = getState().normalForm[arr][position]
+        const { idItem } = getState().normalForm[arr][position]
 
         if (idItem !== undefined) {
             const { cost } = await getFormData(endpoint, idItem.id)
@@ -109,24 +109,28 @@ export const createItemRepeatersByPool = (idPool) => {
 
         const pool = await getFormData("Pools", idPool)
 
-        let go = true
-        num = 0
-        while (go) {
-            if (pool.allItems[num]) {
 
-                const formStructure = {
-                    idItem: pool.allItems[num].idItem.id,
-                    quantity: pool.allItems[num].quantity,
-                    colores: pool.allItems[num].colores,
-                    idColor: pool.allItems[num].idColor,
-                    coste: pool.allItems[num].coste,
-                    name: pool.allItems[num].idItem.name
-                }
+        Object.entries(pool.baseItems).map(baseItems => {
+            const formStructure = {
+                idItem: baseItems[1].idItem.id,
+                quantity: baseItems[1].quantity,
+                coste: baseItems[1].coste,
+                name: baseItems[1].idItem.name
+            }
+            dispatch(addRepeaterRegister('baseItems', formStructure))
+        })
 
-                dispatch(addRepeaterRegister('baseItems', formStructure))
-            } else go = false
-            num++
-        }
+        Object.entries(pool.baseItemColors).map(baseItemColors => {
+            const formStructure = {
+                idItem: baseItemColors[1].idItem.id,
+                quantity: baseItemColors[1].quantity,
+                colores: baseItemColors[1].colores,
+                idColor: baseItemColors[1].idColor,
+                coste: baseItemColors[1].coste,
+                name: baseItemColors[1].idItem.name
+            }
+            dispatch(addRepeaterRegister('baseItemColors', formStructure))
+        })
     }
 }
 

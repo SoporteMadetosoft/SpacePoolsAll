@@ -84,7 +84,7 @@ class ItemDao extends GenericDao {
         const rs = await this.findReservedStock(data.id)
         const list = {
             ...data,
-            reserveStock: rs !== null ? rs : 0
+            reserveStock: rs !== null ? rs : 0,
         }
 
         const { id, itemCode, name, description, reserveStock, stock } = list
@@ -92,7 +92,22 @@ class ItemDao extends GenericDao {
         return nObj
     }
 
+    // totalStock(id){
+    //     return new Promise((resolve, reject) => {
+    //         this.db.query(`SELECT stock FROM item WHERE id = ?`, [id], (err, result) => {
+    //             if (err) {
+    //                 reject(err)
+    //             } else {
+    //                 const tStock = result[0].stock
+    //                 const reserveStock = this.findReservedStock(id)
+    //                 resolve(tStock - reserveStock)
+    //             }
+    //         })
+    //     })
+    // }
+
     findOneFieldById(field, id) {
+        //console.log(`SELECT ${field} FROM item WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT ?? FROM item WHERE id = ?', [field, id], (err, result) => {
                 if (err) {
@@ -121,7 +136,7 @@ class ItemDao extends GenericDao {
 
     findReservedStock(idItem) {
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT cantidadBase, cantidadExtra FROM reserveStock WHERE IDITEM = ?`, [idItem], (err, result) => {
+            this.db.query(`SELECT cantidadBase, cantidadExtra FROM reservestock WHERE IDITEM = ?`, [idItem], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -143,4 +158,4 @@ module.exports = ItemDao
 // 	i.id as IDITEM,
 //     (SELECT SUM(quantity) FROM orders_base_items WHERE idOrder IN (SELECT id FROM orders WHERE state = '0') AND idItem = i.id) as cantidadBase,
 //     (SELECT SUM(quantity) FROM orders_extra_items WHERE idOrder IN (SELECT id FROM orders WHERE state = '0') AND idItem = i.id) as cantidadExtra
-// FROM item i
+// FROM item i  

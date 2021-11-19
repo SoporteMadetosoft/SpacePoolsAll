@@ -24,6 +24,8 @@ const formSchema = {
 
 export const PurchaseFormScreen = () => {
 
+    let { purchaseCode } = useSelector(state => state.normalForm)
+
     const { id } = useParams()
     const history = useHistory()
     const dispatch = useDispatch()

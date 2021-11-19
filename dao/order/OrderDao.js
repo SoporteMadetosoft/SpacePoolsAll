@@ -224,10 +224,10 @@ class OrderDao extends GenericDao {
             const extraItems = await this.ExtraItemDao.findByOrderId(idOrder)
 
             baseItems.map(async (item) => {
-                stock = await this.BaseItemDao.ItemDao.findOneFieldById("stock", item.idItem)
+                
+                stock = await this.BaseItemDao.ItemDao.findOneFieldById("stock", item.quantity)
                 minimumStock = await this.BaseItemDao.ItemDao.findOneFieldById("minimumStock", item.idItem)
                 reserved = await this.BaseItemDao.ItemDao.findReservedStock(item.idItem)
-
                 if ((stock - reserved) <= minimumStock) {
 
                     has = await this.AlertDao.hasItemAlert(item.idItem)
@@ -263,7 +263,7 @@ class OrderDao extends GenericDao {
 
             baseItemColors.map(async (item) => {
                 stock = await this.BaseItemColorDao.ItemsColorsDao.totalStock(item.idItem.id)
-                minimumStock = await this.BaseItemColorDao.ItemsColorsDao.findOneFieldById("minimumStock", item.idItem.id)
+                minimumStock = await this.BaseItemColorDao.ItemsColorsDao.findOneFieldById("minimumStock", item.idItem)
                 reserved = await this.BaseItemColorDao.ItemsColorsDao.findReservedStock(item.idItem.id)
 
                 if ((stock.stock - reserved) <= minimumStock) {
@@ -280,7 +280,7 @@ class OrderDao extends GenericDao {
 
             extraItemColors.map(async (item) => {
                 stock = await this.ExtraItemColorDao.ItemsColorsDao.totalStock(item.idItem.id)
-                minimumStock = await this.ExtraItemColorDao.ItemsColorsDao.findOneFieldById("minimumStock", item.idItem.id)
+                minimumStock = await this.ExtraItemColorDao.ItemsColorsDao.findOneFieldById("minimumStock", item.idItem)
                 reserved = await this.ExtraItemColorDao.ItemsColorsDao.findReservedStock(item.idItem.id)
                 if ((stock.stock - reserved) <= minimumStock) {
                     has = await this.AlertDao.hasItemAlert(item.idItem.id)

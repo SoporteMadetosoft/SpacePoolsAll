@@ -6,7 +6,6 @@ import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
-
 import { useContext } from "react"
 import { AbilityContext } from '@src/utility/context/Can'
 

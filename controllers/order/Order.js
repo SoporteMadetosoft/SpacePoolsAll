@@ -178,7 +178,7 @@ exports.select = async (req, res) => {
     try {
         res.json({
             ok: true,
-            data: await customerDao.findAllStatus()
+            data: await customerDataDao.findAllStatus()
         })
 
     } catch (error) {

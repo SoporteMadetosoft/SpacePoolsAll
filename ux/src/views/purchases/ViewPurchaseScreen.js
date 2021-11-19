@@ -9,7 +9,8 @@ import { handleStartEditing, initNormalForm } from '../../redux/actions/normalFo
 import { ViewForm } from './purchaseForm/ViewForm'
 
 const structureForm = {
-    items: []
+    items: [],
+    itemsColors : []
 }
 
 export const ViewPurchaseScreen = () => {

@@ -99,11 +99,30 @@ export const createItemRepeatersByPool = (idPool) => {
 
         let num = 0
         let deletee = true
+        let deletee2 = true
         while (deletee) {
+            console.log(typeof getState().normalForm.baseItems[0])
             if (getState().normalForm.baseItems[0]) {
+
                 dispatch(removeRepeaterRegister('baseItems', 0))
+
             } else deletee = false
             num++
+
+
+
+        }
+
+        while (deletee2) {
+            if (getState().normalForm.baseItemColors[0]) {
+
+                dispatch(removeRepeaterRegister('baseItemColors', 0))
+
+
+            } else deletee2 = false
+            num++
+
+
         }
 
 
@@ -171,21 +190,34 @@ export const catchAndSetPrice = (numE) => {
 }
 
 export const handleFillCustomerData = (idCustomer) => {
+
+
     return async (dispatch, getState) => {
-        const customerData = await getFormData("Customers", idCustomer)
-        customerData['addresses'].map(
-            elements => {
 
-                if (elements.addressType.id === 1) {
-                    dispatch(handleChangeController('deliveryAddress', `${elements.address}, ${elements.population}`))
-                } else {
-                    dispatch(handleChangeController('deliveryAddress', ''))
+        if (idCustomer === null) {
+            dispatch(handleChangeController('phone', ''))
+            dispatch(handleChangeController('email', ''))
+            dispatch(handleChangeController('deliveryAddress', ''))
+        } else {
+            const customerData = await getFormData("Customers", idCustomer)
+            customerData['addresses'].map(
+                elements => {
+
+
+                    if (elements.addressType.id === 1) {
+                        dispatch(handleChangeController('deliveryAddress', `${elements.address}, ${elements.population}`))
+                    } else {
+
+                        dispatch(handleChangeController('deliveryAddress', ''))
+                    }
                 }
-            }
-        )
+            )
 
-        dispatch(handleChangeController('phone', customerData['phone']))
-        dispatch(handleChangeController('email', customerData['email']))
+            dispatch(handleChangeController('phone', customerData['phone']))
+            dispatch(handleChangeController('email', customerData['email']))
+
+        }
 
     }
+
 }

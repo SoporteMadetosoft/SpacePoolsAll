@@ -27,3 +27,22 @@ exports.listNotification = async (req, res) => {
         return res.status(500).send(error);
     }
 }
+
+exports.update = async (req, res) => {
+
+    try {
+        const alert = req.body.form
+       
+
+
+
+        res.json({
+            ok: true,
+            data: await alertDao.update(alert)
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}

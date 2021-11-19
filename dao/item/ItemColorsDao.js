@@ -146,6 +146,8 @@ class ItemsColorsDao extends GenericDao {
 
     updateStock(action, id, idColor, quantity) {
         return new Promise((resolve, reject) => {
+            console.log(quantity)
+            console.log(`UPDATE item_colors SET stock = stock ${action} ${quantity} WHERE idItem = ${id} AND idColor = ${idColor}`)
             this.db.query(`UPDATE item_colors SET stock = stock ${action} ? WHERE idItem = ? AND idColor = ?`, [quantity, id, idColor], (err, result) => {
                 if (err) {
                     reject(err)
@@ -210,6 +212,7 @@ class ItemsColorsDao extends GenericDao {
             })
         })
     }
+    
 
     findByItemId(id) {
         // console.log(`SELECT * FROM item_colors WHERE idItem = ${id}`)

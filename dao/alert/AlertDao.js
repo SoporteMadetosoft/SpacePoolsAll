@@ -61,5 +61,25 @@ class AlertDao extends GenericDao {
             })
         })
     }
+
+    // async update(params) {
+    //     return new Promise((resolve, reject) => {
+    //         console.log(`UPDATE alerts SET isDone = 1 WHERE id = ${params.id}`)
+    //         this.db.query(`UPDATE alerts SET isDone = 1 WHERE id = ${params.id}`, async (err, result) => {
+    //             if (err) {
+    //                 reject(err)
+    //             } else {
+    //                 let objList = []
+    //                 for (const res of result) {
+    //                     objList.push(await this.mountList(res))
+    //                 }
+    //                 resolve(objList)
+    //             }
+    //         })
+    //     })
+
+
+
+    // }
 }
 module.exports = AlertDao

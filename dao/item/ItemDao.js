@@ -108,7 +108,7 @@ class ItemDao extends GenericDao {
 
     updateStock(action, id, quantity) {
         return new Promise((resolve, reject) => {
-            this.db.query(`UPDATE item_colors SET stock = stock ${action} ? WHERE id = ?`, [quantity, id], (err, result) => {
+            this.db.query(`UPDATE item SET stock = stock ${action} ? WHERE id = ?`, [quantity, id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

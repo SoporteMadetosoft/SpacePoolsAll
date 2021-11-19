@@ -13,9 +13,9 @@ import axios from 'axios'
 
 const formStructure = {
     idItem: '',
-    idColor: '',
-    quantity: '1',
-    coste: 0
+   // idColor: '',
+    quantity: '1'
+    //coste: 0
 }
 
 export const PoolsItemsForm = () => {

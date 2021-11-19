@@ -224,10 +224,10 @@ class OrderDao extends GenericDao {
             const extraItems = await this.ExtraItemDao.findByOrderId(idOrder)
 
             baseItems.map(async (item) => {
-                stock = await this.BaseItemDao.ItemDao.findOneFieldById("stock", item.idItem)
+                
+                stock = await this.BaseItemDao.ItemDao.findOneFieldById("stock", item.quantity)
                 minimumStock = await this.BaseItemDao.ItemDao.findOneFieldById("minimumStock", item.idItem)
                 reserved = await this.BaseItemDao.ItemDao.findReservedStock(item.idItem)
-
                 if ((stock - reserved) <= minimumStock) {
 
                     has = await this.AlertDao.hasItemAlert(item.idItem)

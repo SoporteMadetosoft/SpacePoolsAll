@@ -8,6 +8,7 @@ import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { setSchema } from '../../../redux/actions/formValidator'
 import { Select } from '../../../components/form/inputs/Select'
 import ReactSelect from 'react-select'
+import { ItemsRepeaterColor } from './ItemsRepeaterColor'
 
 
 const placeholderStyles = {
@@ -99,6 +100,11 @@ export const PurchaseForm = () => {
                     <ItemsRepeater />
                 </div>
             </div>
+            {/* <div className="card">
+                <div className="card-body">
+                    <ItemsRepeaterColor />
+                </div>
+            </div> */}
         </>
     )
 }

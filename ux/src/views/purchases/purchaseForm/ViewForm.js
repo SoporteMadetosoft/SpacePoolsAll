@@ -59,6 +59,11 @@ export const ViewForm = () => {
                     <ViewItemsRepeater />
                 </div>
             </div>
+            <div className="card">
+                <div className="card-body">
+                    <ViewItemsRepeaterColor />
+                </div>
+            </div>
         </>
     )
 }

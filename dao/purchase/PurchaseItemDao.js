@@ -20,13 +20,6 @@ class PurchaseItemDao extends GenericDao {
     }
 
     async mountItem(data) {
-        const colData = await this.ItemDao.findById(data.idItem.id)
-        const colores = colData.map(el => ({
-            label: el.name,
-            value: el.id
-        }))
-        const selectedColor = await this.ItemDao.ItemsColorsDao.ColorsDao.findById(data.idColor)
-
         const item = {
             id: data.id,
             idItem: {
@@ -34,8 +27,6 @@ class PurchaseItemDao extends GenericDao {
                 name: data.idItem.name
             },
             itemType: data.idItem.itemType,
-            idColor: selectedColor.id !== undefined ? selectedColor : '',
-            colores: colores,
             quantity: data.quantity,
             recived: data.recived,
             cost: data.idItem.cost,

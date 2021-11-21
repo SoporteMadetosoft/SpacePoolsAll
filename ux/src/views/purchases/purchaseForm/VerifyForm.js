@@ -6,6 +6,7 @@ import { datetimeToEuropeDate } from "../../../utility/helpers/datetimeToEuropeD
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { VerifyItemsRepeater } from './VerifyItemRepeater'
+import { VerifyItemColorsRepeater } from './VerifyItemColorRepeater'
 
 
 export const VerifyForm = () => {
@@ -14,6 +15,7 @@ export const VerifyForm = () => {
     const dispatch = useDispatch()
 
     const { normalForm } = useSelector(state => state)
+
     useEffect(() => {
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Purchases", 'purchaseCode'))
@@ -59,6 +61,11 @@ export const VerifyForm = () => {
             <div className="card">
                 <div className="card-body">
                     <VerifyItemsRepeater />
+                </div>
+            </div>
+            <div className="card">
+                <div className="card-body">
+                    <VerifyItemColorsRepeater />
                 </div>
             </div>
         </>

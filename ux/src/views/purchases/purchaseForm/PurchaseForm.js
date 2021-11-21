@@ -1,30 +1,18 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { GetSetNextId, handleChangeController, handleCleanSection, handleSelectChange } from '../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController, handleCleanSection } from '../../../redux/actions/normalForm'
 import { ItemsRepeater } from './ItemsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
-import { deconstructSelect } from '../../../utility/helpers/deconstructSelect'
-import { setSchema } from '../../../redux/actions/formValidator'
 import { Select } from '../../../components/form/inputs/Select'
-import ReactSelect from 'react-select'
-
-
-const placeholderStyles = {
-    placeholder: (defaultStyles) => {
-        return {
-            ...defaultStyles,
-            FontSize: '5px'
-        }
-    }
-}
+import { ItemsRepeaterColor } from './ItemsRepeaterColor'
 
 export const PurchaseForm = () => {
     let { purchaseCode } = useSelector(state => state.normalForm)
 
     const dispatch = useDispatch()
 
-    const { normalForm, selectReducer } = useSelector(state => state)
+    const { normalForm } = useSelector(state => state)
     useEffect(() => {
 
         if (normalForm.id === undefined) {
@@ -34,8 +22,6 @@ export const PurchaseForm = () => {
     }, [])
 
     const { observations } = normalForm
-
-    const { Vendors } = selectReducer
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Vendors', 'Vendors', 'comercialName'))
@@ -48,10 +34,9 @@ export const PurchaseForm = () => {
 
     const handleSelectChange = ({ value, label }) => {
         dispatch(handleCleanSection('items'))
+        dispatch(handleCleanSection('itemColors'))
         dispatch(handleChangeController('idVendor', { id: value, comercialName: label }))
     }
-
-    const valueVendor = normalForm['idVendor'] ? deconstructSelect(normalForm['idVendor'], 'comercialName') : ''
 
     return (
         <>
@@ -73,6 +58,7 @@ export const PurchaseForm = () => {
                             label="Proveedor"
                             endpoint='Vendors'
                             labelName="comercialName"
+                            onSelect={handleSelectChange}
                         />
                     </div>
                     <div className="col-md-3">
@@ -97,6 +83,11 @@ export const PurchaseForm = () => {
             <div className="card">
                 <div className="card-body">
                     <ItemsRepeater />
+                </div>
+            </div>
+            <div className="card">
+                <div className="card-body">
+                    <ItemsRepeaterColor />
                 </div>
             </div>
         </>

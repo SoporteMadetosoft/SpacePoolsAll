@@ -1,33 +1,35 @@
-const Item = require("../../models/purchase/Item");
+const ItemColor = require("../../models/purchase/ItemColor");
 const GenericDao = require("../GenericDao");
+const ItemsColorsDao = require("../item/ItemColorsDao");
 
-const ItemDao = require("../item/ItemDao");
-
-class PurchaseItemDao extends GenericDao {
+class PurchaseItemColorDao extends GenericDao {
     constructor() {
-        super(Item);
-        this.ItemDao = new ItemDao()
+        super(ItemColor);
+        this.ItemsColorsDao = new ItemsColorsDao()
     }
 
     async mountObj(data) {
         const item = {
             ...data,
-            idItem: await this.ItemDao.findById(data.idItem)
+            idItem: await this.ItemsColorsDao.findById(data.idItem)
         }
-        return new Item(item)
+        return new ItemColor(item)
 
     }
 
-    async mountItem(data){
+    async mountItem(data) {
+        const { stock } = await this.ItemsColorsDao.totalColorStock(data.idItem.id, data.idColor)
         const item = {
+            id: data.id,
             idItem: {
                 id: data.idItem.id,
                 name: data.idItem.name
             },
+            idColor: await this.ItemsColorsDao.ColorsDao.findById(data.idColor),
             itemType: data.idItem.itemType,
             quantity: data.quantity,
             cost: data.idItem.cost,
-            stock: data.idItem.stock
+            stock
         }
         return item
     }
@@ -44,7 +46,7 @@ class PurchaseItemDao extends GenericDao {
 
     findByPurchaseId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM purchases_items WHERE idPurchase = ?', [id], async (err, result) => {
+            this.db.query('SELECT * FROM purchases_item_colors WHERE idPurchase = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -60,7 +62,7 @@ class PurchaseItemDao extends GenericDao {
 
     findByItemId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM purchases_items WHERE idItem = ?', [id], (err, result) => {
+            this.db.query('SELECT * FROM purchases_item_colors WHERE idItem = ?', [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -75,6 +77,19 @@ class PurchaseItemDao extends GenericDao {
         })
     }
 
+    sumRecived(id, recived) {
+        // console.log(`UPDATE purchases_items SET quantity = quantity - ${recived}, recived = recived + ${recived} WHERE id = ${id}`)
+        return new Promise((resolve, reject) => {
+            this.db.query(`UPDATE purchases_item_colors SET quantity = quantity - ${recived}, recived = recived + ${recived} WHERE id = ?`, [id], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve('')
+                }
+            })
+        })
+    }
+
 }
 
-module.exports = PurchaseItemDao
+module.exports = PurchaseItemColorDao

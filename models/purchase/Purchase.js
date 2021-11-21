@@ -1,5 +1,6 @@
 class Purchase {
     items = []
+    itemColors = []
     #table = 'purchases'
 
     constructor({
@@ -10,7 +11,8 @@ class Purchase {
         purchaseDate,
         deliveryDate,
         observations,
-        items = []
+        items = [],
+        itemColors = []
     }) {
         this.id = id
         this.idVendor = idVendor
@@ -20,6 +22,7 @@ class Purchase {
         this.deliveryDate = deliveryDate
         this.observations = observations
         this.items = items
+        this.itemColors = itemColors
     }
     get table() {
         return this.#table;

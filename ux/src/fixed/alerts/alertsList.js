@@ -1,8 +1,13 @@
-import { MoreVertical } from "react-feather"
+import { Check, MoreVertical } from "react-feather"
+import { useDispatch } from "react-redux"
+import { Link } from "react-router-dom"
 import Badge from "reactstrap/lib/Badge"
+import DropdownItem from "reactstrap/lib/DropdownItem"
 import DropdownMenu from "reactstrap/lib/DropdownMenu"
 import DropdownToggle from "reactstrap/lib/DropdownToggle"
 import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
+import { startLoadingTable } from "../../redux/actions/custom"
+import { save } from "../../utility/helpers/Axios/save"
 
 export const alertsList = [
 
@@ -38,7 +43,7 @@ export const alertsList = [
     cell: row => {
       return (
         <>
-          {row.isDone === 0 ?
+          {row.isDone === 1 ?
             (<Badge color='light-success'>
               Visto
             </Badge>)
@@ -53,25 +58,31 @@ export const alertsList = [
   },
   {
     name: '',
-    width: '5%',
+    width: '4%',
     cell: row => {
+      const dispatch = useDispatch()
       return (
         <div className='d-flex'>
-          <UncontrolledDropdown>
-            <DropdownToggle className='pr-1' tag='span'>
-              <MoreVertical size={15} />
-            </DropdownToggle>
-            <DropdownMenu right>
-              {/* {ability.can('update', 'orders') && (
-                  <Link to={`./orders/edit/${row.id}`}>
-                    <DropdownItem tag='a' href='/' className='w-100'>
-                      <FileText size={15} />
-                      <span className='align-middle ml-50'>Detalles</span>
-                    </DropdownItem>
-                  </Link>
-                )} */}
-            </DropdownMenu>
-          </UncontrolledDropdown>
+          {row.isDone !== 0 ? '' :
+            (<UncontrolledDropdown>
+              <DropdownToggle className='pr-1' tag='span'>
+                <MoreVertical size={15} />
+              </DropdownToggle>
+              <DropdownMenu right>
+
+                <DropdownItem  className='w-100' onClick={() => {
+                  save('Alerts', row.id, { id: row.id, isDone: 1 })
+                  dispatch(startLoadingTable('Alerts'))
+                }} >
+                  <Check size={15} />
+                  <span className='align-middle ml-50'>Hecho</span>
+                </DropdownItem>
+
+
+              </DropdownMenu>
+            </UncontrolledDropdown>
+            )
+          }
         </div>
       )
     }

@@ -93,6 +93,7 @@ export const OrderForm = () => {
                 const prettyForm = {
                     ...value,
                     customerData: {
+                        
                         deliveryAddress: value.deliveryAddress,
                         phone: value.phone,
                         email: value.email
@@ -117,8 +118,8 @@ export const OrderForm = () => {
                 const vp = await validateProduction('Orders', { productionDate: prettyForm.productionDate, idPool: prettyForm.idPool })
                 if (vp === true) {
                     save('Orders', id, prettyForm)
-                    dispatch(handleCleanUp())
-                    history.push('/orders')
+                    // dispatch(handleCleanUp())
+                    // history.push('/orders')
                 } else {
                     Swal.fire({
                         title: '¡Error!',

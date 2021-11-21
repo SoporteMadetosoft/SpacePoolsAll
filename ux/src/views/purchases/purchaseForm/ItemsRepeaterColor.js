@@ -1,4 +1,3 @@
-
 import Repeater from '@components/repeater'
 import { X, Plus } from 'react-feather'
 import { Button } from 'reactstrap'
@@ -12,27 +11,22 @@ import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } fro
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { addSelectionOnNormalForm, handleSearchCost, handleSearchStock } from '../../../redux/actions/items'
 
+
 const formStructure = {
-    idItem: [
-        {
-            id: '',
-            name: ''
-        }
-    ],
     quantity: 1
 }
 
-export const ItemsRepeater = () => {
+export const ItemsRepeaterColor = () => {
 
     const dispatch = useDispatch()
     const formValues = useSelector(state => state.normalForm)
 
-    const { items } = formValues
+    const { itemColors } = formValues
 
-    const count = items ? items.length : 0
+    const count = itemColors ? itemColors.length : 0
 
     const increaseCount = () => {
-        dispatch(addRepeaterRegister('items', formStructure))
+        dispatch(addRepeaterRegister('itemColors', formStructure))
     }
 
     useEffect(() => {
@@ -42,14 +36,14 @@ export const ItemsRepeater = () => {
 
     return (
         <>
-            <h1 className="card-title mb-2">Artículos / Materias primas sin color</h1>
+            <h1 className="card-title mb-2">Artículos / Materias primas con color</h1>
             <Repeater count={count}>
 
                 {i => {
                     const Tag = 'div'
                     return (
                         <Tag key={i} >
-                            <ItemsForm position={i} />
+                            <ItemsFormColor position={i} />
                         </Tag>
                     )
                 }}
@@ -62,16 +56,17 @@ export const ItemsRepeater = () => {
     )
 }
 
-const ItemsForm = ({ position }) => {
+const ItemsFormColor = ({ position }) => {
 
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
     const { ItemType } = selectReducer
     const { idVendor } = normalForm
-    const { itemType, idItem, stock, cost, itemsOpt, quantity } = normalForm.items[position]
+    const { itemType, idItem, stock, cost, colores, idColor, itemsOpt, quantity } = normalForm.itemColors[position]
 
     const idItemValue = idItem ? deconstructSelect(idItem) : null
     const itemTypeValue = itemType ? deconstructSelect(itemType) : null
+    const SelectColor = idColor ? deconstructSelect(idColor) : null
 
 
     const handleLoadItems = async (obj) => {
@@ -81,13 +76,13 @@ const ItemsForm = ({ position }) => {
         }
         const token = localStorage.getItem('accessToken')
 
-        const { data: { data } } = await axios.post(`${process.env.REACT_APP_HOST_URI}/items/item/listItems`, { nObj }, {
+        const { data: { data } } = await axios.post(`${process.env.REACT_APP_HOST_URI}/items/itemColors/listItems`, { nObj }, {
             headers: {
                 'Content-type': 'application/json',
                 'x-token': token
             }
         })
-        dispatch(addSelectionOnNormalForm('itemsOpt', data.map(option => ({ label: option.name, value: option.id })), 'items', position))
+        dispatch(addSelectionOnNormalForm('itemsOpt', data.map(option => ({ label: option.name, value: option.id })), 'itemColors', position))
     }
 
     useEffect(() => {
@@ -97,7 +92,7 @@ const ItemsForm = ({ position }) => {
     }, [itemType])
 
     const decreaseCount = () => {
-        dispatch(removeRepeaterRegister('items', position))
+        dispatch(removeRepeaterRegister('itemColors', position))
     }
 
     const handleInputChange = ({ target }) => {
@@ -106,7 +101,7 @@ const ItemsForm = ({ position }) => {
             value: target.value
         }
 
-        dispatch(editRepeaterRegister('items', position, obj))
+        dispatch(editRepeaterRegister('itemColors', position, obj))
     }
 
     const handleSelectChange = (key, element) => {
@@ -116,13 +111,31 @@ const ItemsForm = ({ position }) => {
             value: el
         }
         dispatch(
-            editRepeaterRegister('items', position, obj)
+            editRepeaterRegister('itemColors', position, obj)
         )
     }
 
     const handleLoadStockCost = (obj) => {
-        dispatch(handleSearchCost('Items', obj.value, position, 'items'))
-        dispatch(handleSearchStock('Items', obj.value, position, 'items'))
+        dispatch(handleSearchCost('ItemColors', obj.value, position, 'itemColors'))
+        dispatch(handleSearchStock('ItemColors', obj.value, position, 'itemColors'))
+    }
+
+    const handleLoadColors = async (obj) => {
+        const token = localStorage.getItem('accessToken')
+
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/itemColors/selectByIdItem/${obj.value}`, {
+            headers: {
+                'Content-type': 'application/json',
+                'x-token': token
+            }
+        })
+        const colors = data.map(option => ({ label: option.idColor.name, value: option.idColor.id }))
+        const objFinal = {
+            name: 'colores',
+            value: colors
+        }
+        dispatch(editRepeaterRegister('itemColors', position, objFinal))
+        handleSelectChange('idItem', obj)
     }
 
     const costeReal = cost ? cost * quantity : 0
@@ -154,12 +167,23 @@ const ItemsForm = ({ position }) => {
                         (obj) => {
                             handleLoadStockCost(obj)
                             handleSelectChange('idItem', obj)
+                            handleLoadColors(obj)
                         }
                     }
                     value={idItemValue}
                 />
             </div>
-            <div className="col-md-2">
+            <div className="col-md-3">
+                <label className="control-label">Color</label>
+                <ReactSelect
+                    placeholder="Color"
+                    name="idColor"
+                    options={colores}
+                    onChange={(value) => { handleSelectChange('idColor', value) }}
+                    value={SelectColor}
+                />
+            </div>
+            <div className="col-md-1">
                 <label className="control-label">Cantidad</label>
                 <input
                     type="number"
@@ -169,7 +193,7 @@ const ItemsForm = ({ position }) => {
                     value={quantity}
                 />
             </div>
-            <div className="col-md-2">
+            <div className="col-md-1">
                 <label className="control-label">Precio</label>
                 <input
                     type="text"
@@ -179,7 +203,7 @@ const ItemsForm = ({ position }) => {
                     readOnly />
             </div>
 
-            <div className="col-md-2">
+            <div className="col-md-1">
                 <label className="control-label">Stock</label>
                 <input
                     type="text"

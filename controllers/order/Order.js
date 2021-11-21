@@ -109,6 +109,11 @@ exports.update = async (req, res) => {
 
         const order = req.body.form
         const { extraItems, extraItemColors, extraRaws, extraRawColors, customerData, baseItems, baseItemColors, canvas } = req.body.form
+        
+        const  allItems = [...extraItems, ...extraRaws]
+        const allItemsColors = [...extraItemColors,...extraRawColors]
+        
+        console.log(extraItems, extraItemColors, extraRaws)
 
         delete order.production
         delete order.extraItems
@@ -138,7 +143,7 @@ exports.update = async (req, res) => {
         await orderDao.multipleAccess(baseItemColors, orderDao.BaseItemColorDao, order.id, 'idOrder')
         await orderDao.multipleAccess(canvas, canvasDao, order.id, 'idOrder')
 
-        await orderDao.comprobarStockMinimo(order.id)
+        //await orderDao.comprobarStockMinimo(order.id)
 
         res.json({ ok: true })
     } catch (error) {
@@ -178,7 +183,7 @@ exports.select = async (req, res) => {
     try {
         res.json({
             ok: true,
-            data: await customerDao.findAllStatus()
+            data: await customerDataDao.findAllStatus()
         })
 
     } catch (error) {

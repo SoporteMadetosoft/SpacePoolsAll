@@ -4,12 +4,14 @@ const GenericDao = require("../GenericDao");
 const PurchaseItemDao = require("./PurchaseItemDao");
 const VendorDao = require("../vendor/VendorDao");
 const PurchaseStatusDao = require("../global/PurchaseStatusDao");
+const PurchaseItemColorDao = require("./PurchaseItemColorDao");
 
 class PurchaseDao extends GenericDao {
 
     constructor() {
         super(Purchase);
         this.PurchaseItemDao = new PurchaseItemDao()
+        this.PurchaseItemColorDao = new PurchaseItemColorDao()
         this.VendorDao = new VendorDao()
         this.StatusDao = new PurchaseStatusDao()
     }
@@ -18,6 +20,7 @@ class PurchaseDao extends GenericDao {
         const purchase = {
             ...data,
             items: await this.PurchaseItemDao.findByPurchaseId(data.id),
+            itemColors: await this.PurchaseItemColorDao.findByPurchaseId(data.id),
             idVendor: await this.VendorDao.findVendorById(data.idVendor),
             purchaseDate: this.datetimeToDate(data.purchaseDate),
             deliveryDate: this.datetimeToDate(data.deliveryDate)
@@ -37,7 +40,7 @@ class PurchaseDao extends GenericDao {
         const newPurchaseDate = this.datetimeToEuropeDate(purchaseDate)
         const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)
 
-        const nObj = { id: id, idStatus: idStatus, idVendor: idVendor,  purchaseCode: purchaseCode, purchaseDate: newPurchaseDate, observations: observations, deliveryDate: newDeliveryDate }
+        const nObj = { id: id, idStatus: idStatus, idVendor: idVendor, purchaseCode: purchaseCode, purchaseDate: newPurchaseDate, observations: observations, deliveryDate: newDeliveryDate }
         return nObj
     }
 

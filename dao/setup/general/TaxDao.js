@@ -15,6 +15,7 @@ class TaxDao extends SetupDao {
     }
 
     findTaxNameBy(id){
+        //console.log(`SELECT name FROM setup_taxes WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT name FROM setup_taxes WHERE Id = ?', [id], (err, result) => {
                 if (err) {

@@ -16,15 +16,21 @@ import {
 } from 'reactstrap'
 import { getNotificationDropDown } from '../../../../utility/helpers/Axios/getNotificationDropDown'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { AlertLoad } from '../../../../redux/actions/alert'
 
 const NotificationDropdown = () => {
   // ** Notification Array
-  const [notification, setNotification] = useState([])
+  // const [notification, setNotification] = useState([])
+  const dispatch = useDispatch()
+  const {data} = useSelector(state => state.alertReducer)
+const notification = data !== undefined ? data : []
 
 
   useEffect(() => {
 
-    getNotificationDropDown('Alerts').then(setNotification)
+    dispatch(AlertLoad())
+    // getNotificationDropDown('Alerts').then(setNotification)
 
   }, [])
 
@@ -40,7 +46,7 @@ const NotificationDropdown = () => {
           wheelPropagation: false
         }}
       >
-        {notification.length !== undefined && notification.map((item, index) => {
+        {notification.map((item, index) => {
           return (
             <Media
               className={classnames('d-flex')}

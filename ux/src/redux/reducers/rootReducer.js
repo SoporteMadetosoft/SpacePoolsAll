@@ -18,6 +18,8 @@ import canvasReducer from './canvas'
 import ordersReducer from './orders'
 import calenderReducer from './calendar'
 import permisosReducer from './permisos'
+import alertReducer from './alert'
+
 
 const rootReducer = combineReducers({
   auth,
@@ -31,7 +33,8 @@ const rootReducer = combineReducers({
   ordersReducer,
   calenderReducer,
   permisosReducer,
-  formValidator
+  formValidator,
+  alertReducer
 })
 
 export default rootReducer

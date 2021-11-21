@@ -46,6 +46,17 @@ export const PurchaseVerificationFormScreen = () => {
                     quantity: item.quantity - cantRecived,
                     recived: cantRecived
                 }
+            }),
+            itemColors: form.itemColors.map(item => {
+                const cantRecived = item.recived2 ? item.recived2 : 0
+
+                return {
+                    id: item.id,
+                    idItem: exceptionController(item.idItem),
+                    idColor: exceptionController(item.idColor),
+                    quantity: item.quantity - cantRecived,
+                    recived: cantRecived
+                }
             })
         }
 

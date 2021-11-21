@@ -42,7 +42,7 @@ export const ItemsRepeater = () => {
 
     return (
         <>
-            <h1 className="card-title mb-2">Productos sin color</h1>
+            <h1 className="card-title mb-2">Artículos / Materias primas sin color</h1>
             <Repeater count={count}>
 
                 {i => {
@@ -68,11 +68,10 @@ const ItemsForm = ({ position }) => {
     const { normalForm, selectReducer } = useSelector(state => state)
     const { ItemType } = selectReducer
     const { idVendor } = normalForm
-    const { itemType, idItem, stock, cost, colores, idColor, itemsOpt, quantity } = normalForm.items[position]
+    const { itemType, idItem, stock, cost, itemsOpt, quantity } = normalForm.items[position]
 
     const idItemValue = idItem ? deconstructSelect(idItem) : null
     const itemTypeValue = itemType ? deconstructSelect(itemType) : null
-    const SelectColor = idColor ? deconstructSelect(idColor) : null
 
 
     const handleLoadItems = async (obj) => {
@@ -126,24 +125,6 @@ const ItemsForm = ({ position }) => {
         dispatch(handleSearchStock('Items', obj.value, position, 'items'))
     }
 
-    const handleLoadColors = async (obj) => {
-        const token = localStorage.getItem('accessToken')
-
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/items/itemColors/selectByIdItem/${obj.value.idColor}`, {
-            headers: {
-                'Content-type': 'application/json',
-                'x-token': token
-            }
-        })
-        const colors = data.map(option => ({ label: option.name, value: option.id }))
-        const objFinal = {
-            name: 'colores',
-            value: colors
-        }
-        dispatch(editRepeaterRegister('items', position, objFinal))
-        handleSelectChange('idItem', obj)
-    }
-
     const costeReal = cost ? cost * quantity : 0
 
     return (
@@ -173,13 +154,12 @@ const ItemsForm = ({ position }) => {
                         (obj) => {
                             handleLoadStockCost(obj)
                             handleSelectChange('idItem', obj)
-                            handleLoadColors(obj)
                         }
                     }
                     value={idItemValue}
                 />
             </div>
-            <div className="col-md-1">
+            <div className="col-md-2">
                 <label className="control-label">Cantidad</label>
                 <input
                     type="number"
@@ -189,7 +169,7 @@ const ItemsForm = ({ position }) => {
                     value={quantity}
                 />
             </div>
-            <div className="col-md-1">
+            <div className="col-md-2">
                 <label className="control-label">Precio</label>
                 <input
                     type="text"
@@ -199,7 +179,7 @@ const ItemsForm = ({ position }) => {
                     readOnly />
             </div>
 
-            <div className="col-md-1">
+            <div className="col-md-2">
                 <label className="control-label">Stock</label>
                 <input
                     type="text"

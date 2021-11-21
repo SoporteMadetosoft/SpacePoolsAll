@@ -14,7 +14,8 @@ import { validate, validator } from '../../utility/formValidator/ValidationTypes
 import { setErrors, setSchema } from '../../redux/actions/formValidator'
 
 const structureForm = {
-    items: []
+    items: [],
+    itemColors: []
 }
 const formSchema = {
     idVendor: { validations: [validator.isRequired] },
@@ -23,8 +24,6 @@ const formSchema = {
 }
 
 export const PurchaseFormScreen = () => {
-
-    let { purchaseCode } = useSelector(state => state.normalForm)
 
     const { id } = useParams()
     const history = useHistory()
@@ -66,7 +65,8 @@ export const PurchaseFormScreen = () => {
                 const prettyForm = {
                     ...value,
                     idVendor: exceptionController(value.idVendor),
-                    items: form.items.map(item => ({ idItem: exceptionController(item.idItem), quantity: item.quantity }))
+                    items: form.items.map(item => ({ idItem: exceptionController(item.idItem), quantity: item.quantity })),
+                    itemColors: form.itemColors.map(item => ({ idItem: exceptionController(item.idItem), idColor: exceptionController(item.idColor), quantity: item.quantity }))
                 }
 
                 save('Purchases', id, prettyForm)

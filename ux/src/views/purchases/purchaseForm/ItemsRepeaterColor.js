@@ -13,12 +13,6 @@ import { addSelectionOnNormalForm, handleSearchCost, handleSearchStock } from '.
 
 
 const formStructure = {
-    idItemColor: [
-        {
-            id: '',
-            name: ''
-        }
-    ],
     quantity: 1
 }
 
@@ -27,9 +21,9 @@ export const ItemsRepeaterColor = () => {
     const dispatch = useDispatch()
     const formValues = useSelector(state => state.normalForm)
 
-    const { items } = formValues
+    const { itemColors } = formValues
 
-    const count = items ? items.length : 0
+    const count = itemColors ? itemColors.length : 0
 
     const increaseCount = () => {
         dispatch(addRepeaterRegister('itemColors', formStructure))
@@ -42,7 +36,7 @@ export const ItemsRepeaterColor = () => {
 
     return (
         <>
-            <h1 className="card-title mb-2">Productos con color</h1>
+            <h1 className="card-title mb-2">Artículos / Materias primas con color</h1>
             <Repeater count={count}>
 
                 {i => {
@@ -68,7 +62,7 @@ const ItemsFormColor = ({ position }) => {
     const { normalForm, selectReducer } = useSelector(state => state)
     const { ItemType } = selectReducer
     const { idVendor } = normalForm
-    const { itemType, idItem, stock, cost, colores, idColor, itemsOpt, quantity } = normalForm.items[position]
+    const { itemType, idItem, stock, cost, colores, idColor, itemsOpt, quantity } = normalForm.itemColors[position]
 
     const idItemValue = idItem ? deconstructSelect(idItem) : null
     const itemTypeValue = itemType ? deconstructSelect(itemType) : null
@@ -88,7 +82,7 @@ const ItemsFormColor = ({ position }) => {
                 'x-token': token
             }
         })
-        dispatch(addSelectionOnNormalForm('itemsOpt', data.map(option => ({ label: option.name, value: option.id })), 'items', position))
+        dispatch(addSelectionOnNormalForm('itemsOpt', data.map(option => ({ label: option.name, value: option.id })), 'itemColors', position))
     }
 
     useEffect(() => {
@@ -135,7 +129,7 @@ const ItemsFormColor = ({ position }) => {
                 'x-token': token
             }
         })
-        const colors = data.map(option => ({ label: option.name, value: option.id }))
+        const colors = data.map(option => ({ label: option.idColor.name, value: option.idColor.id }))
         const objFinal = {
             name: 'colores',
             value: colors

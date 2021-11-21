@@ -146,7 +146,22 @@ class ItemsColorsDao extends GenericDao {
         })
     }
 
+    totalColorStock(idItem, idColor) {
+        // console.log(`SELECT SUM(stock) AS stock FROM item_colors WHERE idItem = ${idItem}`)
+        return new Promise((resolve, reject) => {
+            this.db.query(`SELECT SUM(stock) AS stock FROM item_colors WHERE idItem = ? AND idColor = ?`, [idItem, idColor], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+
+                    resolve(result[0])
+                }
+            })
+        })
+    }
+
     updateStock(action, id, idColor, quantity) {
+        //console.log(`UPDATE item_colors SET stock = stock ${action} ${quantity} WHERE idItem = ${id} AND idColor = ${idColor}`)
         return new Promise((resolve, reject) => {
             this.db.query(`UPDATE item_colors SET stock = stock ${action} ? WHERE idItem = ? AND idColor = ?`, [quantity, id, idColor], (err, result) => {
                 if (err) {

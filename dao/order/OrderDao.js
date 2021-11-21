@@ -128,39 +128,39 @@ class OrderDao extends GenericDao {
     updateItemStock(id) {
         // console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
         return new Promise(async (resolve, reject) => {
-            await this.db.query('SELECT * FROM `orders_base_items` WHERE idOrder = ?', [id], async (err, result) => {
+            this.db.query('SELECT * FROM `orders_base_items` WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {
-                    reject(err)
+                    reject(err);
                 } else {
                     for (const res of result) {
-                        await this.BaseItemDao.ItemDao.updateStock('-', res['idItem'], res['quantity'])
+                        await this.BaseItemDao.ItemDao.updateStock('-', res['idItem'], res['quantity']);
                     }
                 }
             })
-            await this.db.query('SELECT * FROM `orders_base_item_colors` WHERE idOrder = ?', [id], async (err, result) => {
+            this.db.query('SELECT * FROM `orders_base_item_colors` WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {
-                    reject(err)
+                    reject(err);
                 } else {
                     for (const res of result) {
-                        await this.BaseItemColorDao.ItemsColorsDao.updateStock('-', res['idItem'], res['quantity'])
+                        await this.BaseItemColorDao.ItemsColorsDao.updateStock('-', res['idItem'], res['quantity']);
                     }
                 }
             })
-            await this.db.query('SELECT * FROM `orders_extra_items` WHERE idOrder = ?', [id], async (err, result) => {
+            this.db.query('SELECT * FROM `orders_extra_items` WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {
-                    reject(err)
+                    reject(err);
                 } else {
                     for (const res of result) {
-                        await this.ExtraItemDao.ItemDao.updateStock('-', res['idItem'], res['quantity'])
+                        await this.ExtraItemDao.ItemDao.updateStock('-', res['idItem'], res['quantity']);
                     }
                 }
             })
-            await this.db.query('SELECT * FROM `orders_extra_item_colors` WHERE idOrder = ?', [id], async (err, result) => {
+            this.db.query('SELECT * FROM `orders_extra_item_colors` WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {
-                    reject(err)
+                    reject(err);
                 } else {
                     for (const res of result) {
-                        await this.ExtraItemColorDao.ItemsColorsDao.updateStock('-', res['idItem'], res['idColor'], res['quantity'])
+                        await this.ExtraItemColorDao.ItemsColorsDao.updateStock('-', res['idItem'], res['idColor'], res['quantity']);
                     }
                 }
             })
@@ -224,7 +224,7 @@ class OrderDao extends GenericDao {
             const extraItems = await this.ExtraItemDao.findByOrderId(idOrder)
 
             baseItems.map(async (item) => {
-                
+
                 stock = await this.BaseItemDao.ItemDao.findOneFieldById("stock", item.quantity)
                 minimumStock = await this.BaseItemDao.ItemDao.findOneFieldById("minimumStock", item.idItem)
                 reserved = await this.BaseItemDao.ItemDao.findReservedStock(item.idItem)

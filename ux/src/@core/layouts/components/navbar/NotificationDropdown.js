@@ -30,7 +30,7 @@ const notification = data !== undefined ? data : []
   useEffect(() => {
 
     dispatch(AlertLoad())
-    // getNotificationDropDown('Alerts').then(setNotification)
+     getNotificationDropDown('Alerts')
 
   }, [])
 

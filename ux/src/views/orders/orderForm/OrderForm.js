@@ -32,7 +32,6 @@ const formSchema = {
 }
 
 export const OrderForm = () => {
-    let { orderCode } = useSelector(state => state.normalForm)
 
     const { id } = useParams()
     const history = useHistory()
@@ -48,6 +47,8 @@ export const OrderForm = () => {
     const productionDate = normalForm['productionDate'] ? normalForm['productionDate'] : ''
     const deliveryDate = normalForm['deliveryDate'] ? normalForm['deliveryDate'] : ''
 
+    const orderCode = id !== undefined ? id : normalForm.orderCode
+
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
@@ -59,9 +60,9 @@ export const OrderForm = () => {
 
     useEffect(() => {
 
-        if (normalForm.id === undefined) {
+        if (id === undefined) {
             dispatch(GetSetNextId("Orders", 'orderCode'))
-        } else orderCode = normalForm.id
+        } 
         dispatch(setSchema(formSchema))
     }, [])
 
@@ -93,7 +94,7 @@ export const OrderForm = () => {
                 const prettyForm = {
                     ...value,
                     customerData: {
-                        
+                        id: value.id,
                         deliveryAddress: value.deliveryAddress,
                         phone: value.phone,
                         email: value.email
@@ -118,8 +119,8 @@ export const OrderForm = () => {
                 const vp = await validateProduction('Orders', { productionDate: prettyForm.productionDate, idPool: prettyForm.idPool })
                 if (vp === true) {
                     save('Orders', id, prettyForm)
-                    // dispatch(handleCleanUp())
-                    // history.push('/orders')
+                    dispatch(handleCleanUp())
+                    history.push('/orders')
                 } else {
                     Swal.fire({
                         title: '¡Error!',

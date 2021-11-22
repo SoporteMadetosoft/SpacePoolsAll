@@ -78,7 +78,8 @@ const ContactsForm = ({ position }) => {
         department,
         defaultContact } = normalForm.contacts[position]
 
-    const SelectValue = department.name ? deconstructSelect(department) : null
+        
+    const SelectValue = department  ? deconstructSelect(department) : null
 
     const decreaseCount = () => {
         dispatch(removeRepeaterRegister('contacts', position))

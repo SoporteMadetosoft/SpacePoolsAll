@@ -6,19 +6,21 @@ import { Input } from '../../../components/form/inputs/Input'
 import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 import { Select } from '../../../components/form/inputs/Select'
 import { ItemsRepeaterColor } from './ItemsRepeaterColor'
+import { useParams } from 'react-router'
 
 export const PurchaseForm = () => {
-    let { purchaseCode } = useSelector(state => state.normalForm)
 
     const dispatch = useDispatch()
+    const { id } = useParams()
 
     const { normalForm } = useSelector(state => state)
+    const purchaseCode = id !== undefined ? id : normalForm.purchaseCode
     useEffect(() => {
 
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Purchases", 'purchaseCode'))
-        } else purchaseCode = normalForm.id
-
+        } 
+        
     }, [])
 
     const { observations } = normalForm

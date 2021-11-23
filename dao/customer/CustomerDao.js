@@ -56,6 +56,7 @@ class CustomerDao extends GenericDao {
 
     async mountList(data) {
         let contact = await this.CustomerContactPersonDao.findMainContactCustomer(data.id);
+        //console.log(contact)
         const list = {
             ...data,
             ContactName: contact != undefined ? contact.name : '',

@@ -2,24 +2,24 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-import { GetSetNextId, handleStartEditing } from '../../../../redux/actions/normalForm'
+import { handleStartEditing } from '../../../../redux/actions/normalForm'
 
 import BreadCrumbs from '@components/breadcrumbs'
 import { PaymentMethodsForm } from './paymentMethodsForm/PaymentMethodsForm'
-import { validate, validator } from '../../../../utility/formValidator/ValidationTypes'
-import { setErrors, setSchema } from '../../../../redux/actions/formValidator'
+// import { validate, validator } from '../../../../utility/formValidator/ValidationTypes'
+// import { setErrors, setSchema } from '../../../../redux/actions/formValidator'
 
-const formSchema = {
-    name: { validations: [validator.isRequired] },
-    value: { validations: [validator.isRequired] }
+// const formSchema = {
+//     name: { validations: [validator.isRequired] },
+//     value: { validations: [validator.isRequired] }
 
-}
+// }
 
 export const PaymentMethodsFormScreen = () => {
 
     const { id } = useParams()
     const dispatch = useDispatch()
-    const { normalForm, formValidator} = useSelector( state => state)
+    //const { normalForm, formValidator} = useSelector( state => state)
 
     const form = useSelector(state => state.normalForm)
 

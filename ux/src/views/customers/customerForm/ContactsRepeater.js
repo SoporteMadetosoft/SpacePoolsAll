@@ -18,7 +18,7 @@ const formStructure = {
     startSchedule: '',
     endSchedule: '',
     department: '',
-    defaultContact: false 
+    defaultContact: 1 
 }
 
 export const ContactsRepeater = () => {
@@ -108,7 +108,8 @@ const ContactsForm = ({ position }) => {
     const handleRadioChange = ({target}) => {
         
         const newContactList = normalForm.contacts.map((contact, index) => {
-            return { ...contact, [target.name] : index === position }
+            return { ...contact, 
+                [target.name] : index === position }
             
         })
         dispatch(handleChangeController('contacts', newContactList))
@@ -116,7 +117,6 @@ const ContactsForm = ({ position }) => {
     }
 
     return (
-
         <div className="row border-bottom pb-1 mt-1 mx-1">
             <div className="col-md-3">
                 <label className="control-label">Nombre del contacto</label>

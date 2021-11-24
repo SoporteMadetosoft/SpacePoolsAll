@@ -26,8 +26,9 @@ class CustomerContactPersonDao extends GenericDao {
     }
 
     findMainContactCustomer(id) {
+        //console.log(`SELECT * FROM customers_contact WHERE idCustomer = ${id} AND defaultContact = 1`)
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM customers_contact WHERE idCustomer = ? AND `defaultContact` = 1', [id], (err, result) => {
+            this.db.query('SELECT * FROM customers_contact WHERE idCustomer = ? AND defaultContact = 1', [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

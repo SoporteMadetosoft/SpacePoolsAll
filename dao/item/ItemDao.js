@@ -137,7 +137,7 @@ class ItemDao extends GenericDao {
 
     findReservedStock(idItem) {
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT cantidadBase, cantidadExtra FROM reservestock WHERE IDITEM = ?`, [idItem], (err, result) => {
+            this.db.query(`SELECT cantidadBase, cantidadExtra FROM reserveStock WHERE IDITEM = ?`, [idItem], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -152,7 +152,6 @@ class ItemDao extends GenericDao {
             })
         })
     }
-
 }
 
 module.exports = ItemDao

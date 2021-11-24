@@ -1,5 +1,5 @@
 import { CustomerScreenList } from '@views/customers/CustomerScreenList'
-import { CustomerFormScreen } from '@views/customers/CustomerFormScreen'
+import { CustomerFormScreen } from '../../../views/customers/CustomerFormScreen'
 
 const CustomersRoutes = [
   {

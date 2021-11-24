@@ -28,7 +28,8 @@ const formSchema = {
     orderDate: { validations: [validator.isRequired] },
     productionDate: { validations: [validator.isRequired] },
     deliveryDate: { validations: [validator.isRequired] },
-    idColor: { validations: [validator.isRequired] }
+    idColor: { validations: [validator.isRequired] },
+    idTax: {validations : [validator.isRequired]}
 }
 
 export const OrderForm = () => {

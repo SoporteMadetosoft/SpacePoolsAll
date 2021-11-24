@@ -62,7 +62,7 @@ class GenericDao {
     }
 
     findAllId(id, foreign) {
-        //console.log(`SELECT id FROM ${this.auxModel.table} WHERE ${foreign} = ${id}`)
+        console.log(`SELECT id FROM ${this.auxModel.table} WHERE ${foreign} = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT id FROM ?? WHERE ?? = ?', [this.auxModel.table, foreign, id], async (err, result) => {
                 if (err) {
@@ -203,6 +203,7 @@ class GenericDao {
             })
         })
     }
+
 
 
 }

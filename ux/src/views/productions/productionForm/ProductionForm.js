@@ -22,7 +22,7 @@ export const ProductionForm = () => {
     const phone = normalForm['orderData'] ? normalForm['orderData']['customerData'][0].phone : ''
     const email = normalForm['orderData'] ? normalForm['orderData']['customerData'][0].email : ''
     const pool = normalForm['orderData'] ? normalForm['orderData']['idPool'].name : ''
-    const tax = normalForm['orderData'] ? normalForm['orderData']['idTax'].name : ''
+    const tax = normalForm['orderData'] ? normalForm['orderData']['idTax'].name : '' 
     const price = normalForm['orderData'] ? normalForm['orderData'].price : ''
     const orderDate = normalForm['orderData'] ? normalForm['orderData'].orderDate : ''
     const productionDate = normalForm['orderData'] ? normalForm['orderData'].productionDate : ''
@@ -64,6 +64,7 @@ export const ProductionForm = () => {
                     <div className="col-md-2">
                         <label className="control-label">Piscina</label>
                         <h6> {pool} </h6>
+
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">Color</label>

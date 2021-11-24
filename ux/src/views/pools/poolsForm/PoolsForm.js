@@ -28,7 +28,6 @@ export const PoolsForm = () => {
     const { id } = useParams()
     const history = useHistory()
 
-    let { poolCode } = useSelector(state => state.normalForm)
 
     const { normalForm } = useSelector(state => state)
     const { formValidator } = useSelector(state => state)
@@ -37,12 +36,14 @@ export const PoolsForm = () => {
 
     const PoolPrice = normalForm.price
 
+    const poolCode = id !== undefined ? id : normalForm.poolCode
+
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (normalForm.id === undefined) {
+        if (id === undefined) {
             dispatch(GetSetNextId("Pools", 'poolCode'))
-        } else poolCode = normalForm.id
+        }
         dispatch(setSchema(formSchema))
     }, [])
 

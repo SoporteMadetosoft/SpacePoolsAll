@@ -29,7 +29,6 @@ const formSchema = {
 
 export const ItemsColorForm = () => {
 
-    let { itemCode } = useSelector(state => state.normalForm)
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -40,14 +39,16 @@ export const ItemsColorForm = () => {
     const { normalForm, formValidator } = useSelector(state => state)
 
     const { description } = normalForm
+    
+    const itemCode = id !== undefined ? id : normalForm.itemCode
 
     useEffect(() => {
         dispatch(startAddSelectOptions('ItemType', 'ItemType'))
         dispatch(startAddSelectStatus('Vendors', 'Vendors', 'comercialName'))
 
-        if (normalForm.id === undefined) {
+        if (id === undefined) {
             dispatch(GetSetNextId("ItemColors", 'itemCode'))
-        } else itemCode = normalForm.id
+        } 
         dispatch(setSchema(formSchema))
     }, [])
 

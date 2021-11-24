@@ -43,10 +43,12 @@ export const CarriersForm = () => {
 
     const { normalForm, formValidator } = useSelector(state => state)
 
+    const carrierCode = id !== undefined ? id : normalForm.carrierCode
+
     useEffect(() => {
-        if (normalForm.id === undefined) {
+        if (id === undefined) {
             dispatch(GetSetNextId("Carriers", 'carrierCode'))
-        } else carrierCode = normalForm.id
+        } 
         dispatch(setSchema(formSchema))
     }, [])
 
@@ -113,7 +115,7 @@ export const CarriersForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <Input name="carrierCode" label="Nº Transportista" readonly='readonly' />
+                        <Input name="carrierCode" label="Nº Transportista" readonly='readonly' value={carrierCode} />
                     </div>
                     <div className="col-md-4">
                         <Input name="name" label="Nombre" />

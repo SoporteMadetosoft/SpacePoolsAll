@@ -19,7 +19,7 @@ import { handleCleanUp } from '../../../redux/actions/fileUpload'
 const formSchema = {
     CIF: { validations: [validator.isRequired] },
     idStatus: { validations: [validator.isRequired] },
-    comercialName: {validations: [validator.isRequired]}
+    comercialName: { validations: [validator.isRequired] }
 
 }
 
@@ -28,13 +28,12 @@ export const VendorsForm = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
-
-    let { vendorCode } = useSelector(state => state.normalForm)
-
     const { normalForm } = useSelector(state => state)
     const { formValidator } = useSelector(state => state)
 
     const { observations } = normalForm
+
+    const vendorCode = id !== undefined ? id : normalForm.vendorCode
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
@@ -42,15 +41,11 @@ export const VendorsForm = () => {
 
     useEffect(() => {
 
-        if (normalForm.id === undefined) {
+        if (id === undefined) {
             dispatch(GetSetNextId("Vendors", "vendorCode"))
-
-        } else vendorCode = normalForm.id
+        }
         dispatch(setSchema(formSchema))
-
-
-
-    }, [])
+        }, [])
 
 
 
@@ -58,10 +53,10 @@ export const VendorsForm = () => {
         e.preventDefault()
         const errors = validate(formValidator.schema, normalForm)
 
-        
+
 
         if (Object.keys(errors).length !== 0) {
-            
+
 
             dispatch(setErrors(errors))
         } else {
@@ -105,8 +100,8 @@ export const VendorsForm = () => {
                         <Input name="comercialName" label="Nombre Comercial" />
                     </div>
                     <div className="col-md-3">
-                        
-                        <Input id="CIF" name="CIF" placeholder="C.I.F" type="text"  value={normalForm['CIF']}  onChange={handleInputChange} label="C.I.F"/>
+
+                        <Input id="CIF" name="CIF" placeholder="C.I.F" type="text" value={normalForm['CIF']} onChange={handleInputChange} label="C.I.F" />
 
                     </div>
                     <div className="col-md-3">

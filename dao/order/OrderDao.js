@@ -127,12 +127,17 @@ class OrderDao extends GenericDao {
 
     updateItemStock(id) {
         // console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
+        var contador = 0
+        var contador2 = 0
         return new Promise(async (resolve, reject) => {
+
             this.db.query('SELECT * FROM `orders_base_items` WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
                     for (const res of result) {
+                        contador = + 1
+                        console.log('entro itemDao: ' + contador)
                         await this.BaseItemDao.ItemDao.updateStock('-', res['idItem'], res['quantity']);
                     }
                 }
@@ -142,8 +147,10 @@ class OrderDao extends GenericDao {
                     reject(err);
                 } else {
                     for (const res of result) {
+                        contador2 = + 1
+                        console.log('entro itemColorsDao: ' + contador2)
                         const resta = res['quantity']
-                        await this.BaseItemColorDao.ItemsColorsDao.updateStock('-', res['idItem'], res['idColor'], resta )
+                        await this.BaseItemColorDao.ItemsColorsDao.updateStock('-', res['idItem'], res['idColor'], resta)
                     }
                 }
             })
@@ -171,11 +178,14 @@ class OrderDao extends GenericDao {
 
     updateOrderState(id) {
         // console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
+        var contador
         return new Promise((resolve, reject) => {
             this.db.query('UPDATE orders SET state = 1 WHERE id = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
+                    contador = + 1
+                    console.log('entro en updateOrderState: ' + contador)
                     await this.updateItemStock(id)
                     resolve('')
                 }
@@ -221,18 +231,19 @@ class OrderDao extends GenericDao {
             let reserved
             let has
 
-                // Items extra y base sin color
+            // Items extra y base sin color
             const baseItems = await this.BaseItemDao.findByOrderId(idOrder)
             const extraItems = await this.ExtraItemDao.findByOrderId(idOrder)
 
-            
+
             baseItems.map(async (item) => {
+
 
                 stock = await this.BaseItemDao.ItemDao.findOneFieldById("stock", item.quantity)
                 minimumStock = await this.BaseItemDao.ItemDao.findOneFieldById("minimumStock", item.idItem)
                 reserved = await this.BaseItemDao.ItemDao.findReservedStock(item.idItem)
+                // console.log(reserved)
                 if ((stock - reserved) <= minimumStock) {
-
                     has = await this.AlertDao.hasItemAlert(item.idItem)
                     if (has === false) {
                         await this.AlertDao.insert({
@@ -245,7 +256,6 @@ class OrderDao extends GenericDao {
             })
 
             extraItems.map(async (item) => {
-                // console.log(item)
                 stock = await this.ExtraItemDao.ItemDao.findOneFieldById("stock", item.idItem.id)
                 minimumStock = await this.ExtraItemDao.ItemDao.findOneFieldById("minimumStock", item.idItem.id)
                 reserved = await this.ExtraItemDao.ItemDao.findReservedStock(item.idItem.id)
@@ -267,15 +277,17 @@ class OrderDao extends GenericDao {
             const extraItemColors = await this.ExtraItemColorDao.findByOrderId(idOrder)
 
             baseItemColors.map(async (item) => {
+
+
                 stock = await this.BaseItemColorDao.ItemsColorsDao.totalStock(item.idItem)
                 minimumStock = await this.BaseItemColorDao.ItemsColorsDao.findOneFieldById("minimumStock", item.idItem)
                 reserved = await this.BaseItemColorDao.ItemsColorsDao.findReservedStock(item.idItem)
-
+                // console.log(reserved)
                 if ((stock.stock - reserved) <= minimumStock) {
                     has = await this.AlertDao.hasItemAlert(item.idItem.id)
                     if (has === false) {
                         await this.AlertDao.insert({
-                            message: `El artículo ${item.idItem.name} se está quedando sin stock ( ${stock.stock - reserved} / ${minimumStock} )`,
+                            message: `El artículo ${item.name} se está quedando sin stock ( ${stock.stock - reserved} / ${minimumStock} )`,
                             idItem: item.idItem.id,
                             isDone: 0
                         })
@@ -292,7 +304,7 @@ class OrderDao extends GenericDao {
                     has = await this.AlertDao.hasItemAlert(item.idItem.id)
                     if (has === false) {
                         await this.AlertDao.insert({
-                            message: `El artículo ${item.idItem.name} se está quedando sin stock ( ${stock.stock - reserved} / ${minimumStock} )`,
+                            message: `El artículo ${item.name} se está quedando sin stock ( ${stock.stock - reserved} / ${minimumStock} )`,
                             idItem: item.idItem.id,
                             isDone: 0
                         })

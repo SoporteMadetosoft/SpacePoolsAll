@@ -38,7 +38,6 @@ const formSchema = {
 
 export const TrailersForm = () => {
 
-    let { trailerCode } = useSelector(state => state.normalForm)
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -51,16 +50,16 @@ export const TrailersForm = () => {
 
     const { normalForm, formValidator } = useSelector(state => state)
 
-    //const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+    const trailerCode = id !== undefined ? id : normalForm.trailerCode
 
     const { observations } = normalForm
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'Brand'))
         dispatch(startAddSelectOptions('Model', 'Model'))
-        if (normalForm.id === undefined) {
+        if (id === undefined) {
             dispatch(GetSetNextId("Trailers", 'trailerCode'))
-        } else trailerCode = normalForm.id
+        } 
         dispatch(setSchema(formSchema))
     }, [])
 

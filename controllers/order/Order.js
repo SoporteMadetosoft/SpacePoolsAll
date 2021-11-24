@@ -66,6 +66,12 @@ exports.insert = async (req, res) => {
         const order = req.body.form
         const { extraItems, extraItemColors, extraRaws, extraRawColors, customerData, baseItems, baseItemColors, canvas } = req.body.form
 
+        const  allItems = [...extraItems, ...extraRaws]
+        console.log("Insert All Items")
+        console.log(allItems)
+        const allItemsColors = [...extraItemColors,...extraRawColors]
+        console.log(allItemsColors)
+
         delete order.production
         delete order.extraItems
         delete order.extraItemColors
@@ -111,9 +117,13 @@ exports.update = async (req, res) => {
         const { extraItems, extraItemColors, extraRaws, extraRawColors, customerData, baseItems, baseItemColors, canvas } = req.body.form
         
         const  allItems = [...extraItems, ...extraRaws]
+
+        console.log("Update All")
+        console.log(allItems)
         const allItemsColors = [...extraItemColors,...extraRawColors]
-        
-        console.log(extraItems, extraItemColors, extraRaws)
+        console.log(allItemsColors)
+        console.log("extras !!!!")
+        console.log(extraItems, extraItemColors)
 
         delete order.production
         delete order.extraItems

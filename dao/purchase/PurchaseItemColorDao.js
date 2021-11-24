@@ -46,7 +46,7 @@ class PurchaseItemColorDao extends GenericDao {
 
     findByPurchaseId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM purchases_item_colors WHERE idPurchase = ?', [id], async (err, result) => {
+            this.db.query('SELECT * FROM purchases_items_colors WHERE idPurchase = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -62,7 +62,7 @@ class PurchaseItemColorDao extends GenericDao {
 
     findByItemId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM purchases_item_colors WHERE idItem = ?', [id], (err, result) => {
+            this.db.query('SELECT * FROM purchases_items_colors WHERE idItem = ?', [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -80,7 +80,7 @@ class PurchaseItemColorDao extends GenericDao {
     sumRecived(id, recived) {
         // console.log(`UPDATE purchases_items SET quantity = quantity - ${recived}, recived = recived + ${recived} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
-            this.db.query(`UPDATE purchases_item_colors SET quantity = quantity - ${recived}, recived = recived + ${recived} WHERE id = ?`, [id], (err, result) => {
+            this.db.query(`UPDATE purchases_items_colors SET quantity = quantity - ${recived}, recived = recived + ${recived} WHERE id = ?`, [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

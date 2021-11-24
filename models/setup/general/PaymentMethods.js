@@ -5,7 +5,7 @@ class PaymentMethods extends Setup {
 
     constructor(params) {
         super(params)
-        this.value = params.value
+        //this.value = params.value
     }
 
     get table() {

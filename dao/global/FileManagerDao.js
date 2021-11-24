@@ -53,8 +53,7 @@ class FileManagerDao {
                         if (err) {
                             reject(err)
                         }
-                        let documents = [];
-
+                        const documents = [];
                         for (const filename of files) {
                             let doc = []
                             if (this.dao) {

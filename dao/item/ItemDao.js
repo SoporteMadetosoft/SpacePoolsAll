@@ -143,6 +143,9 @@ class ItemDao extends GenericDao {
                 } else {
                     const cantidadBase = result[0].cantidadBase
                     const cantidadExtra = result[0].cantidadExtra
+                    // console.log('baseItems', idItem)
+
+                    // console.log(cantidadBase + cantidadExtra)
 
                     resolve(cantidadBase + cantidadExtra)
                 }

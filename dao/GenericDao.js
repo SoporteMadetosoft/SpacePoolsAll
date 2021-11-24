@@ -79,7 +79,7 @@ class GenericDao {
     }
 
     deleteById(id) {
-        console.log(`DELETE FROM ${this.auxModel.table} WHERE id = ${id}`)
+        // console.log(`DELETE FROM ${this.auxModel.table} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query(`DELETE FROM ?? WHERE id = ?`, [this.auxModel.table, id], async (err, result) => {
                 if (err) {
@@ -106,7 +106,7 @@ class GenericDao {
     }
 
     update(params) {
-        console.log(`UPDATE ${this.auxModel.table} SET ${this.#formatUpdate(params)} WHERE id =  ${params.id} `)
+        // console.log(`UPDATE ${this.auxModel.table} SET ${this.#formatUpdate(params)} WHERE id =  ${params.id} `)
         return new Promise((resolve, reject) => {
             this.db.query(`UPDATE ?? SET ${this.#formatUpdate(params)} WHERE id =  ? `, [this.auxModel.table, params.id], async (err, result) => {
                 if (err) {
@@ -144,7 +144,6 @@ class GenericDao {
                 } else {
                     idsForm.push(element.id)
                 }
-                console.log(action)
 
                 obj[action](element)
             })

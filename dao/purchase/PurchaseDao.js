@@ -20,7 +20,7 @@ class PurchaseDao extends GenericDao {
         const purchase = {
             ...data,
             items: await this.PurchaseItemDao.findByPurchaseId(data.id),
-            itemColors: await this.PurchaseItemColorDao.findByPurchaseId(data.id),
+            itemColors : await this.PurchaseItemColorDao.findByPurchaseId(data.id),
             idVendor: await this.VendorDao.findVendorById(data.idVendor),
             purchaseDate: this.datetimeToDate(data.purchaseDate),
             deliveryDate: this.datetimeToDate(data.deliveryDate)

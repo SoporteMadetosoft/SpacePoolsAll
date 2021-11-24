@@ -6,6 +6,12 @@ import { Input } from '../../../components/form/inputs/Input'
 import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 import { Select } from '../../../components/form/inputs/Select'
 import { ItemsRepeaterColor } from './ItemsRepeaterColor'
+import { setSchema } from '../../../redux/actions/formValidator'
+
+
+const formSchema = {
+
+}
 
 export const PurchaseForm = () => {
     let { purchaseCode } = useSelector(state => state.normalForm)
@@ -18,10 +24,13 @@ export const PurchaseForm = () => {
         if (normalForm.id === undefined) {
             dispatch(GetSetNextId("Purchases", 'purchaseCode'))
         } else purchaseCode = normalForm.id
+        dispatch(setSchema(formSchema))
 
     }, [])
 
     const { observations } = normalForm
+
+    
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Vendors', 'Vendors', 'comercialName'))

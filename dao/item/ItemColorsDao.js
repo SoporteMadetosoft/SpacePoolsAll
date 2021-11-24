@@ -117,9 +117,9 @@ class ItemsColorsDao extends GenericDao {
     }
 
     findReservedStock(idItem) {
-        //console.log(`SELECT SUM(cantidadBase) AS cantidadBase, SUM(cantidadExtra) AS cantidadExtra FROM reservestockcolor WHERE IDITEM = ${idItem}`)
+        //console.log(`SELECT SUM(cantidadBase) AS cantidadBase, SUM(cantidadExtra) AS cantidadExtra FROM reserveStockColor WHERE IDITEM = ${idItem}`)
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT SUM(cantidadBase) AS cantidadBase, SUM(cantidadExtra) AS cantidadExtra FROM reservestockcolor WHERE IDITEM = ?`, [idItem], (err, result) => {
+            this.db.query(`SELECT SUM(cantidadBase) AS cantidadBase, SUM(cantidadExtra) AS cantidadExtra FROM reserveStockColor WHERE IDITEM = ?`, [idItem], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -229,7 +229,7 @@ class ItemsColorsDao extends GenericDao {
             })
         })
     }
-    
+
 
     findByItemId(id) {
         //console.log(`SELECT * FROM item_colors WHERE idItem = ${id}`)

@@ -97,7 +97,7 @@ class ProductFamilyDao extends GenericDao {
         const parentName = await this.findById(data.parent)
         const list = {
             ...data,
-            parent: parentName !== undefined ? parentName : 'Nadie'
+            parent: parentName !== undefined ? parentName.name : 'Nadie'
         }
         const nObj = list
         return nObj

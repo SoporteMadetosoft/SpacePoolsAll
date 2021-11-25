@@ -29,7 +29,7 @@ const formSchema = {
     productionDate: { validations: [validator.isRequired] },
     deliveryDate: { validations: [validator.isRequired] },
     idColor: { validations: [validator.isRequired] },
-    idTax: {validations : [validator.isRequired]}
+    idTax: { validations: [validator.isRequired] }
 }
 
 export const OrderForm = () => {
@@ -63,7 +63,7 @@ export const OrderForm = () => {
 
         if (id === undefined) {
             dispatch(GetSetNextId("Orders", 'orderCode'))
-        } 
+        }
         dispatch(setSchema(formSchema))
     }, [])
 

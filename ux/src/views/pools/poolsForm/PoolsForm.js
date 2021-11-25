@@ -67,6 +67,8 @@ export const PoolsForm = () => {
 
             const form2 = dispatch(handleGetForm())
             form2.then((value) => {
+                delete value.baseItems
+                delete value.baseItemColors
                 const prettyForm = {
                     ...value,
                     cost: price,

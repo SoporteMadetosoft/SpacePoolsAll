@@ -25,6 +25,7 @@ export const startLoadingTable = (endPoint) => {
     return async (dispatch) => {
         dispatch(cleaningAll())
         const data = await list(endPoint)
+        console.log(endPoint, data)
         dispatch(setData(data, endPoint))
     }
 }

@@ -10,6 +10,7 @@ import { validate, validator } from '../../../../../utility/formValidator/Valida
 import { setErrors, setSchema } from '../../../../../redux/actions/formValidator'
 import { startAddSelectOptions } from '../../../../../redux/actions/selects'
 import { Input } from '../../../../../components/form/inputs/Input'
+import { exceptionController } from '../../../../../utility/helpers/undefinedExceptionController'
 
 //const ValidationSchema = yup.object().shape({
   //  name: yup.string().required()
@@ -74,7 +75,7 @@ export const CustomerTypeForm = () => {
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-4">
 
-                        <Input required="true" name="name" type="text" label="Tipo de Cliente"  onChange={handleInputChange}/>
+                        <Input required="true" name="name" type="text" label="Tipo de Cliente" />
 
                     </div>
                 </div>

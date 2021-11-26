@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { Form } from 'reactstrap'
-import { GetSetNextId, handleChangeController } from '../../../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController, handleGetForm } from '../../../../../redux/actions/normalForm'
 import { save } from '../../../../../utility/helpers/Axios/save'
 import { ActionButtons } from '../../../../../components/actionButtons/ActionButtons'
 import { validate, validator } from '../../../../../utility/formValidator/ValidationTypes'
@@ -54,7 +54,7 @@ export const DepartmentForm = () => {
 
                 save('Departaments', id, prettyForm)
                 dispatch(handleCleanUp)
-                history.push('/purchases')
+                history.push('/setup/general/departments')
 
             })
         }

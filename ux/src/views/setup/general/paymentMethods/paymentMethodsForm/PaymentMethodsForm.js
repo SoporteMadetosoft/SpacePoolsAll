@@ -30,7 +30,7 @@ export const PaymentMethodsForm = () => {
 
     useEffect(() => {
         dispatch(setSchema(formSchema))
-    })
+    },[])
 
     const submit = async (e) => {
         e.preventDefault()
@@ -46,7 +46,7 @@ export const PaymentMethodsForm = () => {
                 const prettyForm = {
                     ...value,
                     name: exceptionController(value.name),
-                    valor: exceptionController(value.valor)
+                    value: exceptionController(value.value)
 
                 }
 

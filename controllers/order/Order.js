@@ -69,11 +69,11 @@ exports.insert = async (req, res) => {
         const allItemsColors = [...extraItemColors, ...extraRawColors]
 
 
-        const  allItems = [...extraItems, ...extraRaws]
-        console.log("Insert All Items")
-        console.log(allItems)
-        const allItemsColors = [...extraItemColors,...extraRawColors]
-        console.log(allItemsColors)
+        // const  allItems = [...extraItems, ...extraRaws]
+        // console.log("Insert All Items")
+        // console.log(allItems)
+        // const allItemsColors = [...extraItemColors,...extraRawColors]
+        // console.log(allItemsColors)
 
         delete order.production
         delete order.extraItems
@@ -175,7 +175,6 @@ exports.findNId = async (req, res) => {
 exports.switchState = async (req, res) => {
 
     try {
-        console.log('entro en SwitchState')
         await orderDao.updateOrderState(req.body.id)
         res.json({ ok: true })
     } catch (error) {

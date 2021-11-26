@@ -127,8 +127,7 @@ class OrderDao extends GenericDao {
 
     updateItemStock(id) {
         // console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
-        var contador = 0
-        var contador2 = 0
+
         return new Promise(async (resolve, reject) => {
 
             this.db.query('SELECT * FROM `orders_base_items` WHERE idOrder = ?', [id], async (err, result) => {
@@ -136,8 +135,6 @@ class OrderDao extends GenericDao {
                     reject(err);
                 } else {
                     for (const res of result) {
-                        contador = + 1
-                        console.log('entro itemDao: ' + contador)
                         await this.BaseItemDao.ItemDao.updateStock('-', res['idItem'], res['quantity']);
                     }
                 }
@@ -147,8 +144,6 @@ class OrderDao extends GenericDao {
                     reject(err);
                 } else {
                     for (const res of result) {
-                        contador2 = + 1
-                        console.log('entro itemColorsDao: ' + contador2)
                         const resta = res['quantity']
                         await this.BaseItemColorDao.ItemsColorsDao.updateStock('-', res['idItem'], res['idColor'], resta)
                     }
@@ -184,8 +179,6 @@ class OrderDao extends GenericDao {
                 if (err) {
                     reject(err)
                 } else {
-                    contador = + 1
-                    console.log('entro en updateOrderState: ' + contador)
                     await this.updateItemStock(id)
                     resolve('')
                 }
@@ -199,6 +192,7 @@ class OrderDao extends GenericDao {
                 if (err) {
                     reject(err)
                 } else {
+                    // console.log(result[0].idProductionStatus)
                     resolve(result[0].idProductionStatus)
                 }
             })

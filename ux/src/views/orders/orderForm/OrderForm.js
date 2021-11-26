@@ -28,7 +28,8 @@ const formSchema = {
     orderDate: { validations: [validator.isRequired] },
     productionDate: { validations: [validator.isRequired] },
     deliveryDate: { validations: [validator.isRequired] },
-    idColor: { validations: [validator.isRequired] }
+    idColor: { validations: [validator.isRequired] },
+    idTax: {validations : [validator.isRequired]}
 }
 
 export const OrderForm = () => {
@@ -118,8 +119,8 @@ export const OrderForm = () => {
                 const vp = await validateProduction('Orders', { productionDate: prettyForm.productionDate, idPool: prettyForm.idPool })
                 if (vp === true) {
                     save('Orders', id, prettyForm)
-                    // dispatch(handleCleanUp())
-                    // history.push('/orders')
+                    dispatch(handleCleanUp())
+                    history.push('/orders')
                 } else {
                     Swal.fire({
                         title: '¡Error!',

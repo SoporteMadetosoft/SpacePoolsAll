@@ -11,7 +11,7 @@ class ExtraItemColorDao extends GenericDao {
 
     async mountObj(data) {
         const { name, cost } = await this.ItemsColorsDao.findById(data.idItem)
-        const selectedColor = await this.ItemsColorsDao.ColorsDao.findById(data.idColor)
+        const selectedColor = await this.ItemsColorsDao.findById(data.idColor)
 
         const colData = await this.ItemsColorsDao.findByItemId(data.idItem)
 

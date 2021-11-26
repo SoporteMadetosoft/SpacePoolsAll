@@ -19,7 +19,7 @@ class ExtraItemColorDao extends GenericDao {
             ...data,
             idItem: await this.ItemsColorsDao.findById(data.idItem),
             coste: await this.ItemsColorsDao.findOneFieldById("cost", data.idItem),
-            idColor: selectedColor.id !== undefined ? selectedColor : '',
+            idColor: selectedColor !== undefined ? selectedColor : '',
             colores: colores
         }
         return extraItem

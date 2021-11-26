@@ -161,6 +161,8 @@ class GenericDao {
     #formatUpdate(params) {
         let update = ''
         Object.entries(params).forEach(element => {
+            element[1] = typeof element[1] === 'string' ? element[1].replace("'", "\\'") : element[1]
+
             if (element[0] !== 'id' && element[1] !== null && element[1] !== undefined) {
                 update = update.concat("`", element[0], "` = ", "'", element[1], "', ")
             } else if (element[0] !== 'id' && element[1] === null) {

@@ -23,14 +23,14 @@ const NotificationDropdown = () => {
   // ** Notification Array
   // const [notification, setNotification] = useState([])
   const dispatch = useDispatch()
-  const {data} = useSelector(state => state.alertReducer)
-const notification = data !== undefined ? data : []
+  const { data } = useSelector(state => state.alertReducer)
+  const notification = data !== undefined ? data : []
 
 
   useEffect(() => {
 
     dispatch(AlertLoad())
-     getNotificationDropDown('Alerts')
+    getNotificationDropDown('Alerts')
 
   }, [])
 
@@ -57,7 +57,7 @@ const notification = data !== undefined ? data : []
 
                 </Media>
                 <Media className="font-weight-bolder black" body>
-                  {item.title}
+                  {item.title}<br />
                   <small className='notification-text'>{item.subtitle}</small>
                 </Media>
               </Fragment>

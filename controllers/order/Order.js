@@ -168,7 +168,6 @@ exports.findNId = async (req, res) => {
 exports.switchState = async (req, res) => {
 
     try {
-        console.log('entro en SwitchState')
         await orderDao.updateOrderState(req.body.id)
         res.json({ ok: true })
     } catch (error) {

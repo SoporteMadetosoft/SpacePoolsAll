@@ -28,7 +28,6 @@ class ContactDao extends GenericDao {
     }
 
     findByVendorId(id) {
-        // console.log(`SELECT * FROM vendors_contact WHERE idVendor = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM vendors_contact WHERE idVendor = ?', [id], async (err, result) => {
                 if (err) {

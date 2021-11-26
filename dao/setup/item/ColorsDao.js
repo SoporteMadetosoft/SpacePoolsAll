@@ -26,7 +26,6 @@ class ColorsDao extends SetupDao {
     }
 
     findColorNameBy(id) {
-        //console.log(`SELECT name FROM setup_colors WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT name FROM setup_colors WHERE id = ?', [id], (err, result) => {
                 if (err) {

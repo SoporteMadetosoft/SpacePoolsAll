@@ -41,7 +41,6 @@ class UserDao extends GenericDao {
 
 
     checkUser(username) {
-        // console.log(`UPDATE orders SET state = 1 WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT COUNT(*) as contador FROM users WHERE login = ?', [username], (err, result) => {
                 if (err) {

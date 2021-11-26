@@ -43,7 +43,7 @@ export const ItemForm = () => {
 
         if (id === undefined) {
             dispatch(GetSetNextId("Items", 'itemCode'))
-        } 
+        }
         dispatch(setSchema(formSchema))
     }, [])
 
@@ -73,8 +73,6 @@ export const ItemForm = () => {
             history.push('/items')
         }
     }
-
-    console.log(itemCode)
 
     return (
         <Form onSubmit={submit}>

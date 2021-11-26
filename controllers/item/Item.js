@@ -55,8 +55,6 @@ exports.listByID = async (req, res) => {
 }
 exports.comprobacionStock = async (req, res) => {
     const { idItem } = req.body.nObj
-    console.log(idItem)
-
     try {
         res.json({
             ok: true,

@@ -41,7 +41,7 @@ export const originList = [
               <MoreVertical size={15} />
             </DropdownToggle>
             <DropdownMenu right>
-              {ability.can('update', 'origins') && (
+              {ability.can('update', 'origin') && (
                 <Link to={`./origin/edit/${row.id}`}>
                   <DropdownItem tag='a' href='/' className='w-100'>
                     <FileText size={15} />
@@ -49,7 +49,7 @@ export const originList = [
                   </DropdownItem>
                 </Link>
               )}
-              {ability.can('delete', 'origins') && (
+              {ability.can('delete', 'origin') && (
                 <DropdownItem tag='a' href='/' className='w-100' onClick={(e) => {
                   e.preventDefault()
                   dispatch(startDeleteRegister(row.id))

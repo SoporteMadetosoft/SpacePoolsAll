@@ -1,10 +1,12 @@
 const Calendar = require("../../models/calendar/Calendar");
 
 const GenericDao = require("../GenericDao");
+const OrderDao = require("../order/OrderDao");
 
 class CalendarDao extends GenericDao {
     constructor() {
         super(Calendar);
+        this.OrderDao = new OrderDao()
     }
 
     getEvents(calendars) {
@@ -28,15 +30,19 @@ class CalendarDao extends GenericDao {
 
 
     async mountList(data) {
+        const startC = await this.OrderDao.findOrderById(data.id)
+        const endCal = await this.OrderDao.findOrderById(data.id)
         const events = {
             ...data,
             allDay: !!data.allDay,
             extendedProps: {
                 calendar: data.calendar
-            }
+            },
+            startD : startC !== undefined ? startC.productionDate : '',
+            endC : endCal !== undefined ? endCal.deliveryDate : ''
         }
-        const { id, url, title, start, end, allDay, extendedProps } = events
-        const nObj = { id: id, url: url, title: title, start: start, end: end, allDay: allDay, extendedProps: extendedProps }
+        const { id, url, title, startD, endC, allDay, extendedProps } = events
+        const nObj = { id: id, url: url, title: title, start: startD, end: endC, allDay: allDay, extendedProps: extendedProps }
         return nObj
     }
 }

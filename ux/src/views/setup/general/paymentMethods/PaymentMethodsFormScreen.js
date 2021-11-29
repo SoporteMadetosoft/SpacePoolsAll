@@ -1,41 +1,44 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+
+import { handleStartEditing } from '../../../../redux/actions/normalForm'
+
 import BreadCrumbs from '@components/breadcrumbs'
-import { DynamicForm } from '@cc/form/DynamicForm'
-import { paymentMethodForm } from '@fixed/setup/general/paymentMethods/formComposition/paymentMethodForm'
-import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
-import { useHistory, useParams } from 'react-router-dom'
-import { handleStartEditing } from '../../../../redux/actions/form'
-import { startLoadingsPaymentMethods } from './redux/actions'
+import { PaymentMethodsForm } from './paymentMethodsForm/PaymentMethodsForm'
+// import { validate, validator } from '../../../../utility/formValidator/ValidationTypes'
+// import { setErrors, setSchema } from '../../../../redux/actions/formValidator'
+
+// const formSchema = {
+//     name: { validations: [validator.isRequired] },
+//     value: { validations: [validator.isRequired] }
+
+// }
 
 export const PaymentMethodsFormScreen = () => {
- 
-    const { id } = useParams()
 
-    const titulo = (id) ? 'Editar método de pago' : 'Añadir método de pago'
-   
+    const { id } = useParams()
     const dispatch = useDispatch()
-    const history = useHistory()
-    const {base} = useSelector(state => state.form.formData)
-    const form = useSelector(state => state.form)
+    //const { normalForm, formValidator} = useSelector( state => state)
+
+    const form = useSelector(state => state.normalForm)
 
     useEffect(() => {
         if (id) {
             dispatch(handleStartEditing('PaymentMethods', id))
         }
-    }, [id])
+    }, [])
+    
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        save('PaymentMethods', id, form)
-        dispatch(startLoadingsPaymentMethods())
-        history.push('/setup/general/paymentMethods')
-    }
+    const title = (id) ? 'Editar Método de pago' : 'Añadir Método de pago'
+    const customName = form.name ? form.name : title
+
+    
+
     return (
-        <form onSubmit={handleSubmit}>
-            <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Métodos de pago' breadCrumbActive={titulo} />
-            <DynamicForm formCustom={ paymentMethodForm } data={base} />
-            <ActionButtons />
-        </form>
+        <>
+                <BreadCrumbs breadCrumbTitle={customName} breadCrumbParent='Métodos de pago' breadCrumbActive={title} />
+                <PaymentMethodsForm />
+        </>
     )
 }

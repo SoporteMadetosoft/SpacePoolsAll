@@ -6,11 +6,16 @@
 const express = require('express');
 const router = express.Router();
 
-router.use('/language', require('./language/index'));
-router.use('/mode', require('./mode/index'));
-router.use('/status', require('./status/index'));
-router.use('/payday', require('./payday/index'));
+router.use('/language', require('./language'));
+router.use('/mode', require('./mode'));
+router.use('/status', require('./status'));
+router.use('/payday', require('./payday'));
+router.use('/fileManager', require('./fileManager'));
+router.use('/itemType', require('./itemType'));
+router.use('/productionStatus', require('./productionStatus'));
+router.use('/purchaseStatus', require('./purchaseStatus'));
+router.use('/show', require('./show'));
+router.use('/logos', require('./logos'));
 
 
 module.exports = router;
-    

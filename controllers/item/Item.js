@@ -1,11 +1,8 @@
+const ItemsColorsDao = require('../../dao/item/ItemColorsDao')
 const ItemDao = require('../../dao/item/ItemDao')
-const ProductFamilyDao = require('../../dao/item/ProductFamilyDao')
-const ProductPlaceDao = require('../../dao/setup/item/PlaceDao')
 
 const itemDao = new ItemDao()
-const productFamilyDao = new ProductFamilyDao()
-const productPlaceDao = new ProductPlaceDao()
-
+const itemsColorsDao = new ItemsColorsDao()
 
 
 exports.list = async (req, res) => {
@@ -21,14 +18,22 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.select = async (req, res) => {
+exports.listItems = async (req, res) => {
 
-    try{
+    const { itemType, idVendor } = req.body.nObj
+    let result
+    if (idVendor === null) {
+        result = await itemDao.findByItemType(itemType)
+    } else {
+        result = await itemDao.findByItemTypeAndVendor(itemType, idVendor)
+    }
+    try {
         res.json({
-            ok:true,
-            data: await itemDao.getSelect() 
+            ok: true,
+            data: result
         })
-    }catch(error){
+
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
@@ -41,6 +46,19 @@ exports.listByID = async (req, res) => {
         res.json({
             ok: true,
             data: await itemDao.findById(id)
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+exports.comprobacionStock = async (req, res) => {
+    const { idItem } = req.body.nObj
+    try {
+        res.json({
+            ok: true,
+            data: await itemDao.comprobacionStock(idItem)
         })
 
     } catch (error) {
@@ -64,23 +82,9 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT ITEM */
-        const insert = await itemDao.insert(req.body.formData.base)
-        /** INSERT PRODUCT FAMILY */
-        req.body.family.forEach(element => {
-            element.vendorId = insert.insertId
-            productFamilyDao.insert(element)
-        });
-        /** INSERT PRODUCT FAMILY (subfamily)*/
-        req.body.subfamily.forEach(element => {
-            element.vendorId = insert.insertId
-            productFamilyDao.insert(element)
-        });
-        /** INSERT PRODUCT PLACE */
-        req.body.place.forEach(element => {
-            element.vendorId = insert.insertId
-            productPlaceDao.insert(element)
-        });
-        
+        const item = req.body.form
+
+        await itemDao.insert(item)
 
         res.json({ ok: true })
     } catch (error) {
@@ -89,27 +93,45 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
     try {
         /** UPDATE ITEM */
-        itemDao.update(req.body.formData.base)
-        /** INSERT PRODUCT FAMILY */
-        req.body.formData.family.forEach(element => {
-            productFamilyDao.update(element)
-        })
-        /** INSERT PRODUCT FAMILY (subfamily)*/
-        req.body.formData.subfamily.forEach(element => {
-            productFamilyDao.update(element)
-        })
-        /** INSERT PRODUCT PLACE */
-        req.body.formData.place.forEach(element => {
-            productPlaceDao.update(element)
-        })
-       
+        const item = req.body.form
+
+        await itemDao.update(item)
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)
+    }
+}
+
+exports.findNId = async (req, res) => {
+    try {
+
+        res.json({
+            ok: true,
+            data: await itemDao.findAutoincrementID()
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}
+
+
+exports.selectByIdItem = async (req, res) => {
+    const id = parseInt(req.params.id, 10)
+
+    try {
+        res.json({
+            ok: true,
+            data: await itemsColorsDao.findByItemId(id)
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
     }
 }

@@ -1,66 +1,71 @@
 const Vehicle = require("../../models/vehicles/Vehicles");
-const GenericDao = require("../GenericDao");
-
+const BrandDao = require("../setup/vehicles/BrandDao");
+const SetupDao = require("../setup/SetupDao");
 const RepairDao = require("../vehicles/RepairDao");
 const StatusDao = require("../global/StatusDao");
-const ModelDao = require("../setup/general/ModelDao");
+const BrandModelDao = require("../setup/vehicles/BrandModelDao");
+const FileManagerDao = require("../global/FileManagerDao");
+const VehicleDocumentsDao = require("./VehicleDocumentsDao");
+const CarrierDao = require("../carrier/CarrierDao");
+const TrailerDao = require("../trailer/TrailerDao");
 
-class VehicleDao extends GenericDao{
-    RepairDao
-    StatusDao
-    ModelDao
-
-    constructor(){
+class VehicleDao extends SetupDao {
+    constructor() {
         super(Vehicle);
         this.RepairDao = new RepairDao()
         this.StatusDao = new StatusDao()
-        this.ModelDao = new ModelDao()
+        this.ModelDao = new BrandModelDao()
+        this.CarrierDao = new CarrierDao()
+        this.TrailerDao = new TrailerDao()
+        this.BrandDao = new BrandDao()
+        this.FileManagerDao = new FileManagerDao(VehicleDocumentsDao)
     }
 
-    async mountObj(data){
-        console.log(data)
-        const status = await this.StatusDao.findById(data.status)
+    async mountObj(data) {
         const model = await this.ModelDao.findById(data.model)
-        const vehicle={
+        const vehicle = {
             ...data,
             repairs: await this.RepairDao.findByVehicleId(data.id),
-            status: await this.createSelect(status.base),
-            model: await this.createSelect(model.base)
+            status: await this.StatusDao.findById(data.status),            
+            idStatus: await this.StatusDao.findById(data.idStatus),
+            idCarrier: await this.CarrierDao.findById(data.idCarrier),
+            idTrailer: data.idTrailer !== null ? await this.TrailerDao.findById(data.idTrailer) : '',
+            maintenanceDate: this.datetimeToDate(data.maintenanceDate),
+            ITVdate: this.datetimeToDate(data.ITVdate),
+            model,
+            brand: model.idBrand,
+            documents: await this.FileManagerDao.getDocumentsInfo(data.filePath)
         }
-        console.log(vehicle)
         return new Vehicle(vehicle)
     }
 
-    async mountList(data){
+    async mountList(data) {
+        let { name } = await this.CarrierDao.findById(data.idCarrier);
+        const model = await this.ModelDao.findById(data.model)
+        const brand = await this.BrandDao.findById(model.idBrand.id)
         const list = {
             ...data,
+            idCarrier: name,
+            ITVdate: this.datetimeToEuropeDate(data.ITVdate),
+            repairs: await this.RepairDao.findByVehicleId(data.id),
+            model: model != undefined ? model.name : '',
+            brand: brand != undefined ? brand.name : ''
 
         }
-        const{ vehicleCode, plate, carrierId, frameNumber}=list
-        const nObj = {vehicleCode:vehicleCode, plate:plate, carrierId:carrierId, frameNumber:frameNumber}
-        return nObj
+
+        return new Vehicle(list)
     }
 
-    getSelect() {
+    findByCarrierId(idCarrier) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM ??', [this.objectAux.table], async (err, result) => {
+            this.db.query('SELECT * FROM vehicles WHERE idCarrier = ?', [idCarrier], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    let objList = []
-                    for (const res of result) {
-                        objList.push(await this.mountSelect(res))
-                    }
-
-                    resolve(objList)
+                    resolve(await this.mountObj(result[0]))
                 }
-            });
+            })
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
-}   
+}
 module.exports = VehicleDao

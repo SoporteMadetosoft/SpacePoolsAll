@@ -1,32 +1,32 @@
 import React, { useEffect } from 'react'
-import BreadCrumbs from '@components/breadcrumbs'
-
-import { vendorTypeForm } from '@fixed/setup/vendors/vendorType/formComposition/vendorTypeForm'
-import { DynamicForm } from '@cc/form/DynamicForm'
-import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
-import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleStartEditing } from '../../../../redux/actions/form'
+import { useParams } from 'react-router-dom'
+
+import { handleStartEditing } from '../../../../redux/actions/normalForm'
+
+import BreadCrumbs from '@components/breadcrumbs'
+import { VendorTypeForm } from './vendorTypeForm/VendorTypeForm'
 
 export const VendorTypeFormScreen = () => {
-                 
-    const { id } = useParams()
 
-    const titulo = (id) ? 'Editar tipo de vendedor' : 'Añadir tipo de vendedor'
-   
+    const { id } = useParams()
     const dispatch = useDispatch()
-    const {base} = useSelector(state => state.form.formData)
-    
+
+    const form = useSelector(state => state.normalForm)
+
     useEffect(() => {
         if (id) {
             dispatch(handleStartEditing('VendorType', id))
         }
     }, [])
+
+    const title = (id) ? 'Editar Tipo de vendedor' : 'Añadir Tipo de vendedor'
+    const customName = form.name ? form.name : title
+
     return (
-        <form>
-            <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Tipos de proveedor' breadCrumbActive={titulo} />
-            <DynamicForm formCustom={ vendorTypeForm } data={base} />
-            <ActionButtons />
-        </form>
+        <>
+            <BreadCrumbs breadCrumbTitle={customName} breadCrumbParent='Tipos de proveedor' breadCrumbActive={title} />
+            <VendorTypeForm />
+        </>
     )
 }

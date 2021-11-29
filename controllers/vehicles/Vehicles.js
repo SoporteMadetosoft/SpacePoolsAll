@@ -1,9 +1,11 @@
 
 const RepairDao = require('../../dao/vehicles/RepairDao')
 const VehicleDao = require('../../dao/vehicles/VehicleDao')
+const VehicleDocumentsDao = require('../../dao/vehicles/VehicleDocumentsDao')
 
 const vehicleDao = new VehicleDao()
 const repairDao = new RepairDao()
+const vehicleDocumentsDao = new VehicleDocumentsDao()
 
 exports.list = async (req, res) => {
     try {
@@ -13,19 +15,6 @@ exports.list = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await vehicleDao.getSelect() 
-        })
-    }catch(error){
         console.log(error)
         return res.status(500).send(error);
     }
@@ -61,13 +50,20 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT VEHICLE */
-        const insert = await vehicleDao.insert(req.body.formData.base)
-        /**INSERT REPAIR */
-        req.body.repairs.forEach(element => {
-            element.idTrailer = insert.insertId
-            repairDao.insert(element)
-        });
+        const vehicle = req.body.form
+        const documents = req.body.form.documents
+        const numBastidor = req.body.numBastidor
+        
+        delete vehicle.documents
+        delete vehicle.repairs
+        delete vehicle.brand
+        delete vehicle.numBastidor
 
+        
+
+        const insert = await vehicleDao.insert(vehicle)
+
+        vehicleDao.multipleAccess(documents, vehicleDocumentsDao, insert.insertId, 'idVehicle')
 
         res.json({ ok: true })
     } catch (error) {
@@ -76,17 +72,38 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
     try {
         /**UPDATE VEHICLE */
-        vehicleDao.update(req.body.formData.base)
-        /**UPDATE REPAIR */
-        req.body.formData.repairs.forEach(element => {
-            repairDao.update(element)
-        })
-       
+        const vehicle = req.body.form
+        const documents = req.body.form.documents
+        const numBastidor = req.body.numBastidor
+
+        delete vehicle.documents
+        delete vehicle.repairs
+        delete vehicle.brand
+        delete vehicle.numBastidor
+
+
+        await vehicleDao.update(vehicle)
+
+        vehicleDao.multipleAccess(documents, vehicleDocumentsDao, vehicle.id, 'idVehicle')
+
         res.json({ ok: true })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}
+
+exports.findNId = async (req, res) => {
+    try {
+
+        res.json({
+            ok: true,
+            data: await vehicleDao.findAutoincrementID()
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

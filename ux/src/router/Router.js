@@ -1,5 +1,6 @@
 // ** React Imports
-import { Suspense, useContext, lazy, useEffect } from 'react'
+import { Suspense, useContext, lazy, useRef } from 'react'
+import IdleTimer from 'react-idle-timer'
 
 // ** Utils
 import { isUserLoggedIn } from '@utils'
@@ -20,9 +21,8 @@ import { DefaultRoute, Routes } from './routes'
 // ** Layouts
 import BlankLayout from '@layouts/BlankLayout'
 import VerticalLayout from '@src/components/layouts/VerticalLayout'
-
 import { useDispatch } from 'react-redux'
-import { startAddSelectOptions } from '../redux/actions/selects'
+import { handleLogout } from '../views/authentication/redux/actions'
 // import HorizontalLayout from '@src/layouts/HorizontalLayout'
 
 const Router = () => {
@@ -70,6 +70,7 @@ const Router = () => {
    */
   const FinalRoute = props => {
     const route = props.route
+
     let action, resource
 
     // ** Assign vars based on route meta
@@ -88,8 +89,9 @@ const Router = () => {
        ** If user is not Logged in & route.meta.authRoute, !route.meta.publicRoute are undefined
        ** Then redirect user to login
        */
-
       return <Redirect to='/login' />
+      // } else if (route.meta && route.meta.publicRoute) {
+      //   return <Redirect to={route.simpleUrl} />
     } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
       // ** If route has meta and authRole and user is Logged in then redirect user to home page (DefaultRoute)
       return <Redirect to='/' />
@@ -156,20 +158,20 @@ const Router = () => {
                             /*eslint-disable */
                             {...(route.appLayout
                               ? {
-                                  appLayout: route.appLayout
-                                }
+                                appLayout: route.appLayout
+                              }
                               : {})}
                             {...(route.meta
                               ? {
-                                  routeMeta: route.meta
-                                }
+                                routeMeta: route.meta
+                              }
                               : {})}
                             {...(route.className
                               ? {
-                                  wrapperClass: route.className
-                                }
+                                wrapperClass: route.className
+                              }
                               : {})}
-                            /*eslint-enable */
+                          /*eslint-enable */
                           >
                             <FinalRoute route={route} {...props} />
                           </LayoutWrapper>
@@ -186,22 +188,8 @@ const Router = () => {
     })
   }
 
+  const idleRef = useRef(null)
   const dispatch = useDispatch()
-
-useEffect( () => {
-  dispatch(startAddSelectOptions('/setup/general/department', 'departmentOpt'))
-  dispatch(startAddSelectOptions('/setup/general/paymentMethod', 'paymentMethodOpt'))
-  dispatch(startAddSelectOptions('/global/payday', 'paymentDayOpt'))
-  dispatch(startAddSelectOptions('/setup/customers/origin', 'customerOriginOpt'))
-  dispatch(startAddSelectOptions('/setup/customers/type', 'customerTypeOpt'))
-  dispatch(startAddSelectOptions('/setup/customers/activities', 'customerActivityOpt'))
-  dispatch(startAddSelectOptions('/setup/customers/category', 'customerCategoryOpt'))
-  dispatch(startAddSelectOptions('/setup/customers/logisticZone', 'logisticZoneOpt'))
-  dispatch(startAddSelectOptions('/global/mode', 'modeOpt'))
-  dispatch(startAddSelectOptions('/global/status', 'statusOpt'))
-  dispatch(startAddSelectOptions('/global/language', 'languageOpt'))
-
-}, [])
 
   return (
     <AppRouter basename={process.env.REACT_APP_BASENAME}>
@@ -224,7 +212,13 @@ useEffect( () => {
             </Layouts.BlankLayout>
           )}
         />
-        {ResolveRoutes()}
+        <IdleTimer
+          ref={idleRef}
+          timeout={3600000}
+          onIdle={() => dispatch(handleLogout())}
+        >
+          {ResolveRoutes()}
+        </IdleTimer>
 
         {/* NotFound Error page */}
         <Route path='*' component={Error} />

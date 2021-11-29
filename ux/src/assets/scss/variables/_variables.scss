@@ -2,3 +2,19 @@
 //  ? TIP:  It is recommended to use this file for overriding bootstrap variables.
 //  ================================================================================================
 $primary: #275b97;
+::placeholder, .css-1nxvan4-placeholder, .ant-select-selection-placeholder{
+    font-size: small;
+}
+.dropdown-menu .dropdown-menu-right {
+    z-index: 999 !important;
+}
+
+.fc-toolbar-title, .fc-col-header-cell-cushion  { text-transform: capitalize; }
+
+.inline-flex{
+    display: inline-flex !important;
+    margin: .5em !important;
+}
+.border-danger div{
+    border: 0;
+}

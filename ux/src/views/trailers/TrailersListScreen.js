@@ -1,23 +1,26 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-
-import { carriersList } from '../../fixed/vehicles/carriers/carriersList'
+import { trailersList } from '../../fixed/vehicles/trailers/trailersList'
 import { CustomDataTable } from '@cc/datatable/CustomDataTable'
 import { startLoadingTable } from '@redux/actions/custom'
+import { handleCleanForm } from '../../redux/actions/normalForm'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { cleanFormValidator } from '../../redux/actions/formValidator'
 
-export const TrailersListScreen = ({titulo}) => { 
+export const TrailersListScreen = ({ titulo }) => {
 
     const dispatch = useDispatch()
-    const {registros:data} = useSelector(state => state.registrosReducer)
+    const { registros: data } = useSelector(state => state.registrosReducer)
 
     useEffect(() => {
-        dispatch(startLoadingTable('Vehicles'))   
+        dispatch(handleCleanForm())
+        dispatch(startLoadingTable('Trailers'))
+        dispatch(cleanFormValidator())
     }, [])
 
     return (
-        <CustomDataTable title={ titulo } columns={ carriersList } data={ data } />
+        <CustomDataTable title={titulo} columns={trailersList} data={data} />
     )
 }

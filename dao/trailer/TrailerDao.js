@@ -1,66 +1,54 @@
-const Repair = require("../../models/trailer/Repair");
+// const Repair = require("../../models/trailer/Repair");
 const Trailer = require("../../models/trailer/Trailer");
-const GenericDao = require("../GenericDao");
+const SetupDao = require("../setup/SetupDao");
 
 const StatusDao = require("../global/StatusDao");
 const RepairDao = require("../trailer/RepairDao");
-const ModelDao = require("../setup/general/ModelDao");
+const BrandModelDao = require("../setup/vehicles/BrandModelDao");
+const BrandDao = require("../setup/vehicles/BrandDao");
+const FileManagerDao = require("../global/FileManagerDao");
+const TrailerDocumentsDao = require("./TrailerDocumentsDao");
 
-class TrailerDao extends GenericDao{
-    RepairDao
-    StatusDao
-    ModelDao
-
-    constructor(){
+class TrailerDao extends SetupDao {
+    constructor() {
         super(Trailer);
         this.RepairDao = new RepairDao()
         this.StatusDao = new StatusDao()
-        this.ModelDao = new ModelDao()
+        this.ModelDao = new BrandModelDao()
+        this.BrandDao = new BrandDao()
+        this.FileManagerDao = new FileManagerDao(TrailerDocumentsDao)
     }
 
-    async mountObj(data){
-        const status = await this.StatusDao.findById(data.status)
+    async mountObj(data) {
         const model = await this.ModelDao.findById(data.model)
-        const trailer={
+        const trailer = {
             ...data,
             repairs: await this.RepairDao.findByTrailerId(data.id),
-            status: await this.createSelect(status.base),
-            model: await this.createSelect(model.base)
+            idStatus: await this.StatusDao.findById(data.idStatus),
+            ITVdate: await this.datetimeToDate(data.ITVdate),
+            maintenanceDate: await this.datetimeToDate(data.maintenanceDate),
+            insuranceDateLimit: await this.datetimeToDate(data.insuranceDateLimit),
+            model,
+            brand: model.idBrand,
+            documents: await this.FileManagerDao.getDocumentsInfo(data.filePath)
         }
-        console.log(trailer)
         return new Trailer(trailer)
     }
 
-    async mountList(data){
+    async mountList(data) {
+        const model = await this.ModelDao.findById(data.model)
+        const brand = await this.BrandDao.findById(model.idBrand.id)
+
         const list = {
             ...data,
+            ITVdate: this.datetimeToEuropeDate(data.ITVdate),
+            repairs: await this.RepairDao.findByTrailerId(data.id),
+            model: model != undefined ? model.name : '',
+            brand: brand != undefined ? brand.name : ''
         }
 
-        const{ id, plate, model}=list
-        const nObj = {id:id, plate:plate, model:model}
-        return nObj
+        return new Trailer(list)
     }
-    
-    getSelect() {
-        return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM ??', [this.objectAux.table], async (err, result) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    let objList = []
-                    for (const res of result) {
-                        objList.push(await this.mountSelect(res))
-                    }
 
-                    resolve(objList)
-                }
-            });
-        })
-    }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
-}   
+}
 module.exports = TrailerDao

@@ -1,14 +1,13 @@
 const express = require('express');
+const { validarJWT } = require('../../middleware/validarJWT');
 
-const ControllerProduction = require('../../controllers/production/production');
+const ControllerProduction = require('../../controllers/production/Production');
 
 const router = express.Router();
 
-router.get('/list', ControllerProduction.list);
-router.get('/select', ControllerProduction.select);
-router.post('/insert', ControllerProduction.insert);
-router.put('/update', ControllerProduction.update);
-router.delete('/delete/:id', ControllerProduction.delete);
-router.post('/find', ControllerProduction.listByID);
+router.post('/list', validarJWT, ControllerProduction.list);
+router.put('/update', validarJWT, ControllerProduction.update);
+router.delete('/delete/:id', validarJWT, ControllerProduction.delete);
+router.post('/find', validarJWT, ControllerProduction.listByID);
 
 module.exports = router;

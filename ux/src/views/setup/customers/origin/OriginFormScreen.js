@@ -1,25 +1,17 @@
 import React, { useEffect } from 'react'
 import BreadCrumbs from '@components/breadcrumbs'
 
-import { originForm } from '@fixed/setup/customers/origin/formComposition/originForm'
-import { DynamicForm } from '@cc/form/DynamicForm'
-import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleStartEditing } from '../../../../redux/actions/form'
-import { save } from '../../../../utility/helpers/Axios/save'
-import { startLoadingOrigin } from './redux/actions'
+import { OriginForm } from './originForm/OriginForm'
+import { handleStartEditing } from '../../../../redux/actions/normalForm'
 
 export const OriginFormScreen = () => {
-                 
-    const { id } = useParams()
 
-    const titulo = (id) ? 'Editar origen' : 'Añadir origen'
-   
+    const { id } = useParams()
     const dispatch = useDispatch()
-    const history = useHistory()
-    const {base} = useSelector(state => state.form.formData)
-    const form = useSelector(state => state.form)
+
+    const form = useSelector(state => state.normalForm)
 
     useEffect(() => {
         if (id) {
@@ -27,17 +19,14 @@ export const OriginFormScreen = () => {
         }
     }, [])
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        save('Origin', id, form)
-        dispatch(startLoadingOrigin())
-        history.push('/setup/customer/origin')
-    }
+    const title = (id) ? 'Editar Origen' : 'Añadir Origen'
+    const customName = form.name ? form.name : title
+
+
     return (
-        <form onSubmit={handleSubmit}>
-            <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Origenes' breadCrumbActive={titulo} />
-            <DynamicForm formCustom={ originForm } data={base} />
-            <ActionButtons />
-        </form>
+        <>
+            <BreadCrumbs breadCrumbTitle={customName} breadCrumbParent='Origenes' breadCrumbActive={title} />
+            <OriginForm />
+        </>
     )
 }

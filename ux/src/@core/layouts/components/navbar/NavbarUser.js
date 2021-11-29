@@ -3,7 +3,7 @@
 // import CartDropdown from './CartDropdown'
 import UserDropdown from './UserDropdown'
 // import NavbarSearch from './NavbarSearch'
-// import NotificationDropdown from './NotificationDropdown'
+import NotificationDropdown from './NotificationDropdown'
 
 // ** Third Party Components
 import { Sun, Moon } from 'react-feather'
@@ -32,7 +32,7 @@ const NavbarUser = props => {
       </NavItem>
       {/* <NavbarSearch /> */}
       {/* <CartDropdown /> */}
-      {/* <NotificationDropdown /> */}
+      <NotificationDropdown />
       <UserDropdown />
     </ul>
   )

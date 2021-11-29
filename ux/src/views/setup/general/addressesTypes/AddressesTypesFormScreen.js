@@ -1,42 +1,32 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+
+import { handleStartEditing } from '../../../../redux/actions/normalForm'
+
 import BreadCrumbs from '@components/breadcrumbs'
-import { DynamicForm } from '@cc/form/DynamicForm'
-import { addressesTypesForm } from '@fixed/setup/general/addressesTypes/formComposition/addressesTypesForm'
-import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
-import { useHistory, useParams } from 'react-router-dom'
-import { handleStartEditing } from '../../../../redux/actions/form'
-import { save } from '../../../../utility/helpers/Axios/save'
-import { startLoadingAddresses } from './redux/actions'
+import { AddressesTypesForm } from './addressesTypesForm/AddressesTypesForm'
 
 export const AddressesTypesFormScreen = () => {
- 
-    const { id } = useParams()
 
-    const titulo = (id) ? 'Editar tipo de dirección' : 'Añadir tipo de dirección'
-   
+    const { id } = useParams()
     const dispatch = useDispatch()
-    const history = useHistory()
-    const {base} = useSelector(state => state.form.formData)
-    const form = useSelector(state => state.form)
+
+    const form = useSelector(state => state.normalForm)
 
     useEffect(() => {
         if (id) {
             dispatch(handleStartEditing('AddressesTypes', id))
         }
     }, [])
-    
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        save('AddressesTypes', id, form)
-        dispatch(startLoadingAddresses())
-        history.push('/setup/general/addressesTypes')
-    }
+
+    const title = (id) ? 'Editar Tipo de dirección' : 'Añadir Tipo de dirección'
+    const customName = form.name ? form.name : title
+
     return (
-        <form onSubmit={handleSubmit}>
-            <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Tipos de direcciones' breadCrumbActive={titulo} />
-            <DynamicForm formCustom={ addressesTypesForm } data={base} />
-            <ActionButtons />
-        </form>
+        <>
+            <BreadCrumbs breadCrumbTitle={customName} breadCrumbParent='Tipos de dirección' breadCrumbActive={title} />
+            <AddressesTypesForm />
+        </>
     )
 }

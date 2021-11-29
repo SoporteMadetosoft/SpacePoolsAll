@@ -1,58 +1,99 @@
 const User = require("../../models/user/User");
 const GenericDao = require("../GenericDao");
-
 const StatusDao = require("../global/StatusDao");
+const RoleDao = require("../role/RoleDao");
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
-class UserDao extends GenericDao{
-    StatusDao
-
-    constructor(){
+class UserDao extends GenericDao {
+    constructor() {
         super(User);
         this.StatusDao = new StatusDao()
+        this.RoleDao = new RoleDao()
     }
 
-    async mountObj(data){
-        console.log(data)
-        const status = await this.StatusDao.findById(data.status)
-        const user={
+    async mountObj(data) {
+        const role = await this.RoleDao.findById(data.idRole)
+        const user = {
             ...data,
-            status: await this.createSelect(status.base),
+            idStatus: await this.StatusDao.findById(data.idStatus),
+            idRole: {
+                id: role.id,
+                name: role.name
+            }
         }
-        console.log(user)
         return new User(user)
     }
 
-    async mountList(data){
+    async mountList(data) {
+        const role = await this.RoleDao.findById(data.idRole)
         const list = {
             ...data,
+            idRole: role !== undefined ? role.name : ''
         }
 
-        const{ name, login, group, status}=list
-        const nObj = {name:name, login:login, group:group, status:status}
+        const { id, fullname, login, idRole, idStatus } = list
+        const nObj = { id, fullname: fullname, login: login, idRole: idRole, idStatus: idStatus }
+
         return nObj
     }
 
-    getSelect() {
+
+    checkUser(username) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM ??', [this.objectAux.table], async (err, result) => {
+            this.db.query('SELECT COUNT(*) as contador FROM users WHERE login = ?', [username], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    let objList = []
-                    for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                    if (result[0].contador === 0) {
+                        resolve(true)
+                    } else {
+                        resolve(false)
                     }
-
-                    resolve(objList)
                 }
-            });
+            })
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
+
+    insertUser(form) {
+        return new Promise((resolve, reject) => {
+            const { login, fullname, email, phone, password, idRole, idStatus } = form
+            bcrypt.hash(password, saltRounds).then((hash) => {
+                this.db.query('INSERT INTO users (idRole, idStatus, fullname, login, email, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?)', [idRole, idStatus, fullname, login, email, phone, hash], (err, result) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve('')
+                    }
+                })
+            })
+        })
+    }
+
+    updateUser(form) {
+        return new Promise((resolve, reject) => {
+            const { id, login, fullname, email, phone, password, idRole, idStatus } = form
+            if (password) {
+                bcrypt.hash(password, saltRounds).then((hash) => {
+                    this.db.query('UPDATE users SET idRole = ?, idStatus = ?, fullname = ?, login = ?, email = ?, phone = ?, password = ? WHERE id = ?', [idRole, idStatus, fullname, login, email, phone, hash, id], (err, result) => {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            resolve('')
+                        }
+                    })
+                })
+            } else {
+                this.db.query('UPDATE users SET idRole = ?, idStatus = ?, fullname = ?, login = ?, email = ?, phone = ? WHERE id = ?', [idRole, idStatus, fullname, login, email, phone, id], (err, result) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve('')
+                    }
+                })
+            }
+        })
     }
 }
 module.exports = UserDao

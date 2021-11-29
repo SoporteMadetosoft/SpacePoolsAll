@@ -5,25 +5,12 @@ const AddressType = require('../../../models/setup/general/AddressType')
 const addressTypesDao = new AddressTypesDao(AddressType)
 exports.list = async (req, res) => {
 
-    try{
+    try {
         res.json({
-            ok:true,
-            data: await addressTypesDao.findAll() 
+            ok: true,
+            data: await addressTypesDao.findAll()
         })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data:  await addressTypesDao.getSelect()
-        })
-    }catch(error){
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
@@ -46,7 +33,7 @@ exports.listByID = async (req, res) => {
 
 exports.delete = async (req, res) => {
     const id = parseInt(req.params.id, 10)
-    
+
     try {
         await addressTypesDao.deleteById(id)
         res.json({ ok: true, msg: `Success deleting id ${id}` })
@@ -57,22 +44,22 @@ exports.delete = async (req, res) => {
 }
 
 exports.insert = (req, res) => {
-    try{
-        addressTypesDao.insert(req.body.formData.base)
-        res.json({ok: true})
-    }catch(error){
+    try {
+        addressTypesDao.insert(req.body.form)
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
     }
 }
 
-exports.update =(req, res)=>{
-    
-    try{
-        addressTypesDao.update(req.body.formData.base)
-        res.json({ok: true})
-    }catch(error){
+exports.update = (req, res) => {
+
+    try {
+        addressTypesDao.update(req.body.form)
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
-    }    
+    }
 }

@@ -29,6 +29,7 @@ import {
 
 import '@styles/base/pages/page-auth.scss'
 import CardImg from 'reactstrap/lib/CardImg'
+import Swal from 'sweetalert2'
 
 const ToastContent = ({ name, role }) => (
   <Fragment>
@@ -52,27 +53,39 @@ const Login = props => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { register, errors, handleSubmit } = useForm() 
+  const { register, errors, handleSubmit } = useForm()
 
   const illustration = skin === 'dark' ? 'background1.png' : 'background1.png',
     source = require(`@src/assets/images/backgrounds/${illustration}`).default
-    const logoLogin = require(`@src/assets/images/ico/favicon.png`).default
+  const logoLogin = require(`@src/assets/images/ico/favicon.png`).default
 
   const onSubmit = (data) => {
     if (isObjEmpty(errors)) {
-  
+
       useJwt
         .login({ email, password })
         .then(res => {
-          const data = { ...res.data.userData, accessToken: res.data.accessToken, refreshToken: res.data.refreshToken }
-          dispatch(handleLogin(data))
-          console.log('3')
-          ability.update(res.data.userData.ability)
-          history.push(getHomeRouteForLoggedInUser(data.role))
-          toast.success(
-            <ToastContent name={data.fullName || data.username || 'No usename'} role={data.role || 'admin'} />,
-            { transition: Slide, hideProgressBar: true, autoClose: 2000 }
-          )
+          if (res.data.ok === false) {
+            Swal.fire({
+              title: '¡Error!',
+              text: res.data.data,
+              icon: 'error',
+              timer: 3000,
+              timerProgressBar: true,
+              customClass: {
+                confirmButton: 'btn btn-success'
+              }
+            })
+          } else {
+            const data = { ...res.data.data.userData, accessToken: res.data.data.accessToken }
+            dispatch(handleLogin(data))
+            ability.update(res.data.data.userData.ability)
+            history.push(getHomeRouteForLoggedInUser(data.role))
+            toast.success(
+              <ToastContent name={data.fullName || data.username || 'No usename'} role={data.role || 'Admin'} />,
+              { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+            )
+          }
         })
         .catch(err => console.log(err))
     }
@@ -81,16 +94,16 @@ const Login = props => {
   return (
     <div className='auth-wrapper auth-v2'>
       <Row className='auth-inner m-0'>
-      <Col className='d-none d-lg-flex align-items-center' lg='8' sm='12'  style={{padding: '0px'}} >
+        <Col className='d-none d-lg-flex align-items-center' lg='8' sm='12' style={{ padding: '0px', margin: '0px' }} >
           <div className='w-100 h-100 d-lg-flex align-items-center justify-content-center'>
-            <img className='img-fluid' src={source} alt='Login V2' style={{ width: '200%' }}/>
+            <img className='img-fluid' src={source} alt='Login V2' style={{ width: '200%' }} />
           </div>
         </Col>
-        <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
+        <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12' style={{ padding: '0px', margin: '0px' }}>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
-              <div className="d-flex d-lg-flex align-items-center justify-content-center mb-2">
-                <CardImg src={logoLogin} style={{width: '200px'}} />
-              </div>
+            <div className="d-flex d-lg-flex align-items-center justify-content-center mb-2">
+              <CardImg src={logoLogin} style={{ width: '200px' }} />
+            </div>
             <CardTitle tag='h2' className='font-weight-bold mb-1 d-flex d-lg-flex align-items-center justify-content-center mb-1'>
               Bienvenido a Beta SFP
             </CardTitle>
@@ -98,19 +111,18 @@ const Login = props => {
             <CardText className='mb-1 d-flex d-lg-flex align-items-center justify-content-center'>
               Por favor, introduce tus datos de acceso
             </CardText>
-            
+
             <Form className='auth-login-form mt-2' onSubmit={handleSubmit(onSubmit)}>
               <FormGroup>
                 <Label className='form-label' for='login-email'>
-                  Email
+                  Login
                 </Label>
                 <Input
                   autoFocus
-                  type='email'
                   value={email}
                   id='login-email'
                   name='login-email'
-                  placeholder='Email'
+                  placeholder='Login'
                   onChange={e => setEmail(e.target.value)}
                   className={classnames({ 'is-invalid': errors['login-email'] })}
                   innerRef={register({ required: true, validate: value => value !== '' })}
@@ -125,11 +137,11 @@ const Login = props => {
                     <small>¿Olvidaste la contraseña?</small>
                   </Link>
                 </div>
-                <InputPasswordToggle 
+                <InputPasswordToggle
                   value={password}
                   id='login-password'
                   name='login-password'
-                  className='input-group-merge mb-2'  
+                  className='input-group-merge mb-2'
                   htmlFor='merge-password'
                   onChange={e => setPassword(e.target.value)}
                   innerRef={register({ required: true, validate: value => value !== '' })}

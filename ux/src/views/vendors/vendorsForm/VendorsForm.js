@@ -1,132 +1,131 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Select from 'react-select'
-
-import { handleChangeController } from '../../../redux/actions/normalForm'
+import { useHistory, useParams } from 'react-router'
+import { useForm } from 'react-hook-form'
+import { handleChangeController, GetSetNextId, handleGetForm } from '../../../redux/actions/normalForm'
+import { Form } from 'reactstrap'
 import { AddressesRepeater } from './AddressesRepeater'
 import { ContactsRepeater } from './ContactsRepeater'
+import { Input } from '../../../components/form/inputs/Input'
+import { Select } from '../../../components/form/inputs/Select'
+import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
+import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
+import { save } from '../../../utility/helpers/Axios/save'
+import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
+import { handleCleanUp } from '../../../redux/actions/fileUpload'
 
 
-export const VendorsForm = (id) => {
+const formSchema = {
+    CIF: { validations: [validator.isRequired] },
+    idStatus: { validations: [validator.isRequired] },
+    comercialName: { validations: [validator.isRequired] }
 
+}
+
+export const VendorsForm = () => {
+
+    const { id } = useParams()
     const dispatch = useDispatch()
-    const { normalForm, selectReducer } = useSelector(state => state)
+    const history = useHistory()
+    const { normalForm } = useSelector(state => state)
+    const { formValidator } = useSelector(state => state)
 
-    const {
-        comercialName,
-        cif,
-        socialReason,
-        phone,
-        email,
-        idVendorType,
-        idPaymentMethod,
-        idStatus,
-        observations } = normalForm
+    const { observations } = normalForm
 
-    const { 
-        paymentMethodOpt,
-        vendorTypesOpt,
-        statusOpt } = selectReducer
-
-    useEffect( () => {
-        // if (id) {
-        //     dispatch(handleStartEditing('Vehicles', id))
-        // }
-    }, [])
-
+    const vendorCode = id !== undefined ? id : normalForm.vendorCode
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
-    const handleSelectChange = (key, value) => {
-        dispatch(handleChangeController(key, value))
+    useEffect(() => {
+
+        if (id === undefined) {
+            dispatch(GetSetNextId("Vendors", "vendorCode"))
+        }
+        dispatch(setSchema(formSchema))
+        }, [])
+
+
+
+    const submit = async (e) => {
+        e.preventDefault()
+        const errors = validate(formValidator.schema, normalForm)
+
+
+
+        if (Object.keys(errors).length !== 0) {
+
+
+            dispatch(setErrors(errors))
+        } else {
+
+
+            const form2 = dispatch(handleGetForm())
+            form2.then(async (value) => {
+                const prettyForm = {
+                    ...value,
+                    idPaymentMethod: exceptionController(value.idPaymentMethod),
+                    idVendorType: exceptionController(value.idVendorType),
+                    idStatus: exceptionController(value.idStatus),
+                    addresses: normalForm.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType), defaultAddress: address.defaultAddress === true ? 1 : 0 })),
+                    contacts: normalForm.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department), defaultContact: contact.defaultContact === true ? 1 : 0 }))
+                }
+                save('Vendors', id, prettyForm)
+                dispatch(handleCleanUp())
+                history.push('/vendors')
+
+            })
+
+        }
+
+
     }
 
     return (
-        <>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
-                    <div className="col-md-3">
-                        <label className="control-label">Nombre Comercial</label>
+                    <div className="col-md-2">
+                        <label className="control-label">Nº Proveedor</label>
                         <input
-                            className="form-control"
-                            name="comercialName"
-                            placeholder="Nombre Comercial"
-                            value={comercialName}
-                            onChange={handleInputChange}
+                            className={`form-control`}
+                            name="vendorCode"
+                            value={vendorCode}
+                            readOnly
                         />
                     </div>
-                    <div className="col-md-3">
-                        <label className="control-label">C.I.F.</label>
-                        <input
-                            className="form-control"
-                            name="CIF"
-                            placeholder="C.I.F."
-                            value={cif}
-                            onChange={handleInputChange}
-                        />
+                    <div className="col-md-4">
+                        <Input name="comercialName" label="Nombre Comercial" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Razon social</label>
-                        <input
-                            className="form-control"
-                            name="socialReason"
-                            placeholder="Razon social"
-                            value={socialReason}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div className="col-md-3">
-                        <label className="control-label">Teléfono</label>
-                        <input
-                            className="form-control"
-                            name="phone"
-                            placeholder="Teléfono"
-                            value={phone}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div className="col-md-3">
-                        <label className="control-label">Correo electrónico</label>
-                        <input
-                            className="form-control"
-                            name="email"
-                            placeholder="Correo electrónico"
-                            value={email}
-                            onChange={handleInputChange}
 
-                        />
+                        <Input id="CIF" name="CIF" placeholder="C.I.F" type="text" value={normalForm['CIF']} onChange={handleInputChange} label="C.I.F" />
+
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Forma de pago</label>
-                        <Select
-                            name="idPaymentMethod"
-                            placeholder="Forma de pago"
-                            options={ paymentMethodOpt }
-                            defaultValue={idPaymentMethod}
-                            onChange={ (value) => { handleSelectChange('idPaymentMethod', value) }}
-                        />
+
+                        <Input name="socialReason" label="Razón social" />
+
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Tipo de proveedor</label>
-                        <Select
-                            name="idVendorType"
-                            placeholder="Tipo de proveedor"
-                            options={ vendorTypesOpt }
-                            defaultValue={idVendorType}
-                            onChange={ (value) => { handleSelectChange('idVendorType', value) }}
-                        />
+                        <Input name="phone" label="Teléfono" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Estado</label>
-                        <Select
-                            name="idStatus"
-                            placeholder="Estado"
-                            options={ statusOpt }
-                            defaultValue={idStatus}
-                            onChange={ (value) => { handleSelectChange('idStatus', value) }}
-                        />
+                        <Input name="email" label="Correo electrónico" />
+                    </div>
+                    <div className="col-md-3">
+                        <Select name="idPaymentMethod" label="Forma de pago" endpoint="PaymentMethods" />
+                    </div>
+                    <div className="col-md-3">
+                        <Select name="idVendorType" label="Tipo de proveedor" endpoint="VendorType" />
+                    </div>
+                    <div className="col-md-3">
+                        <Select name="idOrigin" label="Origen" endpoint="Origin" />
+                    </div>
+                    <div className="col-md-3">
+                        <Select name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-12">
                         <label className="control-label">Observaciones</label>
@@ -151,6 +150,7 @@ export const VendorsForm = (id) => {
                     <ContactsRepeater />
                 </div>
             </div>
-        </>
+            <ActionButtons />
+        </Form>
     )
 }

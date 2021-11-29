@@ -1,11 +1,27 @@
 const CustomerDao = require('../../dao/customer/CustomerDao')
+const CarrierDocumentsDao = require('../../dao/customer/CustomerDocumentsDao')
+
 const customerDao = new CustomerDao()
+const carrierDocumentsDao = new CarrierDocumentsDao()
 
 exports.list = async (req, res) => {
     try {
         res.json({
             ok: true,
             data: await customerDao.findAll()
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+exports.select = async (req, res) => {
+    
+    try {
+        res.json({
+            ok: true,
+            data: await customerDao.findAllStatus()
         })
 
     } catch (error) {
@@ -50,15 +66,19 @@ exports.insert = async (req, res) => {
         const customer = req.body.form
         const addresses = req.body.form.addresses
         const contacts = req.body.form.contacts
-        console.log(req.body.form)
+        const documents = req.body.form.documents
+
         delete customer.addresses
         delete customer.contacts
+        delete customer.documents
+
         const insert = await customerDao.insert(customer)
-        /** INSERT ADDRESSES**/
-        
+
         customerDao.multipleAccess(addresses, customerDao.CustomerAddressDao, insert.insertId, 'idCustomer')
-        /** INSERT CONTACT PERSONS**/
+
         customerDao.multipleAccess(contacts, customerDao.CustomerContactPersonDao, insert.insertId, 'idCustomer')
+
+        customerDao.multipleAccess(documents, carrierDocumentsDao, insert.insertId, 'idCustomer')
 
         res.json({ ok: true })
     } catch (error) {
@@ -71,25 +91,37 @@ exports.update = async (req, res) => {
 
     try {
         /** UPDATE CUSTOMER **/
-        const base = await customerDao.unMountBase(req.body.formData.base)
+        const customer = req.body.form
+        const addresses = req.body.form.addresses
+        const contacts = req.body.form.contacts
+        const documents = req.body.form.documents
+
+        delete customer.addresses
+        delete customer.contacts
+        delete customer.documents
         
-        customerDao.update(base)
-        /** UPDATE ADDRESSES **/
-        req.body.formData.addresses.forEach(async (element) => {
-            const address = await customerDao.unMountAddress(element)
-            if (address.id) {
-                customerAddressDao.update(address)
-            } else {
-                element.idCustomer = insert.address.idCustomer
-                customerAddressDao.insert(address)
-            }
-        })
-        // /** UPDATE CONTACT PERSONS **/
-        req.body.formData.contactPersons.forEach(async (element) => {
-            const contacts = await customerDao.unMountContacts(element)
-            contactPersonsDao.update(contacts)
-        })
+        customerDao.update(customer)
+
+        customerDao.multipleAccess(addresses, customerDao.CustomerAddressDao, customer.id, 'idCustomer')
+
+        customerDao.multipleAccess(contacts, customerDao.CustomerContactPersonDao, customer.id, 'idCustomer')
+
+        customerDao.multipleAccess(documents, carrierDocumentsDao, customer.id, 'idCustomer')
+
         res.json({ ok: true })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}
+
+exports.findNId= async (req, res) => {
+    try {
+       
+        res.json({ 
+            ok: true,
+            data: await  customerDao.findAutoincrementID()
+         })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

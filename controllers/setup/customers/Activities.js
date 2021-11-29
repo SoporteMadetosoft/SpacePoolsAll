@@ -4,25 +4,12 @@ const Activity = require('../../../models/setup/customer/CustomerActivity')
 const activityDao = new ActivityDao(Activity)
 exports.list = async (req, res) => {
 
-    try{
+    try {
         res.json({
-            ok:true,
-            data: await activityDao.findAll() 
+            ok: true,
+            data: await activityDao.findAll()
         })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await activityDao.getSelect() 
-        })
-    }catch(error){
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
@@ -54,22 +41,22 @@ exports.delete = async (req, res) => {
 }
 
 exports.insert = (req, res) => {
-    try{
-        activityDao.insert(req.body.formData.base)
-        res.json({ok: true})
-    }catch(error){
+    try {
+        activityDao.insert(req.body.form)
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
     }
 }
 
-exports.update =(req, res)=>{
-    
-    try{
-        activityDao.update(req.body.formData.base)
-        res.json({ok: true})
-    }catch(error){
+exports.update = (req, res) => {
+
+    try {
+        activityDao.update(req.body.form)
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
-    }    
+    }
 }

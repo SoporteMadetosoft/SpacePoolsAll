@@ -1,17 +1,20 @@
-class Production{
-    base = {}
+class Production {
     #table = 'production'
 
     constructor({
         id,
-        orderId,
+        idOrder,
         productionCode,
-        status
-    }){
-        this.base.id = id
-        this.base.orderId = orderId
-        this.base.productionCode = productionCode
-        this.base.status = status
+        idProductionStatus,
+        isStarted
+    }) {
+        this.id = id
+        this.idOrder = idOrder
+       // this.productionCode = productionCode
+       // this.status = status
+        this.idProductionStatus = idProductionStatus
+        this.productionCode = productionCode,
+        this.isStarted = isStarted
     }
     get table() {
         return this.#table;

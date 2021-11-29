@@ -11,7 +11,7 @@ class CustomerDataDao extends GenericDao {
 
         const customerData = {
             ...data,
-            
+
         }
         return new CustomerData(customerData)
     }
@@ -20,50 +20,39 @@ class CustomerDataDao extends GenericDao {
         const list = {
             ...data,
         }
-        const{id, phone, email} =list
-        const nObj = { id:id, phone : phone, email: email}
+        const { id, phone, email } = list
+        const nObj = { id: id, phone: phone, email: email }
         return nObj
     }
 
-    getSelect() {
+    findByOrderId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM ??', [this.objectAux.table], async (err, result) => {
+            this.db.query('SELECT * FROM orders_customer_data WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    let objList = []
-                    for (const res of result) {
-                        objList.push(await this.mountSelect(res))
-                    }
-
-                    resolve(objList)
-                }
-            });
-        })
-    }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
-
-    findByOrderId (id) {
-        return new Promise((resolve, reject) => { 
-            this.db.query('SELECT * FROM orders_customer_data WHERE orderId = ?', [id], (err, result) => {
-                if(err){ 
-                    reject(err)
-                }else{
                     const customerData = []
-                    for(const centerDB of result){
-                        customerData.push(this.mountObj(centerDB))
+                    for (const centerDB of result) {
+                        customerData.push(await this.mountObj(centerDB))
                     }
-                  
+
                     resolve(customerData)
                 }
             })
         })
     }
 
+    findOneFieldById(field, id) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT ?? FROM orders_customer_data WHERE idOrder = ?', [field, id], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(result[0][field])
+                }
+            })
+        })
+    }
 }
 
 module.exports = CustomerDataDao

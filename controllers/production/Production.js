@@ -2,30 +2,20 @@ const ProductionDao = require('../../dao/production/ProductionDao')
 
 const productionDao = new ProductionDao()
 
-
-
-
 exports.list = async (req, res) => {
     try {
+        const productionStatus = req.body.productionStatus
+        const arrayIDS = []
+        productionStatus.forEach((p, index) => {
+            arrayIDS.push(p.id)
+        })
+
         res.json({
             ok: true,
-            data: await productionDao.findAll()
+            data: await productionDao.findByState(arrayIDS)
         })
 
     } catch (error) {
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await productionDao.getSelect() 
-        })
-    }catch(error){
         console.log(error)
         return res.status(500).send(error);
     }
@@ -46,6 +36,7 @@ exports.listByID = async (req, res) => {
     }
 }
 
+
 exports.delete = async (req, res) => {
     const id = parseInt(req.params.id, 10)
     try {
@@ -55,29 +46,15 @@ exports.delete = async (req, res) => {
         console.log(error)
         return res.status(500).send(error);
     }
-
-}
-
-exports.insert = async (req, res) => {
-    try {
-        /** INSERT PRODUCTION */
-        const insert = await productionDao.insert(req.body.formData.base)
-       
-
-        res.json({ ok: true })
-    } catch (error) {
-        console.log(error)
-        return res.status(500).send(error)
-    }
 }
 
 exports.update = (req, res) => {
 
     try {
         /** UPDATE PRODUCTION */
-        productionDao.update(req.body.formData.base)
-    
-       
+        productionDao.update(req.body.form)
+
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

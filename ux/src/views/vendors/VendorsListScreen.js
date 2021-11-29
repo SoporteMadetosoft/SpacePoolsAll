@@ -5,20 +5,23 @@ import { CustomDataTable } from '@cc/datatable/CustomDataTable'
 import { startLoadingTable } from '@redux/actions/custom'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-import { handleCleaningUp } from '../../redux/actions/form'
-import { vendorList } from '../../fixed/vendors/vendorsList'
 
-export const VendorsListScreen = ({titulo}) => {
+import { handleCleanForm } from '../../redux/actions/normalForm'
+import { vendorList } from '../../fixed/vendors/vendorsList'
+import { cleanFormValidator } from '../../redux/actions/formValidator'
+
+export const VendorsListScreen = ({ titulo }) => {
 
     const dispatch = useDispatch()
-    const {registros:data} = useSelector(state => state.registrosReducer)
+    const { registros: data } = useSelector(state => state.registrosReducer)
 
     useEffect(() => {
-        // dispatch(handleCleaningUp())
-        // dispatch(startLoadingTable('Vendors'))   
+        dispatch(handleCleanForm())
+        dispatch(startLoadingTable('Vendors'))
+        dispatch(cleanFormValidator())
     }, [])
 
     return (
-        <CustomDataTable title={ titulo } columns={ vendorList } data={ data } />
+        <CustomDataTable title={titulo} columns={vendorList} data={data} />
     )
 }

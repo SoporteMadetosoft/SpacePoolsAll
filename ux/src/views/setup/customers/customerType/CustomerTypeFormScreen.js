@@ -1,25 +1,17 @@
 import React, { useEffect } from 'react'
 import BreadCrumbs from '@components/breadcrumbs'
 
-import { customerTypeForm } from '@fixed/setup/customers/customerType/formComposition/customerTypeForm'
-import { DynamicForm } from '@cc/form/DynamicForm'
-import { ActionButtons } from '../../../../components/actionButtons/ActionButtons'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleStartEditing } from '../../../../redux/actions/form'
-import { save } from '../../../../utility/helpers/Axios/save'
-import { startLoadingCustomerType } from './redux/actions'
+import { CustomerTypeForm } from './customerTypeForm/CustomerTypeForm'
+import { handleStartEditing } from '../../../../redux/actions/normalForm'
 
 export const CustomerTypeFormScreen = () => {
-             
-    const { id } = useParams()
 
-    const titulo = (id) ? 'Editar Tipo de cliente' : 'Añadir Tipo de cliente'
-   
+    const { id } = useParams()
     const dispatch = useDispatch()
-    const history = useHistory()
-    const {base} = useSelector(state => state.form.formData)
-    const form = useSelector(state => state.form)
+
+    const form = useSelector(state => state.normalForm)
 
     useEffect(() => {
         if (id) {
@@ -27,17 +19,15 @@ export const CustomerTypeFormScreen = () => {
         }
     }, [])
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        save('CustomerType', id, form)
-        dispatch(startLoadingCustomerType())
-        history.push('/setup/customer/customerType')
-    }
+    const title = (id) ? 'Editar Tipo de cliente' : 'Añadir Tipo de cliente'
+    const customName = form.name ? form.name : title
+
+
+
     return (
-        <form onSubmit={handleSubmit}>
-            <BreadCrumbs breadCrumbTitle={titulo} breadCrumbParent='Tipos de cliente' breadCrumbActive={titulo} />
-            <DynamicForm formCustom={ customerTypeForm } data={base} />
-            <ActionButtons />
-        </form>
+        <>
+            <BreadCrumbs breadCrumbTitle={customName} breadCrumbParent='Tipos de cliente' breadCrumbActive={title} />
+            <CustomerTypeForm />
+        </>
     )
 }

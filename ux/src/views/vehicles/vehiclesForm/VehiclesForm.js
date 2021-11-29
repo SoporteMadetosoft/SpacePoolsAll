@@ -1,203 +1,256 @@
 import React, { useEffect, useState } from 'react'
-import Select from 'react-select'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useParams } from 'react-router'
 import axios from 'axios'
-
-import { handleChangeController, handleStartEditing } from '../../../redux/actions/normalForm'
-import { startAddSelectOptions, addSelectOptions } from '../../../redux/actions/selects'
+import { Form } from 'reactstrap'
+import { Input } from '../../../components/form/inputs/Input'
+import { Select } from '../../../components/form/inputs/Select'
+import { FileContext } from '../../../utility/context/FileContext'
+import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
+import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
+import { addSelectOptions, startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
+import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
+import { MkDir } from '../../../utility/helpers/Axios/MkDir'
+import { uploadFile } from '../../../utility/helpers/Axios/uploadFile'
+import { save } from '../../../utility/helpers/Axios/save'
+import { SwalUploadAndSave } from '../../../utility/helpers/SwalUploadAndSave'
+import { loadFiles } from '../../../utility/helpers/Axios/loadFiles'
+import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
+import { VehicleDocForm } from './VehicleDocForm'
 import '../styles/form.css'
-import { DocumentsRepeater } from './DocumentsRepeater'
+import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
+import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 
-export const VechiclesForm = ({ id }) => {
-    
-    const dispatch = useDispatch()
-        
-    const { normalForm, selectReducer } = useSelector(state => state)
-    const { 
-        plateNumber,
-        frameNumber,
-        tara,
-        MMA,
-        itvDate,
-        brand,
-        idVehicleBrandModel,
-        policyNumber,
-        carrierId,
-        trailerId,
-        observations,
-        maintenanceDate,
-        insuranceDateLimit,
-        tachograph } = normalForm
-    
-    const opts = selectReducer
 
-    useEffect( () => {
-        if (id) {
-            dispatch(handleStartEditing('Vehicles', id))
+const formSchema = {
+
+    plate: { validations: [validator.isRequired] },
+    frameNumber: { validations: [validator.isRequired] },
+    brand: { validations: [validator.isRequired] },
+    model: { validations: [validator.isRequired] },
+    idStatus: { validations: [validator.isRequired] },
+    idCarrier: { validations: [validator.isRequired] }
+
+}
+
+
+const placeholderStyles = {
+    placeholder: (defaultStyles) => {
+        return {
+            ...defaultStyles,
+            FontSize: '5px'
         }
-        dispatch(startAddSelectOptions('/setup/vehicles/type', 'vehiclesType'))
-        dispatch(startAddSelectOptions('/setup/containers/type', 'containersType'))
-        dispatch(startAddSelectOptions('/setup/vehicles/brand', 'brand'))
-        dispatch(startAddSelectOptions('/setup/vehicles/hookType', 'hooksType'))
-        dispatch(startAddSelectOptions('/setup/vehicles/warehouse', 'warehouse'))
-        dispatch(startAddSelectOptions('/setup/general/garbage/type', 'garbageType'))
+    }
+}
 
+export const VechiclesForm = () => {
+
+    const { id } = useParams()
+    const dispatch = useDispatch()
+    const history = useHistory()
+
+    const [file, setFile] = useState('')
+    const { upload, filePath } = useSelector(state => state.fileUpload)
+
+    const form = useSelector(state => state.normalForm)
+    const realFilePath = form.filePath ? form.filePath : filePath
+
+    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
+    const vehicleCode = id !== undefined ? id : normalForm.vehicleCode
+
+    const { observations, model } = normalForm
+    const { Brand, Carriers } = selectReducer
+    let brandValue
+
+    useEffect(() => {
+        dispatch(startAddSelectOptions('Brand', 'Brand'))
+        dispatch(startAddSelectStatus('Carriers', 'Carriers', 'name'))
     }, [])
 
+
+    const handleSelectChange = (name, { value, label }) => {
+        dispatch(handleChangeController(name, { id: value, name: label }))
+    }
+
     const handleLoadModels = async (obj) => {
-        const { data } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/brand/model/select/${obj.value}`)
-        dispatch(addSelectOptions('idVehicleBrandModel', data.data))
+        const token = localStorage.getItem('accessToken') || ''
+
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}/setup/vehicles/model/selectByIdBrand/${obj.value}`, {
+            headers: {
+                'Content-type': 'application/json',
+                'x-token': token
+            }
+        })
+        dispatch(addSelectOptions('Model', data.map(option => ({ label: option.name, value: option.id }))))
+        dispatch(handleChangeController('model', ''))
+        handleSelectChange('brand', obj)
     }
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
-    const handleSelectChange = (key, value) => {
-        dispatch(handleChangeController(key, value))
+
+    useEffect(() => {
+        dispatch(startAddSelectOptions('Brand', 'brandOpt'))
+        if (id === undefined) {
+            dispatch(GetSetNextId("Vehicles", 'vehicleCode'))
+        } 
+        dispatch(setSchema(formSchema))
+    }, [])
+
+  
+
+    const preSubmit = (filePath2) => {
+        return new Promise(async (resolve, reject) => {
+            if (upload === 1) {
+                const swalResp = await SwalUploadAndSave()
+                if (swalResp === true) {
+                    const formData = new FormData()
+                    formData.append('filePath', filePath2)
+
+                    for (const element of file) {
+
+                        formData.append('file', element)
+                    }
+
+                    await uploadFile('FileManager', formData)
+
+                    dispatch(handleChangeDestination(filePath2))
+                    dispatch(handleChangeUpload(0))
+                    const data = await loadFiles('FileManager', filePath2)
+                    await data.map(
+                        document => (
+                            dispatch(addRepeaterRegister('documents', document))
+                        )
+                    )
+                }
+            }
+            resolve('')
+        })
     }
-        
+
+    const submit = async (e) => {
+        e.preventDefault()
+
+        const errors = validate(formValidator.schema, form)
+
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
+
+        } else {
+            const filePath2 = MkDir('Vehicles', realFilePath)
+            await preSubmit(filePath2)
+
+            const form2 = dispatch(handleGetForm())
+            form2.then(async (value) => {
+                const prettyForm = {
+                    ...value,
+                    idStatus: exceptionController(value.idStatus),
+                    model: exceptionController(value.model),
+                    idCarrier: exceptionController(value.idCarrier),
+                    idTrailer: exceptionController(value.idTrailer),
+                    filePath: filePath2,
+                    brand: exceptionController(value.brand)
+                }
+
+                save('Vehicles', id, prettyForm)
+                dispatch(handleCleanUp())
+                history.push('/porters/vehicles')
+            })
+
+        }
+    }
+
     return (
-        <>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className="row card-body">
-                    <div className="col-md-3">
-                        <label className="control-label">Matrícula</label>
-                        <input 
-                            className="form-control" 
-                            placeholder="Matrícula" 
-                            name="plateNumber"
-                            onChange={ handleInputChange } 
-                            value={ plateNumber }/>
-                    </div>
-                    <div className="col-md-3">
-                        <label className="control-label">Número de bastidor</label>
-                        <input 
-                            className="form-control" 
-                            placeholder="Número de bastidor" 
-                            name="frameNumber"
-                            onChange={handleInputChange}
-                            value={frameNumber} />
-                    </div>
-                    <div className="col-md-3">
-                        <label className="control-label">Número de poliza</label>
-                        <input 
-                            className="form-control" 
-                            placeholder="Número de bastidor" 
-                            name="policyNumber"
-                            onChange={handleInputChange}
-                            value={policyNumber} />
-                    </div>
-                    <div className="col-md-3">
-                        <label className="control-label">Transportista</label>
-                        <Select 
-                            placeholder="Transportista" 
-                            name="carrierId " 
-                            defaultValue={carrierId }
-                            options={opts.carriers }
-                            onChange={ (obj) => { handleSelectChange('carrierId ', obj) }} />
+                    <div className="col-md-2">
+                        <label className="control-label">Nº Vehículo</label>
+                        <input
+                            className={`form-control`}
+                            name="vehicleCode"
+                            value={vehicleCode}
+                            readOnly
+                        />
                     </div>
                     <div className="col-md-2">
-                        <label className="control-label">Tara</label>
-                        <input 
-                            className="form-control" 
-                            placeholder="Tara" 
-                            name="tara"
-                            value={ tara }
-                            onChange={ handleInputChange } />
+                        <Input required="true" type="text" name="plate" label="Matrícula" endpoint="Vehicles" />
+
+                    </div>
+                    <div className="col-md-3">
+                        <Input required="true" type="text" name="frameNumber" label="Número de bastidor" />
+
+                    </div>
+                    <div className="col-md-3">
+                        <Input name="policyNumber" label="Número de poliza" />
+                    </div>
+                    <div className="col-md-2">
+                        <Input name="tachograph" label="Tacografo del camión" />
+                    </div>
+                    <div className="col-md-4">
+                        <Select required="true" name="idCarrier" label="Transportista" endpoint="Carriers" />
+
+                    </div>
+                    <div className="col-md-2">
+                        <Input name="tare" label="Tara" />
                     </div>
                     <div className="col-md-2 ">
-                        <label className="control-label">M.M.A.</label>
-                        <input 
-                            className="form-control" 
-                            placeholder="M.M.A." 
-                            name="MMA"
-                            value={ MMA }
-                            onChange={ handleInputChange } />
+                        <Input name="mma" label="M.M.A." />
                     </div>
+
                     <div className="col-md-2">
-                        <label className="control-label">Tacografo del camion</label>
-                        <input 
-                            className="form-control" 
-                            placeholder="Tacografo" 
-                            name="tachograph"
-                            value={ tachograph }
-                            onChange={ handleInputChange } />
-                    </div>
-                    <div className="col-md-2">
-                        <label className="control-label">Marca</label>
-                        <Select 
-                            placeholder="Marca" 
+                        <Select
+                            required="true"
                             name="brand"
-                            defaultValue={brand}
-                            options={opts.brand}
-                            onChange={ (obj) => { 
-                                handleLoadModels(obj)
-                            }} />
+                            label="Marca"
+                            // onSelect={(obj) => {
+                            //     handleLoadModels(obj)
+                            // }}
+                            endpoint="Brand"
+                        />
                     </div>
                     <div className="col-md-2">
-                        <label className="control-label">Modelo</label>
-                        <Select 
-                            placeholder="Modelo" 
-                            name="idVehicleBrandModel" 
-                            defaultValue={idVehicleBrandModel}
-                            options={opts.idVehicleBrandModel}
-                            onChange={ (obj) => { handleSelectChange('idVehicleBrandModel', obj) }} />
+                        <Select
+                            required="true"
+                            name="model"
+                            label="Modelo"
+                            endpoint="Model"
+                        />
                     </div>
                     <div className="col-md-2">
-                        <label className="control-label">Remolque</label>
-                        <Select 
-                            placeholder="Remolque" 
-                            name="trailerId  " 
-                            defaultValue={ trailerId  }
-                            options={opts.trailers }
-                            onChange={ (obj) => { handleSelectChange('trailerId  ', obj) }} />
+                        <Select name="idTrailer" label="Remolque" endpoint="Trailers" labelName="plate" />
                     </div>
                     <div className="col-md-2">
-                        <label className="control-label">Fecha ITV</label>
-                        <input 
-                            className="form-control" 
-                            type="date" 
-                            placeholder="Fecha ITV" 
-                            name="itvDate"
-                            value={ itvDate }
-                            onChange={ handleInputChange } />
+                        <Input name="ITVdate" type="date" placeholder="Fecha ITV" label="Fecha ITV" />
                     </div>
                     <div className="col-md-2">
-                        <label className="control-label">Fecha de mantenimiento</label>
-                        <input 
-                            className="form-control" 
-                            type="date" 
-                            placeholder="Fecha de mantenimiento" 
-                            name="maintenanceDate"
-                            value={ maintenanceDate }
-                            onChange={ handleInputChange } />
+                        <Input name="maintenanceDate" type="date" label="Fecha de mantenimiento" />
                     </div>
                     <div className="col-md-2">
-                        <label className="control-label">Fecha caducidad seguro</label>
-                        <input 
-                            className="form-control" 
-                            type="date" 
-                            placeholder="Fecha caducidad seguro" 
-                            name="insuranceDateLimit"
-                            value={ insuranceDateLimit }
-                            onChange={ handleInputChange } />
+                        <Select required="true" name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-12">
                         <label className="control-label">Observaciones</label>
-                        <textarea 
-                            className="form-control" 
-                            placeholder="Observaciones" 
+                        <textarea
+                            className="form-control"
+                            placeholder="Observaciones"
                             name="observations"
-                            defaultValue={ observations }
-                            onChange={ handleInputChange }
+                            defaultValue={observations}
+                            onChange={handleInputChange}
                         ></textarea>
                     </div>
                 </div>
             </div>
-            
-            <DocumentsRepeater />
-                
-        </>
+            <div className="card">
+                <div className="card-body">
+                    <FileContext.Provider value={{ file, setFile }}>
+                        <VehicleDocForm />
+                    </FileContext.Provider>
+                </div>
+            </div>
+            <ActionButtons />
+        </Form>
     )
 }

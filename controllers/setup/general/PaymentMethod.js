@@ -1,33 +1,19 @@
-const PaymentMethodDao = require("../../../dao/setup/PaymentMethodDao")
+const PaymentMethodDao = require("../../../dao/setup/general/PaymentMethodDao")
 const PaymentMethod = require("../../../models/setup/general/PaymentMethods")
 
 const paymentMethodDao = new PaymentMethodDao(PaymentMethod)
 exports.list = async (req, res) => {
 
-    try{
+    try {
         res.json({
-            ok:true,
-            data: await paymentMethodDao.findAll() 
+            ok: true,
+            data: await paymentMethodDao.findAll()
         })
-    }catch(error){
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
 }
-
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await paymentMethodDao.getSelect() 
-        })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
 
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
@@ -55,22 +41,22 @@ exports.delete = async (req, res) => {
 }
 
 exports.insert = (req, res) => {
-    try{
-        paymentMethodDao.insert(req.body.formData.base)
-        res.json({ok: true})
-    }catch(error){
+    try {
+        paymentMethodDao.insert(req.body.form)
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
     }
 }
 
-exports.update =(req, res)=>{
-    
-    try{
-        paymentMethodDao.update(req.body.formData.base)
-        res.json({ok: true})
-    }catch(error){
+exports.update = (req, res) => {
+
+    try {
+        paymentMethodDao.update(req.body.form)
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
-    }    
+    }
 }

@@ -1,28 +1,15 @@
-const OriginDao = require('../../../dao/setup/customer/CustomerOriginDao')
-const Origin = require('../../../models/setup/customer/CustomerOrigin')
+const OriginDao = require('../../../dao/setup/general/OriginDao')
+const Origin = require('../../../models/setup/general/Origin')
 
 const origin = new OriginDao(Origin)
 exports.list = async (req, res) => {
 
-    try{
+    try {
         res.json({
-            ok:true,
-            data: await origin.findAll() 
+            ok: true,
+            data: await origin.findAll()
         })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await origin.getSelect() 
-        })
-    }catch(error){
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
@@ -54,22 +41,22 @@ exports.delete = async (req, res) => {
 }
 
 exports.insert = (req, res) => {
-    try{
-        origin.insert(req.body.formData.base)
-        res.json({ok: true})
-    }catch(error){
+    try {
+        origin.insert(req.body.form)
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
     }
 }
 
-exports.update =(req, res)=>{
-    
-    try{
-        origin.update(req.body.formData.base)
-        res.json({ok: true})
-    }catch(error){
+exports.update = (req, res) => {
+
+    try {
+        origin.update(req.body.form)
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
-    }    
+    }
 }

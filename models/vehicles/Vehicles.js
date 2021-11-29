@@ -1,12 +1,12 @@
-class Vehicles{
-    base = {}
-    repairs = []
+class Vehicles {
     #table = 'vehicles'
+    repairs = []
 
     constructor({
         id,
-        carrierId,
-        trailerId,
+        idCarrier,
+        idTrailer,
+        brand,
         model,
         vehicleCode,
         plate,
@@ -19,29 +19,35 @@ class Vehicles{
         maintenanceDate,
         tachograph,
         observations,
-        status,
+        idStatus,
+        filePath,
+        documents = [],
         repairs = []
-    }){
-        this.base.id = id
-        this.base.carrierId = carrierId
-        this.base.trailerId = trailerId
-        this.base.model = model
-        this.base.vehicleCode = vehicleCode
-        this.base.plate = plate
-        this.base.frameNumber = frameNumber
-        this.base.tare = tare
-        this.base.mma = mma
-        this.base.ITVdate = ITVdate
-        this.base.policyNumber = policyNumber
-        this.base.insurnaceDateLimit = insurnaceDateLimit
-        this.base.maintenanceDate = maintenanceDate
-        this.base.tachograph = tachograph
-        this.base.observations = observations
-        this.base.status = status
+    }) {
+        this.id = id
+        this.idCarrier = idCarrier
+        this.idTrailer = idTrailer
+        this.brand = brand
+        this.model = model
+        this.vehicleCode = vehicleCode
+        this.plate = plate
+        this.frameNumber = frameNumber
+        this.tare = tare
+        this.mma = mma
+        this.ITVdate = ITVdate
+        this.policyNumber = policyNumber
+        this.insurnaceDateLimit = insurnaceDateLimit
+        this.maintenanceDate = maintenanceDate
+        this.tachograph = tachograph
+        this.observations = observations
+        this.idStatus = idStatus
+        this.filePath = filePath
+        this.documents = documents
         this.repairs = repairs
     }
     get table() {
         return this.#table;
+        
     }
 }
 module.exports = Vehicles

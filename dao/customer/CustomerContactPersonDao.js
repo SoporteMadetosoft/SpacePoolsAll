@@ -1,22 +1,21 @@
 const CustomerContactPersons = require("../../models/customers/CustomerContactPerson");
 const GenericDao = require("../GenericDao");
-const CustomerDepartmentDao = require("../setup/customer/CustomerDepartmentDao");
+const DepartmentDao = require("../setup/general/DepartmentDao");
 
-class CustomerContactPersonDao extends GenericDao{
-    CustomerDepartmentDao
+class CustomerContactPersonDao extends GenericDao {
     constructor() {
         super(CustomerContactPersons)
-        this.CustomerDepartmentDao = new CustomerDepartmentDao()
+        this.DepartmentDao = new DepartmentDao()
     }
 
-    findByCustomerId (id) {
-        return new Promise((resolve, reject) => { 
+    findByCustomerId(id) {
+        return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM customers_contact WHERE idCustomer = ?', [id], async (err, result) => {
-                if(err){ 
+                if (err) {
                     reject(err)
-                }else{
+                } else {
                     const centerContactList = []
-                    for(const centerDB of result){
+                    for (const centerDB of result) {
                         centerContactList.push(await this.mountObj(centerDB))
                     }
                     resolve(centerContactList)
@@ -25,12 +24,12 @@ class CustomerContactPersonDao extends GenericDao{
         })
     }
 
-    findMainContactCustomer (id){
-        return new Promise((resolve, reject) => { 
-            this.db.query('SELECT * FROM customers_contact WHERE idCustomer = ? AND `defaultContact` = 1', [id], (err, result) => {
-                if(err){ 
+    findMainContactCustomer(id) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT * FROM customers_contact WHERE idCustomer = ? AND defaultContact = 1', [id], (err, result) => {
+                if (err) {
                     reject(err)
-                }else{  
+                } else {
                     resolve(result[0])
                 }
             })
@@ -38,15 +37,14 @@ class CustomerContactPersonDao extends GenericDao{
     }
 
     async mountObj(data) {
-        const department = await this.CustomerDepartmentDao.findById(data.department)
-         const docs = {
-            ...data,            
-            department: await this.CustomerDepartmentDao.createSelect(await department.base)
+        const docs = {
+            ...data,
+            department: await this.DepartmentDao.findById(data.department)
         }
-        
+
         return new CustomerContactPersons(docs)
     }
-    
+
 
 }
 module.exports = CustomerContactPersonDao

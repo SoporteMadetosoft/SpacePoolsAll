@@ -1,17 +1,14 @@
-class ProductFamily{
-    base = {}
+class ProductFamily {
     #table = 'item_product_family'
 
     constructor({
         id,
         parent,
-        familyCode,
         name
-    }){
-        this.base.id = id
-        this.base.parent = parent
-        this.base.familyCode = familyCode
-        this.base.name = name
+    }) {
+        this.id = id
+        this.parent = parent
+        this.name = name
     }
     get table() {
         return this.#table;

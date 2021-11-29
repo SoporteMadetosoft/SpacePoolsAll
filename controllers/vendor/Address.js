@@ -16,19 +16,6 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await addressDao.getSelect() 
-        })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
 
@@ -59,7 +46,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT ADDRESS */
-        await addressDao.insert(req.body.formData.base)
+        await addressDao.insert(req.body.form)
 
         res.json({ ok: true })
     } catch (error) {
@@ -72,8 +59,8 @@ exports.update = (req, res) => {
 
     try {
         /**UPDATE ADDRESS */
-        addressDao.update(req.body.formData.base)
-       
+        addressDao.update(req.body.form)
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

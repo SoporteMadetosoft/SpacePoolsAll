@@ -1,24 +1,28 @@
 class Purchase {
-    base = {}
     items = []
-    #table  = 'purchases'
+    itemColors = []
+    #table = 'purchases'
 
     constructor({
         id,
-        vendorId,
+        idVendor,
+        idStatus,
         purchaseCode,
         purchaseDate,
         deliveryDate,
         observations,
-        items = []
-    }){
-        this.base.id = id
-        this.base.vendorId = vendorId
-        this.base.purchaseCode = purchaseCode
-        this.base.purchaseDate = purchaseDate
-        this.base.deliveryDate = deliveryDate
-        this.base.observations = observations
+        items = [],
+        itemColors = []
+    }) {
+        this.id = id
+        this.idVendor = idVendor
+        this.idStatus = idStatus
+        this.purchaseCode = purchaseCode
+        this.purchaseDate = purchaseDate
+        this.deliveryDate = deliveryDate
+        this.observations = observations
         this.items = items
+        this.itemColors = itemColors
     }
     get table() {
         return this.#table;

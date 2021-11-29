@@ -1,36 +1,55 @@
-class Order{
-    base = {}
+class Order {
     extraItems = []
+    extraRaws = []
     customerData = []
     production = []
+    baseItems = []
     #table = 'orders'
 
     constructor({
         id,
-        customerId,
-        poolId,
-        orderCode,
+        idCustomer,
+        idPool,
         orderDate,
+        productionDate,
         deliveryDate,
         deliverySchedulerStart,
         deliverySchedulerEnd,
         observations,
+        price,
+        idTax,
+        idColor,
         extraItems = [],
+        extraItemColors = [],
+        extraRaws = [],
+        extraRawColors = [],
         customerData = [],
-        production = []
-    }){
-        this.base.id = id
-        this.base.customerId = customerId
-        this.base.poolId = poolId
-        this.base.orderCode = orderCode
-        this.base.orderDate = orderDate
-        this.base.deliveryDate = deliveryDate
-        this.base.deliverySchedulerStart = deliverySchedulerStart
-        this.base.deliverySchedulerEnd = deliverySchedulerEnd
-        this.base.observations = observations
-        this.extraItems =extraItems
+        production = [],
+        baseItems = [],
+        baseItemColors = [],
+        canvasItems = [],
+    }) {
+        this.id = id
+        this.idCustomer = idCustomer
+        this.idPool = idPool
+        this.orderDate = orderDate
+        this.productionDate = productionDate
+        this.deliveryDate = deliveryDate
+        this.deliverySchedulerStart = deliverySchedulerStart
+        this.deliverySchedulerEnd = deliverySchedulerEnd
+        this.observations = observations
+        this.price = price
+        this.idTax = idTax
+        this.idColor = idColor
+        this.extraItems = extraItems
+        this.extraItemColors = extraItemColors
+        this.extraRaws = extraRaws
+        this.extraRawColors = extraRawColors
         this.customerData = customerData
         this.production = production
+        this.baseItems = baseItems
+        this.baseItemColors = baseItemColors
+        this.canvasItems = canvasItems
     }
     get table() {
         return this.#table;

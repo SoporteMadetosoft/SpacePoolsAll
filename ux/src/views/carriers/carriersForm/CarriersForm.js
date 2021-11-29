@@ -1,180 +1,172 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Select from 'react-select'
+import { useHistory, useParams } from 'react-router'
 
-import { handleChangeController } from '../../../redux/actions/normalForm'
-import { startAddSelectOptions } from '../../../redux/actions/selects'
-import { DocForm } from './DocForm'
+import { Form } from 'reactstrap'
+import { Input } from '../../../components/form/inputs/Input'
+import { Select } from '../../../components/form/inputs/Select'
+
+import { FileContext } from '../../../utility/context/FileContext'
+
+import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
+
+import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
+import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
+import { MkDir } from '../../../utility/helpers/Axios/MkDir'
+import { uploadFile } from '../../../utility/helpers/Axios/uploadFile'
+import { save } from '../../../utility/helpers/Axios/save'
+import { SwalUploadAndSave } from '../../../utility/helpers/SwalUploadAndSave'
+import { loadFiles } from '../../../utility/helpers/Axios/loadFiles'
+
+import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
+
+import { CarrierDocForm } from './CarrierDocForm'
+import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 
 
-export const CarriersForm = (id) => {
+const formSchema = {
+    NIF: { validations: [validator.isRequired] },
+    idStatus: { validations: [validator.isRequired] }
+}
 
+export const CarriersForm = () => {
+
+    const { id } = useParams()
     const dispatch = useDispatch()
-    const { normalForm, selectReducer } = useSelector(state => state)
-    const {
-        country,
-        province,
-        postcode,
-        city,
-        address,
-        email,
-        name,
-        NIF,
-        phone1,
-        phone2,
-        status} = normalForm
+    const history = useHistory()
+    const [file, setFile] = useState('')
+    const { upload, filePath } = useSelector(state => state.fileUpload)
+    const form = useSelector(state => state.normalForm)
 
-    const { statusOpt } = selectReducer
+    const realFilePath = form.filePath ? form.filePath : filePath
 
-    useEffect( () => {
-        dispatch(startAddSelectOptions('/Customers', 'customersOpt'))
-        dispatch(startAddSelectOptions('/Vendors', 'vendorsOpt'))
-        dispatch(startAddSelectOptions('/setup/general/status', 'statusOpt'))
+    const { normalForm, formValidator } = useSelector(state => state)
+
+    const carrierCode = id !== undefined ? id : normalForm.carrierCode
+
+    useEffect(() => {
+        if (id === undefined) {
+            dispatch(GetSetNextId("Carriers", 'carrierCode'))
+        } 
+        dispatch(setSchema(formSchema))
     }, [])
 
-    const handleInputChange = ({ target }) => {
-        dispatch(handleChangeController(target.name, target.value))
+    const preSubmit = (filePath2) => {
+        return new Promise(async (resolve, reject) => {
+            if (upload === 1) {
+                const swalResp = await SwalUploadAndSave()
+                if (swalResp === true) {
+                    const formData = new FormData()
+                    formData.append('filePath', filePath2)
+
+                    for (const element of file) {
+
+                        formData.append('file', element)
+                    }
+
+                    await uploadFile('FileManager', formData)
+
+                    dispatch(handleChangeDestination(filePath2))
+                    dispatch(handleChangeUpload(0))
+                    const data = await loadFiles('FileManager', filePath2)
+                    await data.map(
+                        document => (
+                            dispatch(addRepeaterRegister('documents', document))
+                        )
+                    )
+                }
+            }
+            resolve('')
+        })
     }
 
-    const handleSelectChange = (key, value) => {
-        dispatch(handleChangeController(key, value))
+    const submit = async (e) => {
+        e.preventDefault()
+
+        const errors = validate(formValidator.schema, form)
+
+
+        if (Object.keys(errors).length !== 0) {
+            dispatch(setErrors(errors))
+
+        } else {
+            const filePath2 = MkDir('Carriers', realFilePath)
+
+            await preSubmit(filePath2)
+
+            const form2 = dispatch(handleGetForm())
+            form2.then(async (value) => {
+                const prettyForm = {
+                    ...value,
+                    idUser: exceptionController(value.idUser),
+                    idStatus: exceptionController(value.idStatus),
+                    filePath: filePath2
+                }
+                save('Carriers', id, prettyForm)
+                dispatch(handleCleanUp())
+                history.push('/porters/carriers')
+            })
+        }
     }
 
     return (
-        <>
+        <Form onSubmit={submit}>
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
-                    <div className="col-md-3">
-                        <label className="control-label">Nombre</label>
-                        <input
-                            className="form-control"
-                            name="name"
-                            placeholder="Nombre"
-                            value={name}
-                            onChange={handleInputChange}
-                        />
+                    <div className="col-md-2">
+                        <Input name="carrierCode" label="Nº Transportista" readonly='readonly' value={carrierCode} />
+                    </div>
+                    <div className="col-md-4">
+                        <Input name="name" label="Nombre" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">País</label>
-                        <input
-                            className="form-control"
-                            name="country"
-                            placeholder="País"
-                            value={country}
-                            onChange={handleInputChange}
-                        />
+                        <Input required="true" name="NIF" type="text" label="N.I.F." endpoint="Carriers" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">N.I.F.</label>
-                        <input
-                            className="form-control"
-                            name="NIF"
-                            placeholder="N.I.F."
-                            value={NIF}
-                            onChange={handleInputChange}
-                        />
+                        <Select required="true" name="idStatus" label="Estado" endpoint="Status" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Provincia</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="province"
-                            placeholder="Provincia"
-                            value={province}
-                            onChange={handleInputChange}
-                        />
+                        <Input name="email" type="email" label="Correo electrónico" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Código postal</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="postcode"
-                            placeholder="Código postal"
-                            value={postcode}
-                            onChange={handleInputChange}
-                        />
-                    </div> 
-                    <div className="col-md-3">
-                        <label className="control-label">Ciudad</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="city"
-                            placeholder="Ciudad"
-                            value={city}
-                            onChange={handleInputChange}
-                        />
-                    </div> 
-                    <div className="col-md-3">
-                        <label className="control-label">Dirección</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="address"
-                            placeholder="Dirección"
-                            value={address}
-                            onChange={handleInputChange}
-                        />
-                    </div> 
-                    <div className="col-md-3">
-                        <label className="control-label">Correo electrónico</label>
-                        <input
-                            className="form-control"
-                            name="email"
-                            placeholder="Correo electrónico"
-                            value={email}
-                            onChange={handleInputChange}
-
-                        />
+                        <Input name="phone" label="Teléfono" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Teléfono 1</label>
-                        <input
-                            className="form-control"
-                            name="phone"
-                            placeholder="Teléfono"
-                            value={phone1}
-                            onChange={handleInputChange}
-                        />
+                        <Input name="phone2" label="Móvil" />
                     </div>
                     <div className="col-md-3">
-                        <label className="control-label">Teléfono 2</label>
-                        <input
-                            className="form-control"
-                            name="phone2"
-                            placeholder="Teléfono"
-                            value={phone2}
-                            onChange={handleInputChange}
-                        />
-                    </div>  
-                    <div className="col-md-3">
-                        <label className="control-label">Estado</label>
-                        <Select
-                            name="status"
-                            placeholder="Estado"
-                            options={ statusOpt }
-                            defaultValue={status}
-                            onChange={ (value) => { handleSelectChange('status', value) }}
-                        />
+                        <Input name="startSchedule" type="time" label="Horario de contacto" />
                     </div>
-                    <div className="col-md-3">
-                        <label className="control-label">Horario de contacto</label>
-                        <input
-                            className="form-control"
-                            type="time"
-                            name="contactSchedule"
-                            // value={pickupTime}
-                        />
-                    </div>                
+                    <div className="col-md-4">
+                        <Input name="country" label="País" />
+                    </div>
+                    <div className="col-md-4">
+                        <Input name="state" label="Provincia" />
+                    </div>
+                    <div className="col-md-4">
+                        <Input name="city" label="Ciudad" />
+                    </div>
+                    <div className="col-md-4">
+                        <Input name="address" label="Dirección" />
+                    </div>
+                    <div className="col-md-4">
+                        <Input name="postcode" label="Código postal" />
+                    </div>
+                    <div className="col-md-4">
+                        <Select name="idUser" label="Usuario" endpoint="Users" labelName='fullname' />
+                    </div>
                 </div>
             </div>
             <div className="card">
                 <div className="card-body">
-                    <DocForm />
+                    <FileContext.Provider value={{ file, setFile }}>
+                        <CarrierDocForm />
+                    </FileContext.Provider>
+
                 </div>
             </div>
-        </>
+            <ActionButtons />
+        </Form>
     )
 }

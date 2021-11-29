@@ -1,61 +1,66 @@
 const Pool = require("../../models/pool/Pool");
 const GenericDao = require("../GenericDao");
 
+const PoolItemsDao = require("./PoolItemsDao");
+//const PoolRawsDao = require("./PoolItemsDao")
 const StatusDao = require("../global/StatusDao");
+const ExtraItemColorDao = require("./ExtraItemColorDao");
 
 class PoolDao extends GenericDao {
-    StatusDao
-
     constructor() {
         super(Pool);
         this.StatusDao = new StatusDao()
+        this.PoolItemsDao = new PoolItemsDao()
+        this.ExtraItemColorDao = new ExtraItemColorDao()
     }
 
     async mountObj(data) {
-        const status = await this.StatusDao.findById(data.status)
         const pool = {
             ...data,
-            status: await this.createSelect(status.base)
+            idStatus: await this.StatusDao.findById(data.idStatus),
+            items: await this.PoolItemsDao.getItemsByTypeAndPool(data.id, 2),
+            itemColor: await this.ExtraItemColorDao.getItemsByTypeAndPool(data.id, 2),
+            raws: await this.PoolItemsDao.getItemsByTypeAndPool(data.id, 1),
+            rawColor: await this.ExtraItemColorDao.getItemsByTypeAndPool(data.id, 1),
+            baseItems: await this.PoolItemsDao.getItemsByIdPool(data.id),
+            baseItemColors: await this.ExtraItemColorDao.getItemsByIdPool(data.id)
         }
-        return new Pool(pool)
+        return pool
     }
 
     async mountList(data) {
+        const status = await this.StatusDao.findById(data.idStatus)
         const list = {
             ...data,
+
+            idStatus: status != undefined ? status.id : ''
         }
-        const{id, nameEuropa, cost, status} =list
-        const nObj = {id :id, nameEuropa :nameEuropa, cost: cost, status : status}
-        return nObj
+        return new Pool(list)
     }
 
-    getSelect() {
+    findPoolById(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM ??', [this.objectAux.table], async (err, result) => {
+            this.db.query('SELECT * FROM pool WHERE id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    let objList = []
-                    for (const res of result) {
-                        objList.push(await this.mountSelect(res))
-                    }
-
-                    resolve(objList)
+                    resolve(result[0])
                 }
-            });
+            })
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
 
-    async createSelect(obj){
-        let obj2 = {}
-        obj2.value = obj.id
-        obj2.label = obj.nameEuropa
-        return obj2
+    findPoolNameBy(id) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT fabricationName FROM pool WHERE id = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(result[0].fabricationName)
+                    //  resolve(result[0])
+                }
+            })
+        })
     }
 
 }

@@ -1,5 +1,6 @@
-class Pool{
-    base = {}
+class Pool {
+    items = []
+    raws = []
     #table = 'pool'
 
     constructor({
@@ -8,28 +9,30 @@ class Pool{
         nameEuropa,
         nameSpace,
         nameSociedad,
-        nameHydrius,
+        nameHydryus,
         fabricationName,
-        priceVATout,
-        priceVATin,
+        price,
         cost,
         simultaneousFabrications,
         observations,
-        status
-    }){
-        this.base.id = id
-        this.base.poolCode = poolCode
-        this.base.nameEuropa = nameEuropa
-        this.base.nameSpace = nameSpace
-        this.base.nameSociedad = nameSociedad
-        this.base.nameHydrius = nameHydrius
-        this.base.fabricationName = fabricationName
-        this.base.priceVATout = priceVATout
-        this.base.priceVATin = priceVATin
-        this.base.cost = cost
-        this.base.simultaneousFabrications = simultaneousFabrications
-        this.base.observations = observations
-        this.base.status = status
+        idStatus,
+        items = [],
+        raws = []
+    }) {
+        this.id = id
+        this.poolCode = poolCode
+        this.nameEuropa = nameEuropa
+        this.nameSpace = nameSpace
+        this.nameSociedad = nameSociedad
+        this.nameHydryus = nameHydryus
+        this.fabricationName = fabricationName
+        this.price = price
+        this.cost = cost
+        this.simultaneousFabrications = simultaneousFabrications
+        this.observations = observations
+        this.idStatus = idStatus
+        this.items = items
+        this.raws = raws
     }
     get table() {
         return this.#table;

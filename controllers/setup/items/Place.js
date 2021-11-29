@@ -4,30 +4,16 @@ const Place = require("../../../models/setup/Item/Place")
 const placeDao = new PlaceDao(Place)
 exports.list = async (req, res) => {
 
-    try{
+    try {
         res.json({
-            ok:true,
-            data: await placeDao.findAll() 
+            ok: true,
+            data: await placeDao.findAll()
         })
-    }catch(error){
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
 }
-
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await placeDao.getSelect() 
-        })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
 
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
@@ -55,22 +41,22 @@ exports.delete = async (req, res) => {
 }
 
 exports.insert = (req, res) => {
-    try{
-        placeDao.insert(req.body.formData.base)
-        res.json({ok: true})
-    }catch(error){
+    try {
+        placeDao.insert(req.body.form)
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
     }
 }
 
-exports.update =(req, res)=>{
-    
-    try{
-        placeDao.update(req.body.formData.base)
-        res.json({ok: true})
-    }catch(error){
+exports.update = (req, res) => {
+
+    try {
+        placeDao.update(req.body.form)
+        res.json({ ok: true })
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error)
-    }    
+    }
 }

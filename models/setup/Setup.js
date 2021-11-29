@@ -1,11 +1,8 @@
 class Setup {
 
-    base={}
-
     constructor({ id, name }) {
-        this.base.id = id
-        this.base.name = name
-
+        this.id = id
+        this.name = name
     }
 }
 

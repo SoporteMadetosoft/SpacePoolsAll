@@ -11,22 +11,31 @@ import pool from './pool/settings'
 import purchases from './purchases/settings'
 import items from './items/settings'
 import orders from './orders/settings'
-import production from './production/settings'
+import productions from './production/settings'
 
 import administrator from './administrator/settings'
-
+import calendar from './calendar/settings'
+import delivery from './entregas/settings'
+import users from './users/settings'
+import alerts from './alerts/settings'
+import logs from './logs/settings'
 // ** Merge & Export
 
 export default [
-    ...headerMenu, 
+    ...headerMenu,
     ...customers,
     ...vendors,
-    ...vehicles, 
-    ...pool, 
-    ...items, 
-    ...purchases, 
-    ...orders, 
-    ...production,
+    ...vehicles,
+    ...pool,
+    ...items,
+    ...purchases,
+    ...orders,
+    ...delivery,
+    ...productions,
+    ...calendar,
     ...headerAdmin,
-    ...administrator
+    ...users,
+    ...administrator,
+    ...alerts,
+    ...logs
 ]

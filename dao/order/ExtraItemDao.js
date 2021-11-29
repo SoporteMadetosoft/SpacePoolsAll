@@ -3,66 +3,79 @@ const GenericDao = require("../GenericDao");
 
 const ItemDao = require("../item/ItemDao");
 
-
 class ExtraItemDao extends GenericDao {
-    ItemDao
     constructor() {
         super(ExtraItem);
-        this.ItemDao = new ItemDao
+        this.ItemDao = new ItemDao()
     }
 
     async mountObj(data) {
-        const item = await this.ItemDao.findById(data.itemId)
         const extraItem = {
             ...data,
-            itemId: await this.createSelect(item.base),
+            idItem: await this.ItemDao.findById(data.idItem),
+            coste: await this.ItemDao.findOneFieldById("cost", data.idItem),
         }
-        return new ExtraItem(extraItem)
+        return extraItem
     }
 
     async mountList(data) {
         const list = {
             ...data,
+
         }
-        const{orderId, itemId} =list
-        const nObj = {orderId :orderId, itemId :itemId}
+        const { idOrder, idItem } = list
+        const nObj = { idOrder: idOrder, idItem: idItem }
         return nObj
     }
 
-    getSelect() {
+    findByOrderId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM ??', [this.objectAux.table], async (err, result) => {
+            this.db.query('SELECT * FROM orders_extra_items WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    let objList = []
-                    for (const res of result) {
-                        objList.push(await this.mountSelect(res))
-                    }
+                    const customerData = []
+                    for (const extraItem of result) {
 
-                    resolve(objList)
+                        const ovj = await this.mountObj(extraItem)
+                        customerData.push(ovj)
+                    }
+                    resolve(customerData)
+                    // resolve(result[0])
+                }
+            })
+        })
+    }
+
+    async getItemsByTypeAndOrder(idOrder, itemType) {
+        return new Promise((resolve, reject) => {
+            this.db.query(`SELECT * FROM orders_extra_items WHERE idOrder = ?`, [idOrder], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    let ItemList = []
+                    for (const data of result) {
+                        const item = await this.ItemDao.findByItemTypeAndId(data.idItem, itemType)
+                        if (item[0]) {
+                            if (item[0]['itemType'].id === itemType) {
+                                ItemList.push(await this.mountObj(data))
+                            }
+                        }
+                        //ItemList.push(await this.mountObj(data))
+                    }
+                    resolve(ItemList)
                 }
             });
         })
     }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
 
-    findByOrderId (id) {
-        return new Promise((resolve, reject) => { 
-            this.db.query('SELECT * FROM orders_extra_items WHERE orderId = ?', [id], (err, result) => {
-                if(err){ 
+    countItemById(id, idOrder) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT id FROM orders_extra_items WHERE idItem = ? and idOrder = ?', [id, idOrder], (err, result) => {
+                if (err) {
                     reject(err)
-                }else{
-                    const customerData = []
-                    for(const centerDB of result){
-                        customerData.push(this.mountObj(centerDB))
-                    }
-                  
-                    resolve(customerData)
+                } else {
+                    resolve(result[0])
                 }
             })
         })

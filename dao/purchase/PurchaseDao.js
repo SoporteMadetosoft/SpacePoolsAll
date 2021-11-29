@@ -1,74 +1,87 @@
 const Purchase = require("../../models/purchase/Purchase");
 const GenericDao = require("../GenericDao");
 
-const ItemDao = require("../purchase/ItemDao");
+const PurchaseItemDao = require("./PurchaseItemDao");
+const VendorDao = require("../vendor/VendorDao");
+const PurchaseStatusDao = require("../global/PurchaseStatusDao");
+const PurchaseItemColorDao = require("./PurchaseItemColorDao");
 
 class PurchaseDao extends GenericDao {
-    ItemDao
+
     constructor() {
         super(Purchase);
-        this.ItemDao = new ItemDao()
+        this.PurchaseItemDao = new PurchaseItemDao()
+        this.PurchaseItemColorDao = new PurchaseItemColorDao()
+        this.VendorDao = new VendorDao()
+        this.StatusDao = new PurchaseStatusDao()
     }
 
     async mountObj(data) {
-        
         const purchase = {
             ...data,
-            items: await this.ItemDao.findByPurchaseId(data.id)
+            items: await this.PurchaseItemDao.findByPurchaseId(data.id),
+            itemColors : await this.PurchaseItemColorDao.findByPurchaseId(data.id),
+            idVendor: await this.VendorDao.findVendorById(data.idVendor),
+            purchaseDate: this.datetimeToDate(data.purchaseDate),
+            deliveryDate: this.datetimeToDate(data.deliveryDate)
         }
-        console.log(purchase)
         return new Purchase(purchase)
     }
 
     async mountList(data) {
+        const vendor = await this.VendorDao.findVendorById(data.idVendor)
         const list = {
             ...data,
+            idVendor: vendor !== undefined ? vendor.comercialName : ''
         }
-        const{vendorid, purchaseDate, observations} =list
-        const nObj = {vendorid :vendorid, purchaseDate :purchaseDate, observations: observations}
+
+        const { id, idStatus, purchaseCode, idVendor, purchaseDate, deliveryDate, observations } = list
+
+        const newPurchaseDate = this.datetimeToEuropeDate(purchaseDate)
+        const newDeliveryDate = this.datetimeToEuropeDate(deliveryDate)
+
+        const nObj = { id: id, idStatus: idStatus, idVendor: idVendor, purchaseCode: purchaseCode, purchaseDate: newPurchaseDate, observations: observations, deliveryDate: newDeliveryDate }
         return nObj
     }
 
-    getSelect() {
+
+
+    findByVendorId(id) {
         return new Promise((resolve, reject) => {
-            this.db.query('SELECT * FROM ??', [this.objectAux.table], async (err, result) => {
+            this.db.query('SELECT * FROM purchases WHERE idVendor = ?', [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
-                    let objList = []
-                    for (const res of result) {
-                        objList.push(await this.mountSelect(res))
+                    const addressesList = []
+                    for (const centerDB of result) {
+                        addressesList.push(this.mountObj(centerDB))
                     }
 
-                    resolve(objList)
-                }
-            });
-        })
-    }
-    
-    async mountSelect(data){
-        return await this.createSelect(data)
-        
-    }
-
-    
-    findByVendorId (id) {
-        return new Promise((resolve, reject) => { 
-            this.db.query('SELECT * FROM purchases WHERE vendorId = ?', [id], (err, result) => {
-                if(err){ 
-                    reject(err)
-                }else{
-                    const adressesList = []
-                    for(const centerDB of result){
-                        adressesList.push(this.mountObj(centerDB))
-                    }
-                  
-                    resolve(adressesList)
+                    resolve(addressesList)
                 }
             })
         })
     }
 
+    verify(id) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT SUM(quantity) as PENDING FROM `purchases_items` WHERE idPurchase = ?', [id], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    let objStatus = { id: id }
+                    if (result[0].PENDING === 0 || result[0].PENDING === '0') {
+                        objStatus.idStatus = 3
+                        this.PurchaseItemDao.equalize('quantity', 'recived', 'idPurchase', id)
+                    } else {
+                        objStatus.idStatus = 2
+                    }
+
+                    resolve(this.update(objStatus))
+                }
+            })
+        })
+    }
 }
 
 module.exports = PurchaseDao

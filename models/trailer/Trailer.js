@@ -1,37 +1,47 @@
-class Trailer{
-    base={}
-    repairs = []
+class Trailer {
     #table = 'trailer'
+    repairs = []
 
     constructor({
         id,
+        brand,
         model,
         trailerCode,
         plate,
+        frame,
+        mma,
         ITVdate,
         policyNumber,
         insuranceNumber,
         insuranceDateLimit,
         maintenanceDate,
         observations,
-        status,
-        repairs =[]
-    }){
-        this.base.id = id
-        this.base.model = model
-        this.base.trailerCode = trailerCode
-        this.base.plate = plate
-        this.base.ITVdate = ITVdate
-        this.base.policyNumber = policyNumber
-        this.base.insuranceNumber = insuranceNumber
-        this.base.insuranceDateLimit = insuranceDateLimit
-        this.base.maintenanceDate = maintenanceDate
-        this.base.observations = observations
-        this.base.status = status
+        filePath,
+        idStatus,
+        documents = [],
+        repairs = []
+    }) {
+        this.id = id
+        this.brand = brand
+        this.model = model
+        this.trailerCode = trailerCode
+        this.plate = plate
+        this.frame = frame
+        this.mma = mma
+        this.ITVdate = ITVdate
+        this.policyNumber = policyNumber
+        this.insuranceNumber = insuranceNumber
+        this.insuranceDateLimit = insuranceDateLimit
+        this.maintenanceDate = maintenanceDate
+        this.observations = observations
+        this.idStatus = idStatus
+        this.filePath = filePath
+        this.documents = documents
         this.repairs = repairs
     }
     get table() {
         return this.#table;
+        
     }
 }
 module.exports = Trailer

@@ -1,15 +1,10 @@
 const OrderDao = require('../../dao/order/OrderDao')
-const ExtraItemDao = require('../../dao/order/ExtraItemDao')
 const CustomerDataDao = require('../../dao/order/CustomerDataDao')
-const ProductionDao = require('../../dao/production/ProductionDao')
-
-
+const CanvasDao = require('../../dao/order/CanvasDao')
 
 const orderDao = new OrderDao()
-const productionDao = new ProductionDao()
-const extraItemDao = new ExtraItemDao()
 const customerDataDao = new CustomerDataDao()
-
+const canvasDao = new CanvasDao()
 
 exports.list = async (req, res) => {
     try {
@@ -24,22 +19,23 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.select = async (req, res) => {
-
-    try{
+exports.listCItems = async (req, res) => {
+    const id = parseInt(req.params.id, 10)
+    try {
         res.json({
-            ok:true,
-            data: await orderDao.getSelect() 
+            ok: true,
+            data: await canvasDao.findByOrderId(id)
         })
-    }catch(error){
+
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
 }
 
+
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
-
     try {
         res.json({
             ok: true,
@@ -66,24 +62,40 @@ exports.delete = async (req, res) => {
 
 exports.insert = async (req, res) => {
     try {
-        /** INSERT ORDER */
-        const insert = await orderDao.insert(req.body.formData.base)
-        /** INSERT PODUCTION */
-        req.body.production.forEach(element => {
-            element.orderId = insert.insertId
-            productionDao.insert(element)
-        });
-        /** INSERT CUSTOMER DATA */
-        req.body.extraItems.forEach(element => {
-            element.orderId = insert.insertId
-            extraItemDao.insert(element)
-        });
-        /** INSERT EXTRA ITEMS */
-        req.body.customerData.forEach(element => {
-            element.orderId = insert.insertId
-            customerDataDao.insert(element)
-        });
-        
+
+        const order = req.body.form
+        const { extraItems, extraItemColors, extraRaws, extraRawColors, customerData, baseItems, baseItemColors, canvas } = req.body.form
+        const allItems = [...extraItems, ...extraRaws]
+        const allItemsColors = [...extraItemColors, ...extraRawColors]
+
+        delete order.production
+        delete order.extraItems
+        delete order.extraItemColors
+        delete order.extraRaws
+        delete order.extraRawColors
+        delete order.customerData
+        delete order.canvas
+        delete order.baseItems
+        delete order.baseItemColors
+        delete order.extraRawColors
+        delete order.extraItemColors
+
+        const insert = await orderDao.insert(order)
+
+        const customerData2 = {
+            ...customerData,
+            idOrder: insert.insertId
+        }
+        // await customerDataDao.insert(customerData2)
+        await orderDao.multipleAccess([customerData2], orderDao.CustomerDataDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(allItems, orderDao.ExtraItemDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(allItemsColors, orderDao.ExtraItemColorDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(baseItemColors, orderDao.BaseItemColorDao, insert.insertId, 'idOrder')
+        await orderDao.multipleAccess(canvas, canvasDao, insert.insertId, 'idOrder')
+
+
+        await orderDao.comprobarStockMinimo(insert.insertId)
 
         res.json({ ok: true })
     } catch (error) {
@@ -92,27 +104,104 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
     try {
-        /** UPDATE ORDER */
-        orderDao.update(req.body.formData.base)
-        /** UPDATE PRODUCTION*/
-        req.body.formData.production.forEach(element => {
-            productionDao.update(element)
-        })
-        /** UPDATE CUSTOMER DATA */
-        req.body.formData.extraItems.forEach(element => {
-            extraItemDao.update(element)
-        })
-        /** UPDATE EXTRA ITEMS */
-        req.body.formData.customerData.forEach(element => {
-            customerDataDao.update(element)
-        })
-       
+
+        const order = req.body.form
+        const { extraItems, extraItemColors, extraRaws, extraRawColors, customerData, baseItems, baseItemColors, canvas } = req.body.form
+
+        const allItems = [...extraItems, ...extraRaws]
+        const allItemsColors = [...extraItemColors, ...extraRawColors]
+
+        delete order.production
+        delete order.extraItems
+        delete order.extraItemColors
+        delete order.extraRaws
+        delete order.extraRawColors
+        delete order.customerData
+        delete order.canvas
+        delete order.baseItems
+        delete order.baseItemColors
+        delete order.extraRawColors
+        delete order.extraItemColors
+
+        await orderDao.update(order)
+
+        const customerData2 = {
+            ...customerData,
+            idOrder: order.id
+        }
+
+
+        await orderDao.multipleAccess([customerData2], orderDao.CustomerDataDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(allItems, orderDao.ExtraItemDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(allItemsColors, orderDao.ExtraItemColorDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(baseItems, orderDao.BaseItemDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(baseItemColors, orderDao.BaseItemColorDao, order.id, 'idOrder')
+        await orderDao.multipleAccess(canvas, canvasDao, order.id, 'idOrder')
+
+        await orderDao.comprobarStockMinimo(order.id)
+
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)
+    }
+}
+
+
+exports.findNId = async (req, res) => {
+    try {
+
+        res.json({
+            ok: true,
+            data: await orderDao.findAutoincrementID()
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}
+
+exports.switchState = async (req, res) => {
+
+    try {
+        await orderDao.updateOrderState(req.body.id)
+        res.json({ ok: true })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+
+}
+
+exports.select = async (req, res) => {
+
+    try {
+        res.json({
+            ok: true,
+            data: await customerDataDao.findAllStatus()
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+exports.validate = async (req, res) => {
+    try {
+        const { productionDate, idPool } = req.body.form
+
+        res.json({
+            ok: true,
+            data: await orderDao.validarOrderPoolProduction(productionDate, idPool)
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
     }
 }

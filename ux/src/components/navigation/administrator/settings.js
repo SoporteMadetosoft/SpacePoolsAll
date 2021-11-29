@@ -30,11 +30,17 @@ export default [
             title: 'Tipos de direcciones',
             icon: <Circle size={12} />,
             navLink: '/setup/general/addressesTypes'
+          },
+          {
+            id: 'taxes',
+            title: 'Impuestos',
+            icon: <Circle size={12} />,
+            navLink: '/setup/taxes'
           }
         ]
       },
       {
-        id: 'customer',
+        id: 'setupCustomers',
         title: 'Clientes',
         icon: <FontAwesomeIcon icon={faUser} />,
         children: [
@@ -65,21 +71,21 @@ export default [
         ]
       },
       {
-        id: 'vendors',
+        id: 'setupVendors',
         title: 'Proveedores',
         icon: <FontAwesomeIcon icon={faBoxes} />,
         children: [
           {
             id: 'vendorType',
-            title: 'Tipos de vendedor',
+            title: 'Tipos de proveedor',
             icon: <Circle size={12} />,
             navLink: '/setup/vendors/vendorType'
           }
         ]
       },
       {
-        id: 'vehicles',
-        title: 'Vehiculos',
+        id: 'setupVehicles',
+        title: 'Vehículos',
         icon: <FontAwesomeIcon icon={faTruckMoving} />,
         children: [
           {
@@ -97,7 +103,7 @@ export default [
         ]
       },
       {
-        id: 'items',
+        id: 'setupItems',
         title: 'Artículos',
         icon: <FontAwesomeIcon icon={faCube} />,
         children: [
@@ -106,6 +112,12 @@ export default [
             title: 'Ubicaciones',
             icon: <Circle size={12} />,
             navLink: '/setup/items/place'
+          },
+          {
+            id: 'colors',
+            title: 'Colores',
+            icon: <Circle size={12} />,
+            navLink: '/setup/items/colors'
           }
         ]
       }

@@ -1,19 +1,21 @@
 import { formTypes } from "../../types/normalForm/types"
 import { getFormData } from "../../../utility/helpers/Axios/getFormData"
+import axios from "axios"
+import { endPoints } from "@fixed/endPoints"
 
 export const handleChangeController = (name, value) => ({
-  type: formTypes.inputChange,
-  payload: { name, value }
+    type: formTypes.inputChange,
+    payload: { name, value }
 })
 
 export const initNormalForm = (structure) => ({
     type: formTypes.initForm,
-    payload: structure 
+    payload: structure
 })
 
-export const addRepeaterRegister = (key) => ({
+export const addRepeaterRegister = (key, structure) => ({
     type: formTypes.addRepeaterRegister,
-    payload: key
+    payload: { key, structure }
 })
 
 export const removeRepeaterRegister = (key, position) => ({
@@ -30,6 +32,10 @@ export const handleCleanForm = () => ({
     type: formTypes.cleanForm
 })
 
+export const handleCleanSection = (key) => ({
+    type: formTypes.cleanSectionForm,
+    payload: key
+})
 
 export const fillFormData = (data) => ({
     type: formTypes.fillFormData,
@@ -39,9 +45,27 @@ export const fillFormData = (data) => ({
 export const handleStartEditing = (endpoint, id) => {
     return async (dispatch) => {
         const data = await getFormData(endpoint, id)
-        const base = data.base
-        delete data.base
-        console.log({ ...data, ...base })
-        dispatch(fillFormData({ ...data, ...base }))
+        dispatch(fillFormData(data))
     }
-  }
+}
+
+export const handleGetForm = () => {
+    return async (dispatch, getState) => {
+        return getState().normalForm
+    }
+}
+
+
+export const GetSetNextId = (endPoint, name) => {
+    return async (dispatch) => {
+        const token = localStorage.getItem('accessToken') || ''
+
+        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/findnid`, {
+            headers: {
+                'Content-type': 'application/json',
+                'x-token': token
+            }
+        })
+        dispatch(handleChangeController(name, data[0].AUTO_INCREMENT))
+    }
+}

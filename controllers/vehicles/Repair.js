@@ -15,19 +15,6 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await repairDao.getSelect() 
-        })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
 
@@ -58,7 +45,7 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT REPAIR */
-        await repairDao.insert(req.body.formData.base)
+        await repairDao.insert(req.body.form)
 
         res.json({ ok: true })
     } catch (error) {
@@ -71,9 +58,23 @@ exports.update = (req, res) => {
 
     try {
         /**UPDATE REPAIR */
-        repairDao.update(req.body.formData.base)
-       
+        repairDao.update(req.body.form)
+
         res.json({ ok: true })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}
+
+exports.findNId = async (req, res) => {
+
+    try {
+
+        res.json({
+            ok: true,
+            data: await repairDao.findAutoincrementID()
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

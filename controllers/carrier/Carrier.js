@@ -1,7 +1,9 @@
 
 const CarrierDao = require('../../dao/carrier/CarrierDao')
+const CarrierDocumentsDao = require('../../dao/carrier/CarrierDocumentsDao');
 
 const carrierDao = new CarrierDao()
+const carrierDocumentsDao = new CarrierDocumentsDao()
 
 exports.list = async (req, res) => {
     try {
@@ -15,15 +17,14 @@ exports.list = async (req, res) => {
         return res.status(500).send(error);
     }
 }
-
 exports.select = async (req, res) => {
-
-    try{
+    try {
         res.json({
-            ok:true,
-            data: await carrierDao.getSelect() 
+            ok: true,
+            data: await carrierDao.findAllStatus()
         })
-    }catch(error){
+
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
@@ -31,7 +32,6 @@ exports.select = async (req, res) => {
 
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
-
     try {
         res.json({
             ok: true,
@@ -59,7 +59,13 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT CARRIER */
-        await carrierDao.insert(req.body.formData.base)
+        const carrier = req.body.form
+        const documents = req.body.form.documents
+        delete carrier.documents
+
+        const insert = await carrierDao.insert(carrier)
+
+        carrierDao.multipleAccess(documents, carrierDocumentsDao, insert.insertId, 'idCarrier')
 
         res.json({ ok: true })
     } catch (error) {
@@ -69,12 +75,31 @@ exports.insert = async (req, res) => {
 }
 
 exports.update = (req, res) => {
-
     try {
         /**UPDATE CARRIER */
-        carrierDao.update(req.body.formData.base)
+        const carrier = req.body.form
+        const documents = req.body.form.documents
+
+        delete carrier.documents
+
+        carrierDao.update(carrier)
+
+        carrierDao.multipleAccess(documents, carrierDocumentsDao, carrier.id, 'idCarrier')
 
         res.json({ ok: true })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}
+
+exports.findNId= async (req, res) => {
+    try {
+       
+        res.json({ 
+            ok: true,
+            data: await  carrierDao.findAutoincrementID()
+         })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

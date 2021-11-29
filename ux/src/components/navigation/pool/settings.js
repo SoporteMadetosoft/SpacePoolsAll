@@ -3,9 +3,9 @@ import { faSwimmingPool } from '@fortawesome/free-solid-svg-icons'
 
 export default [
   {
-    id: 'pool',
+    id: 'pools',
     title: 'Piscinas',
     icon: <FontAwesomeIcon icon={faSwimmingPool} />,
-    navLink: '/pool'
-}
+    navLink: '/pools'
+  }
 ]

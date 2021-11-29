@@ -16,14 +16,16 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.select = async (req, res) => {
 
-    try{
+exports.select = async (req, res) => {
+    const treeData = await productFamilyDao.findAllFamily(req.body.idNode)
+    try {
         res.json({
-            ok:true,
-            data: await productFamilyDao.getSelect() 
+            ok: true,
+            data: treeData
         })
-    }catch(error){
+
+    } catch (error) {
         console.log(error)
         return res.status(500).send(error);
     }
@@ -59,8 +61,8 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT PRODUCT FAMILY */
-        const insert = await productFamilyDao.insert(req.body.formData.base)
-        
+        const insert = await productFamilyDao.insert(req.body.form)
+
 
         res.json({ ok: true })
     } catch (error) {
@@ -69,14 +71,35 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
     try {
         /** UPDATE PRODUCT FAMILY */
-        productFamilyDao.update(req.body.formData.base)
-      
-       
+        const familia = req.body.form
+        if (familia.id === familia.parent) {
+            return res.status(500).send()
+        }
+        if (familia.parent === null) {
+            await productFamilyDao.setParentNullById(familia.id)
+            delete familia.parent
+        }
+        productFamilyDao.update(familia)
+
+
         res.json({ ok: true })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}
+
+exports.findNId = async (req, res) => {
+    try {
+
+        res.json({
+            ok: true,
+            data: await productFamilyDao.findAutoincrementID()
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

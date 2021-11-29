@@ -1,14 +1,13 @@
-class Vendor{
-    base = {}
-    contact = []
-    adresses = []
-    purchase = []
+class Vendor {
+    contacts = []
+    addresses = []
     #table = 'vendors'
 
     constructor({
         id,
-        vendorType,
-        paymentMethod,
+        idVendorType,
+        idPaymentMethod,
+        idOrigin,
         vendorCode,
         comercialName,
         CIF,
@@ -16,25 +15,24 @@ class Vendor{
         phone,
         email,
         observations,
-        status,
-        contact = [],
-        adresses = [],
-        purchase = []
-    }){
-        this.base.id = id
-        this.base.vendorType = vendorType
-        this.base.paymentMethod = paymentMethod
-        this.base.vendorCode = vendorCode
-        this.base.comercialName = comercialName
-        this.base.CIF = CIF
-        this.base.socialReason = socialReason
-        this.base.phone = phone
-        this.base.email = email
-        this.base.observations = observations
-        this.base.status = status
-        this.contact = contact
-        this.adresses = adresses
-        this.purchase = purchase
+        idStatus,
+        contacts = [],
+        addresses = []
+    }) {
+        this.id = id
+        this.idVendorType = idVendorType
+        this.idPaymentMethod = idPaymentMethod
+        this.idOrigin = idOrigin
+        this.vendorCode = vendorCode
+        this.comercialName = comercialName
+        this.CIF = CIF
+        this.socialReason = socialReason
+        this.phone = phone
+        this.email = email
+        this.observations = observations
+        this.idStatus = idStatus
+        this.contacts = contacts
+        this.addresses = addresses
     }
     get table() {
         return this.#table;

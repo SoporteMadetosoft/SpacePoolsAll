@@ -1,23 +1,22 @@
 class Customer {
-    base={}
     addresses = []
-    contactPersons = []
+    contacts = []
     #table = 'customers'
 
     constructor({
         id,
         customerCode,
         comercialName,
-        comercialNum,
         CIF,
         socialReason,
         phone,
         email,
         observations,
         accountNumber,
-        payDay,
-        status,
-        mode,
+        filePath,
+        idPayDay,
+        idStatus,
+        idMode,
         idLanguage,
         idPaymentMethod,
         idCustomerCategory,
@@ -25,29 +24,31 @@ class Customer {
         idCustomerActivity,
         idCustomerOrigin,
         addresses = [],
-        contacts = []
+        contacts = [],
+        documents = []
     }) {
-        this.base.id = id
-        this.base.customerCode = customerCode
-        this.base.comercialName = comercialName
-        this.base.comercialNum = comercialNum
-        this.base.CIF = CIF
-        this.base.socialReason = socialReason
-        this.base.phone = phone
-        this.base.email = email
-        this.base.observations = observations
-        this.base.accountNumber = accountNumber
-        this.base.payDay = payDay
-        this.base.status = status
-        this.base.mode = mode
-        this.base.idLanguage = idLanguage
-        this.base.idPaymentMethod = idPaymentMethod
-        this.base.idCustomerType = idCustomerType
-        this.base.idCustomerCategory = idCustomerCategory
-        this.base.idCustomerActivity = idCustomerActivity
-        this.base.idCustomerOrigin = idCustomerOrigin
+        this.id = id
+        this.customerCode = customerCode
+        this.comercialName = comercialName
+        this.CIF = CIF
+        this.socialReason = socialReason
+        this.phone = phone
+        this.email = email
+        this.observations = observations
+        this.accountNumber = accountNumber
+        this.filePath = filePath
+        this.idPayDay = idPayDay
+        this.idStatus = idStatus
+        this.idMode = idMode
+        this.idLanguage = idLanguage
+        this.idPaymentMethod = idPaymentMethod
+        this.idCustomerType = idCustomerType
+        this.idCustomerCategory = idCustomerCategory
+        this.idCustomerActivity = idCustomerActivity
+        this.idCustomerOrigin = idCustomerOrigin
         this.addresses = addresses
         this.contacts = contacts
+        this.documents = documents
     }
     get table() {
         return this.#table;

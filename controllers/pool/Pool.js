@@ -16,19 +16,6 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await poolDao.getSelect() 
-        })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
 
@@ -59,8 +46,21 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT POOL */
-        const insert = await poolDao.insert(req.body.formData.base)
-        
+        const pool = req.body.form
+        const { items, raws, itemColor, rawColor } = req.body.form
+
+        const allItems = [...items, ...raws]
+        const allItems2 = [...itemColor, ...rawColor]
+
+        delete pool.items
+        delete pool.itemColor
+        delete pool.raws
+        delete pool.rawColor
+
+        const insert = await poolDao.insert(pool)
+
+        poolDao.multipleAccess(allItems, poolDao.PoolItemsDao, insert.insertId, 'idPool')
+        poolDao.multipleAccess(allItems2, poolDao.ExtraItemColorDao, insert.insertId, 'idPool')
 
         res.json({ ok: true })
     } catch (error) {
@@ -69,14 +69,40 @@ exports.insert = async (req, res) => {
     }
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
     try {
         /** UPDATE POOL */
-        console.log(req.body)
-        poolDao.update(req.body.formData.base)
-       
+        const pool = req.body.form
+        const { items, raws, itemColor, rawColor } = req.body.form
+
+        const allItems = [...items, ...raws]
+        const allItems2 = [...itemColor, ...rawColor]
+
+        delete pool.items
+        delete pool.itemColor
+        delete pool.raws
+        delete pool.rawColor
+
+        await poolDao.update(pool)
+
+        poolDao.multipleAccess(allItems, poolDao.PoolItemsDao, pool.id, 'idPool')
+        poolDao.multipleAccess(allItems2, poolDao.ExtraItemColorDao, pool.id, 'idPool')
+
         res.json({ ok: true })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}
+
+exports.findNId = async (req, res) => {
+    try {
+
+        res.json({
+            ok: true,
+            data: await poolDao.findAutoincrementID()
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).send(error)

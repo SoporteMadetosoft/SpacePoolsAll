@@ -16,18 +16,6 @@ exports.list = async (req, res) => {
     }
 }
 
-exports.select = async (req, res) => {
-
-    try{
-        res.json({
-            ok:true,
-            data: await customerDDao.getSelect() 
-        })
-    }catch(error){
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
 
 exports.listByID = async (req, res) => {
     const id = parseInt(req.body.id, 10)
@@ -59,8 +47,8 @@ exports.delete = async (req, res) => {
 exports.insert = async (req, res) => {
     try {
         /** INSERT CUSTOMER DATA */
-        const insert = await customerDDao.insert(req.body.formData.base)
-        
+        const insert = await customerDDao.insert(req.body.form)
+
 
         res.json({ ok: true })
     } catch (error) {
@@ -73,9 +61,9 @@ exports.update = (req, res) => {
 
     try {
         /** UPDATE CUSTOMER DATA */
-        customerDDao.update(req.body.formData.base)
-    
-       
+        customerDDao.update(req.body.form)
+
+
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

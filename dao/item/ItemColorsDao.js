@@ -42,7 +42,7 @@ class ItemsColorsDao extends GenericDao {
         const list = {
             ...data,
             reserveStock: rs !== null ? rs : 0,
-            stock: st.stock !== null ? st.stock : 0,
+            stock: st !== null ? st : 0,
         }
         const { id, itemCode, name, description, reserveStock, stock } = list
         const nObj = { id, itemCode, name, description, reserveStock, stock }
@@ -69,7 +69,6 @@ class ItemsColorsDao extends GenericDao {
 
 
     findByItemTypeAndId(id, itemType) {
-        // console.log(`SELECT * FROM item WHERE id = ${id} AND itemType = ${itemType}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM item2 WHERE id = ? AND itemType = ?', [id, itemType], async (err, result) => {
                 if (err) {
@@ -117,9 +116,8 @@ class ItemsColorsDao extends GenericDao {
     }
 
     findReservedStock(idItem) {
-        //console.log(`SELECT SUM(cantidadBase) AS cantidadBase, SUM(cantidadExtra) AS cantidadExtra FROM reservestockcolor WHERE IDITEM = ${idItem}`)
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT SUM(cantidadBase) AS cantidadBase, SUM(cantidadExtra) AS cantidadExtra FROM reservestockcolor WHERE IDITEM = ?`, [idItem], (err, result) => {
+            this.db.query(`SELECT SUM(cantidadBase) AS cantidadBase, SUM(cantidadExtra) AS cantidadExtra FROM reserveStockColor WHERE IDITEM = ?`, [idItem], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -133,21 +131,19 @@ class ItemsColorsDao extends GenericDao {
     }
 
     totalStock(idItem) {
-        // console.log(`SELECT SUM(stock) AS stock FROM item_colors WHERE idItem = ${idItem}`)
         return new Promise((resolve, reject) => {
             this.db.query(`SELECT SUM(stock) AS stock FROM item_colors WHERE idItem = ?`, [idItem], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
 
-                    resolve(result[0])
+                    resolve(result[0].stock)
                 }
             })
         })
     }
 
     totalColorStock(idItem, idColor) {
-        // console.log(`SELECT SUM(stock) AS stock FROM item_colors WHERE idItem = ${idItem}`)
         return new Promise((resolve, reject) => {
             this.db.query(`SELECT SUM(stock) AS stock FROM item_colors WHERE idItem = ? AND idColor = ?`, [idItem, idColor], (err, result) => {
                 if (err) {
@@ -161,10 +157,7 @@ class ItemsColorsDao extends GenericDao {
     }
 
     updateStock(action, id, idColor, quantity) {
-        //console.log(`UPDATE item_colors SET stock = stock ${action} ${quantity} WHERE idItem = ${id} AND idColor = ${idColor}`)
         return new Promise((resolve, reject) => {
-            //console.log(quantity)
-            //console.log(`UPDATE item_colors SET stock = stock ${action} ${quantity} WHERE idItem = ${id} AND idColor = ${idColor}`)
             this.db.query(`UPDATE item_colors SET stock = stock ${action} ? WHERE idItem = ? AND idColor = ?`, [quantity, id, idColor], (err, result) => {
                 if (err) {
                     reject(err)
@@ -216,7 +209,6 @@ class ItemsColorsDao extends GenericDao {
     }
 
     findOneFieldById(field, id) {
-        //console.log(`SELECT ${field} FROM item2 WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT ?? FROM item2 WHERE id = ?', [field, id], (err, result) => {
                 if (err) {
@@ -229,10 +221,9 @@ class ItemsColorsDao extends GenericDao {
             })
         })
     }
-    
+
 
     findByItemId(id) {
-        //console.log(`SELECT * FROM item_colors WHERE idItem = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM item_colors WHERE idItem = ?', [id], async (err, result) => {
                 if (err) {

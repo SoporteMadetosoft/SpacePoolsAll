@@ -16,6 +16,7 @@ import Badge from "reactstrap/lib/Badge"
 
 import { useContext } from "react"
 import { AbilityContext } from '@src/utility/context/Can'
+import { handleChange } from "../../redux/actions/custom"
 
 function renderSwitch(param) {
 
@@ -88,7 +89,7 @@ export const ProductionsList = [
     name: 'Estado',
     sortable: true,
     width: '15%',
-    cell: row => {
+    cell: (row, index) => {
       const proceso_prod = row.idProductionStatus
       const dispatch = useDispatch()
       return (
@@ -97,7 +98,7 @@ export const ProductionsList = [
             (
               <Link onClick={() => {
                 save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus - 1 })
-                dispatch(startLoadingTableProduction('Productions'))
+                dispatch(handleChange(row.idProductionStatus - 1, 'idProductionStatus', index))
               }}>
                 <Badge color='light-dark' className="mr-1"><ChevronLeft size={15} /></Badge>
               </Link>
@@ -107,14 +108,14 @@ export const ProductionsList = [
 
           {renderSwitch(proceso_prod)}
 
+
           {proceso_prod < 8 ?
             (
               <Link onClick={() => {
                 save('Productions', row.id, { id: row.id, idProductionStatus: row.idProductionStatus + 1 })
-                dispatch(startLoadingTableProduction('Productions'))
+                dispatch(handleChange(row.idProductionStatus + 1, 'idProductionStatus', index))
                 if ((row.idProductionStatus + 1) === 8) {
                   const token = localStorage.getItem('accessToken')
-
                   axios.put(`${process.env.REACT_APP_HOST_URI}${endPoints['Orders']}/switchState`, { id: row.idOrder, state: 1 }, {
                     headers: {
                       'Content-type': 'application/json',
@@ -122,6 +123,7 @@ export const ProductionsList = [
                     }
                   })
                 }
+                //dispatch(startLoadingTableProduction('Productions'))
               }}>
                 <Badge color='light-dark' className="ml-1"><ChevronRight size={15} /></Badge>
               </Link>

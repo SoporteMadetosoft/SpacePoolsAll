@@ -70,7 +70,6 @@ class PurchaseItemDao extends GenericDao {
     }
 
     sumRecived(id, recived) {
-        // console.log(`UPDATE purchases_items SET quantity = quantity - ${recived}, recived = recived + ${recived} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query(`UPDATE purchases_items SET quantity = quantity - ${recived}, recived = recived + ${recived} WHERE id = ?`, [id], (err, result) => {
                 if (err) {

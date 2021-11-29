@@ -62,7 +62,7 @@ class GenericDao {
     }
 
     findAllId(id, foreign) {
-        //console.log(`SELECT id FROM ${this.auxModel.table} WHERE ${foreign} = ${id}`)
+        // console.log(`SELECT id FROM ${this.auxModel.table} WHERE ${foreign} = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT id FROM ?? WHERE ?? = ?', [this.auxModel.table, foreign, id], async (err, result) => {
                 if (err) {
@@ -79,7 +79,7 @@ class GenericDao {
     }
 
     deleteById(id) {
-        console.log(`DELETE FROM ${this.auxModel.table} WHERE id = ${id}`)
+        // console.log(`DELETE FROM ${this.auxModel.table} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query(`DELETE FROM ?? WHERE id = ?`, [this.auxModel.table, id], async (err, result) => {
                 if (err) {
@@ -92,7 +92,7 @@ class GenericDao {
     }
 
     insert(params) {
-        console.log(`INSERT INTO ${this.auxModel.table} (${Object.keys(params)}) VALUES  (${Object.values(params)})`)
+        // console.log(`INSERT INTO ${this.auxModel.table} (${Object.keys(params)}) VALUES  (${Object.values(params)})`)
         Object.keys(params).forEach((k) => { if (params[k] === '') { params[k] = null } })
         return new Promise((resolve, reject) => {
             this.db.query(`INSERT INTO ?? (??) VALUES  (?)`, [this.auxModel.table, Object.keys(params), Object.values(params)], async (err, result) => {
@@ -106,7 +106,7 @@ class GenericDao {
     }
 
     update(params) {
-        console.log(`UPDATE ${this.auxModel.table} SET ${this.#formatUpdate(params)} WHERE id =  ${params.id} `)
+        // console.log(`UPDATE ${this.auxModel.table} SET ${this.#formatUpdate(params)} WHERE id =  ${params.id} `)
         return new Promise((resolve, reject) => {
             this.db.query(`UPDATE ?? SET ${this.#formatUpdate(params)} WHERE id =  ? `, [this.auxModel.table, params.id], async (err, result) => {
                 if (err) {
@@ -132,30 +132,37 @@ class GenericDao {
     }
 
     multipleAccess = async (data, obj, id, foreign) => {
-        const idsDb = await obj.findAllId(id, foreign)
-        const idsForm = []
-        const d = data
-        d.forEach(element => {
-            const action = element.id ? 'update' : 'insert'
+        if (data) {
+            const idsDb = await obj.findAllId(id, foreign)
+            const idsForm = []
+            const d = data
+            d.forEach(element => {
+                const action = element.id ? 'update' : 'insert'
 
-            if (action === 'insert') {
-                element[foreign] = id
-            } else {
-                idsForm.push(element.id)
-            }
+                if (action === 'insert') {
+                    element[foreign] = id
+                } else {
+                    idsForm.push(element.id)
+                }
 
-            obj[action](element)
-        })
+                obj[action](element)
+            })
 
-        const diff = idsDb.filter(x => !idsForm.includes(x))
-        diff.forEach(id => {
-            obj.deleteById(id)
-        })
+            const diff = idsDb.filter(x => !idsForm.includes(x))
+            diff.forEach(id => {
+                obj.deleteById(id)
+            })
+
+
+        }
+
     }
 
     #formatUpdate(params) {
         let update = ''
         Object.entries(params).forEach(element => {
+            element[1] = typeof element[1] === 'string' ? element[1].replace("'", "\\'") : element[1]
+
             if (element[0] !== 'id' && element[1] !== null && element[1] !== undefined) {
                 update = update.concat("`", element[0], "` = ", "'", element[1], "', ")
             } else if (element[0] !== 'id' && element[1] === null) {
@@ -198,6 +205,7 @@ class GenericDao {
             })
         })
     }
+
 
 
 }

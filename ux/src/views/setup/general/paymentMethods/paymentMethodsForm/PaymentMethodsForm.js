@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { Form } from 'reactstrap'
-import { GetSetNextId,  handleGetForm } from '../../../../../redux/actions/normalForm'
+import { GetSetNextId, handleGetForm } from '../../../../../redux/actions/normalForm'
 import { save } from '../../../../../utility/helpers/Axios/save'
 import { ActionButtons } from '../../../../../components/actionButtons/ActionButtons'
 import { setErrors, setSchema } from '../../../../../redux/actions/formValidator'
@@ -30,7 +30,7 @@ export const PaymentMethodsForm = () => {
 
     useEffect(() => {
         dispatch(setSchema(formSchema))
-    })
+    }, [])
 
     const submit = async (e) => {
         e.preventDefault()
@@ -82,6 +82,6 @@ export const PaymentMethodsForm = () => {
             </div>
             <ActionButtons />
         </Form>
-      
+
     )
 }

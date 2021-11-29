@@ -35,7 +35,7 @@ class ProductionDao extends GenericDao {
             deliverySchedulerEnd: order != undefined ? order.deliverySchedulerEnd : '',
             observations: order != undefined ? order.observations : '',
             pools: pool != undefined ? pool.fabricationName : '',
-            colors : color !=undefined ? color.name : ''
+            colors: color != undefined ? color.name : ''
         }
         const { id, idOrder, orderCode, pools, colors, orderDate, deliveryDate, deliverySchedulerStart, deliverySchedulerEnd, observations, isStarted, idProductionStatus } = list
         const newOrderDate = this.datetimeToEuropeDate(orderDate)
@@ -52,8 +52,7 @@ class ProductionDao extends GenericDao {
             observations: observations,
             isStarted: isStarted,
             idProductionStatus: idProductionStatus,
-            color : colors,
-             
+            color: colors
         }
         console.log(nObj)
         return nObj
@@ -78,7 +77,6 @@ class ProductionDao extends GenericDao {
     }
 
     findByState(states) {
-        // console.log(`SELECT * FROM production WHERE idProductionStatus IN (${states})`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM production WHERE idProductionStatus IN (?)', [states], async (err, result) => {
                 if (err) {

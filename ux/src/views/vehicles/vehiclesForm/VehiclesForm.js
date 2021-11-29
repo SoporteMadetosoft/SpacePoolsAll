@@ -45,7 +45,6 @@ const placeholderStyles = {
 
 export const VechiclesForm = () => {
 
-    let { vehicleCode } = useSelector(state => state.normalForm)
     const { id } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
@@ -57,8 +56,7 @@ export const VechiclesForm = () => {
     const realFilePath = form.filePath ? form.filePath : filePath
 
     const { normalForm, selectReducer, formValidator } = useSelector(state => state)
-
-    //    const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(ValidationSchema) })
+    const vehicleCode = id !== undefined ? id : normalForm.vehicleCode
 
     const { observations, model } = normalForm
     const { Brand, Carriers } = selectReducer
@@ -95,9 +93,9 @@ export const VechiclesForm = () => {
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'brandOpt'))
-        if (normalForm.id === undefined) {
+        if (id === undefined) {
             dispatch(GetSetNextId("Vehicles", 'vehicleCode'))
-        } else vehicleCode = normalForm.id
+        } 
         dispatch(setSchema(formSchema))
     }, [])
 

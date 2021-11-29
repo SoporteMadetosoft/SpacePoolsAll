@@ -24,16 +24,44 @@ class DeliveryDao extends GenericDao {
         const order = await this.OrderDao.mountObj(await this.OrderDao.findOrderById(data.idOrder));
         const pool = await this.OrderDao.PoolDao.findById(order.idPool.id);
         const vehicle = await this.VehicleDao.findByCarrierId(data.idCarrier);
+        const customer = await this.CustomerDao.findById(data.idCustomer);
+
+        const customerData = order.customerData
+        const vehiclePlate = vehicle.plate
+        const trailerPlate = vehicle.idTrailer.plate
+        const poolColor = order.idColor.name
+
+        delete order.customerData
+        delete order.idCustomer
+        delete order.canvasItems
+        delete order.idPool
 
         const obj = {
             ...data,
+            customer: {
+                name: customer.comercialName,
+                origin: customer.idCustomerOrigin,
+                language: customer.idLanguage,
+                customerData
+            },
             orderData: order,
             orderDate: this.datetimeToEuropeDate(new Date(order.orderDate)),
             productionDate: this.datetimeToEuropeDate(new Date(order.productionDate)),
             deliveryDate: this.datetimeToEuropeDate(new Date(order.deliveryDate)),
-            idPool: pool,
-            idCarrier: carrier,
-            idVehicle: vehicle
+            pool: {
+                name: pool.fabricationName,
+                nameEuropa: pool.nameEuropa,
+                nameSpace: pool.nameSpace,
+                nameSociedad: pool.nameSociedad,
+                nameHydryus: pool.nameHydryus,
+                color: poolColor
+            },
+            carrier: {
+                name: carrier.name,
+                NIF: carrier.NIF
+            },
+            vehiclePlate,
+            trailerPlate
         }
 
         return obj
@@ -89,7 +117,6 @@ class DeliveryDao extends GenericDao {
     async findDeliveryByUser(idUser) {
         const isCarrier = await this.comprobarCarrier(idUser)
         if (isCarrier === true) {
-            // console.log(`SELECT * FROM delivery WHERE idCarrier = (SELECT id FROM carriers WHERE idUser = ${idUser})`)
             return new Promise((resolve, reject) => {
                 this.db.query('SELECT * FROM delivery WHERE idCarrier = (SELECT id FROM carriers WHERE idUser = ?)', [idUser], async (err, result) => {
                     if (err) {

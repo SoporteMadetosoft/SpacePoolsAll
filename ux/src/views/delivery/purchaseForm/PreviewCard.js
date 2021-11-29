@@ -11,6 +11,19 @@ const structureForm = {
   baseItems: [],
   extraItems: []
 }
+const logos = [
+  require(`@src/assets/images/logo/logo.png`).default,
+  require(`@src/assets/images/logo/logo-hydryus.png`).default,
+  require(`@src/assets/images/logo/logo-europa.png`).default,
+  require(`@src/assets/images/logo/logo-sociedad.png`).default
+]
+
+const poolNames = [
+  'nameSpace',
+  'nameHydryus',
+  'nameEuropa',
+  'nameSociedad'
+]
 
 const PreviewCard = () => {
 
@@ -19,57 +32,32 @@ const PreviewCard = () => {
 
   const { normalForm } = useSelector(state => state)
 
-  const cn = normalForm['orderData'] !== undefined ? normalForm['orderData']['idCustomer'].comercialName : ''
-  const deliveryAddress = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].deliveryAddress : ''
-  const phone = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].phone : ''
-  const email = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].email : ''
-  const carrier = normalForm['idCarrier'] !== undefined ? normalForm['idCarrier'] : ''
-  const vehicle = normalForm['idVehicle'] !== undefined ? normalForm['idVehicle'] : ''
-  const trailer = normalForm['idVehicle'] !== undefined ? normalForm['idVehicle']['idTrailer'] : ''
-  const poolName = normalForm['idPool'] !== undefined ? normalForm['idPool'].fabricationName : ''
-  const poolPrice = normalForm['idPool'] !== undefined ? normalForm['idPool'].price : ''
-  const tax = normalForm['orderData'] !== undefined ? normalForm['orderData']['idTax'].name : ''
-  const base = normalForm['orderData'] !== undefined ? normalForm['orderData']['baseItems'] : ''
+  const customerName = normalForm['customer'] !== undefined ? normalForm['customer'].name : ''
+  const deliveryAddress = normalForm['customer'] !== undefined ? normalForm['customer']['customerData'][0].deliveryAddress : ''
+  const phone = normalForm['customer'] !== undefined ? normalForm['customer']['customerData'][0].phone : ''
+  const email = normalForm['customer'] !== undefined ? normalForm['customer']['customerData'][0].email : ''
+  const logo = normalForm['customer'] !== undefined ? normalForm['customer'].origin.logo.id : ''
+  const info = normalForm['customer'] !== undefined ? normalForm['customer'].origin.info.split('\n') : ''
+  const language = normalForm['customer'] !== undefined ? normalForm['customer'].language.id : ''
+
+  const carrierName = normalForm['carrier'] !== undefined ? normalForm['carrier'].name : ''
+  const carrierNIF = normalForm['carrier'] !== undefined ? normalForm['carrier'].NIF : ''
+  const vehiclePlate = normalForm['vehiclePlate'] !== undefined ? normalForm['vehiclePlate'] : ''
+  const trailerPlate = normalForm['trailerPlate'] !== undefined ? normalForm['trailerPlate'] : ''
+
+  const pool = normalForm['pool'] !== undefined ? normalForm['pool'] : ''
+  const poolColor = normalForm['pool'] !== undefined ? normalForm['pool'].color : ''
+
+  const baseItems = normalForm['orderData'] !== undefined ? normalForm['orderData']['baseItems'] : ''
   const baseItemColors = normalForm['orderData'] !== undefined ? normalForm['orderData']['baseItemColors'] : ''
   const extraItems = normalForm['orderData'] !== undefined ? normalForm['orderData']['extraItems'] : ''
   const extraItemColors = normalForm['orderData'] !== undefined ? normalForm['orderData']['extraItemColors'] : ''
   const extraRaws = normalForm['orderData'] !== undefined ? normalForm['orderData']['extraRaws'] : ''
   const extraRawColors = normalForm['orderData'] !== undefined ? normalForm['orderData']['extraRawColors'] : ''
 
-  const price = normalForm['orderData'] ? normalForm['orderData'].price : ''
   const deliveryDate = normalForm ? normalForm.deliveryDate : ''
+  const orderDate = normalForm ? normalForm.orderDate : ''
   const observations = normalForm['orderData'] ? normalForm['orderData'].observations : ''
-
-  const data = {
-    customer: {
-      name: cn,
-      address: deliveryAddress,
-      phone,
-      email
-    },
-    deliveryDate,
-    idCarrier: {
-      name: carrier.name,
-      nif: carrier.NIF
-    },
-    vehicle: {
-      plate: vehicle.plate,
-      trailerPlate: trailer.plate
-    },
-    piscina: {
-      name: poolName,
-      price: poolPrice
-    },
-    baseItems: base,
-    baseItemColors,
-    extraItems,
-    extraItemColors,
-    extraRaws,
-    extraRawColors,
-    tax,
-    total: price,
-    observations
-  }
 
   useEffect(() => {
     if (id) {
@@ -83,8 +71,7 @@ const PreviewCard = () => {
   const handleEndSignature = () => {
     dispatch(handleChangeController('signature', sigCanvas.getTrimmedCanvas().toDataURL('image/png')))
   }
-
-
+  console.log(language)
   return (
     <Card className='invoice-preview-card'>
       <CardBody className='invoice-padding pb-0'>
@@ -92,21 +79,23 @@ const PreviewCard = () => {
         <div className='d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0'>
           <div>
             <div className='logo-wrapper'>
-              <img src={themeConfig.app.appLogoImage} style={{ width: '120px' }} alt='logo' />
-
-              <h3 className='text-primary invoice-logo'>Space Pools</h3>
+              <img src={logos[logo - 1]} style={{ width: '300px' }} alt='logo' />
             </div>
-            <CardText className='mb-25'>Office 149, 450 South Brand Brooklyn</CardText>
-            <CardText className='mb-25'>San Diego County, CA 91905, USA</CardText>
-            <CardText className='mb-0'>+1 (123) 456 7891, +44 (876) 543 2198</CardText>
+            {
+              Object.entries(info).map((inf) => <CardText className='mb-25'>{inf[1]}</CardText>)
+            }
           </div>
           <div className='mt-md-0 mt-2'>
             <h4 className='invoice-title'>
-              Entrega <span className='invoice-number'>#{id}</span>
+              {(language !== undefined && language === 1) ? (`Entrega`) : (`Livraison`)} <span className='invoice-number'>#{id}</span>
             </h4>
             <div className='invoice-date-wrapper'>
-              <p className='invoice-date-title'>F. de entrega:</p>
-              <p className='invoice-date'>{data.deliveryDate}</p>
+              <p className='invoice-date-title'>{(language !== undefined && language === 1) ? (`F. pedido:`) : (`D. commande:`)}</p>
+              <p className='invoice-date'>{orderDate}</p>
+            </div>
+            <div className='invoice-date-wrapper'>
+              <p className='invoice-date-title'>{(language !== undefined && language === 1) ? (`F. entrega:`) : (`D. livraison:`)}</p>
+              <p className='invoice-date'>{deliveryDate}</p>
             </div>
           </div>
         </div>
@@ -119,29 +108,29 @@ const PreviewCard = () => {
       <CardBody className='invoice-padding pt-0'>
         <Row className='invoice-spacing'>
           <Col className='p-0' lg='8'>
-            <h6 className='mb-2'>Datos del receptor:</h6>
-            <h6 className='mb-25'>{data.customer.name}</h6>
-            <CardText className='mb-25'>{data.customer.address}</CardText>
-            <CardText className='mb-25'>{data.customer.phone}</CardText>
-            <CardText className='mb-25'>{data.customer.email}</CardText>
+            <h6 className='mb-2'>{(language !== undefined && language === 1) ? (`Datos del receptor:`) : (`Données du récepteur:`)}</h6>
+            <h6 className='mb-25'>{customerName}</h6>
+            <CardText className='mb-25'>{deliveryAddress}</CardText>
+            <CardText className='mb-25'>{phone}</CardText>
+            <CardText className='mb-25'>{email}</CardText>
           </Col>
           <Col className='p-0 mt-xl-0 mt-2' lg='4'>
-            <h6 className='mb-2'>Transportista:</h6>
+            <h6 className='mb-2'>{(language !== undefined && language === 1) ? (`Transportista:`) : (`Transporteur:`)}</h6>
             <table>
               <tbody>
                 <tr>
-                  <td className='pr-1'>Nombre:</td>
+                  <td className='pr-1'>{(language !== undefined && language === 1) ? (`Nombre:`) : (`Nom:`)}</td>
                   <td>
-                    <span className='font-weight-bolder'>{data.idCarrier.name}</span>
+                    <span className='font-weight-bolder'>{carrierName}</span>
                   </td>
                 </tr>
                 <tr>
                   <td className='pr-1'>NIF: </td>
-                  <td>{data.idCarrier.nif}</td>
+                  <td>{carrierNIF}</td>
                 </tr>
                 <tr>
-                  <td className='pr-1'>Matrícula: </td>
-                  <td>{data.vehicle.plate} ( {data.vehicle.trailerPlate} )</td>
+                  <td className='pr-1'>{(language !== undefined && language === 1) ? (`Matrícula:`) : (`Inscription:`)} </td>
+                  <td>{vehiclePlate} ( {trailerPlate} )</td>
                 </tr>
               </tbody>
             </table>
@@ -154,7 +143,7 @@ const PreviewCard = () => {
       <Table responsive>
         <thead>
           <tr>
-            <th className='py-1'>Artículo</th>
+            <th className='py-1'>{(language !== undefined && language === 1) ? (`Pedido`) : (`Commande`)}</th>
             {/* <th className='py-1'>Base</th>
             <th className='py-1'>IVA</th>
             <th className='py-1'>Cantidad</th>
@@ -165,9 +154,9 @@ const PreviewCard = () => {
 
           <tr className='border-bottom'>
             <td className='py-1'>
-              <p className='card-text font-weight-bold mb-50'>{data.piscina.name}</p>
+              <p className='card-text font-weight-bold mb-50'>{pool[poolNames[logo - 1]]} ({poolColor})</p>
               {
-                (data['baseItems'] !== undefined && data['baseItems'] !== '') && data['baseItems'].map(obj => {
+                (baseItems !== undefined && baseItems !== '') && baseItems.map(obj => {
                   return (
                     (obj.show === 2 &&
                       (<p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
@@ -178,7 +167,7 @@ const PreviewCard = () => {
               }
 
               {
-                (data['baseItemColors'] !== undefined && data['baseItemColors'] !== '') && data['baseItemColors'].map(obj => {
+                (baseItemColors !== undefined && baseItemColors !== '') && baseItemColors.map(obj => {
                   return (
                     (obj.show === 2 &&
                       (<p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
@@ -203,7 +192,7 @@ const PreviewCard = () => {
           </tr>
 
           {
-            (data['extraItems'] !== undefined && data['extraItems'] !== '') && data['extraItems'].map(obj => {
+            (extraItems !== undefined && extraItems !== '') && extraItems.map(obj => {
               return (
                 (obj.idItem.show.id === 2 &&
                   (
@@ -219,7 +208,7 @@ const PreviewCard = () => {
             })
           }
           {
-            (data['extraRaws'] !== undefined && data['extraRaws'] !== '') && data['extraRaws'].map(obj => {
+            (extraRaws !== undefined && extraRaws !== '') && extraRaws.map(obj => {
               return (
                 (obj.idItem.show.id === 2 &&
                   (
@@ -235,7 +224,7 @@ const PreviewCard = () => {
             })
           }
           {
-            (data['extraItemColors'] !== undefined && data['extraItemColors'] !== '') && data['extraItemColors'].map(obj => {
+            (extraItemColors !== undefined && extraItemColors !== '') && extraItemColors.map(obj => {
               return (
                 (obj.idItem.show.id === 2 &&
                   (
@@ -251,7 +240,7 @@ const PreviewCard = () => {
             })
           }
           {
-            (data['extraRawColors'] !== undefined && data['extraRawColors'] !== '') && data['extraRawColors'].map(obj => {
+            (extraRawColors !== undefined && extraRawColors !== '') && extraRawColors.map(obj => {
               return (
                 (obj.idItem.show.id === 2 &&
                   (
@@ -318,13 +307,13 @@ const PreviewCard = () => {
         <Row>
           <Col sm='12'>
             <span>
-              {data.observations}
+              {observations}
             </span>
           </Col>
         </Row>
       </CardBody>
       {/* /Invoice Note */}
-    </Card>
+    </Card >
   )
 }
 

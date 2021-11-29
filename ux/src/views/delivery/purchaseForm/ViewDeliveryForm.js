@@ -18,12 +18,13 @@ export const ViewDeliveryForm = () => {
 
     const { normalForm } = useSelector(state => state)
 
-    const cn = normalForm['orderData'] !== undefined ? normalForm['orderData']['idCustomer'].comercialName : ''
-    const deliveryAddress = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].deliveryAddress : ''
-    const phone = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].phone : ''
-    const email = normalForm['orderData'] !== undefined ? normalForm['orderData']['customerData'][0].email : ''
+    const cn = normalForm['customer'] !== undefined ? normalForm['customer'].name : ''
+    const deliveryAddress = normalForm['customer'] !== undefined ? normalForm['customer']['customerData'][0].deliveryAddress : ''
+    const phone = normalForm['customer'] !== undefined ? normalForm['customer']['customerData'][0].phone : ''
+    const email = normalForm['customer'] !== undefined ? normalForm['customer']['customerData'][0].email : ''
     const carrier = normalForm['idCarrier'] !== undefined ? normalForm['idCarrier'] : ''
-    const poolName = normalForm['idPool'] !== undefined ? normalForm['idPool'].fabricationName : ''
+    const poolName = normalForm['pool'] !== undefined ? normalForm['pool'].name : ''
+    const poolColor = normalForm['pool'] !== undefined ? normalForm['pool'].color : ''
     const poolPrice = normalForm['idPool'] !== undefined ? normalForm['idPool'].price : ''
     const tax = normalForm['orderData'] !== undefined ? normalForm['orderData']['idTax'].name : ''
 
@@ -63,6 +64,10 @@ export const ViewDeliveryForm = () => {
                     <div className="col-md-2">
                         <label className="control-label">Piscina</label>
                         <h6> {poolName} </h6>
+                    </div>
+                    <div className="col-md-2">
+                        <label className="control-label">Color</label>
+                        <h6> {poolColor} </h6>
                     </div>
                     <div className="col-md-2">
                         <label className="control-label">IVA</label>

@@ -28,7 +28,6 @@ export const PoolsForm = () => {
     const { id } = useParams()
     const history = useHistory()
 
-    let { poolCode } = useSelector(state => state.normalForm)
 
     const { normalForm } = useSelector(state => state)
     const { formValidator } = useSelector(state => state)
@@ -37,12 +36,14 @@ export const PoolsForm = () => {
 
     const PoolPrice = normalForm.price
 
+    const poolCode = id !== undefined ? id : normalForm.poolCode
+
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (normalForm.id === undefined) {
+        if (id === undefined) {
             dispatch(GetSetNextId("Pools", 'poolCode'))
-        } else poolCode = normalForm.id
+        }
         dispatch(setSchema(formSchema))
     }, [])
 
@@ -66,6 +67,8 @@ export const PoolsForm = () => {
 
             const form2 = dispatch(handleGetForm())
             form2.then((value) => {
+                delete value.baseItems
+                delete value.baseItemColors
                 const prettyForm = {
                     ...value,
                     cost: price,
@@ -115,7 +118,7 @@ export const PoolsForm = () => {
                         <Input name="nameSociedad" label="Nombre Sociedad" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="nameHydrius" label="Nombre Hydrus" />
+                        <Input name="nameHydryus" label="Nombre Hydrus" />
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">Precio</label>

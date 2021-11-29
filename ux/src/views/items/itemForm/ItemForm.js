@@ -24,7 +24,6 @@ const formSchema = {
 
 export const ItemForm = () => {
 
-    let { itemCode } = useSelector(state => state.normalForm)
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -36,13 +35,15 @@ export const ItemForm = () => {
 
     const { description } = normalForm
 
+    const itemCode = id !== undefined ? id : normalForm.itemCode
+
     useEffect(() => {
         dispatch(startAddSelectOptions('ItemType', 'ItemType'))
         dispatch(startAddSelectStatus('Vendors', 'Vendors', 'comercialName'))
 
-        if (normalForm.id === undefined) {
+        if (id === undefined) {
             dispatch(GetSetNextId("Items", 'itemCode'))
-        } else itemCode = normalForm.id
+        }
         dispatch(setSchema(formSchema))
     }, [])
 
@@ -72,8 +73,6 @@ export const ItemForm = () => {
             history.push('/items')
         }
     }
-
-    console.log(itemCode)
 
     return (
         <Form onSubmit={submit}>

@@ -21,6 +21,7 @@ import Swal from 'sweetalert2'
 import { ExtraItemColorsRepeater } from './ExtraItemColorsRepeater'
 import { ExtraRawColorsRepeater } from './ExtraRawColorsRepeater'
 import { ItemColorsRepeater } from './ItemColorsRepeater'
+import { AlertLoad } from '../../../redux/actions/alert'
 
 const formSchema = {
     idCustomer: { validations: [validator.isRequired] },

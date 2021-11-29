@@ -18,6 +18,13 @@ const logos = [
   require(`@src/assets/images/logo/logo-sociedad.png`).default
 ]
 
+const poolNames = [
+  'nameSpace',
+  'nameHydryus',
+  'nameEuropa',
+  'nameSociedad'
+]
+
 const PreviewCard = () => {
 
   const { id } = useParams()
@@ -31,14 +38,14 @@ const PreviewCard = () => {
   const email = normalForm['customer'] !== undefined ? normalForm['customer']['customerData'][0].email : ''
   const logo = normalForm['customer'] !== undefined ? normalForm['customer'].origin.logo.id : ''
   const info = normalForm['customer'] !== undefined ? normalForm['customer'].origin.info.split('\n') : ''
-  const language = normalForm['customer'] !== undefined ? normalForm['customer'].language : ''
+  const language = normalForm['customer'] !== undefined ? normalForm['customer'].language.id : ''
 
   const carrierName = normalForm['carrier'] !== undefined ? normalForm['carrier'].name : ''
   const carrierNIF = normalForm['carrier'] !== undefined ? normalForm['carrier'].NIF : ''
   const vehiclePlate = normalForm['vehiclePlate'] !== undefined ? normalForm['vehiclePlate'] : ''
   const trailerPlate = normalForm['trailerPlate'] !== undefined ? normalForm['trailerPlate'] : ''
 
-  const poolName = normalForm['pool'] !== undefined ? normalForm['pool'].name : ''
+  const pool = normalForm['pool'] !== undefined ? normalForm['pool'] : ''
   const poolColor = normalForm['pool'] !== undefined ? normalForm['pool'].color : ''
 
   const baseItems = normalForm['orderData'] !== undefined ? normalForm['orderData']['baseItems'] : ''
@@ -64,7 +71,7 @@ const PreviewCard = () => {
   const handleEndSignature = () => {
     dispatch(handleChangeController('signature', sigCanvas.getTrimmedCanvas().toDataURL('image/png')))
   }
-
+  console.log(language)
   return (
     <Card className='invoice-preview-card'>
       <CardBody className='invoice-padding pb-0'>
@@ -80,14 +87,14 @@ const PreviewCard = () => {
           </div>
           <div className='mt-md-0 mt-2'>
             <h4 className='invoice-title'>
-              Entrega <span className='invoice-number'>#{id}</span>
+              {(language !== undefined && language === 1) ? (`Entrega`) : (`Livraison`)} <span className='invoice-number'>#{id}</span>
             </h4>
             <div className='invoice-date-wrapper'>
-              <p className='invoice-date-title'>F. pedido:</p>
+              <p className='invoice-date-title'>{(language !== undefined && language === 1) ? (`F. pedido:`) : (`D. commande:`)}</p>
               <p className='invoice-date'>{orderDate}</p>
             </div>
             <div className='invoice-date-wrapper'>
-              <p className='invoice-date-title'>F. entrega:</p>
+              <p className='invoice-date-title'>{(language !== undefined && language === 1) ? (`F. entrega:`) : (`D. livraison:`)}</p>
               <p className='invoice-date'>{deliveryDate}</p>
             </div>
           </div>
@@ -101,18 +108,18 @@ const PreviewCard = () => {
       <CardBody className='invoice-padding pt-0'>
         <Row className='invoice-spacing'>
           <Col className='p-0' lg='8'>
-            <h6 className='mb-2'>Datos del receptor:</h6>
+            <h6 className='mb-2'>{(language !== undefined && language === 1) ? (`Datos del receptor:`) : (`Données du récepteur:`)}</h6>
             <h6 className='mb-25'>{customerName}</h6>
             <CardText className='mb-25'>{deliveryAddress}</CardText>
             <CardText className='mb-25'>{phone}</CardText>
             <CardText className='mb-25'>{email}</CardText>
           </Col>
           <Col className='p-0 mt-xl-0 mt-2' lg='4'>
-            <h6 className='mb-2'>Transportista:</h6>
+            <h6 className='mb-2'>{(language !== undefined && language === 1) ? (`Transportista:`) : (`Transporteur:`)}</h6>
             <table>
               <tbody>
                 <tr>
-                  <td className='pr-1'>Nombre:</td>
+                  <td className='pr-1'>{(language !== undefined && language === 1) ? (`Nombre:`) : (`Nom:`)}</td>
                   <td>
                     <span className='font-weight-bolder'>{carrierName}</span>
                   </td>
@@ -122,7 +129,7 @@ const PreviewCard = () => {
                   <td>{carrierNIF}</td>
                 </tr>
                 <tr>
-                  <td className='pr-1'>Matrícula: </td>
+                  <td className='pr-1'>{(language !== undefined && language === 1) ? (`Matrícula:`) : (`Inscription:`)} </td>
                   <td>{vehiclePlate} ( {trailerPlate} )</td>
                 </tr>
               </tbody>
@@ -136,7 +143,7 @@ const PreviewCard = () => {
       <Table responsive>
         <thead>
           <tr>
-            <th className='py-1'>Pedido</th>
+            <th className='py-1'>{(language !== undefined && language === 1) ? (`Pedido`) : (`Commande`)}</th>
             {/* <th className='py-1'>Base</th>
             <th className='py-1'>IVA</th>
             <th className='py-1'>Cantidad</th>
@@ -147,7 +154,7 @@ const PreviewCard = () => {
 
           <tr className='border-bottom'>
             <td className='py-1'>
-              <p className='card-text font-weight-bold mb-50'>{poolName} ({poolColor})</p>
+              <p className='card-text font-weight-bold mb-50'>{pool[poolNames[logo - 1]]} ({poolColor})</p>
               {
                 (baseItems !== undefined && baseItems !== '') && baseItems.map(obj => {
                   return (

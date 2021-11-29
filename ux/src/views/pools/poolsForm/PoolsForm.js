@@ -118,7 +118,7 @@ export const PoolsForm = () => {
                         <Input name="nameSociedad" label="Nombre Sociedad" />
                     </div>
                     <div className="col-md-3">
-                        <Input name="nameHydrius" label="Nombre Hydrus" />
+                        <Input name="nameHydryus" label="Nombre Hydrus" />
                     </div>
                     <div className="col-md-3">
                         <label className="control-label">Precio</label>

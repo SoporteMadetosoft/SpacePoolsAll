@@ -50,6 +50,10 @@ class DeliveryDao extends GenericDao {
             deliveryDate: this.datetimeToEuropeDate(new Date(order.deliveryDate)),
             pool: {
                 name: pool.fabricationName,
+                nameEuropa: pool.nameEuropa,
+                nameSpace: pool.nameSpace,
+                nameSociedad: pool.nameSociedad,
+                nameHydryus: pool.nameHydryus,
                 color: poolColor
             },
             carrier: {

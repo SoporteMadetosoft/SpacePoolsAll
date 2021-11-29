@@ -30,7 +30,6 @@ const NotificationDropdown = () => {
   useEffect(() => {
 
     dispatch(AlertLoad())
-    getNotificationDropDown('Alerts')
 
   }, [])
 
@@ -89,7 +88,7 @@ const NotificationDropdown = () => {
         </li>
         {renderNotificationItems()}
         <li className='dropdown-menu-footer'>
-          <Link to={`./alerts`}>
+          <Link to={`/alerts`}>
             <Button.Ripple color='primary' block>
               Ver todas las notificaciones
             </Button.Ripple>

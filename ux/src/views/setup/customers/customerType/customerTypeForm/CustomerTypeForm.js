@@ -59,8 +59,8 @@ export const CustomerTypeForm = () => {
 
         } else {
             const prettyForm = {
-                ...form,
-                name : exceptionController(form.name)
+                ...form
+                //name : exceptionController(form.name)
             }
         
         e.preventDefault()

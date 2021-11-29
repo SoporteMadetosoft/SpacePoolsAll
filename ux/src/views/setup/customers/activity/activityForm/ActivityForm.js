@@ -8,6 +8,7 @@ import { Form, Input as InputValid, FormFeedback } from 'reactstrap'
 import { validate, validator } from '../../../../../utility/formValidator/ValidationTypes'
 import { Input } from '../../../../../components/form/inputs/Input'
 import { setErrors, setSchema } from '../../../../../redux/actions/formValidator'
+import { exceptionController } from '../../../../../utility/helpers/undefinedExceptionController'
 
 
 const formSchema = {
@@ -48,8 +49,8 @@ export const ActivityForm = () => {
 
         } else {
             const prettyForm = {
-                ...form,
-                name : exceptionController(form.name)
+                ...form
+                //name : exceptionController(form.name)
             }
         
         save('Activity', id, prettyForm)

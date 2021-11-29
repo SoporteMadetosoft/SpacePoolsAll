@@ -54,8 +54,8 @@ export const VendorTypeForm = () => {
 
         } else {
             const prettyForm = {
-                ...form,
-                name : exceptionController(form.name)
+                ...form
+                //name : exceptionController(form.name)
             }
         save('VendorType', id, prettyForm)
         history.push('/setup/vendors/vendorType')

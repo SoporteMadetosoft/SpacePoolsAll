@@ -65,8 +65,8 @@ export const ModelForm = () => {
         } else {
             const prettyForm = {
                 ...normalForm,
-                idBrand: exceptionController(normalForm.idBrand),
-                name: exceptionController(normalForm.name)
+                idBrand: exceptionController(normalForm.idBrand)
+               //    name: exceptionController(normalForm.name)
             }
             save('Model', id, prettyForm)
             history.push('/setup/vehicles/model')

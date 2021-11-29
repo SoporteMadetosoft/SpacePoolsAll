@@ -8,26 +8,22 @@ import { ordersList } from '@fixed/orders/ordersList'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { handleCleanCanvas } from '../../redux/actions/canvas'
-import { startAddSelectOptions, startAddSelectStatus} from '../../redux/actions/selects'
+import { startAddSelectStatus } from '../../redux/actions/selects'
 import { cleanFormValidator } from '../../redux/actions/formValidator'
-
 
 export const OrderScreenList = ({ titulo }) => {
 
     const dispatch = useDispatch()
     const { registros: data } = useSelector(state => state.registrosReducer)
 
-    
+
 
     useEffect(() => {
         dispatch(handleCleanCanvas())
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Orders'))
-        dispatch(startAddSelectStatus('Carriers', 'Carriers','name'))
+        dispatch(startAddSelectStatus('Carriers', 'Carriers', 'name'))
         dispatch(cleanFormValidator())
-        
-
-
     }, [])
     return (
 

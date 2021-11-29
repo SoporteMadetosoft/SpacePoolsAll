@@ -14,7 +14,6 @@ class CanvasDao extends GenericDao {
     }
 
     findByOrderId(id) {
-        // console.log(`SELECT * FROM orders_canvas WHERE idOrder = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM orders_canvas WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {

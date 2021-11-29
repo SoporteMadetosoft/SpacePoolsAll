@@ -14,15 +14,14 @@ class TaxDao extends SetupDao {
         return new Tax(docs)
     }
 
-    findTaxNameBy(id){
-        //console.log(`SELECT name FROM setup_taxes WHERE id = ${id}`)
+    findTaxNameBy(id) {
         return new Promise((resolve, reject) => {
             this.db.query('SELECT name FROM setup_taxes WHERE Id = ?', [id], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
                     resolve(result[0].name)
-                  //  resolve(result[0])
+                    //  resolve(result[0])
                 }
             })
         })

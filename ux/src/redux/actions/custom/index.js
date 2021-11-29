@@ -6,6 +6,7 @@ import { save } from '../../../utility/helpers/Axios/save'
 import { handleSelectCarrier } from '../../../utility/helpers/handleSelectCarrier'
 import { listProduction } from '../../../utility/helpers/Axios/listProduction'
 import { listDelivery } from '../../../utility/helpers/Axios/listDelivery'
+import { handleChangeController } from '../normalForm'
 
 
 export const cleaningAll = () => ({
@@ -97,4 +98,22 @@ export const startLoadingTableDelivery = (endPoint) => {
         const data = await listDelivery(endPoint, userData['id'])
         dispatch(setData(data, endPoint))
     }
+}
+
+export const handleChange = (valor, name, index) => {
+
+    return async (dispatch, getState) => {
+        dispatch({
+            type: types.change,
+            payload: {
+                valor,
+                name,
+                index
+            }
+
+        })
+
+
+    }
+
 }

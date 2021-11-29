@@ -23,14 +23,13 @@ const NotificationDropdown = () => {
   // ** Notification Array
   // const [notification, setNotification] = useState([])
   const dispatch = useDispatch()
-  const {data} = useSelector(state => state.alertReducer)
-const notification = data !== undefined ? data : []
+  const { data } = useSelector(state => state.alertReducer)
+  const notification = data !== undefined ? data : []
 
 
   useEffect(() => {
 
     dispatch(AlertLoad())
-    // getNotificationDropDown('Alerts').then(setNotification)
 
   }, [])
 
@@ -57,7 +56,7 @@ const notification = data !== undefined ? data : []
 
                 </Media>
                 <Media className="font-weight-bolder black" body>
-                  {item.title}
+                  {item.title}<br />
                   <small className='notification-text'>{item.subtitle}</small>
                 </Media>
               </Fragment>
@@ -89,7 +88,7 @@ const notification = data !== undefined ? data : []
         </li>
         {renderNotificationItems()}
         <li className='dropdown-menu-footer'>
-          <Link to={`./alerts`}>
+          <Link to={`/alerts`}>
             <Button.Ripple color='primary' block>
               Ver todas las notificaciones
             </Button.Ripple>

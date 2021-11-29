@@ -31,6 +31,20 @@ const registrosReducer = (state = initialState, action) => {
         endPoint: null,
         registros: []
       }
+    case types.change:
+      const { index, name, valor } = action.payload
+
+      const newReg = {
+        ...state.registros[index],
+        [name]: valor
+      }
+
+      return {
+        ...state,
+        registros: state.registros.map((reg, i) => (
+          i === index ? newReg : reg
+        ))
+      }
     default:
       return state
   }

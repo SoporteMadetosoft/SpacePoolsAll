@@ -49,8 +49,8 @@ export const poolsList = [
         width: '14%'
     },
     {
-        name: 'Nombre (Hydrius)',
-        selector: 'nameHydrius',
+        name: 'Nombre (Hydryus)',
+        selector: 'nameHydryus',
         sortable: true,
         searchable: true,
         width: '14%'

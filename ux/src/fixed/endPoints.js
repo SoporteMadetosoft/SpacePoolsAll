@@ -2,6 +2,7 @@ const globalEndpoints = {
     FileManager: '/global/fileManager',
     ItemType: '/global/itemType',
     Language: '/global/language',
+    Logos: '/global/logos',
     Mode: '/global/mode',
     Status: '/global/status',
     ProductionStatus: '/global/productionStatus',

@@ -51,7 +51,6 @@ class ItemDao extends GenericDao {
     }
 
     findByItemTypeAndId(id, itemType) {
-        // console.log(`SELECT * FROM item WHERE id = ${id} AND itemType = ${itemType}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT * FROM item WHERE id = ? AND itemType = ?', [id, itemType], async (err, result) => {
                 if (err) {
@@ -107,7 +106,6 @@ class ItemDao extends GenericDao {
     // }
 
     findOneFieldById(field, id) {
-        //console.log(`SELECT ${field} FROM item WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query('SELECT ?? FROM item WHERE id = ?', [field, id], (err, result) => {
                 if (err) {
@@ -122,7 +120,6 @@ class ItemDao extends GenericDao {
     }
 
     updateStock(action, id, quantity) {
-        //console.log(`UPDATE item SET stock = stock ${action} ${quantity} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query(`UPDATE item SET stock = stock ${action} ? WHERE id = ?`, [quantity, id], (err, result) => {
                 if (err) {
@@ -137,7 +134,7 @@ class ItemDao extends GenericDao {
 
     findReservedStock(idItem) {
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT cantidadBase, cantidadExtra FROM reservestock WHERE IDITEM = ?`, [idItem], (err, result) => {
+            this.db.query(`SELECT cantidadBase, cantidadExtra FROM reserveStock WHERE IDITEM = ?`, [idItem], (err, result) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -149,7 +146,6 @@ class ItemDao extends GenericDao {
             })
         })
     }
-
 }
 
 module.exports = ItemDao

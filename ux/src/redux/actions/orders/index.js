@@ -101,7 +101,6 @@ export const createItemRepeatersByPool = (idPool) => {
         let deletee = true
         let deletee2 = true
         while (deletee) {
-            console.log(typeof getState().normalForm.baseItems[0])
             if (getState().normalForm.baseItems[0]) {
 
                 dispatch(removeRepeaterRegister('baseItems', 0))

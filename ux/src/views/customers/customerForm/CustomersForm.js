@@ -28,7 +28,6 @@ const formSchema = {
 }
 
 export const CustomersForm = () => {
-    let { customerCode } = useSelector(state => state.normalForm)
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -43,14 +42,15 @@ export const CustomersForm = () => {
     const { formValidator } = useSelector(state => state)
 
     const { observations } = normalForm
+    const customerCode = id !== undefined ? id : normalForm.customerCode
 
     const handleInputChange = ({ target }) => {
         dispatch(handleChangeController(target.name, target.value))
     }
     useEffect(() => {
-        if (normalForm.id === undefined) {
+        if (id === undefined) {
             dispatch(GetSetNextId("Customers", 'customerCode'))
-        } else customerCode = normalForm.id
+        } 
         dispatch(setSchema(formSchema))
 
     }, [])

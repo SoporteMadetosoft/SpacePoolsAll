@@ -9,6 +9,12 @@ const alertReducer = (state = initialState, action) => {
                 ...state,
                 data: [...action.payload]
             }
+
+        case alertTypes.AlertDelete:
+            return {
+                ...state,
+                data: [...action.payload]
+            }    
     default:
       return state
   }

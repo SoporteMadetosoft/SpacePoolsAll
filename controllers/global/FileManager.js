@@ -4,7 +4,7 @@ const fileManagerDao = new FileManagerDao();
 
 exports.create = async (req, res) => {
     try {
-        await fileManagerDao.createFile(req.body.filePath)
+        fileManagerDao.createFile(req.body.filePath)
         res.json({ ok: true })
     } catch (error) {
         console.log(error)
@@ -15,8 +15,9 @@ exports.create = async (req, res) => {
 exports.upload = async (req, res) => {
     try {
         const dateNow = req.body.filePath;
+
         const files = [].concat(req.files.file);
-        await fileManagerDao.uploadFile(dateNow, files)
+        fileManagerDao.uploadFile(dateNow, files)
         return res.json({ ok: true })
     } catch (error) {
         console.log(error);
@@ -36,7 +37,7 @@ exports.load = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        await fileManagerDao.deleteFile(req.body.url)
+        fileManagerDao.deleteFile(req.body.url)
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

@@ -48,7 +48,7 @@ export const CarriersForm = () => {
     useEffect(() => {
         if (id === undefined) {
             dispatch(GetSetNextId("Carriers", 'carrierCode'))
-        } 
+        }
         dispatch(setSchema(formSchema))
     }, [])
 
@@ -70,7 +70,7 @@ export const CarriersForm = () => {
                     dispatch(handleChangeDestination(filePath2))
                     dispatch(handleChangeUpload(0))
                     const data = await loadFiles('FileManager', filePath2)
-                    await data.map(
+                    data.map(
                         document => (
                             dispatch(addRepeaterRegister('documents', document))
                         )

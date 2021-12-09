@@ -95,11 +95,11 @@ export const VechiclesForm = () => {
         dispatch(startAddSelectOptions('Brand', 'brandOpt'))
         if (id === undefined) {
             dispatch(GetSetNextId("Vehicles", 'vehicleCode'))
-        } 
+        }
         dispatch(setSchema(formSchema))
     }, [])
 
-  
+
 
     const preSubmit = (filePath2) => {
         return new Promise(async (resolve, reject) => {
@@ -119,7 +119,7 @@ export const VechiclesForm = () => {
                     dispatch(handleChangeDestination(filePath2))
                     dispatch(handleChangeUpload(0))
                     const data = await loadFiles('FileManager', filePath2)
-                    await data.map(
+                    data.map(
                         document => (
                             dispatch(addRepeaterRegister('documents', document))
                         )

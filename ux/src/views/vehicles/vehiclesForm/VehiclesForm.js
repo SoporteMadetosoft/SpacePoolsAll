@@ -6,20 +6,19 @@ import { Form } from 'reactstrap'
 import { Input } from '../../../components/form/inputs/Input'
 import { Select } from '../../../components/form/inputs/Select'
 import { FileContext } from '../../../utility/context/FileContext'
-import { handleChangeDestination, handleChangeUpload, handleCleanUp } from '../../../redux/actions/fileUpload'
-import { addRepeaterRegister, GetSetNextId, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
+import { handleCleanUp } from '../../../redux/actions/fileUpload'
+import { GetSetNextId, handleChangeController, handleGetForm } from '../../../redux/actions/normalForm'
 import { addSelectOptions, startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
 import { exceptionController } from '../../../utility/helpers/undefinedExceptionController'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
-import { uploadFile } from '../../../utility/helpers/Axios/uploadFile'
 import { save } from '../../../utility/helpers/Axios/save'
-import { SwalUploadAndSave } from '../../../utility/helpers/SwalUploadAndSave'
-import { loadFiles } from '../../../utility/helpers/Axios/loadFiles'
 import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { VehicleDocForm } from './VehicleDocForm'
 import '../styles/form.css'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+import { preSubmit } from '../../../components/preSubmit/preSubmit'
+import fileUpload from 'express-fileupload'
 
 
 const formSchema = {
@@ -33,34 +32,22 @@ const formSchema = {
 
 }
 
-
-const placeholderStyles = {
-    placeholder: (defaultStyles) => {
-        return {
-            ...defaultStyles,
-            FontSize: '5px'
-        }
-    }
-}
-
 export const VechiclesForm = () => {
 
     const { id } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const [file, setFile] = useState('')
-    const { upload, filePath } = useSelector(state => state.fileUpload)
+    const [file, setFile] = useState([])
+    const { upload, filePath } = fileUpload
 
     const form = useSelector(state => state.normalForm)
     const realFilePath = form.filePath ? form.filePath : filePath
 
-    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
+    const { normalForm, formValidator } = useSelector(state => state)
     const vehicleCode = id !== undefined ? id : normalForm.vehicleCode
 
-    const { observations, model } = normalForm
-    const { Brand, Carriers } = selectReducer
-    let brandValue
+    const { observations } = normalForm
 
     useEffect(() => {
         dispatch(startAddSelectOptions('Brand', 'Brand'))
@@ -100,36 +87,6 @@ export const VechiclesForm = () => {
     }, [])
 
 
-
-    const preSubmit = (filePath2) => {
-        return new Promise(async (resolve, reject) => {
-            if (upload === 1) {
-                const swalResp = await SwalUploadAndSave()
-                if (swalResp === true) {
-                    const formData = new FormData()
-                    formData.append('filePath', filePath2)
-
-                    for (const element of file) {
-
-                        formData.append('file', element)
-                    }
-
-                    await uploadFile('FileManager', formData)
-
-                    dispatch(handleChangeDestination(filePath2))
-                    dispatch(handleChangeUpload(0))
-                    const data = await loadFiles('FileManager', filePath2)
-                    data.map(
-                        document => (
-                            dispatch(addRepeaterRegister('documents', document))
-                        )
-                    )
-                }
-            }
-            resolve('')
-        })
-    }
-
     const submit = async (e) => {
         e.preventDefault()
 
@@ -140,7 +97,7 @@ export const VechiclesForm = () => {
 
         } else {
             const filePath2 = MkDir('Vehicles', realFilePath)
-            await preSubmit(filePath2)
+            const totalDocs = await preSubmit(filePath2, upload, file, form.documents)
 
             const form2 = dispatch(handleGetForm())
             form2.then(async (value) => {
@@ -151,6 +108,7 @@ export const VechiclesForm = () => {
                     idCarrier: exceptionController(value.idCarrier),
                     idTrailer: exceptionController(value.idTrailer),
                     filePath: filePath2,
+                    documents : totalDocs,
                     brand: exceptionController(value.brand)
                 }
 

@@ -3,7 +3,7 @@ import { loadFiles } from "../../../utility/helpers/Axios/loadFiles"
 import { fileUploadTypes } from "../../types/fileUpload/types"
 import { uploadFile } from "../../../utility/helpers/Axios/uploadFile"
 import { deleteFile } from '../../../utility/helpers/Axios/deleteFile'
-import { addRepeaterRegister, handleCleanSection, removeRepeaterRegister } from '../normalForm'
+import { addRepeaterRegister, removeRepeaterRegister } from '../normalForm'
 import { types } from "@redux/types/types"
 
 
@@ -57,7 +57,7 @@ export const handleLoadDocuments = (endpoint, filePath) => {
         if (filePath !== null) {
             const data = await loadFiles(endpoint, filePath)
             const oldDocuments = getState().normalForm.documents
-            dispatch(handleCleanSection('documents'))
+            dispatch(handleChangeController('documents', []))
 
             data.map(
                 document => {

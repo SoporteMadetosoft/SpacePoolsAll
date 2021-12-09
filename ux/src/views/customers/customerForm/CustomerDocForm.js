@@ -8,12 +8,13 @@ import { CustomMiniTable } from '../../../components/datatable/CustomMiniTable'
 import { FileContext } from '../../../utility/context/FileContext'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
 import { customerDocs } from '../../../fixed/customers/customerDocs'
+import fileUpload from 'express-fileupload'
 
 export const CustomerDocForm = () => {
 
     const { file, setFile } = useContext(FileContext)
     const dispatch = useDispatch()
-    const { upload, filePath } = useSelector(state => state.fileUpload)
+    const { upload, filePath } = fileUpload
     const { filePath: formFilePath, documents: data } = useSelector(state => state.normalForm)
 
     let realFilePath = formFilePath !== null ? formFilePath : filePath

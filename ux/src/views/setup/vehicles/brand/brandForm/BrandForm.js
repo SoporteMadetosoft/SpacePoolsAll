@@ -8,6 +8,7 @@ import { ActionButtons } from '../../../../../components/actionButtons/ActionBut
 import { Input } from '../../../../../components/form/inputs/Input'
 import { setErrors, setSchema } from '../../../../../redux/actions/formValidator'
 import { validate, validator } from '../../../../../utility/formValidator/ValidationTypes'
+import { exceptionController } from '../../../../../utility/helpers/undefinedExceptionController'
 
 const formSchema = {
     name: { validations: [validator.isRequired] }
@@ -42,8 +43,8 @@ export const BrandForm = () => {
 
         } else {
             const prettyForm = {
-                ...form,
-                name: exceptionController(form.name)
+                ...form
+               // name: exceptionController(form.name)
             }
             save('Brand', id, prettyForm)
             history.push('/setup/vehicles/brand')

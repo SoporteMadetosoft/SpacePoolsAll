@@ -9,7 +9,7 @@ class Pool {
         nameEuropa,
         nameSpace,
         nameSociedad,
-        nameHydrius,
+        nameHydryus,
         fabricationName,
         price,
         cost,
@@ -24,7 +24,7 @@ class Pool {
         this.nameEuropa = nameEuropa
         this.nameSpace = nameSpace
         this.nameSociedad = nameSociedad
-        this.nameHydrius = nameHydrius
+        this.nameHydryus = nameHydryus
         this.fabricationName = fabricationName
         this.price = price
         this.cost = cost

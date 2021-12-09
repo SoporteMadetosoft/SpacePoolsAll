@@ -25,7 +25,6 @@ class BaseItemDao extends GenericDao {
 
     findByOrderId(id) {
         return new Promise((resolve, reject) => {
-            // console.log(`SELECT * FROM orders_base_items WHERE idOrder = ${id}`)
             this.db.query('SELECT * FROM orders_base_items WHERE idOrder = ?', [id], async (err, result) => {
                 if (err) {
                     reject(err)

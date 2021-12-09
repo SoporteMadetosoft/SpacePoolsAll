@@ -20,7 +20,6 @@ class AlertDao extends GenericDao {
     }
 
     hasItemAlert(id) {
-        //console.log(`SELECT * FROM ${this.auxModel.table} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {
             this.db.query(`SELECT * FROM alerts WHERE idItem = ? AND isDone = 0`, [id], async (err, result) => {
                 if (err) {
@@ -39,13 +38,11 @@ class AlertDao extends GenericDao {
     async listNotification() {
         const d = new Date()
         const fechaActual = await this.datetimeToDate(new Date(d))
+        var fechaInicial = await this.datetimeToDate(new Date(new Date(fechaActual).setDate(new Date(fechaActual).getDate() - 7)))
         var fechaLimite = await this.datetimeToDate(new Date(new Date(fechaActual).setMonth(new Date(fechaActual).getMonth() + 1)))
 
-
-
-        var newDateActual = "'" + fechaActual.toLocaleString() + "'"
+        var newDateActual = "'" + fechaInicial.toLocaleString() + "'"
         var newDateLimite = "'" + fechaLimite.toLocaleString() + "'"
-
 
         return new Promise((resolve, reject) => {
             this.db.query(`SELECT * FROM alerts WHERE date BETWEEN ${newDateActual} AND ${newDateLimite} AND isDone = 0`, async (err, result) => {
@@ -62,24 +59,5 @@ class AlertDao extends GenericDao {
         })
     }
 
-    // async update(params) {
-    //     return new Promise((resolve, reject) => {
-    //         console.log(`UPDATE alerts SET isDone = 1 WHERE id = ${params.id}`)
-    //         this.db.query(`UPDATE alerts SET isDone = 1 WHERE id = ${params.id}`, async (err, result) => {
-    //             if (err) {
-    //                 reject(err)
-    //             } else {
-    //                 let objList = []
-    //                 for (const res of result) {
-    //                     objList.push(await this.mountList(res))
-    //                 }
-    //                 resolve(objList)
-    //             }
-    //         })
-    //     })
-
-
-
-    // }
 }
 module.exports = AlertDao

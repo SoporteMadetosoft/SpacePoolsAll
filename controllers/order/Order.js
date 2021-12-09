@@ -68,13 +68,6 @@ exports.insert = async (req, res) => {
         const allItems = [...extraItems, ...extraRaws]
         const allItemsColors = [...extraItemColors, ...extraRawColors]
 
-
-        // const  allItems = [...extraItems, ...extraRaws]
-        // console.log("Insert All Items")
-        // console.log(allItems)
-        // const allItemsColors = [...extraItemColors,...extraRawColors]
-        // console.log(allItemsColors)
-
         delete order.production
         delete order.extraItems
         delete order.extraItemColors

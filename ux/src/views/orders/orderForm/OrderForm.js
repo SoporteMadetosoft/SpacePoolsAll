@@ -21,6 +21,7 @@ import Swal from 'sweetalert2'
 import { ExtraItemColorsRepeater } from './ExtraItemColorsRepeater'
 import { ExtraRawColorsRepeater } from './ExtraRawColorsRepeater'
 import { ItemColorsRepeater } from './ItemColorsRepeater'
+import { AlertLoad } from '../../../redux/actions/alert'
 
 const formSchema = {
     idCustomer: { validations: [validator.isRequired] },
@@ -29,7 +30,7 @@ const formSchema = {
     productionDate: { validations: [validator.isRequired] },
     deliveryDate: { validations: [validator.isRequired] },
     idColor: { validations: [validator.isRequired] },
-    idTax: {validations : [validator.isRequired]}
+    idTax: { validations: [validator.isRequired] }
 }
 
 export const OrderForm = () => {
@@ -63,7 +64,7 @@ export const OrderForm = () => {
 
         if (id === undefined) {
             dispatch(GetSetNextId("Orders", 'orderCode'))
-        } 
+        }
         dispatch(setSchema(formSchema))
     }, [])
 

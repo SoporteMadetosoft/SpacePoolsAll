@@ -1,22 +1,32 @@
 import axios from "axios"
 import { endPoints } from "@fixed/endPoints"
 
-export const list = async (endPoint) => {
+export const list = async (endPoint, source) => {
     const token = localStorage.getItem('accessToken') || ''
 
-    console.log(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/list`)
-    const { data: dataSnap } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/list`, {
+    return await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/list`, {
         headers: {
             'Content-type': 'application/json',
             'x-token': token
-        }
+        },
+        cancelToken: source.token
     })
-    const data = []
-    dataSnap.data.forEach(element => {
-        data.push({
-            ...element
-        })
-    })
+        .then((response) => {
 
-    return data
+            const data = []
+            response.data.data.forEach(element => {
+                data.push({
+                    ...element
+                })
+            })
+            return data
+        })
+        .catch((thrown) => {
+            if (axios.isCancel(thrown)) {
+                console.log('Request canceled', thrown.message)
+            } else {
+
+            }
+            return []
+        })
 }

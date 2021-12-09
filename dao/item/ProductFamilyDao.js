@@ -59,8 +59,6 @@ class ProductFamilyDao extends GenericDao {
     }
 
     setParentNullById(id) {
-        // console.log(`UPDATE item_product_family SET parent = null WHERE id = ${id}`)
-
         return new Promise((resolve, reject) => {
             this.db.query(`UPDATE item_product_family SET parent = null WHERE id = ?`, id, async (err, result) => {
                 if (err) {
@@ -97,7 +95,7 @@ class ProductFamilyDao extends GenericDao {
         const parentName = await this.findById(data.parent)
         const list = {
             ...data,
-            parent: parentName !== undefined ? parentName : 'Nadie'
+            parent: parentName !== undefined ? parentName.name : 'Nadie'
         }
         const nObj = list
         return nObj

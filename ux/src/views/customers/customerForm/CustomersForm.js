@@ -50,7 +50,7 @@ export const CustomersForm = () => {
     useEffect(() => {
         if (id === undefined) {
             dispatch(GetSetNextId("Customers", 'customerCode'))
-        } 
+        }
         dispatch(setSchema(formSchema))
 
     }, [])
@@ -73,7 +73,7 @@ export const CustomersForm = () => {
                     dispatch(handleChangeDestination(filePath2))
                     dispatch(handleChangeUpload(0))
                     const data = await loadFiles('FileManager', filePath2)
-                    await data.map(
+                    data.map(
                         document => (
                             dispatch(addRepeaterRegister('documents', document))
                         )

@@ -6,6 +6,4 @@ export const types = {
     deleteRepair: '[Delete] Delete repair register',
     cleaningAll: '[Cleaning] Cleaning register from redux',
     change: '[Change] Changing value'
-
-
 }

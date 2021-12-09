@@ -59,7 +59,7 @@ export const TrailersForm = () => {
         dispatch(startAddSelectOptions('Model', 'Model'))
         if (id === undefined) {
             dispatch(GetSetNextId("Trailers", 'trailerCode'))
-        } 
+        }
         dispatch(setSchema(formSchema))
     }, [])
 
@@ -104,7 +104,7 @@ export const TrailersForm = () => {
                     dispatch(handleChangeDestination(filePath2))
                     dispatch(handleChangeUpload(0))
                     const data = await loadFiles('FileManager', filePath2)
-                    await data.map(
+                    data.map(
                         document => (
                             dispatch(addRepeaterRegister('documents', document))
                         )

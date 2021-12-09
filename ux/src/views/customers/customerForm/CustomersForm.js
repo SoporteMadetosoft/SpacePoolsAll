@@ -26,7 +26,11 @@ const formSchema = {
     comercialName: { validations: [validator.isRequired] },
     email: { validations: [validator.isEmail] },
     CIF: { validations: [validator.isRequired] },
-    idStatus: { validations: [validator.isRequired] }
+    idStatus: { validations: [validator.isRequired] },
+    addresses : {
+        address: {validations: [validator.isRequired]}},
+    contacts : {validations: [validator.isRequired]}
+
 }
 
 export const CustomersForm = () => {

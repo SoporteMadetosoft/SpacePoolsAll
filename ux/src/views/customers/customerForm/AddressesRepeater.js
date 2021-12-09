@@ -63,6 +63,7 @@ const AddressesForm = ({ position }) => {
 
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
+    const { formValidator } = useSelector(state => state)
     const { addresseTypesOpt } = selectReducer
     const {
         addressType,
@@ -127,7 +128,7 @@ const AddressesForm = ({ position }) => {
                 <input
                     type="text"
                     name="address"
-                    className="form-control"
+                    className={`form-control ${formValidator.errors && formValidator.errors[name] ? 'borderless border-danger rounded' : ''}`}
                     onChange={handleInputChange}
                     value={address} />
             </div>

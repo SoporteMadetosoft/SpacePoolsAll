@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
 
@@ -8,13 +7,10 @@ import { handleChangeUpload, handleLoadDocuments, saveFiles } from '../../../red
 import { CustomMiniTable } from '../../../components/datatable/CustomMiniTable'
 import { FileContext } from '../../../utility/context/FileContext'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
-import { handleChangeController, handleStartEditing } from '../../../redux/actions/normalForm'
 import { customerDocs } from '../../../fixed/customers/customerDocs'
 import fileUpload from 'express-fileupload'
 
 export const CustomerDocForm = () => {
-
-    const { id } = useParams()
 
     const { file, setFile } = useContext(FileContext)
     const dispatch = useDispatch()

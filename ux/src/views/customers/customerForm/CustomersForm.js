@@ -52,11 +52,10 @@ export const CustomersForm = () => {
     useEffect(() => {
         if (id === undefined) {
             dispatch(GetSetNextId("Customers", 'customerCode'))
-        } 
+        }
         dispatch(setSchema(formSchema))
 
     }, [])
-
 
     const submit = async (e) => {
         e.preventDefault()

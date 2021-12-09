@@ -57,7 +57,7 @@ export const TrailersForm = () => {
         dispatch(startAddSelectOptions('Model', 'Model'))
         if (id === undefined) {
             dispatch(GetSetNextId("Trailers", 'trailerCode'))
-        } 
+        }
         dispatch(setSchema(formSchema))
     }, [])
 

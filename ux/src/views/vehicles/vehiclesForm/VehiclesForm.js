@@ -82,9 +82,10 @@ export const VechiclesForm = () => {
         dispatch(startAddSelectOptions('Brand', 'brandOpt'))
         if (id === undefined) {
             dispatch(GetSetNextId("Vehicles", 'vehicleCode'))
-        } 
+        }
         dispatch(setSchema(formSchema))
     }, [])
+
 
     const submit = async (e) => {
         e.preventDefault()

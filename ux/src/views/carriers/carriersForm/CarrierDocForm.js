@@ -24,12 +24,7 @@ export const CarrierDocForm = () => {
 
     useEffect(() => {
         if (upload === 0 && realFilePath !== undefined) {
-
-            if (!id) {
-                dispatch(handleLoadDocuments('FileManager', realFilePath))
-            } else {
-                dispatch(handleStartEditing('Carriers', id))
-            }
+            dispatch(handleLoadDocuments('FileManager', realFilePath))
         }
     }, [upload])
 
@@ -51,6 +46,7 @@ export const CarrierDocForm = () => {
 
         dispatch(await saveFiles('FileManager', realFilePath, file))
     }
+
 
     return (
         <div className="card">

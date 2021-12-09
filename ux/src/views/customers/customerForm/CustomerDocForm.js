@@ -8,13 +8,12 @@ import { CustomMiniTable } from '../../../components/datatable/CustomMiniTable'
 import { FileContext } from '../../../utility/context/FileContext'
 import { MkDir } from '../../../utility/helpers/Axios/MkDir'
 import { customerDocs } from '../../../fixed/customers/customerDocs'
-import fileUpload from 'express-fileupload'
 
 export const CustomerDocForm = () => {
 
     const { file, setFile } = useContext(FileContext)
     const dispatch = useDispatch()
-    const { upload, filePath } = fileUpload
+    const { upload, filePath } = useSelector(state => state.fileUpload)
     const { filePath: formFilePath, documents: data } = useSelector(state => state.normalForm)
 
     let realFilePath = formFilePath !== null ? formFilePath : filePath
@@ -62,13 +61,12 @@ export const CustomerDocForm = () => {
                     />
                 </div>
                 {
-                    upload === 1 ?
+                    upload === 1 &&
                         <div className="col-md-1">
                             <a type="button" id="uploadButton" onClick={uploadFileToCloud} class="btn btn-primary">
                                 <FontAwesomeIcon icon={faUpload} />
                             </a>
                         </div>
-                        : null
                 }
 
             </div>

@@ -1,25 +1,23 @@
 import React, { useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
 import { handleChangeUpload, handleLoadDocuments, saveFiles } from '../../../redux/actions/fileUpload'
 import { CustomMiniTable } from '../../../components/datatable/CustomMiniTable'
-import { MkDir } from '../../../utility/helpers/Axios/MkDir'
 import { FileContext } from '../../../utility/context/FileContext'
 import { trailersDocs } from '../../../fixed/vehicles/trailers/trailersDocs'
 import { handleChangeController } from '../../../redux/actions/normalForm'
+import { MkDir } from '../../../utility/helpers/Axios/MkDir'
 
 export const TrailerDocForm = () => {
 
-    const { id } = useParams()
 
     const { file, setFile } = useContext(FileContext)
     const dispatch = useDispatch()
     const { upload, filePath } = useSelector(state => state.fileUpload)
     const { filePath: formFilePath, documents: data } = useSelector(state => state.normalForm)
 
-    let realFilePath = formFilePath ? formFilePath : filePath
+    let realFilePath = formFilePath !== null ? formFilePath : filePath
 
     useEffect(() => {
         if (upload === 0 && realFilePath !== undefined) {
@@ -43,7 +41,8 @@ export const TrailerDocForm = () => {
 
         const filePath2 = await MkDir('Trailers', realFilePath)
         realFilePath = filePath2 ? filePath2 : filePath
-        dispatch(handleChangeController('filePath', realFilePath))
+        
+        //dispatch(handleChangeController('filePath', realFilePath))
 
         dispatch(await saveFiles('FileManager', realFilePath, file))
     }
@@ -65,13 +64,12 @@ export const TrailerDocForm = () => {
                     />
                 </div>
                 {
-                    upload === 1 ?
+                    upload === 1 &&
                         <div className="col-md-1">
                             <a type="button" id="uploadButton" onClick={uploadFileToCloud} class="btn btn-primary">
                                 <FontAwesomeIcon icon={faUpload} />
                             </a>
                         </div>
-                        : null
                 }
 
             </div>

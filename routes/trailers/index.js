@@ -16,7 +16,8 @@ router.post('/insert', validarJWT, ControllerTrailer.insert);
 router.put('/update', validarJWT, ControllerTrailer.update);
 router.delete('/delete/:id', validarJWT, ControllerTrailer.delete);
 router.post('/find', validarJWT, ControllerTrailer.listByID);
-router.get('/findnid', validarJWT, ControllerTrailer.findNId)
+router.get('/findnid', validarJWT, ControllerTrailer.findNId);
+router.get('/select', validarJWT, ControllerTrailer.select);
 
 router.get('/repair/list', validarJWT, ControllerRepair.list);
 router.post('/repair/insert', validarJWT, ControllerRepair.insert);

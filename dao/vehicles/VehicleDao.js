@@ -40,8 +40,7 @@ class VehicleDao extends SetupDao {
     }
 
     async mountList(data) {
-        const name  = await this.CarrierDao.findById(data.idCarrier);
-        console.log(name)
+        const name  = await this.CarrierDao.findById(data.idCarrier)
         const model = await this.ModelDao.findById(data.model)
         const brand = await this.BrandDao.findById(model.idBrand.id)
         const list = {

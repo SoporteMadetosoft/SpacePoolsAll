@@ -27,9 +27,12 @@ const formSchema = {
     email: { validations: [validator.isEmail] },
     CIF: { validations: [validator.isRequired] },
     idStatus: { validations: [validator.isRequired] },
-    addresses : {
-        address: {validations: [validator.isRequired]}},
-    contacts : {validations: [validator.isRequired]}
+    addresses: {
+        address: { validations: [validator.isRequired] }
+    },
+    contacts: {
+         name: {validations: [validator.isRequired] }
+    }
 
 }
 

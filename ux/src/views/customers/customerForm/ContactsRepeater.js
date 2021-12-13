@@ -9,6 +9,7 @@ import Select from 'react-select'
 import { addRepeaterRegister, editRepeaterRegister, handleChangeController, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
+import { InputValidator } from '../../../components/form/inputs/InputValidator'
 
 const formStructure = {
     name: '',
@@ -63,8 +64,9 @@ export const ContactsRepeater = () => {
 
 const ContactsForm = ({ position }) => {
 
+    const repeaterName = 'contacts'
     const dispatch = useDispatch()
-
+    const { formValidator } = useSelector(state => state)
     const { normalForm, selectReducer } = useSelector(state => state)
     const { departmentOpt } = selectReducer
 
@@ -94,6 +96,15 @@ const ContactsForm = ({ position }) => {
         dispatch(editRepeaterRegister('contacts', position, obj))
     }
 
+    const RepInputValidator = ({ errMsg, target }) => {
+
+        if (formValidator.errors[repeaterName] && formValidator.errors[repeaterName][position]) {
+            return <InputValidator errMsg={errMsg} errors={formValidator.errors[repeaterName][position]} target={target} />
+        }
+        return <span />
+
+    }
+
     const handleSelectChange = (key, element) => {
         const el = constructSelect(element)
 
@@ -119,11 +130,12 @@ const ContactsForm = ({ position }) => {
     return (
         <div className="row border-bottom pb-1 mt-1 mx-1">
             <div className="col-md-3">
-                <label className="control-label">Nombre del contacto</label>
+                <label className="control-label">Nombre del contacto {<RepInputValidator target="name" />}</label>
                 <input
                     type="text"
+                    id={`name-${position}`}
                     name="name"
-                    className="form-control"
+                    className={`form-control ${formValidator.errors && formValidator.errors[repeaterName] ? 'borderless border-danger rounded' : ''}`}
                     onChange={handleInputChange}
                     value={name} />
             </div>

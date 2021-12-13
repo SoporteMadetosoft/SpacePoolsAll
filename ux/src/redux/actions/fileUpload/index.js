@@ -3,7 +3,7 @@ import { loadFiles } from "../../../utility/helpers/Axios/loadFiles"
 import { fileUploadTypes } from "../../types/fileUpload/types"
 import { uploadFile } from "../../../utility/helpers/Axios/uploadFile"
 import { deleteFile } from '../../../utility/helpers/Axios/deleteFile'
-import { addRepeaterRegister, removeRepeaterRegister } from '../normalForm'
+import { addRepeaterRegister, handleChangeController, removeRepeaterRegister } from '../normalForm'
 import { types } from "@redux/types/types"
 
 

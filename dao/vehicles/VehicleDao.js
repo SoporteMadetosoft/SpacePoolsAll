@@ -40,12 +40,12 @@ class VehicleDao extends SetupDao {
     }
 
     async mountList(data) {
-        let { name } = await this.CarrierDao.findById(data.idCarrier);
+        const name  = await this.CarrierDao.findById(data.idCarrier)
         const model = await this.ModelDao.findById(data.model)
         const brand = await this.BrandDao.findById(model.idBrand.id)
         const list = {
             ...data,
-            idCarrier: name,
+            idCarrier: name != undefined ? name.name : '' ,
             ITVdate: this.datetimeToEuropeDate(data.ITVdate),
             repairs: await this.RepairDao.findByVehicleId(data.id),
             model: model != undefined ? model.name : '',

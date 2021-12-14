@@ -61,6 +61,7 @@ exports.insert = async (req, res) => {
         /** INSERT CARRIER */
         const carrier = req.body.form
         const documents = req.body.form.documents
+        
         delete carrier.documents
 
         const insert = await carrierDao.insert(carrier)

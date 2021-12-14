@@ -19,8 +19,13 @@ import { handleCleanUp } from '../../../redux/actions/fileUpload'
 const formSchema = {
     CIF: { validations: [validator.isRequired] },
     idStatus: { validations: [validator.isRequired] },
-    comercialName: { validations: [validator.isRequired] }
-
+    comercialName: { validations: [validator.isRequired] },
+    addresses: {
+        address: { validations: [validator.isRequired] }
+    },
+    contacts: {
+         name: {validations: [validator.isRequired] }
+    }
 }
 
 export const VendorsForm = () => {

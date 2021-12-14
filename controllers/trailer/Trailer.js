@@ -104,3 +104,16 @@ exports.findNId = async (req, res) => {
         return res.status(500).send(error)
     }
 }
+
+exports.select = async (req, res) => {
+    try {
+        res.json({
+            ok: true,
+            data: await carrierDao.findAllStatus()
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}

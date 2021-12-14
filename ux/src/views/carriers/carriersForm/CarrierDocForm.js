@@ -20,7 +20,7 @@ export const CarrierDocForm = () => {
     const { upload, filePath } = useSelector(state => state.fileUpload)
     const { filePath: formFilePath, documents: data } = useSelector(state => state.normalForm)
 
-    let realFilePath = formFilePath ? formFilePath : filePath
+    let realFilePath = formFilePath !== null ? formFilePath : filePath
 
     useEffect(() => {
         if (upload === 0 && realFilePath !== undefined) {
@@ -65,13 +65,12 @@ export const CarrierDocForm = () => {
                     />
                 </div>
                 {
-                    upload === 1 ?
+                    upload === 1 &&
                         <div className="col-md-1">
                             <a type="button" id="uploadButton" onClick={uploadFileToCloud} class="btn btn-primary">
                                 <FontAwesomeIcon icon={faUpload} />
                             </a>
                         </div>
-                        : null
                 }
 
             </div>

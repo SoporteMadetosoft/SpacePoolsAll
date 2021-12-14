@@ -29,8 +29,7 @@ class OrderDao extends GenericDao {
         this.AlertDao = new AlertDao()
     }
 
-    async mountObj(data) {
-        //const customerId = await this.CustomerDao.findById(data.customerId)
+    async mountObj(data) {        //const customerId = await this.CustomerDao.findById(data.customerId)
         const order = {
             ...data,
             customerData: await this.CustomerDataDao.findByOrderId(data.id),

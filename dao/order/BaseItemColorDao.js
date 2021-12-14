@@ -24,6 +24,7 @@ class BaseItemColorDao extends GenericDao {
         baseItem2 = {
             ...baseItem2,
             name: await this.ItemsColorsDao.findOneFieldById("name", data.idItem),
+            name_fr: await this.ItemsColorsDao.findOneFieldById("name_fr", data.idItem),
             coste: await this.ItemsColorsDao.findOneFieldById("cost", data.idItem),
             show: await this.ItemsColorsDao.findOneFieldById("show", data.idItem),
             idColor: selectedColor.id !== undefined ? selectedColor : '',

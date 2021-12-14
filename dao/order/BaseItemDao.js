@@ -17,6 +17,7 @@ class BaseItemDao extends GenericDao {
         baseItem2 = {
             ...baseItem2,
             name: await this.ItemDao.findOneFieldById("name", data.idItem),
+            name_fr : await this.ItemDao.findOneFieldById("name_fr", data.idItem),
             coste: await this.ItemDao.findOneFieldById("cost", data.idItem),
             show: await this.ItemDao.findOneFieldById("show", data.idItem)
         }

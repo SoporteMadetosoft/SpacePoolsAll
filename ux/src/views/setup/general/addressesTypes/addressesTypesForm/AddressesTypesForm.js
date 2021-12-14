@@ -44,16 +44,14 @@ export const AddressesTypesForm = () => {
 
         } else {
             const form2 = dispatch(handleGetForm())
-            form2.then(async (value) => {
+            form2.then( async (value) => {
                 const prettyForm = {
-                    ...value,
-                    name: exceptionController(value.name)
+                    ...value
                 }
                 save('AddressesTypes', id, prettyForm)
                 history.push('/setup/general/addressesTypes')
             })
-
-
+        
         }
     }
 

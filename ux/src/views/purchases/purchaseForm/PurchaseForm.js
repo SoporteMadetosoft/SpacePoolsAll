@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { GetSetNextId, handleChangeController, handleCleanSection } from '../../../redux/actions/normalForm'
+import { GetSetNextId, handleChangeController } from '../../../redux/actions/normalForm'
 import { ItemsRepeater } from './ItemsRepeater'
 import { Input } from '../../../components/form/inputs/Input'
 import { startAddSelectOptions, startAddSelectStatus } from '../../../redux/actions/selects'
@@ -42,8 +42,8 @@ export const PurchaseForm = () => {
     }
 
     const handleSelectChange = ({ value, label }) => {
-        dispatch(handleCleanSection('items'))
-        dispatch(handleCleanSection('itemColors'))
+        dispatch(handleChangeController('items', []))
+        dispatch(handleChangeController('itemColors', []))
         dispatch(handleChangeController('idVendor', { id: value, comercialName: label }))
     }
 

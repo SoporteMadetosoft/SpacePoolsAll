@@ -8,6 +8,8 @@ import { ActionButtons } from '../../../../../components/actionButtons/ActionBut
 import { Input } from '../../../../../components/form/inputs/Input'
 import { setErrors, setSchema } from '../../../../../redux/actions/formValidator'
 import { validate, validator } from '../../../../../utility/formValidator/ValidationTypes'
+import { handleCleanUp } from '../../../../../redux/actions/fileUpload'
+import { exceptionController } from '../../../../../utility/helpers/undefinedExceptionController'
 
 const formSchema = {
     name: { validations: [validator.isRequired] }
@@ -44,8 +46,10 @@ export const TaxesForm = () => {
             form2.then(async (value) => {
                 const prettyForm = {
                     ...normalForm,
-                    value: exceptionController(value.name / 100) 
+                   value: exceptionController(value.name / 100) 
                 }
+                console.log(value.name / 100)
+                
                 save('Taxes', id, prettyForm)
                 dispatch(handleCleanUp)
                 history.push('/setup/taxes')

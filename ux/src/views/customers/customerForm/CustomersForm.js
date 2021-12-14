@@ -19,12 +19,21 @@ import { AddressesRepeater } from './AddressesRepeater'
 import { ContactsRepeater } from './ContactsRepeater'
 import { CustomerDocForm } from './CustomerDocForm'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
+import fileUpload from 'express-fileupload'
+import { preSubmit } from '../../../components/preSubmit/preSubmit'
 
 const formSchema = {
     comercialName: { validations: [validator.isRequired] },
     email: { validations: [validator.isEmail] },
     CIF: { validations: [validator.isRequired] },
-    idStatus: { validations: [validator.isRequired] }
+    idStatus: { validations: [validator.isRequired] },
+    addresses: {
+        address: { validations: [validator.isRequired] }
+    },
+    contacts: {
+         name: {validations: [validator.isRequired] }
+    }
+
 }
 
 export const CustomersForm = () => {
@@ -32,8 +41,8 @@ export const CustomersForm = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
-    const [file, setFile] = useState('')
-    const { upload, filePath } = useSelector(state => state.fileUpload)
+    const [file, setFile] = useState([])
+    const { upload, filePath } = fileUpload
     const form = useSelector(state => state.normalForm)
 
     const realFilePath = form.filePath ? form.filePath : filePath
@@ -50,40 +59,10 @@ export const CustomersForm = () => {
     useEffect(() => {
         if (id === undefined) {
             dispatch(GetSetNextId("Customers", 'customerCode'))
-        } 
+        }
         dispatch(setSchema(formSchema))
 
     }, [])
-
-    const preSubmit = (filePath2) => {
-        return new Promise(async (resolve, reject) => {
-            if (upload === 1) {
-                const swalResp = await SwalUploadAndSave()
-                if (swalResp === true) {
-                    const formData = new FormData()
-                    formData.append('filePath', filePath2)
-
-                    for (const element of file) {
-
-                        formData.append('file', element)
-                    }
-
-                    await uploadFile('FileManager', formData)
-
-                    dispatch(handleChangeDestination(filePath2))
-                    dispatch(handleChangeUpload(0))
-                    const data = await loadFiles('FileManager', filePath2)
-                    await data.map(
-                        document => (
-                            dispatch(addRepeaterRegister('documents', document))
-                        )
-                    )
-                }
-            }
-            resolve('')
-        })
-    }
-
 
     const submit = async (e) => {
         e.preventDefault()
@@ -97,7 +76,7 @@ export const CustomersForm = () => {
         } else {
             const filePath2 = MkDir('Customers', realFilePath)
 
-            await preSubmit(filePath2)
+            const totalDocs = await preSubmit(filePath2, upload, file, form.documents)
 
             const form2 = dispatch(handleGetForm())
             form2.then(async (value) => {
@@ -113,6 +92,7 @@ export const CustomersForm = () => {
                     idStatus: exceptionController(value.idStatus),
                     idLanguage: exceptionController(value.idLanguage),
                     filePath: filePath2,
+                    documents : totalDocs,
                     addresses: value.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType), defaultAddress: address.defaultAddress === true ? 1 : 0 })),
                     contacts: value.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department), defaultContact: contact.defaultContact === true ? 1 : 0 }))
                 }

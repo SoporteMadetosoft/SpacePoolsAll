@@ -9,6 +9,7 @@ import Select from 'react-select'
 import { addRepeaterRegister, editRepeaterRegister, handleChangeController, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
+import { InputValidator } from '../../../components/form/inputs/InputValidator'
 
 const formStructure = {
     addressType: '',
@@ -60,8 +61,10 @@ export const AddressesRepeater = () => {
 
 const AddressesForm = ({ position }) => {
 
+    const repeaterName = 'addresses'
     const dispatch = useDispatch()
     const { normalForm, selectReducer } = useSelector(state => state)
+    const { formValidator } = useSelector(state => state)
     const { addresseTypesOpt } = selectReducer
     const {
         addressType,
@@ -111,6 +114,15 @@ const AddressesForm = ({ position }) => {
 
     }
 
+    const RepInputValidator = ({ errMsg, target }) => {
+
+        if (formValidator.errors[repeaterName] && formValidator.errors[repeaterName][position]) {
+            return <InputValidator errMsg={errMsg} errors={formValidator.errors[repeaterName][position]} target={target} />
+        }
+        return <span />
+
+    }
+
     return (
 
         <div className="row border-bottom pb-1 mt-1 mx-1">
@@ -124,11 +136,12 @@ const AddressesForm = ({ position }) => {
                 />
             </div>
             <div className="col-md-2">
-                <label className="control-label">Dirección</label>
+            <label className="control-label">Dirección {<RepInputValidator target="address" />}</label>
                 <input
                     type="text"
+                    id={`address-${position}`}
                     name="address"
-                    className="form-control"
+                    className={`form-control ${formValidator.errors && formValidator.errors[repeaterName] ? 'borderless border-danger rounded' : ''}`}
                     onChange={handleInputChange}
                     value={address} />
             </div>

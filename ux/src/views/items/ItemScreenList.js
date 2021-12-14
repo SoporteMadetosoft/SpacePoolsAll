@@ -6,6 +6,7 @@ import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { itemList } from '../../fixed/items/itemList'
 import { handleCleanForm } from '../../redux/actions/normalForm'
 import { cleanFormValidator } from '../../redux/actions/formValidator'
+import { cleaningAll } from '../../redux/actions/custom'
 
 export const ItemScreenList = ({ titulo }) => {
 

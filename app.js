@@ -83,4 +83,4 @@ app.use('/logs', require('./routes/logs'))
 
 const server = app.listen(port, () => {
   console.log(`app listening at ${origin}:${port}`);
-});
+});  

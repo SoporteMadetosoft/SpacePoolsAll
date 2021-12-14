@@ -40,9 +40,9 @@ exports.delete = async (req, res) => {
     }
 }
 
-exports.insert = (req, res) => {
+exports.insert = async(req, res) => {
     try {
-        paymentMethodDao.insert(req.body.form)
+        await paymentMethodDao.insert(req.body.form)
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

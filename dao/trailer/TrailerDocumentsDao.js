@@ -1,19 +1,19 @@
 const TrailerDocuments = require("../../models/trailer/TrailerDocuments");
 const DocumentsDao = require("../DocumentsDao");
-const dbCon = require("../Connection");
+//const dbCon = require("../Connection");
 
 
 class TrailerDocumentsDao extends DocumentsDao {
-    db=dbCon
+    //db=dbCon
     constructor() {
         super(TrailerDocuments)
     }
 
     async mountObj(data) {
-        const documents = {
-            ...data,
-            expiration: this.datetimeToDate(data.expiration)
-        }
+        // const documents = {
+        //     ...data,
+        //     expiration: this.datetimeToDate(data.expiration)
+        // }
         return new TrailerDocuments(documents)
     }
 

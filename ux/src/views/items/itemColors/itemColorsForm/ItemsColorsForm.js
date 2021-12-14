@@ -93,8 +93,11 @@ export const ItemsColorForm = () => {
                             readOnly
                         />
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-5">
                         <Input name="name" label="Nombre" />
+                    </div>
+                    <div className="col-md-5">
+                        <Input name="name_fr" label="Nombre Francés" placeholder="Nombre"/>
                     </div>
                     <div className="col-md-3">
                         <Select name="idFamily" label="Familia" endpoint="Family" />

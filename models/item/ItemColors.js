@@ -10,6 +10,7 @@ class ItemColors {
         idPlace,
         itemCode,
         name,
+        name_fr,
         priceVATout,
         priceVATin,
         cost,
@@ -28,6 +29,7 @@ class ItemColors {
         this.idPlace = idPlace
         this.itemCode = itemCode
         this.name = name
+        this.name_fr = name_fr
         this.priceVATout = priceVATout
         this.priceVATin = priceVATin
         this.cost = cost

@@ -71,7 +71,6 @@ const PreviewCard = () => {
   const handleEndSignature = () => {
     dispatch(handleChangeController('signature', sigCanvas.getTrimmedCanvas().toDataURL('image/png')))
   }
-  console.log(language)
   return (
     <Card className='invoice-preview-card'>
       <CardBody className='invoice-padding pb-0'>
@@ -160,7 +159,7 @@ const PreviewCard = () => {
                   return (
                     (obj.show === 2 &&
                       (<p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
-                        - {obj.name}
+                        - {(language !== undefined && language === 1) ? (obj.name) : (obj.name_fr)}
                       </p>))
                   )
                 })
@@ -171,7 +170,8 @@ const PreviewCard = () => {
                   return (
                     (obj.show === 2 &&
                       (<p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
-                        - {obj.name} {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
+                        - {(language !== undefined && language === 1) ? (obj.name) : (obj.name_fr)}
+                        {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
                       </p>))
                   )
                 })
@@ -199,7 +199,7 @@ const PreviewCard = () => {
                     <tr className='border-bottom'>
                       <td className='py-1'>
                         <p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
-                          - {obj.idItem.name}
+                        - {(language !== undefined && language === 1) ? (obj.idItem.name) : (obj.idItem.name_fr)}
                         </p>
                       </td>
                     </tr>
@@ -215,7 +215,7 @@ const PreviewCard = () => {
                     <tr className='border-bottom'>
                       <td className='py-1'>
                         <p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
-                          - {obj.idItem.name}
+                        - {(language !== undefined && language === 1) ? (obj.idItem.name) : (obj.idItem.name_fr)}
                         </p>
                       </td>
                     </tr>
@@ -231,7 +231,8 @@ const PreviewCard = () => {
                     <tr className='border-bottom'>
                       <td className='py-1'>
                         <p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
-                          - {obj.idItem.name} {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
+                          - {(language !== undefined && language === 1) ? (obj.idItem.name) : (obj.idItem.name_fr)}
+                           {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
                         </p>
                       </td>
                     </tr>
@@ -247,7 +248,8 @@ const PreviewCard = () => {
                     <tr className='border-bottom'>
                       <td className='py-1'>
                         <p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
-                          - {obj.idItem.name} {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
+                          - {(language !== undefined && language === 1) ? (obj.idItem.name) : (obj.idItem.name_fr)}
+                           {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
                         </p>
                       </td>
                     </tr>

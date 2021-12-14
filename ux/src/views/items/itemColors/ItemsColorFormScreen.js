@@ -23,7 +23,7 @@ export const ItemsColorsFormScreen = () => {
         dispatch(initNormalForm(structureForm))
     }, [initNormalForm])
 
-    const titulo = (id) ? 'Editar Artícul con color' : 'Añadir Artícul con color'
+    const titulo = (id) ? 'Editar Artículocon color' : 'Añadir Artículo con color'
     const customerName = (form.name) ? form.name : titulo
 
 

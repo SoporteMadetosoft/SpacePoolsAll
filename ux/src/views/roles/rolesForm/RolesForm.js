@@ -88,37 +88,16 @@ export const RolesForm = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <Permiso name='Clientes' id='Customers' actions={0} />
-                                <Permiso name='Proveedores' id='Vendors' actions={0} />
-                                <Permiso name='Transportistas' id='Carriers' actions={0} />
-                                <Permiso name='Vehículos' id='Vehicles' />
-                                <Permiso name='Remolques' id='Trailers' />
-                                <Permiso name='Piscinas' id='Pools' actions={0} />
-                                <Permiso name='Artículos' id='Items' actions={0} />
-                                <Permiso name='Artículos con colores' id='ItemColors' actions={0} />
-                                <Permiso name='Familias' id='Family' actions={0} />
-                                <Permiso name='Compras' id='Purchases' />
-                                <Permiso name='Pedidos' id='Orders' />
-                                <Permiso name='Gestor de entregas' id='Delivery' />
-                                <Permiso name='Producción' id='Production' add={0} />
-                                <Permiso name='Calendario' id='Calendar' add={0} edit={0} del={0} actions={0} />
-                                <Permiso name='Usuarios' id='Users' actions={0} />
-                                <Permiso name='Roles' id='Roles' actions={0} />
-                                <Permiso name='Métodos de pago' id='PaymentMethods' actions={0} />
-                                <Permiso name='Departamentos' id='Departments' actions={0} />
-                                <Permiso name='Tipos de dirección' id='AddressesTypes' actions={0} />
-                                <Permiso name='Impuestos' id='Taxes' actions={0} />
-                                <Permiso name='Tipos de clientes' id='CustomerType' actions={0} />
-                                <Permiso name='Categorias de cliente' id='CustomerCategory' actions={0} />
-                                <Permiso name='Actividad' id='Activity' actions={0} />
-                                <Permiso name='Origen' id='Origin' actions={0} />
-                                <Permiso name='Tipos de proveedor' id='VendorType' actions={0} />
-                                <Permiso name='Marcas' id='Brand' actions={0} />
-                                <Permiso name='Modelos' id='Model' actions={0} />
-                                <Permiso name='Ubicaciones' id='Place' actions={0} />
-                                <Permiso name='Colores' id='Colors' actions={0} />
-                                <Permiso name='Alertas' id='Alerts' add={0} edit={0} actions={0} />
-                                <Permiso name='Logs' id='Logs' add={0} edit={0} del={0} actions={0} />
+                                {
+                                    Object.entries(permisosReducer).map((permiso) => (
+                                        <Permiso id={permiso[0]}
+                                            add={permiso[1].insert}
+                                            edit={permiso[1].update}
+                                            del={permiso[1].delete}
+                                            actions={permiso[1].actions}
+                                        />
+                                    ))
+                                }
                             </tbody>
                         </Table>
                     </div>

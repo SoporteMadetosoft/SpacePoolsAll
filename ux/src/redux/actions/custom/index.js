@@ -22,11 +22,11 @@ export const setData = (data, endPoint) => ({
 
 export const startLoadingTable = (endPoint) => {
     return async (dispatch) => {
-        const CancelToken = axios.CancelToken
-        const source = CancelToken.source()
+        // const CancelToken = axios.CancelToken
+        // const source = CancelToken.source()
 
         dispatch(cleaningAll())
-        const data = await list(endPoint, source)
+        const data = await list(endPoint)
 
         dispatch(setData(data, endPoint))
         // if (data.length === 60) {

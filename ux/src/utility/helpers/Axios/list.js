@@ -1,15 +1,15 @@
 import axios from "axios"
 import { endPoints } from "@fixed/endPoints"
 
-export const list = async (endPoint, source) => {
+export const list = async (endPoint) => {
     const token = localStorage.getItem('accessToken') || ''
 
     return await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/list`, {
         headers: {
             'Content-type': 'application/json',
             'x-token': token
-        },
-        cancelToken: source.token
+        }
+        // cancelToken: source.token
     })
         .then((response) => {
 

@@ -4,14 +4,55 @@ import CustomInput from 'reactstrap/lib/CustomInput'
 import { Select } from '../../../components/form/inputs/Select'
 import { SwitchPermission, SwitchPermissionAll } from '../../../redux/actions/permisos'
 
-export const Permiso = ({ name, id, add = 1, edit = 1, del = 1, actions = 1 }) => {
+const diccionario = {
+    Customers: 'Clientes',
+    Vendors: 'Proveedores',
+    Carriers: 'Transportistas',
+    Vehicles: 'Vehículos',
+    Trailers: 'Remolques',
+    Pools: 'Piscinas',
+    Items: 'Artículos',
+    ItemColors: 'Artículos con color',
+    Family: 'Familias',
+    Purchases: 'Compras',
+    Orders: 'Pedidos',
+    Delivery: 'Gestor de entregas',
+    Production: 'Producción',
+    Calendar: 'Calendario',
+    Users: 'Usuarios',
+    Roles: 'Roles',
+    PaymentMethods: 'Métodos de pago',
+    Departments: 'Departamentos',
+    AddressesTypes: 'Tipos de diección',
+    Taxes: 'Impuestos',
+    CustomerType: 'Tipos de cliente',
+    CustomerCategory: 'Categorias de cliente',
+    Activity: 'Actividades',
+    Origin: 'Origenes',
+    VendorType: 'Tipos de vendedor',
+    Brand: 'Marcas',
+    Model: 'Modelos',
+    Place: 'Ubicaciones',
+    Colors: 'Colores',
+    Alerts: 'Alertas',
+    Logs: 'Logs'
+}
+
+export const Permiso = ({ id, add, edit, del, actions }) => {
 
     const dispatch = useDispatch()
     const permisos = useSelector(state => state.permisosReducer)
 
     let manage = false
     let perm = 0
-    const total = 1 + add + edit + del + actions
+
+    const manageadd = add ? 1 : 0
+    const manageedit = edit ? 1 : 0
+    const managedel = del ? 1 : 0
+    const manageactions = actions ? 1 : 0
+
+    const total = 1 + manageadd + manageedit + managedel + manageactions
+
     if (permisos[id]['read'] === true) {
         perm += 1
     }
@@ -43,33 +84,33 @@ export const Permiso = ({ name, id, add = 1, edit = 1, del = 1, actions = 1 }) =
     return (
         <tr>
             <td style={{ width: '2%' }}><CustomInput type='checkbox' checked={manage} onChange={(e) => handleChangeAllPermission(e, id)} id={`${id}-0`} /></td>
-            <td>{name}</td>
+            <td>{diccionario[id]}</td>
             <td>
                 <CustomInput type='checkbox' checked={permisos[id]['read']} onChange={(e) => handleChangeSinglePermission(e, id, 'read')} id={`${id}-1`} />
             </td>
             <td>
-                {add === 1 &&
+                {add !== undefined &&
                     (
                         <CustomInput type='checkbox' checked={permisos[id]['insert']} onChange={(e) => handleChangeSinglePermission(e, id, 'insert')} id={`${id}-2`} />
                     )
                 }
             </td>
             <td>
-                {edit === 1 &&
+                {edit !== undefined &&
                     (
                         <CustomInput type='checkbox' checked={permisos[id]['update']} onChange={(e) => handleChangeSinglePermission(e, id, 'update')} id={`${id}-3`} />
                     )
                 }
             </td>
             <td>
-                {del === 1 &&
+                {del !== undefined &&
                     (
                         <CustomInput type='checkbox' checked={permisos[id]['delete']} onChange={(e) => handleChangeSinglePermission(e, id, 'delete')} id={`${id}-4`} />
                     )
                 }
             </td>
 
-            {actions === 1 ?
+            {actions !== undefined ?
                 (
                     <>
                         <td>

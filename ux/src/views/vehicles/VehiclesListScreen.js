@@ -12,6 +12,7 @@ import { cleanFormValidator } from '../../redux/actions/formValidator'
 export const VehiclesListScreen = ({ titulo }) => {
 
     const dispatch = useDispatch()
+    
 
     const { registros: data } = useSelector(state => state.registrosReducer)
 
@@ -19,7 +20,10 @@ export const VehiclesListScreen = ({ titulo }) => {
         dispatch(handleCleanForm())
         dispatch(startLoadingTable('Vehicles'))
         dispatch(cleanFormValidator())
+        
     }, [])
+
+    
 
     return (
         <CustomDataTable title={titulo} columns={vehiclesList} data={data} />

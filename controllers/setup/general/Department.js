@@ -41,9 +41,9 @@ exports.delete = async (req, res) => {
     }
 }
 
-exports.insert = (req, res) => {
+exports.insert = async (req, res) => {
     try {
-        departmentDao.insert(req.body.form)
+        await departmentDao.insert(req.body.form)
         res.json({ ok: true })
     } catch (error) {
         console.log(error)

@@ -11,6 +11,7 @@ import { ActionButtons } from '../../../../../components/actionButtons/ActionBut
 import { Input } from '../../../../../components/form/inputs/Input'
 import { setErrors, setSchema } from '../../../../../redux/actions/formValidator'
 import { validate, validator } from '../../../../../utility/formValidator/ValidationTypes'
+import { exceptionController } from '../../../../../utility/helpers/undefinedExceptionController'
 
 const formSchema = {
     name: { validations: [validator.isRequired] }
@@ -45,8 +46,8 @@ export const PlaceForm = () => {
             const form2 = dispatch(handleGetForm())
             form2.then(async (value) => {
                 const prettyForm = {
-                    ...value,
-                    name: exceptionController(value.name)
+                    ...value
+                    //name: exceptionController(value.name)
 
                 }
                 save('Place', id, prettyForm)

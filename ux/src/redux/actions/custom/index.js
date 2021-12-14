@@ -6,8 +6,7 @@ import { save } from '../../../utility/helpers/Axios/save'
 import { handleSelectCarrier } from '../../../utility/helpers/handleSelectCarrier'
 import { listProduction } from '../../../utility/helpers/Axios/listProduction'
 import { listDelivery } from '../../../utility/helpers/Axios/listDelivery'
-import { handleChangeController } from '../normalForm'
-
+import axios from 'axios'
 
 export const cleaningAll = () => ({
     type: types.cleaningAll
@@ -23,9 +22,17 @@ export const setData = (data, endPoint) => ({
 
 export const startLoadingTable = (endPoint) => {
     return async (dispatch) => {
+        const CancelToken = axios.CancelToken
+        const source = CancelToken.source()
+
         dispatch(cleaningAll())
-        const data = await list(endPoint)
+        const data = await list(endPoint, source)
+
         dispatch(setData(data, endPoint))
+        // if (data.length === 60) {
+        //     const data2 = await list(endPoint, 2)
+        //     dispatch(setData(data2, endPoint))
+        // }
     }
 }
 

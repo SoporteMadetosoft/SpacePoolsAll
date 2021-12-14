@@ -44,8 +44,8 @@ export const ColorsForm = () => {
             const form2 = dispatch(handleGetForm())
             form2.then(async (value) => {
                 const prettyForm = {
-                    ...value,
-                    name: exceptionController(value.name)
+                    ...value
+                    //name: exceptionController(value.name)
                 }
                 save('Colors', id, prettyForm)
                 history.push('/setup/items/colors')

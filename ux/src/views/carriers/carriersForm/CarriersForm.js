@@ -23,6 +23,8 @@ import { ActionButtons } from '../../../components/actionButtons/ActionButtons'
 import { CarrierDocForm } from './CarrierDocForm'
 import { setErrors, setSchema } from '../../../redux/actions/formValidator'
 import { validate, validator } from '../../../utility/formValidator/ValidationTypes'
+import fileUpload from 'express-fileupload'
+import { preSubmit } from '../../../components/preSubmit/preSubmit'
 
 
 const formSchema = {
@@ -35,8 +37,8 @@ export const CarriersForm = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
-    const [file, setFile] = useState('')
-    const { upload, filePath } = useSelector(state => state.fileUpload)
+    const [file, setFile] = useState([])
+    const { upload, filePath } = fileUpload
     const form = useSelector(state => state.normalForm)
 
     const realFilePath = form.filePath ? form.filePath : filePath
@@ -48,39 +50,11 @@ export const CarriersForm = () => {
     useEffect(() => {
         if (id === undefined) {
             dispatch(GetSetNextId("Carriers", 'carrierCode'))
-        } 
+        }
         dispatch(setSchema(formSchema))
     }, [])
 
-    const preSubmit = (filePath2) => {
-        return new Promise(async (resolve, reject) => {
-            if (upload === 1) {
-                const swalResp = await SwalUploadAndSave()
-                if (swalResp === true) {
-                    const formData = new FormData()
-                    formData.append('filePath', filePath2)
-
-                    for (const element of file) {
-
-                        formData.append('file', element)
-                    }
-
-                    await uploadFile('FileManager', formData)
-
-                    dispatch(handleChangeDestination(filePath2))
-                    dispatch(handleChangeUpload(0))
-                    const data = await loadFiles('FileManager', filePath2)
-                    await data.map(
-                        document => (
-                            dispatch(addRepeaterRegister('documents', document))
-                        )
-                    )
-                }
-            }
-            resolve('')
-        })
-    }
-
+  
     const submit = async (e) => {
         e.preventDefault()
 
@@ -93,7 +67,7 @@ export const CarriersForm = () => {
         } else {
             const filePath2 = MkDir('Carriers', realFilePath)
 
-            await preSubmit(filePath2)
+            const totalDocs = await preSubmit(filePath2, upload, file, form.documents)
 
             const form2 = dispatch(handleGetForm())
             form2.then(async (value) => {
@@ -101,7 +75,8 @@ export const CarriersForm = () => {
                     ...value,
                     idUser: exceptionController(value.idUser),
                     idStatus: exceptionController(value.idStatus),
-                    filePath: filePath2
+                    filePath: filePath2,
+                    documents : totalDocs
                 }
                 save('Carriers', id, prettyForm)
                 dispatch(handleCleanUp())
@@ -115,7 +90,11 @@ export const CarriersForm = () => {
             <div className="card">
                 <div className=" card-body row pb-3 px-3">
                     <div className="col-md-2">
-                        <Input name="carrierCode" label="Nº Transportista" readonly='readonly' value={carrierCode} />
+                        <Input 
+                            name="carrierCode" 
+                            label="Nº Transportista" 
+                            readonly='readonly' 
+                            value={carrierCode} />
                     </div>
                     <div className="col-md-4">
                         <Input name="name" label="Nombre" />

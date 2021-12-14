@@ -33,7 +33,7 @@ export const ColorRepeater = () => {
 
     return (
         <>
-            <h1 className="card-title mb-2">Color Stock</h1>
+            <h1 className="card-title mb-2">Color / Stock</h1>
             <Repeater count={count}>
 
                 {i => {

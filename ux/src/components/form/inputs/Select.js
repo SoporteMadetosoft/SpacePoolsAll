@@ -16,9 +16,6 @@ export const Select = ({ name, label, className, endpoint, placeholder = label, 
     let value
     let handleSelectChange
 
-    const optionNone = [{ label: '-', value: null }]
-    const realOptions = options !== undefined ? optionNone.concat(options) : null
-
     if (isMulti) {
         value = normalForm[name] ? normalForm[name].map(element => ({ value: element.id, label: element[labelName] })) : null
         handleSelectChange = (value) => {
@@ -52,9 +49,10 @@ export const Select = ({ name, label, className, endpoint, placeholder = label, 
         <div>
             <label className="control-label d-flex justify-content-between">{label} {<InputValidator errMsg={errMsg} errors={formValidator.errors} target={name} />}</label>
             <ReactSelect
+                isClearable={true}
                 className={`${className} ${formValidator.errors && formValidator.errors[name] ? 'border-danger rounded' : ''}`}
                 name={name}
-                options={realOptions}
+                options={options}
                 placeholder={placeholder}
                 value={value}
                 isMulti={isMulti}

@@ -9,7 +9,6 @@ export const list = async (endPoint) => {
             'Content-type': 'application/json',
             'x-token': token
         }
-        // cancelToken: source.token
     })
         .then((response) => {
 

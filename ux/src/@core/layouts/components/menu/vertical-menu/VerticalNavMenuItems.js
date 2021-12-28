@@ -19,6 +19,7 @@ const VerticalMenuNavItems = props => {
     VerticalNavMenuGroup,
     VerticalNavMenuLink
   }
+  console.log(props.items)
 
   // ** Render Nav Menu Items
   const RenderNavItems = props.items.map((item, index) => {

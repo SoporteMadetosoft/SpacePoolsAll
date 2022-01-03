@@ -190,22 +190,6 @@ export const searchArr = [
         link: '/pages/forgot-password-v2'
       },
       {
-        id: 24,
-        target: 'resetPassword-v1',
-        isBookmarked: false,
-        title: 'Reset Password v1 Page',
-        icon: 'TrendingUp',
-        link: '/pages/reset-password-v1'
-      },
-      {
-        id: 25,
-        target: 'resetPassword-v2',
-        isBookmarked: false,
-        title: 'Reset Password v2 Page',
-        icon: 'TrendingUp',
-        link: '/pages/reset-password-v2'
-      },
-      {
         id: 26,
         target: 'accountSettings',
         isBookmarked: false,

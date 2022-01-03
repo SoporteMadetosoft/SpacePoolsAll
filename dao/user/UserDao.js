@@ -56,6 +56,23 @@ class UserDao extends GenericDao {
         })
     }
 
+    checkEmail(email) {
+        return new Promise((resolve, reject) => {
+            this.db.query('SELECT COUNT(*) as contador FROM users WHERE email = ?', [email], (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    if (result[0].contador === 0) {
+                        resolve(true)
+                    } else {
+                        resolve(false)
+                    }
+                }
+            })
+        })
+    }
+
+
     insertUser(form) {
         return new Promise((resolve, reject) => {
             const { login, fullname, email, phone, password, idRole, idStatus } = form
@@ -93,6 +110,37 @@ class UserDao extends GenericDao {
                     }
                 })
             }
+        })
+    }
+
+    recoverPassword(form) {
+        return new Promise((resolve, reject) => {
+            const { email, password } = form
+            if (password) {
+                bcrypt.hash(password, saltRounds).then((hash) => {
+                    this.db.query('UPDATE users SET password = ? WHERE email = ?', [hash, email], (err, result) => {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            resolve('')
+                        }
+                    })
+                })
+            } else {
+                reject('Error con el password')
+            }
+        })
+    }
+
+    async getUserByEmail(email) {
+        return new Promise(async (resolve, reject) => {
+            this.db.query(`SELECT * FROM users WHERE email = ?`, [email], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(result[0])
+                }
+            })
         })
     }
 }

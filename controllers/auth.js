@@ -9,7 +9,6 @@ const authDao = new AuthDao()
 
 exports.login = async (req, res) => {
     const { email, password } = req.body;
-
     try {
         res.json({
             ok: true,
@@ -52,13 +51,23 @@ exports.register = async (req, res) => {
 
 exports.refreshToken = async (req, res) => {
     try {
-        const { id } = req.body.userData
-        res.json({
-            ok: true,
-            data: {
-                accessToken: await GenerarJWT(id, process.env.JWT_SECRET)
-            }
-        })
+        const { userData } = req.body
+        if (userData) {
+            const { id } = userData
+            res.json({
+                ok: true,
+                data: {
+                    accessToken: await GenerarJWT(id, process.env.JWT_SECRET)
+                }
+            })
+        } else {
+            res.json({
+                ok: true,
+                error: {
+                    msg: 'No user data'
+                }
+            })
+        }
 
     } catch (error) {
         console.log(error);

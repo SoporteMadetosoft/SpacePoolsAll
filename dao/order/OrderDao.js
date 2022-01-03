@@ -186,7 +186,6 @@ class OrderDao extends GenericDao {
                 if (err) {
                     reject(err)
                 } else {
-                    // console.log(result[0].idProductionStatus)
                     resolve(result[0].idProductionStatus)
                 }
             })

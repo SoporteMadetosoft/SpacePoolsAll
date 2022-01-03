@@ -4,12 +4,14 @@ import { X, Plus } from 'react-feather'
 import { Button } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactSelect from 'react-select'
+import { selectThemeColors } from '@utils'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { startAddSelectPoolItems } from '../../../redux/actions/selects'
 import { handleCalculateTotalCost, handleSearchOutID2 } from '../../../redux/actions/orders'
 import axios from 'axios'
+import '@styles/react/libs/react-select/_react-select.scss'
 
 const formStructure = {
     idItem: '',
@@ -124,6 +126,8 @@ const ItemsForm = ({ position }) => {
                     placeholder="Artículo"
                     name="idItem"
                     value={SelectValue}
+                    classNamePrefix={'select'}
+                    theme={selectThemeColors}
                     options={ItemsColors}
                     onChange={(obj) => {
                         handleLoadColors(obj)
@@ -136,6 +140,8 @@ const ItemsForm = ({ position }) => {
                     placeholder="Color"
                     name="idColor"
                     options={colores}
+                    classNamePrefix={'select'}
+                    theme={selectThemeColors}
                     onChange={(value) => { handleSelectChange('idColor', value) }}
                     value={SelectColor}
                 />

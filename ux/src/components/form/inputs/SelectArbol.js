@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
@@ -38,6 +38,8 @@ export const SelectArbol = ({ name, label, className, placeholder = label, endpo
         <>
             <label className="control-label">{label}</label>
             <TreeSelect
+                allowClear={true}
+                showSearch={true}
                 className={`${className}`}
                 name={name}
                 value={value}
@@ -46,7 +48,6 @@ export const SelectArbol = ({ name, label, className, placeholder = label, endpo
                 onChange={handleSelectChange}
                 style={{ width: "100%" }}
                 dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-                treeDefaultExpandAll
             />
         </>
     )

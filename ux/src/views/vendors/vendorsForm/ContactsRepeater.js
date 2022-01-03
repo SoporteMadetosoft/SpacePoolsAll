@@ -5,12 +5,13 @@ import { Button } from 'reactstrap'
 import RadioButton from '@material-ui/core/Radio'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
-
+import { selectThemeColors } from '@utils'
 
 import { addRepeaterRegister, editRepeaterRegister, handleChangeController, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { InputValidator } from '../../../components/form/inputs/InputValidator'
+import '@styles/react/libs/react-select/_react-select.scss'
 
 const formStructure = {
     name: '',
@@ -25,7 +26,7 @@ const formStructure = {
 
 export const ContactsRepeater = () => {
 
-   
+
     const dispatch = useDispatch()
     const formValues = useSelector(state => state.normalForm)
     const { contacts } = formValues
@@ -40,7 +41,7 @@ export const ContactsRepeater = () => {
         dispatch(startAddSelectOptions('Departments', 'departmentOpt'))
     }, [])
 
-    
+
 
     return (
         <>
@@ -211,6 +212,8 @@ const ContactsForm = ({ position }) => {
                 <Select
                     name="department"
                     options={departmentOpt}
+                    classNamePrefix={'select'}
+                    theme={selectThemeColors}
                     onChange={(value) => { handleSelectChange('department', value) }}
                     value={SelectValue}
                 />

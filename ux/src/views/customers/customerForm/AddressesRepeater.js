@@ -5,12 +5,14 @@ import { Button } from 'reactstrap'
 import RadioButton from '@material-ui/core/Radio'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
+import { selectThemeColors } from '@utils'
 
 import { addRepeaterRegister, editRepeaterRegister, handleChangeController, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
-import { save } from '../../../utility/helpers/Axios/save'
 import { InputValidator } from '../../../components/form/inputs/InputValidator'
+
+import '@styles/react/libs/react-select/_react-select.scss'
 
 const formStructure = {
     addressType: '',
@@ -130,6 +132,8 @@ const AddressesForm = ({ position }) => {
                 <Select
                     name="addressType"
                     options={addresseTypesOpt}
+                    classNamePrefix={'select'}
+                    theme={selectThemeColors}
                     onChange={(value) => { handleSelectChange('addressType', value) }}
                     value={SelectValue}
                 />

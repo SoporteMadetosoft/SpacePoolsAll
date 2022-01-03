@@ -21,7 +21,7 @@ class ProductFamilyDao extends GenericDao {
                         if (parseInt(idNode) !== res.id) {
                             treeData.push({
                                 value: res.id,
-                                label: `${res.id} - ${res.name}`,
+                                label: `${res.name}`,
                                 children: await this.findChilds(res.id, idNode)
                             })
                         }
@@ -44,7 +44,7 @@ class ProductFamilyDao extends GenericDao {
                             if (parseInt(idNode) !== res.id) {
                                 childs.push({
                                     value: res.id,
-                                    label: `${res.id} - ${res.name}`,
+                                    label: `${res.name}`,
                                     children: await this.findChilds(res.id, idNode)
                                 })
                             }

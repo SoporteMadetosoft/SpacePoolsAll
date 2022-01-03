@@ -5,11 +5,13 @@ import { Button } from 'reactstrap'
 import RadioButton from '@material-ui/core/Radio'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
+import { selectThemeColors } from '@utils'
 
 import { addRepeaterRegister, editRepeaterRegister, handleChangeController, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import { InputValidator } from '../../../components/form/inputs/InputValidator'
+import '@styles/react/libs/react-select/_react-select.scss'
 
 const formStructure = {
     name: '',
@@ -19,7 +21,7 @@ const formStructure = {
     startSchedule: '',
     endSchedule: '',
     department: '',
-    defaultContact: 1 
+    defaultContact: 1
 }
 
 export const ContactsRepeater = () => {
@@ -116,15 +118,17 @@ const ContactsForm = ({ position }) => {
             editRepeaterRegister('contacts', position, obj)
         )
     }
-    const handleRadioChange = ({target}) => {
-        
+    const handleRadioChange = ({ target }) => {
+
         const newContactList = normalForm.contacts.map((contact, index) => {
-            return { ...contact, 
-                [target.name] : index === position }
-            
+            return {
+                ...contact,
+                [target.name]: index === position
+            }
+
         })
         dispatch(handleChangeController('contacts', newContactList))
-        
+
     }
 
     return (
@@ -172,7 +176,7 @@ const ContactsForm = ({ position }) => {
                 <RadioButton
                     type="radio"
                     checked={defaultContact}
-                    onChange= {handleRadioChange}
+                    onChange={handleRadioChange}
                     name="defaultContact"
                     defaultValue={SelectValue}
                 />
@@ -205,6 +209,8 @@ const ContactsForm = ({ position }) => {
                 <Select
                     name="department"
                     options={departmentOpt}
+                    classNamePrefix={'select'}
+                    theme={selectThemeColors}
                     onChange={(value) => { handleSelectChange('department', value) }}
                     defaultValue={SelectValue}
                 />

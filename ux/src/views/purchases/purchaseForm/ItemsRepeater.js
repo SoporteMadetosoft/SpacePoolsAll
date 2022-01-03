@@ -7,10 +7,12 @@ import ReactSelect from 'react-select'
 import { startAddSelectOptions } from '../../../redux/actions/selects'
 import React, { useEffect } from 'react'
 import axios from 'axios'
+import { selectThemeColors } from '@utils'
 
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
 import { addSelectionOnNormalForm, handleSearchCost, handleSearchStock } from '../../../redux/actions/items'
+import '@styles/react/libs/react-select/_react-select.scss'
 
 const formStructure = {
     idItem: [
@@ -135,6 +137,8 @@ const ItemsForm = ({ position }) => {
                 <ReactSelect
                     name="itemType"
                     options={ItemType}
+                    classNamePrefix={'select'}
+                    theme={selectThemeColors}
                     onChange={
                         (obj) => {
                             handleLoadItems(obj)
@@ -150,6 +154,8 @@ const ItemsForm = ({ position }) => {
                 <ReactSelect
                     name="item"
                     options={itemsOpt}
+                    classNamePrefix={'select'}
+                    theme={selectThemeColors}
                     onChange={
                         (obj) => {
                             handleLoadStockCost(obj)

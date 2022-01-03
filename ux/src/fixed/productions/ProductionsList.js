@@ -161,16 +161,7 @@ export const ProductionsList = [
                     </DropdownItem>
                   </Link>
                 )}
-                {ability.can('delete', 'production') && (
-                  <Link onClick={(e) => {
-                    dispatch(startDeleteRegister(row.id))
-                  }}>
-                    <DropdownItem tag='a' href='/' className='w-100'>
-                      <Trash size={15} />
-                      <span className='align-middle ml-50'>Eliminar</span>
-                    </DropdownItem>
-                  </Link>
-                )}
+
               </DropdownMenu>
             </UncontrolledDropdown>
           </div>

@@ -100,6 +100,7 @@ const Router = () => {
       return <Redirect to='/misc/not-authorized' />
     } else {
       // ** If none of the above render component
+      console.log(props)
       return <route.component {...props} />
     }
   }

@@ -1,8 +1,6 @@
 // ** React Imports
-import { Fragment, useState, forwardRef, useContext } from 'react'
+import { Fragment, useState, useContext } from 'react'
 
-// ** Third Party Components
-import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
 import { ChevronDown, FileText, Plus, Download, ArrowLeft } from 'react-feather'
 import {
@@ -26,24 +24,13 @@ import { AbilityContext } from '@src/utility/context/Can'
 import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-// ** Bootstrap Checkbox Component
-const BootstrapCheckbox = forwardRef(({ onClick, ...rest }, ref) => (
-  <div className='custom-control custom-checkbox'>
-    <input type='checkbox' className='custom-control-input' ref={ref} {...rest} />
-    <label className='custom-control-label' onClick={onClick} />
-  </div>
-))
-
-
 export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) => {
   // ** States
-  const [currentPage, setCurrentPage] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [filteredData, setFilteredData] = useState([])
+
   const history = useHistory()
   const ability = useContext(AbilityContext)
-
-
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toLowerCase() + string.slice(1)
   }
@@ -90,38 +77,6 @@ export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) =>
     }
   }
 
-
-  // ** Function to handle Pagination
-  const handlePagination = page => {
-    setCurrentPage(page.selected)
-  }
-
-  // ** Custom Pagination
-  const CustomPagination = () => (
-    <ReactPaginate
-      previousLabel=''
-      nextLabel=''
-      forcePage={currentPage}
-      onPageChange={page => handlePagination(page)}
-      pageCount={searchValue.length ? filteredData.length / 20 : data.length / 20 || 1}
-      breakLabel='...'
-      pageRangeDisplayed={2}
-      marginPagesDisplayed={2}
-      activeClassName='active'
-      pageClassName='page-item'
-      breakClassName='page-item'
-      breakLinkClassName='page-link'
-      nextLinkClassName='page-link'
-      nextClassName='page-item next'
-      previousClassName='page-item prev'
-      previousLinkClassName='page-link'
-      pageLinkClassName='page-link'
-      breakClassName='page-item'
-      breakLinkClassName='page-link'
-      containerClassName='pagination react-paginate separated-pagination pagination-sm justify-content-end pr-1 mt-1'
-    />
-  )
-
   // ** Converts table to CSV
   function convertArrayOfObjectsToCSV(array) {
     let result
@@ -156,7 +111,7 @@ export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) =>
     let csv = convertArrayOfObjectsToCSV(array)
     if (csv === null || csv === undefined) return
 
-    const filename = 'export.csv'
+    const filename = `${title}.csv`
 
     if (!csv.match(/^data:text\/csv/i)) {
       csv = `data:text/csv;charset=utf-8,${csv}`
@@ -208,8 +163,10 @@ export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) =>
 
           </div>
         </CardHeader>
+
         <Row className='justify-content-end mx-0'>
           <Col className='d-flex align-items-center justify-content-end mt-1' md='6' sm='12'>
+
             <Label className='mr-1' for='search-input'>
               Buscar
             </Label>
@@ -227,16 +184,37 @@ export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) =>
           noHeader
           pagination
           responsive
+          customStyles={{
+            noData: {
+              style: {
+                backgroundColor: 'transparent',
+                color: '#a2a3a6'
+              }
+            },
+            rows: {
+              style: {
+                placeItems: 'center',
+                height: '2.5rem !important',
+                minHeight: '1rem'
+              }
+            },
+            cells: {
+              style: {
+                height: '2rem !important',
+                padding: '0 2.5rem 0 0.5 !important'
+              }
+            }
+          }}
           // selectableRows
-          noDataComponent={<span>No hay registros para mostrar</span>}
+          noDataComponent={<span style={{ margin: '2%', width: '50%', textAlign: 'center' }}>No se han encontrado resultados</span>}
           columns={columns}
-          paginationPerPage={20}
+          paginationPerPage={25}
           className='react-dataTable'
           sortIcon={<ChevronDown size={10} />}
-          paginationDefaultPage={currentPage + 1}
-          paginationComponent={CustomPagination}
+          paginationDefaultPage={1}
+          paginationComponentOptions={{ rowsPerPageText: 'Registros por página', rangeSeparatorText: 'de', selectAllRowsItem: true, selectAllRowsItemText: 'Todos' }}
+          paginationRowsPerPageOptions={[10, 25, 50, 100, 250]}
           data={searchValue.length ? filteredData : data}
-          selectableRowsComponent={BootstrapCheckbox}
         />
       </Card>
     </Fragment>

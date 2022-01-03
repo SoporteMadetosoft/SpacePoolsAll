@@ -16,6 +16,9 @@ router.put('/update', validarJWT, ControllerUser.update);
 router.delete('/delete/:id', validarJWT, ControllerUser.delete);
 router.post('/find', validarJWT, ControllerUser.listByID);
 router.post('/checkUser', validarJWT, ControllerUser.checkUser);
+router.post('/checkEmail', ControllerUser.checkEmail);
+router.post('/checkToken', ControllerUser.checkToken);
+router.post('/recoverPassword', ControllerUser.recoverPassword);
 
 
 module.exports = router;

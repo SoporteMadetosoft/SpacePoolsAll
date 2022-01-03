@@ -16,7 +16,7 @@ class ProductionDao extends GenericDao {
         const production = {
             ...data,
             orderData: await this.OrderDao.mountObj(await this.OrderDao.findOrderById(data.idOrder)),
-            
+
 
         }
         return production
@@ -54,9 +54,8 @@ class ProductionDao extends GenericDao {
             idProductionStatus: idProductionStatus,
             color: colors
         }
-        console.log(nObj)
         return nObj
-        
+
     }
 
     findByOrderId(id) {

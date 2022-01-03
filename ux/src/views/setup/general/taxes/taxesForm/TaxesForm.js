@@ -31,7 +31,7 @@ export const TaxesForm = () => {
     }
 
     useEffect(() => {
-        
+
         dispatch(setSchema(formSchema))
     }, [])
 
@@ -46,10 +46,9 @@ export const TaxesForm = () => {
             form2.then(async (value) => {
                 const prettyForm = {
                     ...normalForm,
-                   value: exceptionController(value.name / 100) 
+                    value: exceptionController(value.name / 100)
                 }
-                console.log(value.name / 100)
-                
+
                 save('Taxes', id, prettyForm)
                 dispatch(handleCleanUp)
                 history.push('/setup/taxes')

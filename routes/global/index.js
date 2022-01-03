@@ -16,6 +16,7 @@ router.use('/productionStatus', require('./productionStatus'));
 router.use('/purchaseStatus', require('./purchaseStatus'));
 router.use('/show', require('./show'));
 router.use('/logos', require('./logos'));
+router.use('/forgotPassword', require('./forgotPassword'));
 
 
 module.exports = router;

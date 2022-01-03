@@ -1,5 +1,6 @@
 const globalEndpoints = {
     FileManager: '/global/fileManager',
+    ForgotPassword: '/global/forgotPassword',
     ItemType: '/global/itemType',
     Language: '/global/language',
     Logos: '/global/logos',

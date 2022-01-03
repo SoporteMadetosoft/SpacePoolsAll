@@ -10,14 +10,6 @@ const PagesRoutes = [
     }
   },
   {
-    path: '/register',
-    component: lazy(() => import('@views/authentication/Register')),
-    layout: 'BlankLayout',
-    meta: {
-      authRoute: true
-    }
-  },
-  {
     path: '/forgot-password',
     component: lazy(() => import('@views/authentication/ForgotPassword')),
     layout: 'BlankLayout',
@@ -26,9 +18,12 @@ const PagesRoutes = [
     }
   },
   {
-    path: '/pages/reset-password-v1',
-    component: lazy(() => import('@views/authentication/ResetPasswordV1')),
-    layout: 'BlankLayout'
+    path: '/reset-password/:token',
+    component: lazy(() => import('@views/authentication/ResetPassword')),
+    layout: 'BlankLayout',
+    meta: {
+      authRoute: true
+    }
   },
   {
     path: '/pages/profile',

@@ -15,6 +15,7 @@ import LayoutWrapper from '@layouts/components/layout-wrapper'
 // ** Router Components
 import { BrowserRouter as AppRouter, Route, Switch, Redirect } from 'react-router-dom'
 
+
 // ** Routes & Default Routes
 import { DefaultRoute, Routes } from './routes'
 
@@ -23,10 +24,14 @@ import BlankLayout from '@layouts/BlankLayout'
 import VerticalLayout from '@src/components/layouts/VerticalLayout'
 import { useDispatch } from 'react-redux'
 import { handleLogout } from '../views/authentication/redux/actions'
+import { handleAbilityCheck } from '../utility/helpers/handleAbilityCheck'
 // import HorizontalLayout from '@src/layouts/HorizontalLayout'
 
 const Router = () => {
   // ** Hooks
+  const dispatch = useDispatch()
+  const idleRef = useRef(null)
+
   const [layout, setLayout] = useLayout()
   const [transition, setTransition] = useRouterTransition()
 
@@ -70,9 +75,7 @@ const Router = () => {
    */
   const FinalRoute = props => {
     const route = props.route
-
     let action, resource
-
     // ** Assign vars based on route meta
     if (route.meta) {
       action = route.meta.action ? route.meta.action : null
@@ -89,18 +92,16 @@ const Router = () => {
        ** If user is not Logged in & route.meta.authRoute, !route.meta.publicRoute are undefined
        ** Then redirect user to login
        */
+
       return <Redirect to='/login' />
-      // } else if (route.meta && route.meta.publicRoute) {
-      //   return <Redirect to={route.simpleUrl} />
     } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
       // ** If route has meta and authRole and user is Logged in then redirect user to home page (DefaultRoute)
       return <Redirect to='/' />
-    } else if (isUserLoggedIn() && !ability.can(action || 'read', resource)) {
+    } else if (isUserLoggedIn() && (!ability.can(action || 'read', resource) || handleAbilityCheck(resource) === false)) {
       // ** If user is Logged in and doesn't have ability to visit the page redirect the user to Not Authorized
       return <Redirect to='/misc/not-authorized' />
     } else {
       // ** If none of the above render component
-      console.log(props)
       return <route.component {...props} />
     }
   }
@@ -189,9 +190,6 @@ const Router = () => {
     })
   }
 
-  const idleRef = useRef(null)
-  const dispatch = useDispatch()
-
   return (
     <AppRouter basename={process.env.REACT_APP_BASENAME}>
       <Switch>
@@ -215,7 +213,7 @@ const Router = () => {
         />
         <IdleTimer
           ref={idleRef}
-          timeout={3600000}
+          timeout={360000}
           onIdle={() => dispatch(handleLogout())}
         >
           {ResolveRoutes()}

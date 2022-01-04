@@ -1,5 +1,6 @@
 const dbCon = require("./Connection");
 const StatusDao = require("./global/StatusDao");
+const btoa = require("btoa");
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -69,7 +70,11 @@ class AuthDao {
         Object.entries(role).map(el => {
             Object.entries(el[1]).map(perm => {
                 if (perm[1] === true) {
-                    newObjectRole.push({ subject: this.capitalizeFirstLetter(el[0]), action: perm[0] })
+                    newObjectRole.push({
+                        id: btoa(this.capitalizeFirstLetter(el[0])),
+                        subject: this.capitalizeFirstLetter(el[0]),
+                        action: perm[0]
+                    })
                 }
             })
         })

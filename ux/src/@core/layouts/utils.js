@@ -1,6 +1,7 @@
 // ** React Imports
 import { useContext } from 'react'
 import { AbilityContext } from '@src/utility/context/Can'
+import { handleAbilityCheck } from '../../utility/helpers/handleAbilityCheck'
 
 /**
  * Return which component to render based on it's data/context
@@ -148,7 +149,8 @@ export const canViewMenuGroup = item => {
     if (i.children) {
       return canViewMenuGroup(i)
     }
-    return ability.can('read', i.id)
+
+    return handleAbilityCheck(i.id) && ability.can('read', i.id)
   })
 
   // ** If resource and action is defined in item => Return based on children visibility (Hide group if no child is visible)
@@ -161,7 +163,7 @@ export const canViewMenuGroup = item => {
 
 export const canViewMenuItem = item => {
   const ability = useContext(AbilityContext)
-  return ability.can('read', item.id)
+  return handleAbilityCheck(item.id) && ability.can('read', item.id)
 }
 
 export const canViewMenuHeader = item => {

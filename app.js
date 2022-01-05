@@ -10,6 +10,10 @@ const app = express();
 const port = process.env.PORT || 4000;
 const origin = process.env.ORIGIN;
 
+if (typeof (PhusionPassenger) !== 'undefined') {
+  PhusionPassenger.configure({ autoInstall: false });
+}
+
 app.use(cors({
   origin: origin,
 }));
@@ -81,6 +85,8 @@ app.use('/logs', require('./routes/logs'))
 //   res.sendFile(path.join(__dirname + '/ux/build/index.html'));
 // });
 
-const server = app.listen(port, () => {
-  console.log(`app listening at ${origin}:${port}`);
-});  
+if (typeof (PhusionPassenger) !== 'undefined') {
+  app.listen('passenger');
+} else {
+  app.listen(port, () => { console.log(`app listening at port ${port}`) })
+}

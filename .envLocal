@@ -3,7 +3,7 @@ JWT_SECRET = }7->cZ]Yex~X
 GMAIL_USER = 
 GMAIL_PASS = 
 
-DB_HOST = 192.168.0.53
+DB_HOST = 192.168.0.62
 DB_NAME = alphasfp
 DB_USER = alphasfp
 DB_PASS = BTVSWS8.8R-.IzoK

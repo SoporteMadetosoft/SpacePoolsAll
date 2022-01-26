@@ -5,12 +5,14 @@ import { handleChangeController } from '../../../redux/actions/normalForm'
 import { removeError } from '../../../redux/actions/formValidator'
 import { InputValidator } from './InputValidator'
 
-export const Input = ({ name, label, className, placeholder = label, type = "text", styles, errMsg = '', readonly = false }) => {
+export const Input = ({ props }) => {
+
+    const { name, label, className = '', placeholder = label, type = "text", styles, errMsg = '', readonly = false, value = '' } = props
 
     const dispatch = useDispatch()
     const { normalForm, formValidator } = useSelector(state => state)
 
-    const value = normalForm[name] ? normalForm[name] : ''
+    const valor = normalForm[name] ? normalForm[name] : value
 
     const handleInputChange = ({ target }) => {
         if (formValidator.errors && formValidator.errors[target.name]) {
@@ -26,11 +28,11 @@ export const Input = ({ name, label, className, placeholder = label, type = "tex
             <input
                 style={{ ...styles }}
                 type={type}
-                readonly={readonly}
+                readonly={readonly && 'readonly'}
                 className={`form-control ${className} ${formValidator.errors && formValidator.errors[name] ? 'borderless border-danger rounded' : ''}`}
                 name={name}
                 placeholder={placeholder}
-                value={value}
+                value={valor}
                 onChange={handleInputChange}
                 autoComplete="off"
             />

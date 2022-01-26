@@ -3,20 +3,7 @@ import { Fragment, useState, useContext } from 'react'
 
 import DataTable from 'react-data-table-component'
 import { ChevronDown, FileText, Plus, Download, ArrowLeft } from 'react-feather'
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  Button,
-  UncontrolledButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Input,
-  Label,
-  Row,
-  Col
-} from 'reactstrap'
+import { Card, CardHeader, CardTitle, Button, UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, Row, Col } from 'reactstrap'
 import { useHistory } from 'react-router'
 import { AbilityContext } from '@src/utility/context/Can'
 

@@ -10,50 +10,52 @@ import { InputValidator } from './InputValidator'
 
 import '@styles/react/libs/react-select/_react-select.scss'
 
-export const Select = ({ name, label, className, endpoint, placeholder = label, isMulti = false, labelName = 'name', errMsg = '', isClearable = true, onSelect, styles = '', defecto = false }) => {
+export const Select = ({ props }) => {
+
+    const { name, label, className = '', endPoint, placeholder = label, isMulti = false,
+        labelName = 'name', errMsg = '', isClearable = true, onSelect, containerStyle = {},
+        styles = '', defecto = false, hasLabel = true, defaultOptions } = props
 
     const dispatch = useDispatch()
     const { selectReducer, normalForm, formValidator } = useSelector(state => state)
-    const { [endpoint]: options } = selectReducer
+    let { [endPoint]: options } = selectReducer
     const isValueEmpty = normalForm[name] && Object.keys(normalForm[name]).length > 0
+    options = defaultOptions ? defaultOptions : options
 
     let value
-    let handleSelectChange
 
     if (isMulti) {
         value = isValueEmpty ? normalForm[name].map(element => ({ value: element.id, label: element[labelName] })) : (defecto !== false && options !== undefined) && options[defecto]
-        handleSelectChange = (value) => {
-
-            if (formValidator.errors && formValidator.errors[name]) {
-                delete formValidator.errors[name]
-            }
-            dispatch(removeError(formValidator.errors))
-            const newValues = value.map(element => ({ id: element.value, [labelName]: element.label }))
-
-            dispatch(handleChangeController(name, newValues))
-        }
     } else {
         value = isValueEmpty ? { label: normalForm[name][labelName], value: normalForm[name].id } : (defecto !== false && options !== undefined) && options[defecto]
-        handleSelectChange = (value) => {
-
-            if (formValidator.errors && formValidator.errors[name]) {
-                delete formValidator.errors[name]
-            }
-            dispatch(removeError(formValidator.errors))
-            const selectValue = value ? { id: value.value, [labelName]: value.label } : null
-
-            dispatch(handleChangeController(name, selectValue))
-        }
     }
 
+    const handleSelectChange = (value) => {
+
+        if (formValidator.errors && formValidator.errors[name]) {
+            delete formValidator.errors[name]
+        }
+        dispatch(removeError(formValidator.errors))
+
+        const selectedValue = isMulti
+            ? value.map(element => ({ id: element.value, [labelName]: element.label }))
+            : value && { id: value.value, [labelName]: value.label }
+
+        dispatch(handleChangeController(name, selectedValue))
+    }
+
+
     useEffect(() => {
-        dispatch(startAddSelectOptions(endpoint, endpoint, labelName))
+        dispatch(startAddSelectOptions(endPoint, endPoint, labelName))
     }, [])
 
 
     return (
-        <div>
-            <label className="control-label d-flex justify-content-between">{label} {<InputValidator errMsg={errMsg} errors={formValidator.errors} target={name} />}</label>
+        <div style={{ ...containerStyle }}>
+            {
+                hasLabel &&
+                <label className="control-label d-flex justify-content-between">{label} {<InputValidator errMsg={errMsg} errors={formValidator.errors} target={name} />}</label>
+            }
             <ReactSelect
                 isClearable={isClearable}
                 className={`${className} ${formValidator.errors && formValidator.errors[name] ? 'border-danger rounded' : ''}`}

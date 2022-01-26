@@ -16,7 +16,7 @@ import {
 
 const BreadCrumbs = props => {
   // ** Props
-  const { breadCrumbTitle, breadCrumbParent, breadCrumbParent2, breadCrumbParent3, breadCrumbActive } = props
+  const { breadCrumbTitle, breadCrumbParent, breadCrumbParent2, breadCrumbParent3, breadCrumbActive = breadCrumbTitle } = props
 
   const history = useHistory()
 
@@ -31,7 +31,7 @@ const BreadCrumbs = props => {
                 <BreadcrumbItem tag='li'>
                   <Link to='/'>Inicio</Link>
                 </BreadcrumbItem>
-                <BreadcrumbItem tag='li' className='text-primary' style={{cursor: 'Pointer'}} onClick={ () => { history.goBack() } }>
+                <BreadcrumbItem tag='li' className='text-primary' style={{ cursor: 'Pointer' }} onClick={() => { history.goBack() }}>
                   {breadCrumbParent}
                 </BreadcrumbItem>
                 {breadCrumbParent2 ? (

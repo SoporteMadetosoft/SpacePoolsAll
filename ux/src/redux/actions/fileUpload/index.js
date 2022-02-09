@@ -35,14 +35,14 @@ export const startDeleteFile = (position, url, id) => {
     }
 }
 
-export const saveFiles = async (endpoint, filePath, files) => {
+export const saveFiles = (endpoint, filePath, files) => {
     return async (dispatch) => {
         const formData = new FormData()
+
         formData.append('filePath', filePath)
 
-        for (const element of files) {
-
-            formData.append('file', element)
+        for (let i = 0; i < files.length; i++) {
+            formData.append('file', files[i])
         }
 
         await uploadFile(endpoint, formData)

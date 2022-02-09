@@ -7,7 +7,7 @@ import { handleCleanForm } from '@redux/actions/normalForm'
 import { cleanFormValidator } from '../redux/actions/formValidator/index.js'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
-export const ListScreen = ({ titulo, endPoint, columns }) => {
+export const ListScreen = ({ titulo, endPoint, columns, filters }) => {
 
     const dispatch = useDispatch()
     const { registros: data } = useSelector(state => state.registrosReducer)
@@ -19,6 +19,6 @@ export const ListScreen = ({ titulo, endPoint, columns }) => {
     }, [])
 
     return (
-        <CustomDataTable title={titulo} columns={columns} data={data} />
+        <CustomDataTable title={titulo} columns={columns} data={data} filters={filters} />
     )
 }

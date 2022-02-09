@@ -7,7 +7,11 @@ const format = (form, structure) => {
         value = exceptionController(value)
       }
     } else {
-      format(form[keys], structure[keys])
+      form[keys] = form[keys].map((el) => {
+        const element = format(el, structure[keys])
+        return Object.assign({}, ...element)
+      })
+      return form
     }
     return {
       [keys]: value
@@ -17,7 +21,6 @@ const format = (form, structure) => {
 
 export const PrettyForm = (form, structure) => {
   const newObject = format(form, structure)
-
   return Object.assign({}, ...newObject)
 }
 

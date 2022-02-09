@@ -31,7 +31,7 @@ const formSchema = {
         address: { validations: [validator.isRequired] }
     },
     contacts: {
-        name: { validations: [validator.isRequired] }
+         name: {validations: [validator.isRequired] }
     }
 
 }
@@ -92,7 +92,7 @@ export const CustomersForm = () => {
                     idStatus: exceptionController(value.idStatus),
                     idLanguage: exceptionController(value.idLanguage),
                     filePath: filePath2,
-                    documents: totalDocs,
+                    documents : totalDocs,
                     addresses: value.addresses.map(address => ({ ...address, addressType: exceptionController(address.addressType), defaultAddress: address.defaultAddress === true ? 1 : 0 })),
                     contacts: value.contacts.map(contact => ({ ...contact, department: exceptionController(contact.department), defaultContact: contact.defaultContact === true ? 1 : 0 }))
                 }

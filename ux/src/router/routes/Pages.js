@@ -17,14 +17,14 @@ const PagesRoutes = [
       authRoute: true
     }
   },
-  {
-    path: '/reset-password/:token',
-    component: lazy(() => import('@views/authentication/ResetPassword')),
-    layout: 'BlankLayout',
-    meta: {
-      authRoute: true
-    }
-  },
+  // {
+  //   path: '/reset-password/:token',
+  //   component: lazy(() => import('@views/authentication/ResetPassword')),
+  //   layout: 'BlankLayout',
+  //   meta: {
+  //     authRoute: true
+  //   }
+  // },
   {
     path: '/pages/profile',
     component: lazy(() => import('@views/profile'))

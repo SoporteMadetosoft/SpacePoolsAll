@@ -2,14 +2,12 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Repeater from '@components/repeater'
 import { Button } from 'reactstrap'
-import { selectThemeColors } from '@utils'
 
 import { Plus, X } from 'react-feather'
 import Select from 'react-select'
 import { addRepeaterRegister, editRepeaterRegister, removeRepeaterRegister } from '../../../../redux/actions/normalForm'
 import { startAddSelectOptions } from '../../../../redux/actions/selects'
 import { constructSelect, deconstructSelect } from '../../../../utility/helpers/deconstructSelect'
-import '@styles/react/libs/react-select/_react-select.scss'
 
 const formStructure = {
     idColor: '',
@@ -99,8 +97,6 @@ const ColorsForm = ({ position }) => {
                 <Select
                     name="idColor"
                     options={colorsOpt}
-                    classNamePrefix={'select'}
-                    theme={selectThemeColors}
                     onChange={(value) => { handleSelectChange('idColor', value) }}
                     value={SelectValue}
                 />

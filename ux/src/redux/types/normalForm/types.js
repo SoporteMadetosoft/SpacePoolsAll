@@ -8,5 +8,6 @@ export const formTypes = {
     removeRepeaterRegister: '[NormalForm] Remove register for repeater',
     editRepeaterRegister: '[NormalForm] Edit register for repeater',
     fillFormData: '[NormalForm] Fill form data',
-    cleanSectionForm: '[NormalForm] Clean Section'
+    cleanSectionForm: '[NormalForm] Clean Section',
+    cleanExceptId: '[NormalForm] Clean Values Except Id'
 }

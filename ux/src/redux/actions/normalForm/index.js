@@ -2,6 +2,7 @@ import { formTypes } from "../../types/normalForm/types"
 import { getFormData } from "../../../utility/helpers/Axios/getFormData"
 import axios from "axios"
 import { endPoints } from "@fixed/endPoints"
+import { getNextId } from "../../../utility/helpers/Axios/getNextId"
 
 export const handleChangeController = (name, value) => ({
     type: formTypes.inputChange,
@@ -11,6 +12,11 @@ export const handleChangeController = (name, value) => ({
 export const initNormalForm = (structure) => ({
     type: formTypes.initForm,
     payload: structure
+})
+
+export const handleCleanExceptId = (id) => ({
+    type: formTypes.cleanExceptId,
+    payload: { name: 'id', id }
 })
 
 export const addRepeaterRegister = (key, structure) => ({
@@ -58,14 +64,7 @@ export const handleGetForm = () => {
 
 export const GetSetNextId = (endPoint, name) => {
     return async (dispatch) => {
-        const token = localStorage.getItem('accessToken') || ''
-
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/findnid`, {
-            headers: {
-                'Content-type': 'application/json',
-                'x-token': token
-            }
-        })
-        dispatch(handleChangeController(name, data[0].AUTO_INCREMENT))
+        const next = await getNextId(endPoint)
+        dispatch(handleChangeController(name, next))
     }
 }

@@ -2,7 +2,7 @@
 import { Fragment, useState, useContext } from 'react'
 
 import DataTable from 'react-data-table-component'
-import { ChevronDown, FileText, Plus, Download, ArrowLeft } from 'react-feather'
+import { ChevronDown, FileText, Plus, Download, ArrowLeft, Filter, Layers, XCircle } from 'react-feather'
 import { Card, CardHeader, CardTitle, Button, UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, Row, Col } from 'reactstrap'
 import { useHistory } from 'react-router'
 import { AbilityContext } from '@src/utility/context/Can'
@@ -10,125 +10,164 @@ import { AbilityContext } from '@src/utility/context/Can'
 
 import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { downloadCSV } from './addons/DownloadCSV'
+import { customStyles } from './addons/CustomStyles'
+import CustomFilter from './addons/CustomFilter'
+import { AdvancedFilter } from './addons/AdvancedFilter'
 
-export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) => {
-  // ** States
-  const [searchValue, setSearchValue] = useState('')
-  const [filteredData, setFilteredData] = useState([])
+export const CustomDataTable = ({ title, columns, data = [], filters, addButton = true, backButton = false }) => {
 
   const history = useHistory()
   const ability = useContext(AbilityContext)
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toLowerCase() + string.slice(1)
-  }
+
+  // ** States
+  const [filteredData, setFilteredData] = useState([])
+  const [currentPage, setCurrentPage] = useState(0)
+
+  const [searchGlobalValue, setGlobalSearchValue] = useState('')
+  const [searchColumnValue, setColumnValue] = useState({})
+  const [isButtonClicked, setIsButtonClicked] = useState(false)
+  const [showFilters, setShowFilters] = useState(false)
+  const [showAdvanced, setShowAdvanced] = useState(false)
 
   const { endPoint } = useSelector(state => state.registrosReducer)
-  const can = endPoint !== null ? capitalizeFirstLetter(endPoint) : null
+
+  const capitalizeFirstLetter = (string) => string.charAt(0).toLowerCase() + string.slice(1)
+  const can = endPoint ? capitalizeFirstLetter(endPoint) : null
+
+  if (isButtonClicked) {
+    handleFullClean(dispatch)
+    setIsButtonClicked(false)
+  }
+
+  const updateFilterData = (columnFilter, globalFilter, isSelect) => {
+
+    if (isSelect) {
+      const updateData = data
+        .filter(dataItem => Object
+          .keys(columnFilter)
+          .every(FilterKey => columnFilter[FilterKey].every(value => String(dataItem[FilterKey]).toLowerCase().startsWith(value))))
+        .filter(dataItem => Object
+          .keys(dataItem)
+          .some(FilterKey => String(dataItem[FilterKey]).toLowerCase().includes(globalFilter.toLowerCase()))
+        )
+
+      setFilteredData(updateData)
+    } else {
+      const updateData = data
+        .filter(dataItem => Object
+          .keys(columnFilter)
+          .every(FilterKey => columnFilter[FilterKey].every(value => String(dataItem[FilterKey]).toLowerCase().indexOf(value.toLowerCase()) !== -1)))
+        .filter(dataItem => Object
+          .keys(dataItem)
+          .some(FilterKey => String(dataItem[FilterKey]).toLowerCase().includes(globalFilter.toLowerCase()))
+        )
+
+      setFilteredData(updateData)
+    }
+  }
+
+
+  const refreshFilters = () => {
+    setShowFilters(!showFilters)
+    setColumnValue({})
+    updateFilterData({}, searchGlobalValue)
+  }
+
+  const refreshAdvancedFilters = () => {
+    setShowAdvanced(!showAdvanced)
+  }
+
 
   const searchableColumns = () => {
     const columnas = []
     columns.forEach(column => {
-      if (column.searchable === true) {
-        columnas.push(`${column.selector}`)
-      }
+      if (column.searchable === true) columnas.push(`${column.selector}`)
     })
     return { columnas }
   }
 
   // ** Function to handle filter
-  const handleFilter = e => {
-    const value = e.target.value
-    let updatedData = []
-    setSearchValue(value)
+  const handleFilter = (id, values, isSelect = false) => {
+    // TODO: Implementar columnas no filtrables
+    const updateGlobalFilter = (id === 'globalFilter')
 
-    if (value.length) {
-      updatedData = data.filter(item => {
+    const globalFilter = updateGlobalFilter ? values : searchGlobalValue
+    const columnFilter = updateGlobalFilter ? searchColumnValue : { ...searchColumnValue, [id]: values }
 
-        const schCols = searchableColumns()
+    if (!updateGlobalFilter) values = values.filter(value => value.length !== 0)
+    if (!updateGlobalFilter && values.length === 0) delete columnFilter[id]
 
-        let returned
+    setColumnValue(columnFilter)
+    setGlobalSearchValue(globalFilter)
+    setCurrentPage(0)
+    updateFilterData(columnFilter, globalFilter, isSelect)
 
-        schCols.columnas.forEach(col => {
-          const colValue = (item[col] !== null && item[col] !== undefined) ? item[col].toString() : ''
-          const startsWith = colValue.toLowerCase().startsWith(value.toLowerCase())
-          const includes = colValue.toLowerCase().includes(value.toLowerCase())
-          if (startsWith || (!startsWith && includes)) {
-            returned = item.toString()
-          }
-        })
-
-        return returned
-      })
-      setFilteredData(updatedData)
-      setSearchValue(value)
-    }
   }
+  // const handleFilter = e => {
+  //   const value = e.target.value
+  //   let updatedData = []
 
-  // ** Converts table to CSV
-  function convertArrayOfObjectsToCSV(array) {
-    let result
-    if (array.length > 0) {
-      const columnDelimiter = ','
-      const lineDelimiter = '\n'
-      const keys = Object.keys(data[0])
+  //   if (value.length) {
+  //     updatedData = data.filter(item => {
 
-      result = ''
-      result += keys.join(columnDelimiter)
-      result += lineDelimiter
+  //       const schCols = searchableColumns()
 
-      array.forEach(item => {
-        let ctr = 0
-        keys.forEach(key => {
-          if (ctr > 0) result += columnDelimiter
+  //       let returned
 
-          result += item[key]
+  //       schCols.columnas.forEach(col => {
+  //         const colValue = (item[col] !== null && item[col] !== undefined) ? item[col].toString() : ''
+  //         const startsWith = colValue.toLowerCase().startsWith(value.toLowerCase())
+  //         const includes = colValue.toLowerCase().includes(value.toLowerCase())
+  //         if (startsWith || (!startsWith && includes)) {
+  //           returned = item.toString()
+  //         }
+  //       })
 
-          ctr++
-        })
-        result += lineDelimiter
-      })
+  //       return returned
+  //     })
+  //   }
 
-      return result
-    }
-  }
-
-  // ** Downloads CSV
-  function downloadCSV(array) {
-    const link = document.createElement('a')
-    let csv = convertArrayOfObjectsToCSV(array)
-    if (csv === null || csv === undefined) return
-
-    const filename = `${title}.csv`
-
-    if (!csv.match(/^data:text\/csv/i)) {
-      csv = `data:text/csv;charset=utf-8,${csv}`
-    }
-
-    link.setAttribute('href', encodeURI(csv))
-    link.setAttribute('download', filename)
-    link.click()
-  }
+  //   setFilteredData(updatedData)
+  //   setSearchValue(value)
+  // }
 
   return (
     <Fragment>
       <Card>
+        {
+          (filters && showAdvanced) && (<AdvancedFilter endPoint={endPoint} title={title} filters={filters} />)
+        }
+      </Card>
+      <Card>
         <CardHeader className='flex-md-row flex-column align-md-items-center align-items-start border-bottom'>
-          <CardTitle tag='h4'>{title}</CardTitle>
-          <div className='d-flex mt-md-0 mt-1'>
+          <Col>
+            <CardTitle tag='h4' className="pl-0">{title}</CardTitle>
+          </Col>
+          <Col style={{ textAlign: 'right', display: ' contents' }}>
+            {filters &&
+              (<Button className='mr-1 border' outline={!showAdvanced} color={showAdvanced ? 'primary' : ''} onClick={refreshAdvancedFilters}>
+                <Layers className='p-0' size={12} />
+              </Button>)
+            }
+            <Button className='mr-1 border btn btn-xs' outline={!showFilters} color={showFilters ? 'primary' : ''} onClick={refreshFilters}>
+              <Filter size={12} />
+            </Button>
+            <Input className='dataTable-filter mr-2' type='text' placeholder='Buscar' bsSize='xl' onChange={(e) => handleFilter('globalFilter', e.target.value)} style={{ maxWidth: '20%' }} />
             <UncontrolledButtonDropdown>
-              <DropdownToggle color='secondary' caret outline>
+              <DropdownToggle color='secondary' outline>
                 <Download size={15} />
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem className='w-100' onClick={() => downloadCSV(searchValue.length ? (filteredData) : (data))}>
+                <DropdownItem className='w-100' onClick={() => downloadCSV(title, Object.keys(searchColumnValue).length === 0 && searchGlobalValue.length === 0 ? data : filteredData)}>
                   <FileText size={15} />
                   <span className='align-middle ml-50'>CSV</span>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledButtonDropdown>
             {
-              repa !== '' && (
-                <Link to='#' onClick={() => { history.push(`${repa}`) }}>
+              backButton && (
+                <Link to='#' onClick={() => { history.goBack() }}>
                   <Button className='ml-2' color='secondary' outline>
                     <ArrowLeft size={15} />
                     <span className='align-middle ml-50'>Atrás</span>
@@ -137,8 +176,7 @@ export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) =>
               )
             }
             {
-
-              add === 1 && (can && ability.can('insert', can)) && (
+              addButton && (can && ability.can('insert', can)) && (
                 <Link to={`${useLocation().pathname}/add`}>
                   <Button className='ml-2' color='primary'>
                     <Plus size={15} />
@@ -147,61 +185,26 @@ export const CustomDataTable = ({ title, columns, data, add = 1, repa = '' }) =>
                 </Link>
               )
             }
-
-          </div>
-        </CardHeader>
-
-        <Row className='justify-content-end mx-0'>
-          <Col className='d-flex align-items-center justify-content-end mt-1' md='6' sm='12'>
-
-            <Label className='mr-1' for='search-input'>
-              Buscar
-            </Label>
-            <Input
-              className='dataTable-filter mb-50'
-              type='text'
-              bsSize='sm'
-              id='search-input'
-              value={searchValue}
-              onChange={handleFilter}
-            />
           </Col>
-        </Row>
+        </CardHeader>
+        <div style={{ display: 'flex', marginTop: '0.5%', marginBottom: '0.5%', height: '2.1rem' }}>
+          <CustomFilter columns={columns} searchColumnValue={searchColumnValue} handleFilter={handleFilter} areFiltersActive={showFilters} />
+        </div>
         <DataTable
           noHeader
           pagination
           responsive
-          customStyles={{
-            noData: {
-              style: {
-                backgroundColor: 'transparent',
-                color: '#a2a3a6'
-              }
-            },
-            rows: {
-              style: {
-                placeItems: 'center',
-                height: '2.5rem !important',
-                minHeight: '1rem'
-              }
-            },
-            cells: {
-              style: {
-                height: '2rem !important',
-                padding: '0 2.5rem 0 0.5 !important'
-              }
-            }
-          }}
+          customStyles={customStyles}
           // selectableRows
           noDataComponent={<span style={{ margin: '2%', width: '50%', textAlign: 'center' }}>No se han encontrado resultados</span>}
           columns={columns}
           paginationPerPage={25}
           className='react-dataTable'
           sortIcon={<ChevronDown size={10} />}
-          paginationDefaultPage={1}
+          paginationDefaultPage={currentPage + 1}
           paginationComponentOptions={{ rowsPerPageText: 'Registros por página', rangeSeparatorText: 'de', selectAllRowsItem: true, selectAllRowsItemText: 'Todos' }}
           paginationRowsPerPageOptions={[10, 25, 50, 100, 250]}
-          data={searchValue.length ? filteredData : data}
+          data={Object.keys(searchColumnValue).length === 0 && searchGlobalValue.length === 0 ? data : filteredData}
         />
       </Card>
     </Fragment>

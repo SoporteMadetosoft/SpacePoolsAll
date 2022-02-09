@@ -78,6 +78,32 @@ class GenericDao {
         })
     }
 
+    listFilter(form = {}) {
+
+        let conditions = ""
+        for (var [key, value] of Object.entries(form)) {
+            if (typeof value === 'string' && value !== "") {
+                conditions += key + " LIKE '%" + value + "%' AND "
+            } else if (typeof value === 'object' && value.length > 0) {
+                conditions += key + " IN (" + value.map(v => v.id) + ") AND "
+            }
+        }
+        conditions = conditions.slice(0, -5)
+        return new Promise((resolve, reject) => {
+            this.db.query(`SELECT * FROM ?? ${conditions.length !== 0 ? 'WHERE ' + conditions + ' ' : ''}ORDER BY id`, [this.auxModel.table], async (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    let objList = []
+                    for (const res of result) {
+                        objList.push(await this.mountList(res))
+                    }
+                    resolve(objList)
+                }
+            });
+        })
+    }
+
     deleteById(id) {
         // console.log(`DELETE FROM ${this.auxModel.table} WHERE id = ${id}`)
         return new Promise((resolve, reject) => {

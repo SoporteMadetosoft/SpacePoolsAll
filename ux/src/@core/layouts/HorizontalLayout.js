@@ -13,7 +13,7 @@ import ScrollToTop from 'react-scroll-up'
 import { Navbar, NavItem, Button } from 'reactstrap'
 
 // ** Configs
-import themeConfig from '@configs/themeConfig'
+import themeConfig from '@core/configs/themeConfig'
 
 // ** Custom Components
 import Customizer from '@components/customizer'

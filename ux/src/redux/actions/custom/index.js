@@ -6,7 +6,7 @@ import { save } from '../../../utility/helpers/Axios/save'
 import { handleSelectCarrier } from '../../../utility/helpers/handleSelectCarrier'
 import { listProduction } from '../../../utility/helpers/Axios/listProduction'
 import { listDelivery } from '../../../utility/helpers/Axios/listDelivery'
-import axios from 'axios'
+import { listFilter } from '../../../utility/helpers/Axios/listFilter'
 
 export const cleaningAll = () => ({
     type: types.cleaningAll
@@ -117,10 +117,17 @@ export const handleChange = (valor, name, index) => {
                 name,
                 index
             }
-
         })
-
-
     }
+}
 
+export const startLoadingTableFilter = (endPoint, form) => {
+
+    return async (dispatch) => {
+        dispatch(cleaningAll())
+
+        const data = await listFilter(endPoint, form)
+
+        dispatch(setData(data.data.data, endPoint))
+    }
 }

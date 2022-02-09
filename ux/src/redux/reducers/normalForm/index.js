@@ -26,6 +26,11 @@ const normalForm = (state = initialState, action) => {
                 ...action.payload
             }
 
+        case formTypes.cleanExceptId:
+            return {
+                [action.payload.name]: action.payload.value
+            }
+
         case formTypes.addRepeaterRegister:
             return {
                 ...state,

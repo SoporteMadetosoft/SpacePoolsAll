@@ -55,13 +55,9 @@ export const OrderForm = () => {
         dispatch(handleChangeController(target.name, target.value))
     }
 
-    const handleSelectChange = (name, obj, labelName = 'name') => {
-        if (obj !== null) {
-            dispatch(handleFillCustomerData(obj.value))
-            dispatch(handleChangeController(name, { id: obj.value, [labelName]: obj.label }))
-        } else {
-            dispatch(handleChangeController(name, {}))
-        }
+    const handleSelectChange = (name, { value, label }, labelName = 'name') => {
+        dispatch(handleChangeController(name, { id: value, [labelName]: label }))
+        dispatch(handleFillCustomerData(value))
     }
 
     useEffect(() => {
@@ -77,18 +73,13 @@ export const OrderForm = () => {
     }
 
     const setPoolInRedux = (obj, labelName = 'name') => {
-        if (obj !== null) {
-            dispatch(createItemRepeatersByPool(obj.value))
-            dispatch(handleChangeController('idPool', { id: obj.value, [labelName]: obj.label }))
-        } else {
-            dispatch(handleChangeController('idPool', {}))
-        }
+        dispatch(createItemRepeatersByPool(obj.value))
+        dispatch(handleChangeController("idPool", { id: obj.value, [labelName]: obj.label }))
         preparePrice()
     }
 
     const setIvaInRedux = (obj) => {
-        const newObject = obj !== null ? { id: obj.value, name: obj.label } : {}
-        dispatch(handleChangeController("idTax", newObject))
+        dispatch(handleChangeController("idTax", { id: obj.value, name: obj.label }))
         preparePrice()
     }
 
@@ -184,7 +175,6 @@ export const OrderForm = () => {
 
                     <div className="col-md-2">
                         <Select
-                            isClearable={false}
                             name="idPool"
                             label="Piscina"
                             onSelect={(obj) => {

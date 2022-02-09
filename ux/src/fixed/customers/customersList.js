@@ -1,14 +1,13 @@
-import { Check, FileText, MoreVertical, Slash, Trash } from "react-feather"
+import { Check, Slash, Trash } from "react-feather"
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
-import DropdownMenu from "reactstrap/lib/DropdownMenu"
-import DropdownToggle from "reactstrap/lib/DropdownToggle"
-import UncontrolledDropdown from "reactstrap/lib/UncontrolledDropdown"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
 import Badge from "reactstrap/lib/Badge"
 import { useContext } from "react"
 import { AbilityContext } from '@src/utility/context/Can'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEdit } from '@fortawesome/pro-light-svg-icons'
 
 export const customerList = [
   {
@@ -38,7 +37,7 @@ export const customerList = [
     width: '15%'
   },
   {
-    name: 'Cif',
+    name: 'CIF',
     selector: 'CIF',
     sortable: true,
     searchable: true,
@@ -74,21 +73,18 @@ export const customerList = [
   },
   {
     name: 'Estado',
+    selector: 'idStatus',
     sortable: true,
-    searchable: true,
+    searchable: false,
+    select: 'Status',
     width: '9%',
     cell: row => {
       return (
         <>
 
-          {row.idStatus === 2 ?
-            (<Badge color='light-success'>
-              Activo
-            </Badge>)
-            :
-            (<Badge color='light-danger'>
-              Inactivo
-            </Badge>)
+          {row.idStatus === 2
+            ? (<Badge color='light-success'>Activo</Badge>)
+            : (<Badge color='light-danger'>Inactivo</Badge>)
           }
         </>
       )
@@ -104,31 +100,23 @@ export const customerList = [
 
       return (
         <div className='d-flex'>
-          <UncontrolledDropdown>
-            <DropdownToggle className='pr-1' tag='span'>
-              <MoreVertical size={15} />
-            </DropdownToggle>
-            <DropdownMenu right>
-              {ability.can('update', 'customers') && (
-                <Link to={`./customers/edit/${row.id}`}>
-                  <DropdownItem tag='a' href='/' className='w-100'>
-                    <FileText size={15} />
-                    <span className='align-middle ml-50'>Detalles</span>
-                  </DropdownItem>
-                </Link>
-              )}
-              {ability.can('delete', 'customers') && (
-                <Link onClick={(e) => {
-                  dispatch(startDeleteRegister(row.id))
-                }}>
-                  <DropdownItem tag='a' href='/' className='w-100'>
-                    <Trash size={15} />
-                    <span className='align-middle ml-50'>Eliminar</span>
-                  </DropdownItem>
-                </Link>
-              )}
-            </DropdownMenu>
-          </UncontrolledDropdown>
+          {ability.can('update', 'customers') && (
+            <Link to={`/customers/edit/${row.id}`}>
+              <DropdownItem tag='a' href='/' className='w-100 greenhover' style={{ padding: '0.6rem' }}>
+                <FontAwesomeIcon icon={faEdit} />
+              </DropdownItem>
+            </Link>
+          )}
+          {ability.can('delete', 'customers') && (
+            <Link onClick={(e) => {
+              dispatch(startDeleteRegister(row.id))
+            }}>
+              <DropdownItem tag='a' href='/' className='w-100'>
+                <Trash size={15} />
+                <span className='align-middle ml-50'>Eliminar</span>
+              </DropdownItem>
+            </Link>
+          )}
         </div>
       )
     }

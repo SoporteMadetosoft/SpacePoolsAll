@@ -1,0 +1,147 @@
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>
+    <body>
+    <table width="200" border="1">
+        <tr>
+            <th>Fecha/Hora</th>
+            <th>Ticket</th>
+            <th>Efectivo</th>
+            <th>Visa</th>
+            <th>Vale</th>
+            <th>Devoluciones</th>
+            <th>Total</th>
+        </tr>
+                    <tr>
+                <td>02/02/2022</td>
+                <td>6190</td>
+                                <td>0.00 €</td>
+                <td>10.00 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>10.00 €</td>
+            </tr>
+                    <tr>
+                <td>02/02/2022</td>
+                <td>6189</td>
+                                <td>0.00 €</td>
+                <td>34.99 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>34.99 €</td>
+            </tr>
+                    <tr>
+                <td>02/02/2022</td>
+                <td>6188</td>
+                                <td>9.90 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>9.90 €</td>
+            </tr>
+                    <tr>
+                <td>02/02/2022</td>
+                <td>6187</td>
+                                <td>30.00 €</td>
+                <td>9.99 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>39.99 €</td>
+            </tr>
+                    <tr>
+                <td>02/02/2022</td>
+                <td>6186</td>
+                                <td>0.00 €</td>
+                <td>43.98 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>43.98 €</td>
+            </tr>
+                    <tr>
+                <td>02/02/2022</td>
+                <td>6185</td>
+                                <td>2.40 €</td>
+                <td>0.00 €</td>
+                <td>17.59 €</td>
+                <td>0.00 €</td>
+                <td>19.99 €</td>
+            </tr>
+                    <tr>
+                <td>02/02/2022</td>
+                <td>6184</td>
+                                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>-17.59 €</td>
+                <td>-17.59 €</td>
+            </tr>
+                    <tr>
+                <td>02/02/2022</td>
+                <td>6183</td>
+                                <td>0.00 €</td>
+                <td>24.99 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>24.99 €</td>
+            </tr>
+                    <tr>
+                <td>02/02/2022</td>
+                <td>6182</td>
+                                <td>15.99 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>15.99 €</td>
+            </tr>
+                    <tr>
+                <td>02/02/2022</td>
+                <td>6181</td>
+                                <td>67.97 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>67.97 €</td>
+            </tr>
+                    <tr>
+                <td>02/02/2022</td>
+                <td>6180</td>
+                                <td>0.00 €</td>
+                <td>79.97 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>79.97 €</td>
+            </tr>
+                    <tr>
+                <td>02/02/2022</td>
+                <td>6150</td>
+                                <td>0.01 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>0.01 €</td>
+            </tr>
+                    <tr>
+                <td>02/02/2022</td>
+                <td>5923</td>
+                                <td>0.00 €</td>
+                <td>39.95 €</td>
+                <td>0.00 €</td>
+                <td>0.00 €</td>
+                <td>39.95 €</td>
+            </tr>
+                <tr>
+            <td></td>
+            <td></td>
+            <td>126.27 €</td>
+            <td>243.87 €</td>
+            <td>17.59 €</td>
+            <td>-17.59 €</td>
+
+            <td><strong>370.14 €</strong></td>
+
+        </tr>
+    </table>
+    </body>
+    </html>
+    

@@ -11,6 +11,7 @@ const Controller = require('../../controllers/customers/Customers.js');
 const router = express.Router();
 
 router.get('/list', validarJWT, Controller.list);
+router.post('/listFilter', validarJWT, Controller.listFilter);
 router.post('/find', validarJWT, Controller.listByID);
 router.post('/insert', validarJWT, Controller.insert);
 router.put('/update', validarJWT, Controller.update);

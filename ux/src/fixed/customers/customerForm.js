@@ -1,27 +1,25 @@
 import { validator } from "../../utility/formValidator/ValidationTypes"
 
 export const CustomerForm = {
-    structure: [
-        {
-            addresses: [],
-            contacts: [],
-            documents: []
+    structure: {
+        addresses: [],
+        contacts: [],
+        documents: []
+    },
+    errors: {
+        comercialName: { validations: [validator.isRequired] },
+        email: { validations: [validator.isEmail] },
+        CIF: { validations: [validator.isRequired] },
+        idStatus: { validations: [validator.isRequired] },
+        addresses: {
+            address: { validations: [validator.isRequired] }
+        },
+        contacts: {
+            name: { validations: [validator.isRequired] }
         }
-    ],
-    errors: [
-        {
-            comercialName: { validations: [validator.isRequired] },
-            email: { validations: [validator.isEmail] },
-            CIF: { validations: [validator.isRequired] },
-            idStatus: { validations: [validator.isRequired] },
-            addresses: {
-                address: { validations: [validator.isRequired] }
-            },
-            contacts: {
-                name: { validations: [validator.isRequired] }
-            }
-        }
-    ],
+    },
+    autoincrement: 'customerCode',
+    documents: true,
     base: [
         {
             col: [6, 2, 2],
@@ -113,6 +111,12 @@ export const CustomerForm = {
             name: 'idLanguage',
             label: 'Idioma',
             endPoint: 'Language'
+        },
+        {
+            col: [12, 12, 12],
+            area: true,
+            name: 'observations',
+            label: 'Observaciones'
         }
     ],
     repeaters: [
@@ -121,13 +125,19 @@ export const CustomerForm = {
             endPoint: 'addresses',
             structure: [
                 {
+                    addressType: '',
+                    address: '',
+                    population: '',
+                    province: '',
+                    postcode: ''
+                }
+            ],
+            base: [
+                {
                     col: [6, 2, 2],
                     name: 'addressType',
                     label: 'Tipo de dirección',
-                    endPoint: 'AddressesTypes',
-                    onSelect: (value) => {
-                        handleSelectChange('addressType', value)
-                    }
+                    endPoint: 'AddressesTypes'
                 },
                 {
                     col: [6, 2, 2],
@@ -164,6 +174,45 @@ export const CustomerForm = {
                     endSchedule: '',
                     department: ''
                 }
+            ],
+            base: [
+                {
+                    col: [6, 3, 3],
+                    name: 'name',
+                    label: 'Nombre'
+                },
+                {
+                    col: [6, 2, 2],
+                    name: 'phone',
+                    label: 'Teléfono'
+                },
+                {
+                    col: [6, 3, 3],
+                    name: 'email',
+                    label: 'Correo'
+                },
+                {
+                    col: [6, 2, 2],
+                    name: 'charge',
+                    label: 'Cargo'
+                },
+                {
+                    col: [6, 3, 3],
+                    name: 'startSchedule',
+                    label: 'Horario inicio'
+                },
+                {
+                    col: [6, 3, 3],
+                    name: 'endSchedule',
+                    label: 'Horario fin'
+                },
+                {
+                    col: [6, 4, 4],
+                    name: 'department',
+                    label: 'Departamento',
+                    endPoint: 'Departments'
+                }
+
             ]
         }
     ]

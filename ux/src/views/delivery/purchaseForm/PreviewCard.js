@@ -1,6 +1,5 @@
 // ** Third Party Components
 import { Card, CardBody, CardText, Row, Col, Table } from 'reactstrap'
-import themeConfig from '@configs/themeConfig'
 import { useParams } from 'react-router'
 import SignatureCanvas from 'react-signature-canvas'
 import { useEffect } from 'react'
@@ -199,7 +198,7 @@ const PreviewCard = () => {
                     <tr className='border-bottom'>
                       <td className='py-1'>
                         <p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
-                        - {(language !== undefined && language === 1) ? (obj.idItem.name) : (obj.idItem.name_fr)}
+                          - {(language !== undefined && language === 1) ? (obj.idItem.name) : (obj.idItem.name_fr)}
                         </p>
                       </td>
                     </tr>
@@ -215,7 +214,7 @@ const PreviewCard = () => {
                     <tr className='border-bottom'>
                       <td className='py-1'>
                         <p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
-                        - {(language !== undefined && language === 1) ? (obj.idItem.name) : (obj.idItem.name_fr)}
+                          - {(language !== undefined && language === 1) ? (obj.idItem.name) : (obj.idItem.name_fr)}
                         </p>
                       </td>
                     </tr>
@@ -232,7 +231,7 @@ const PreviewCard = () => {
                       <td className='py-1'>
                         <p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
                           - {(language !== undefined && language === 1) ? (obj.idItem.name) : (obj.idItem.name_fr)}
-                           {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
+                          {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
                         </p>
                       </td>
                     </tr>
@@ -249,7 +248,7 @@ const PreviewCard = () => {
                       <td className='py-1'>
                         <p className='card-text text-nowrap' style={{ 'font-size': '11px' }}>
                           - {(language !== undefined && language === 1) ? (obj.idItem.name) : (obj.idItem.name_fr)}
-                           {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
+                          {obj.idColor.name !== undefined && (`(${obj.idColor.name})`)}
                         </p>
                       </td>
                     </tr>

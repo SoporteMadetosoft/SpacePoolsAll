@@ -7,7 +7,7 @@ module.exports = function override(config, env) {
     plugins: loader => [require('postcss-rtl')()]
   })
 
-  
+
   config = rewireAliases.aliasesOptions({
     '@src': path.resolve(__dirname, 'src'),
     '@fixed': path.resolve(__dirname, 'src/fixed'),
@@ -15,7 +15,7 @@ module.exports = function override(config, env) {
     '@router': path.resolve(__dirname, 'src/router'),
     '@views': path.resolve(__dirname, 'src/views'),
     '@cc': path.resolve(__dirname, 'src/components'),
-    
+
     '@auth': path.resolve(__dirname, 'src/views/authentication'),
 
     '@addressesTypes': path.resolve(__dirname, 'src/views/setup/general/addressesTypes'),
@@ -27,12 +27,13 @@ module.exports = function override(config, env) {
     '@customerType': path.resolve(__dirname, 'src/views/setup/customers/customerType'),
     '@origin': path.resolve(__dirname, 'src/views/setup/customers/origin'),
     '@brand': path.resolve(__dirname, 'src/views/setup/vehicles/brand'),
-    
+
     '@language': path.resolve(__dirname, 'src/views/global/language'),
     '@status': path.resolve(__dirname, 'src/views/global/status'),
     '@mode': path.resolve(__dirname, 'src/views/global/mode'),
     '@payDay': path.resolve(__dirname, 'src/views/global/payDay'),
-    
+
+    '@core': path.resolve(__dirname, 'src/@core'),
     '@assets': path.resolve(__dirname, 'src/@core/assets'),
     '@components': path.resolve(__dirname, 'src/@core/components'),
     '@layouts': path.resolve(__dirname, 'src/@core/layouts'),

@@ -4,12 +4,10 @@ import { Button } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import React from 'react'
 import ReactSelect from 'react-select'
-import { selectThemeColors } from '@utils'
 
 import { editRepeaterRegister, removeRepeaterRegister } from '../../../redux/actions/normalForm'
 import { handleLessPrice } from '../../../redux/actions/orders'
 import { constructSelect, deconstructSelect } from '../../../utility/helpers/deconstructSelect'
-import '@styles/react/libs/react-select/_react-select.scss'
 
 export const ItemColorsRepeater = () => {
 
@@ -86,8 +84,6 @@ const ItemsForm = ({ position }) => {
                     placeholder="Color"
                     name="idColor"
                     options={colores}
-                    classNamePrefix={'select'}
-                    theme={selectThemeColors}
                     onChange={(value) => { handleSelectChange('idColor', value) }}
                     value={SelectColor}
                 />

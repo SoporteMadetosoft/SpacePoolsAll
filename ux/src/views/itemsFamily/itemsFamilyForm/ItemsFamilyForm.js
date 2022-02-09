@@ -27,11 +27,11 @@ export const ItemsFamilyForm = () => {
     const dispatch = useDispatch()
     const form = useSelector(state => state.normalForm)
     const { normalForm, formValidator } = useSelector(state => state)
-
+    
     useEffect(() => {
         if (!id) {
             dispatch(GetSetNextId('Family', 'id'))
-        }
+        } 
         dispatch(setSchema(formSchema))
     }, [])
 
@@ -46,7 +46,7 @@ export const ItemsFamilyForm = () => {
         } else {
             const prettyForm = {
                 ...form
-
+               
             }
 
             save('Family', id, prettyForm)
@@ -67,7 +67,7 @@ export const ItemsFamilyForm = () => {
                             name="id"
                             value={normalForm.id}
                             readOnly
-
+                            
                         />
                     </div>
                     <div className="col-md-5">

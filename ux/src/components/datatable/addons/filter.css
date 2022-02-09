@@ -1,0 +1,17 @@
+/* CSS solo para filtros*/
+
+input.littlePlaceHolder::placeholder{
+    font-size: 9.5pt;
+}
+
+div.littlePlaceHolder::placeholder{
+  font-size: 9.5pt;
+}
+
+div[class^="select__c"]{
+  padding: 0rem;
+}
+
+div.select__dropdown-indicator.select__indicator{
+  padding: 0rem 0rem .5rem 0rem;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Form } from 'reactstrap'
@@ -12,15 +12,19 @@ import { ActionButtons } from '../components/actionButtons/ActionButtons'
 import { setErrors, setSchema } from '../redux/actions/formValidator'
 import { validate } from '../utility/formValidator/ValidationTypes'
 import { PrettyForm } from '../utility/formFormats/prettyForm'
-import { AddressesRepeater } from './customers/customerForm/AddressesRepeater'
 import { RepeaterScreen } from './RepeaterScreen'
+import { Textarea } from '../components/form/inputs/Textarea'
+import { DocScreen } from './DocScreen'
+import { FileContext } from '../utility/context/FileContext'
+import { save } from '../utility/helpers/Axios/save'
 
-export const FormScreen = ({ titulo, endPoint, form }) => {
+export const FormScreen = ({ titulo, endPoint, form, docColumns }) => {
 
-    const { base, structure, errors, repeaters } = form
+    const { base, structure, errors, repeaters, autoincrement, documents } = form
     const { id } = useParams()
     const dispatch = useDispatch()
     const { normalForm, formValidator } = useSelector(state => state)
+    const [file, setFile] = useState([])
 
     const breadCrumTitle = (id) ? `Editar ${titulo}` : `Añadir ${titulo}`
 
@@ -28,10 +32,10 @@ export const FormScreen = ({ titulo, endPoint, form }) => {
         if (id) {
             dispatch(handleStartEditing(endPoint, id))
         } else {
-            dispatch(GetSetNextId(endPoint, 'customerCode')) //TODO: Se tiene que refactorizar este metodo para que no se le tenga que pasar el campo
+            dispatch(GetSetNextId(endPoint, autoincrement))
         }
-        dispatch(initNormalForm(structure[0]))
-        dispatch(setSchema(errors[0]))
+        dispatch(initNormalForm(structure))
+        dispatch(setSchema(errors))
     }, [initNormalForm])
 
     const submit = async (e) => {
@@ -40,8 +44,8 @@ export const FormScreen = ({ titulo, endPoint, form }) => {
         if (Object.keys(errors).length !== 0) {
             dispatch(setErrors(errors))
         } else {
-            console.log(PrettyForm(normalForm, structure[0]))
-            //save(endPoint, id, PrettyForm(normalForm, structure[0]))
+            console.log(PrettyForm(normalForm, structure))
+            // save(endPoint, id, PrettyForm(normalForm, structure[0]))
         }
     }
 
@@ -54,22 +58,14 @@ export const FormScreen = ({ titulo, endPoint, form }) => {
                         {
                             base.map((e) => {
                                 const clase = `col-${e.col[1]} col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`
-                                const Component = e.endPoint ? Select : Input
+                                const Component = e.endPoint ? Select : e.area ? Textarea : Input
                                 return (
                                     <div className={clase}>
-                                        <Component props={e} />
+                                        <Component {...e} />
                                     </div>
                                 )
                             })
                         }
-                        <div className="col-md-12">
-                            <label className="control-label">Observaciones</label>
-                            <textarea
-                                className="form-control"
-                                name="observations"
-                                value=""
-                            />
-                        </div>
                     </div>
                 </div>
                 {
@@ -77,11 +73,23 @@ export const FormScreen = ({ titulo, endPoint, form }) => {
                         return (
                             <div className="card">
                                 <div className="card-body">
-                                    <RepeaterScreen props={e} />
+                                    <RepeaterScreen {...e} />
                                 </div>
                             </div>
                         )
                     })
+                }
+                {
+                    documents &&
+                    (
+                        <div className="card">
+                            <div className="card-body">
+                                <FileContext.Provider value={{ file, setFile }}>
+                                    <DocScreen endPoint={endPoint} columns={docColumns} />
+                                </FileContext.Provider>
+                            </div>
+                        </div>
+                    )
                 }
                 <ActionButtons />
             </Form>

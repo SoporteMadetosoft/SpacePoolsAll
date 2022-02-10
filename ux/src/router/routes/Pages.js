@@ -26,28 +26,8 @@ const PagesRoutes = [
   //   }
   // },
   {
-    path: '/pages/profile',
-    component: lazy(() => import('@views/profile'))
-  },
-  {
-    path: '/misc/coming-soon',
-    component: lazy(() => import('@views/misc/ComingSoon')),
-    layout: 'BlankLayout',
-    meta: {
-      publicRoute: true
-    }
-  },
-  {
     path: '/misc/not-authorized',
     component: lazy(() => import('@views/misc/NotAuthorized')),
-    layout: 'BlankLayout',
-    meta: {
-      publicRoute: true
-    }
-  },
-  {
-    path: '/misc/maintenance',
-    component: lazy(() => import('@views/misc/Maintenance')),
     layout: 'BlankLayout',
     meta: {
       publicRoute: true

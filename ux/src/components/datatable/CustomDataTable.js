@@ -2,11 +2,10 @@
 import { Fragment, useState, useContext } from 'react'
 
 import DataTable from 'react-data-table-component'
-import { ChevronDown, FileText, Plus, Download, ArrowLeft, Filter, Layers, XCircle } from 'react-feather'
-import { Card, CardHeader, CardTitle, Button, UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, Row, Col } from 'reactstrap'
+import { ChevronDown, FileText, Plus, Download, ArrowLeft, Filter, Layers } from 'react-feather'
+import { Card, CardHeader, CardTitle, Button, UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Col } from 'reactstrap'
 import { useHistory } from 'react-router'
 import { AbilityContext } from '@src/utility/context/Can'
-
 
 import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -14,16 +13,23 @@ import { downloadCSV } from './addons/DownloadCSV'
 import { customStyles } from './addons/CustomStyles'
 import CustomFilter from './addons/CustomFilter'
 import { AdvancedFilter } from './addons/AdvancedFilter'
+import { handleFullClean } from '../../utility/helpers/handleFullClean'
 
-export const CustomDataTable = ({ title, columns, data = [], filters, addButton = true, backButton = false }) => {
+const noResult = <span style={{ margin: '2%', width: '50%', textAlign: 'center' }}>No se han encontrado resultados</span>
+const sortIcon = <ChevronDown size={10} />
+const messagePagination = { rowsPerPageText: 'Registros por página', rangeSeparatorText: 'de', selectAllRowsItem: true, selectAllRowsItemText: 'Todos' }
+const limit = [10, 25, 50, 100, 250]
+
+export const CustomDataTable = (props) => {
 
   const history = useHistory()
   const ability = useContext(AbilityContext)
 
+  const { title, addButton = true, backButton = false, columns, data = [], filters } = props
+
   // ** States
   const [filteredData, setFilteredData] = useState([])
   const [currentPage, setCurrentPage] = useState(0)
-
   const [searchGlobalValue, setGlobalSearchValue] = useState('')
   const [searchColumnValue, setColumnValue] = useState({})
   const [isButtonClicked, setIsButtonClicked] = useState(false)
@@ -34,6 +40,8 @@ export const CustomDataTable = ({ title, columns, data = [], filters, addButton 
 
   const capitalizeFirstLetter = (string) => string.charAt(0).toLowerCase() + string.slice(1)
   const can = endPoint ? capitalizeFirstLetter(endPoint) : null
+
+  const realData = Object.keys(searchColumnValue).length === 0 && searchGlobalValue.length === 0 ? data : filteredData
 
   if (isButtonClicked) {
     handleFullClean(dispatch)
@@ -78,18 +86,8 @@ export const CustomDataTable = ({ title, columns, data = [], filters, addButton 
     setShowAdvanced(!showAdvanced)
   }
 
-
-  const searchableColumns = () => {
-    const columnas = []
-    columns.forEach(column => {
-      if (column.searchable === true) columnas.push(`${column.selector}`)
-    })
-    return { columnas }
-  }
-
   // ** Function to handle filter
   const handleFilter = (id, values, isSelect = false) => {
-    // TODO: Implementar columnas no filtrables
     const updateGlobalFilter = (id === 'globalFilter')
 
     const globalFilter = updateGlobalFilter ? values : searchGlobalValue
@@ -104,33 +102,6 @@ export const CustomDataTable = ({ title, columns, data = [], filters, addButton 
     updateFilterData(columnFilter, globalFilter, isSelect)
 
   }
-  // const handleFilter = e => {
-  //   const value = e.target.value
-  //   let updatedData = []
-
-  //   if (value.length) {
-  //     updatedData = data.filter(item => {
-
-  //       const schCols = searchableColumns()
-
-  //       let returned
-
-  //       schCols.columnas.forEach(col => {
-  //         const colValue = (item[col] !== null && item[col] !== undefined) ? item[col].toString() : ''
-  //         const startsWith = colValue.toLowerCase().startsWith(value.toLowerCase())
-  //         const includes = colValue.toLowerCase().includes(value.toLowerCase())
-  //         if (startsWith || (!startsWith && includes)) {
-  //           returned = item.toString()
-  //         }
-  //       })
-
-  //       return returned
-  //     })
-  //   }
-
-  //   setFilteredData(updatedData)
-  //   setSearchValue(value)
-  // }
 
   return (
     <Fragment>
@@ -159,7 +130,7 @@ export const CustomDataTable = ({ title, columns, data = [], filters, addButton 
                 <Download size={15} />
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem className='w-100' onClick={() => downloadCSV(title, Object.keys(searchColumnValue).length === 0 && searchGlobalValue.length === 0 ? data : filteredData)}>
+                <DropdownItem className='w-100' onClick={() => downloadCSV(title, realData)}>
                   <FileText size={15} />
                   <span className='align-middle ml-50'>CSV</span>
                 </DropdownItem>
@@ -192,19 +163,18 @@ export const CustomDataTable = ({ title, columns, data = [], filters, addButton 
         </div>
         <DataTable
           noHeader
-          pagination
           responsive
-          customStyles={customStyles}
-          // selectableRows
-          noDataComponent={<span style={{ margin: '2%', width: '50%', textAlign: 'center' }}>No se han encontrado resultados</span>}
-          columns={columns}
-          paginationPerPage={25}
+          pagination
           className='react-dataTable'
-          sortIcon={<ChevronDown size={10} />}
+          customStyles={customStyles}
+          sortIcon={sortIcon}
+          noDataComponent={noResult}
+          paginationPerPage={25}
           paginationDefaultPage={currentPage + 1}
-          paginationComponentOptions={{ rowsPerPageText: 'Registros por página', rangeSeparatorText: 'de', selectAllRowsItem: true, selectAllRowsItemText: 'Todos' }}
-          paginationRowsPerPageOptions={[10, 25, 50, 100, 250]}
-          data={Object.keys(searchColumnValue).length === 0 && searchGlobalValue.length === 0 ? data : filteredData}
+          paginationComponentOptions={messagePagination}
+          paginationRowsPerPageOptions={limit}
+          columns={columns}
+          data={realData}
         />
       </Card>
     </Fragment>

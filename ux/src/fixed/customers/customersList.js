@@ -1,4 +1,4 @@
-import { Check, Slash, Trash } from "react-feather"
+import { Check, Slash } from "react-feather"
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import { startDeleteRegister } from "@redux/actions/custom"
@@ -8,6 +8,7 @@ import { useContext } from "react"
 import { AbilityContext } from '@src/utility/context/Can'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEdit } from '@fortawesome/pro-light-svg-icons'
+import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 export const customerList = [
   {
@@ -69,7 +70,7 @@ export const customerList = [
     selector: 'ContactPhone',
     sortable: true,
     searchable: true,
-    width: '12%'
+    width: '10%'
   },
   {
     name: 'Estado',
@@ -102,7 +103,7 @@ export const customerList = [
         <div className='d-flex'>
           {ability.can('update', 'customers') && (
             <Link to={`/customers/edit/${row.id}`}>
-              <DropdownItem tag='a' href='/' className='w-100 greenhover' style={{ padding: '0.6rem' }}>
+              <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
                 <FontAwesomeIcon icon={faEdit} />
               </DropdownItem>
             </Link>
@@ -111,13 +112,13 @@ export const customerList = [
             <Link onClick={(e) => {
               dispatch(startDeleteRegister(row.id))
             }}>
-              <DropdownItem tag='a' href='/' className='w-100'>
-                <Trash size={15} />
-                <span className='align-middle ml-50'>Eliminar</span>
+              <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
+                <FontAwesomeIcon icon={faTrash} />
               </DropdownItem>
             </Link>
           )}
         </div>
+
       )
     }
   }

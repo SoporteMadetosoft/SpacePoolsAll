@@ -1,39 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { Form } from 'reactstrap'
 
 import { GetSetNextId, handleStartEditing, initNormalForm } from '../redux/actions/normalForm'
 import BreadCrumbs from '@components/breadcrumbs'
 
-import { Input } from '../components/form/inputs/Input'
-import { Select } from '../components/form/inputs/Select'
+import { Input } from '../components/form/Input'
+import { Select } from '../components/form/Select'
 import { ActionButtons } from '../components/actionButtons/ActionButtons'
 import { setErrors, setSchema } from '../redux/actions/formValidator'
 import { validate } from '../utility/formValidator/ValidationTypes'
-import { PrettyForm } from '../utility/formFormats/prettyForm'
 import { RepeaterScreen } from './RepeaterScreen'
-import { Textarea } from '../components/form/inputs/Textarea'
+import { Textarea } from '../components/form/Textarea'
 import { DocScreen } from './DocScreen'
 import { FileContext } from '../utility/context/FileContext'
 import { save } from '../utility/helpers/Axios/save'
+import { preSubmit } from '../components/preSubmit/preSubmit'
+import { MkDir } from '../utility/helpers/Axios/MkDir'
 
-export const FormScreen = ({ titulo, endPoint, form, docColumns }) => {
+export const FormScreen = (props) => {
 
+    const { title, endPoint, form: { form, docColumns } } = props
     const { base, structure, errors, repeaters, autoincrement, documents } = form
+
+    const history = useHistory()
     const { id } = useParams()
     const dispatch = useDispatch()
-    const { normalForm, formValidator } = useSelector(state => state)
+    const { normalForm, formValidator, fileUpload } = useSelector(state => state)
+    const { upload, filePath } = fileUpload
+
     const [file, setFile] = useState([])
 
-    const breadCrumTitle = (id) ? `Editar ${titulo}` : `Añadir ${titulo}`
+    const breadCrumTitle = (id) ? `Editar ${title}` : `Añadir ${title}`
 
     useEffect(() => {
-        if (id) {
-            dispatch(handleStartEditing(endPoint, id))
-        } else {
-            dispatch(GetSetNextId(endPoint, autoincrement))
-        }
+        (id) ? dispatch(handleStartEditing(endPoint, id)) : dispatch(GetSetNextId(endPoint, autoincrement))
         dispatch(initNormalForm(structure))
         dispatch(setSchema(errors))
     }, [initNormalForm])
@@ -41,17 +43,22 @@ export const FormScreen = ({ titulo, endPoint, form, docColumns }) => {
     const submit = async (e) => {
         e.preventDefault()
         const errors = validate(formValidator.schema, normalForm)
-        if (Object.keys(errors).length !== 0) {
+        if (Object.keys(errors).length) {
             dispatch(setErrors(errors))
         } else {
-            console.log(PrettyForm(normalForm, structure))
-            // save(endPoint, id, PrettyForm(normalForm, structure[0]))
+            if (documents) {
+                const filePath2 = !normalForm['filePath'] ? await MkDir(endPoint, filePath) : normalForm['filePath']
+                normalForm['documents'] = await preSubmit(filePath2, upload, file, normalForm['documents'])
+                normalForm['filePath'] = filePath2
+            }
+            save(endPoint, id, { ...normalForm })
+            history.goBack()
         }
     }
 
     return (
         <>
-            <BreadCrumbs breadCrumbTitle={breadCrumTitle} breadCrumbParent={titulo} />
+            <BreadCrumbs breadCrumbTitle={breadCrumTitle} breadCrumbParent={title} />
             <Form onSubmit={submit}>
                 <div className="card">
                     <div className=" card-body row pb-3 px-3">

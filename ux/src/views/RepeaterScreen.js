@@ -5,8 +5,8 @@ import { Button } from 'reactstrap'
 import { X, Plus } from 'react-feather'
 import RadioButton from '@material-ui/core/Radio'
 import { addRepeaterRegister, handleChangeController, removeRepeaterRegister } from '../redux/actions/normalForm'
-import { Select } from '../components/form/inputs/Select'
-import { Input } from '../components/form/inputs/Input'
+import { Select } from '../components/form/Select'
+import { Input } from '../components/form/Input'
 
 export const RepeaterScreen = (props) => {
     const { titulo, endPoint, structure, base } = props

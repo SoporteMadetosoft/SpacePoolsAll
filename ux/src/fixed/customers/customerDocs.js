@@ -85,9 +85,7 @@ export const customerDocs = [
                                     <span className='align-middle ml-50'>Ver documento</span>
                                 </DropdownItem>
                             </Link>
-                            <Link onClick={(e) => {
-                                dispatch(startDeleteFile(index, row.url))
-                            }}>
+                            <Link onClick={() => dispatch(startDeleteFile(index, row.url))}>
                                 <DropdownItem tag='a' href='/' className='w-100'>
                                     <Trash size={15} />
                                     <span className='align-middle ml-50'>Eliminar</span>

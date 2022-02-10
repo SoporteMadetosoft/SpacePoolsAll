@@ -13,7 +13,6 @@ import InputPasswordToggle from '@components/input-password-toggle'
 import { getHomeRouteForLoggedInUser, isObjEmpty } from '@utils'
 import { Coffee } from 'react-feather'
 import {
-  Alert,
   Row,
   Col,
   CardTitle,
@@ -23,8 +22,7 @@ import {
   FormGroup,
   Label,
   CustomInput,
-  Button,
-  UncontrolledTooltip
+  Button
 } from 'reactstrap'
 
 import '@styles/base/pages/page-auth.scss'

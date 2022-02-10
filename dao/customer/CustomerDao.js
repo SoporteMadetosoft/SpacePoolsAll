@@ -38,15 +38,6 @@ class CustomerDao extends GenericDao {
     async mountObj(data) {
         const customer = {
             ...data,
-            idPayDay: await this.PayDayDao.findById(data.idPayDay),
-            idStatus: await this.StatusDao.findById(data.idStatus),
-            idMode: await this.ModeDao.findById(data.idMode),
-            idLanguage: await this.Language.findById(data.idLanguage),
-            idPaymentMethod: await this.PaymentMethodDao.findById(data.idPaymentMethod),
-            idCustomerType: await this.CustomerTypeDao.findById(data.idCustomerType),
-            idCustomerCategory: await this.CustomerCategoryDao.findById(data.idCustomerCategory),
-            idCustomerActivity: await this.CustomerActivityDao.findById(data.idCustomerActivity),
-            idCustomerOrigin: await this.OriginDao.findById(data.idCustomerOrigin),
             addresses: await this.CustomerAddressDao.findByCustomerId(data.id),
             contacts: await this.CustomerContactPersonDao.findByCustomerId(data.id),
             documents: await this.FileManagerDao.getDocumentsInfo(data.filePath)

@@ -4,7 +4,7 @@ const isEmail = (value) => {
 }
 
 const isRequired = (value) => {
-    return !!value && Object.keys(value).length !== 0
+    return !!value
 }
 export const validate = (schema, form) => {
     const errors = {}
@@ -35,14 +35,6 @@ export const validate = (schema, form) => {
 
 const length = (value, { min, max }) => {
     return value.length > min || max < validate.length
-}
-
-const inFormat = (regex) => {
-    regex.test(value)
-}
-
-const repeaterValidation = () => {
-
 }
 
 export const validator = {

@@ -5,12 +5,24 @@ import { customerList } from '../../../fixed/customers/customersList'
 import { FormScreen } from '../../../views/FormScreen'
 import { ListScreen } from '../../../views/ListScreen'
 
+const base = {
+  title: 'Clientes',
+  endPoint: 'Customers',
+  list: {
+    columns: customerList,
+    filters: customersFilter
+  },
+  form: {
+    form: CustomerForm,
+    docColumns: customerDocs
+  }
+}
 const CustomersRoutes = [
   {
     path: '/customers',
     exact: true,
     layout: 'VerticalLayout',
-    component: () => <ListScreen titulo={'Clientes'} endPoint={'Customers'} columns={customerList} filters={customersFilter} />,
+    component: () => <ListScreen {...base} />,
     meta: {
       action: 'read',
       resource: 'customers'
@@ -20,7 +32,7 @@ const CustomersRoutes = [
     path: '/customers/add',
     exact: true,
     layout: 'VerticalLayout',
-    component: () => <FormScreen titulo={'Clientes'} endPoint={'Customers'} form={CustomerForm} docColumns={customerDocs} />,
+    component: () => <FormScreen {...base} />,
     meta: {
       action: 'insert',
       resource: 'customers'
@@ -30,7 +42,7 @@ const CustomersRoutes = [
     path: '/customers/edit/:id',
     exact: true,
     layout: 'VerticalLayout',
-    component: () => <FormScreen titulo={'Clientes'} endPoint={'Customers'} form={CustomerForm} docColumns={customerDocs} />,
+    component: () => <FormScreen {...base} />,
     meta: {
       action: 'update',
       resource: 'customers'

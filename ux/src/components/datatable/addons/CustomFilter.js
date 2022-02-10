@@ -5,7 +5,7 @@ import { selectThemeColors } from '@utils'
 import '@styles/react/libs/react-select/_react-select.scss'
 import './filter.css'
 import { formatDateDMY } from "../../../utility/helpers/formatDate"
-import { Select } from "../../form/inputs/Select"
+import { Select } from "../../form/Select"
 
 export const CustomFilter = ({ columns, searchColumnValue, handleFilter, areFiltersActive }) => {
 

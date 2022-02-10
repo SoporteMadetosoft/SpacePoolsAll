@@ -3,22 +3,21 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { CustomDataTable } from '@cc/datatable/CustomDataTable'
 import { startLoadingTable } from '@redux/actions/custom'
-import { handleCleanForm } from '@redux/actions/normalForm'
-import { cleanFormValidator } from '../redux/actions/formValidator/index.js'
+import { handleFullClean } from '../utility/helpers/handleFullClean.js'
+
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
-export const ListScreen = ({ titulo, endPoint, columns, filters }) => {
+export const ListScreen = (props) => {
 
     const dispatch = useDispatch()
     const { registros: data } = useSelector(state => state.registrosReducer)
 
+    const { title, endPoint, list } = props
+
     useEffect(() => {
-        dispatch(handleCleanForm())
+        handleFullClean(dispatch)
         dispatch(startLoadingTable(endPoint))
-        dispatch(cleanFormValidator())
     }, [])
 
-    return (
-        <CustomDataTable title={titulo} columns={columns} data={data} filters={filters} />
-    )
+    return <CustomDataTable title={title} data={data} {...list} />
 }

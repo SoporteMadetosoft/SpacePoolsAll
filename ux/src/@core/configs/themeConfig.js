@@ -3,7 +3,7 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'Space Poasdasdols',
+    appName: 'Space SpacePools G',
     appLogoImage: require('@src/assets/images/logo/favicon.png').default
   },
   layout: {

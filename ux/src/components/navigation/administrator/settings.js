@@ -1,4 +1,4 @@
-import { Box, Circle, Settings, Users, Package, AlertCircle } from 'react-feather'
+import { Circle } from 'react-feather'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCogs, faUser, faBoxes, faTruckMoving, faCube, faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
 

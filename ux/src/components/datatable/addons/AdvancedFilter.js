@@ -1,11 +1,11 @@
 import { Check, Trash } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from 'reactstrap/lib/Button'
-import { startLoadingTableFilter } from '../../../redux/actions/custom'
-import { handleCleanExceptId } from '../../../redux/actions/normalForm'
-import { Input } from '../../form/inputs/Input'
-import { MultiSelect } from '../../form/inputs/MultiSelect'
-import { Textarea } from '../../form/inputs/Textarea'
+import { startLoadingTable, startLoadingTableFilter } from '../../../redux/actions/custom'
+import { handleCleanForm } from '../../../redux/actions/normalForm'
+import { Input } from '../../form/Input'
+import { MultiSelect } from '../../form/MultiSelect'
+import { Textarea } from '../../form/Textarea'
 
 export const AdvancedFilter = ({ title, filters, endPoint }) => {
     const dispatch = useDispatch()
@@ -15,7 +15,10 @@ export const AdvancedFilter = ({ title, filters, endPoint }) => {
             <div className="card-header">
                 <h1 className="card-title pb-0 px-2">Filtro Avanzado - {title}</h1>
                 <div>
-                    <Button className='mr-2' onClick={() => dispatch(handleCleanExceptId('selectReducer'))}>
+                    <Button className='mr-2' onClick={() => {
+                        dispatch(handleCleanForm())
+                        dispatch(startLoadingTable(endPoint))
+                    }}>
                         <Trash size={15} />
                         <span className='align-middle ml-50'>Limpiar Filtros</span>
                     </Button>

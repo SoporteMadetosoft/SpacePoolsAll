@@ -1,7 +1,5 @@
 import { formTypes } from "../../types/normalForm/types"
 import { getFormData } from "../../../utility/helpers/Axios/getFormData"
-import axios from "axios"
-import { endPoints } from "@fixed/endPoints"
 import { getNextId } from "../../../utility/helpers/Axios/getNextId"
 
 export const handleChangeController = (name, value) => ({
@@ -12,11 +10,6 @@ export const handleChangeController = (name, value) => ({
 export const initNormalForm = (structure) => ({
     type: formTypes.initForm,
     payload: structure
-})
-
-export const handleCleanExceptId = (id) => ({
-    type: formTypes.cleanExceptId,
-    payload: { name: 'id', id }
 })
 
 export const addRepeaterRegister = (key, structure) => ({
@@ -38,11 +31,6 @@ export const handleCleanForm = () => ({
     type: formTypes.cleanForm
 })
 
-export const handleCleanSection = (key) => ({
-    type: formTypes.cleanSectionForm,
-    payload: key
-})
-
 export const fillFormData = (data) => ({
     type: formTypes.fillFormData,
     payload: { ...data }
@@ -54,13 +42,6 @@ export const handleStartEditing = (endpoint, id) => {
         dispatch(fillFormData(data))
     }
 }
-
-export const handleGetForm = () => {
-    return async (dispatch, getState) => {
-        return getState().normalForm
-    }
-}
-
 
 export const GetSetNextId = (endPoint, name) => {
     return async (dispatch) => {

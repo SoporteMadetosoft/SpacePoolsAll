@@ -22,17 +22,9 @@ export const setData = (data, endPoint) => ({
 
 export const startLoadingTable = (endPoint) => {
     return async (dispatch) => {
-        // const CancelToken = axios.CancelToken
-        // const source = CancelToken.source()
-
         dispatch(cleaningAll())
         const data = await list(endPoint)
-
         dispatch(setData(data, endPoint))
-        // if (data.length === 60) {
-        //     const data2 = await list(endPoint, 2)
-        //     dispatch(setData(data2, endPoint))
-        // }
     }
 }
 
@@ -61,7 +53,6 @@ export const startDeleteRepairRegister = (id, index, endPoint) => {
                 type: types.deleteRepair,
                 payload: {
                     id,
-
                     index
                 }
             })

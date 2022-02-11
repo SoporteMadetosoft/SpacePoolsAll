@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
 
-import { handleChangeUpload, handleLoadDocuments, saveFiles } from '../redux/actions/fileUpload'
-import { CustomMiniTable } from '../components/datatable/CustomMiniTable'
-import { FileContext } from '../utility/context/FileContext'
-import { MkDir } from '../utility/helpers/Axios/MkDir'
-import { DocSchema } from '../fixed/commons/DocSchema'
+import { handleChangeUpload, handleLoadDocuments, saveFiles } from '@redux/actions/fileUpload'
+import { CustomMiniTable } from '@components/datatable/CustomMiniTable'
+import { FileContext } from '@context/FileContext'
+import { MkDir } from '@helpers/Axios/MkDir'
+import { DocSchema } from '@fixed/commons/DocSchema'
 
 export const DocScreen = ({ endPoint, columns = DocSchema }) => {
 

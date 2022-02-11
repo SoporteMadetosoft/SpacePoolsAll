@@ -5,25 +5,25 @@ const { PassRecoveryJWT } = require('../../helpers/GenerarJWT')
 const userDao = new UserDao()
 
 exports.send = async (req, res) => {
-    const { email } = req.body.form
-    const userData = await userDao.getUserByEmail(email)
-    const token = await PassRecoveryJWT(email, userData.password)
+  const { email } = req.body.form
+  const userData = await userDao.getUserByEmail(email)
+  const token = await PassRecoveryJWT(email, userData.password)
 
-    const smtpTransport = nodemailer.createTransport({
-        service: 'Gmail',
-        port: 465,
-        secure: true,
-        auth: {
-            user: process.env.GMAIL_USER,
-            pass: process.env.GMAIL_PASS
-        }
-    })
+  const smtpTransport = nodemailer.createTransport({
+    service: 'Gmail',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS
+    }
+  })
 
-    const mailOptions = {
-        from: 'xavi@madetosoft.com',
-        to: email,
-        subject: 'Recuperación de contraseña',
-        html: `
+  const mailOptions = {
+    from: process.env.GMAIL_USER,
+    to: email,
+    subject: 'Recuperación de contraseña',
+    html: `
         <!DOCTYPE html>
         <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
         
@@ -152,21 +152,21 @@ exports.send = async (req, res) => {
           </body>
         
         </html>`
-    }
+  }
 
-    try {
-        let emailMessage
-        smtpTransport.sendMail(mailOptions, (error, response) => {
+  try {
+    let emailMessage
+    smtpTransport.sendMail(mailOptions, (error, response) => {
 
-            if (error) {
-                emailMessage = "there was an error :-(, and it was this: " + error;
-            } else {
-                emailMessage = "Message sent: " + response;
-            }
-            return res.json({ ok: true, msg: emailMessage })
-        })
-    } catch (error) {
-        console.log(error)
-        return res.status(500).send(error)
-    }
+      if (error) {
+        emailMessage = error;
+      } else {
+        emailMessage = "Message sent: " + response;
+      }
+      return res.json({ ok: true, msg: emailMessage })
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(500).send(error)
+  }
 }

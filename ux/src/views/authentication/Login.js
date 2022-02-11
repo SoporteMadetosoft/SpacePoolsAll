@@ -12,21 +12,8 @@ import { Link, useHistory } from 'react-router-dom'
 import InputPasswordToggle from '@components/input-password-toggle'
 import { getHomeRouteForLoggedInUser, isObjEmpty } from '@utils'
 import { Coffee } from 'react-feather'
-import {
-  Row,
-  Col,
-  CardTitle,
-  CardText,
-  Form,
-  Input,
-  FormGroup,
-  Label,
-  CustomInput,
-  Button
-} from 'reactstrap'
-
+import { Row, Col, CardImg, CardTitle, CardText, Form, Input, FormGroup, Label, Button } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
-import CardImg from 'reactstrap/lib/CardImg'
 import Swal from 'sweetalert2'
 
 const ToastContent = ({ name, role }) => (
@@ -43,8 +30,8 @@ const ToastContent = ({ name, role }) => (
   </Fragment>
 )
 
-const Login = props => {
-  const [skin, setSkin] = useSkin()
+const Login = () => {
+  const [skin] = useSkin()
   const ability = useContext(AbilityContext)
   const dispatch = useDispatch()
   const history = useHistory()
@@ -91,10 +78,10 @@ const Login = props => {
 
   return (
     <div className='auth-wrapper auth-v2'>
-      <Row className='auth-inner m-0'>
+      <Row className='auth-inner'>
         <Col className='d-none d-lg-flex align-items-center' lg='8' sm='12' style={{ padding: '0px', margin: '0px' }} >
           <div className='w-100 h-100 d-lg-flex align-items-center justify-content-center'>
-            <img className='img-fluid' src={source} alt='Login V2' style={{ width: '200%' }} />
+            <img className='img-fluid w-100 h-100' src={source} />
           </div>
         </Col>
         <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12' style={{ padding: '0px', margin: '0px' }}>
@@ -155,9 +142,6 @@ const Login = props => {
                   className={classnames({ 'is-invalid': errors['login-password'] })}
                   innerRef={register({ required: true, validate: value => value !== '' })}
                 /> */}
-              </FormGroup>
-              <FormGroup>
-                <CustomInput type='checkbox' className='custom-control-Primary' id='remember-me' label='Recuérdame' />
               </FormGroup>
               <Button.Ripple type='submit' color='primary' block>
                 Acceder

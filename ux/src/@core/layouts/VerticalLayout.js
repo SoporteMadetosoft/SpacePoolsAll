@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 
 // ** Store & Actions
 import { useSelector, useDispatch } from 'react-redux'
-import { handleMenuCollapsed, handleContentWidth, handleMenuHidden } from '@store/actions/layout'
+import { handleMenuCollapsed, handleContentWidth, handleMenuHidden } from '@redux/actions/layout'
 
 // ** Third Party Components
 import classnames from 'classnames'

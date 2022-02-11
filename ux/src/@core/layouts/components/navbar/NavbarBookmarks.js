@@ -13,7 +13,7 @@ import {
 
 // ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux'
-import { getBookmarks, updateBookmarked, handleSearchQuery } from '@store/actions/navbar'
+import { getBookmarks, updateBookmarked, handleSearchQuery } from '@redux/actions/navbar'
 
 const NavbarBookmarks = props => {
   // ** Props

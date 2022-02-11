@@ -5,7 +5,7 @@ export const setSchema = (schema) => ({
     payload: schema
 })
 
-export const removeSchema = (schema) => ({
+export const removeSchema = () => ({
     type: formValidatorTypes.removeSchema
 })
 

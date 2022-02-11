@@ -12,23 +12,9 @@ const normalForm = (state = initialState, action) => {
                 [action.payload.name]: action.payload.value
             }
 
-        case formTypes.cleanForm:
-            return initialState
-
-        case formTypes.cleanSectionForm:
-            return {
-                ...state,
-                [action.payload]: []
-            }
-
         case formTypes.initForm:
             return {
                 ...action.payload
-            }
-
-        case formTypes.cleanExceptId:
-            return {
-                [action.payload.name]: action.payload.value
             }
 
         case formTypes.addRepeaterRegister:
@@ -57,6 +43,10 @@ const normalForm = (state = initialState, action) => {
                 ...state,
                 [key]: [...state[key]]
             }
+
+        case formTypes.cleanForm:
+            return initialState
+
         case formTypes.fillFormData:
             return {
                 ...action.payload

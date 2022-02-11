@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { CustomDataTable } from '@cc/datatable/CustomDataTable'
+import { CustomDataTable } from '@components/datatable/CustomDataTable'
 import { startLoadingTable } from '@redux/actions/custom'
-import { handleFullClean } from '../utility/helpers/handleFullClean.js'
+import { handleFullClean } from '@helpers/handleFullClean.js'
 
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 

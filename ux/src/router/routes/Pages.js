@@ -3,7 +3,7 @@ import { lazy } from 'react'
 const PagesRoutes = [
   {
     path: '/login',
-    component: lazy(() => import('@views/authentication/Login')),
+    component: lazy(() => import('@auth/Login')),
     layout: 'BlankLayout',
     meta: {
       authRoute: true
@@ -11,20 +11,20 @@ const PagesRoutes = [
   },
   {
     path: '/forgot-password',
-    component: lazy(() => import('@views/authentication/ForgotPassword')),
+    component: lazy(() => import('@auth/ForgotPassword')),
     layout: 'BlankLayout',
     meta: {
       authRoute: true
     }
   },
-  // {
-  //   path: '/reset-password/:token',
-  //   component: lazy(() => import('@views/authentication/ResetPassword')),
-  //   layout: 'BlankLayout',
-  //   meta: {
-  //     authRoute: true
-  //   }
-  // },
+  {
+    path: '/reset-password/:token',
+    component: lazy(() => import('@auth/ResetPassword')),
+    layout: 'BlankLayout',
+    meta: {
+      authRoute: true
+    }
+  },
   {
     path: '/misc/not-authorized',
     component: lazy(() => import('@views/misc/NotAuthorized')),

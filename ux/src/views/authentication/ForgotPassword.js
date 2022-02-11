@@ -1,6 +1,6 @@
 import { isUserLoggedIn } from '@utils'
 import { useSkin } from '@hooks/useSkin'
-import { ChevronLeft, XOctagon } from 'react-feather'
+import { ChevronLeft } from 'react-feather'
 import { Link, Redirect, useHistory } from 'react-router-dom'
 import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
@@ -8,7 +8,6 @@ import { sendEmail } from '../../utility/helpers/Axios/sendEmail'
 import { useState, Fragment } from 'react'
 import axios from 'axios'
 import { endPoints } from '../../fixed/endPoints'
-import Avatar from 'antd/lib/avatar/avatar'
 import { toast, Slide } from 'react-toastify'
 
 const ToastError = () => (
@@ -25,9 +24,9 @@ const ToastError = () => (
 )
 
 const ForgotPassword = () => {
-  const [skin, setSkin] = useSkin()
-  const history = useHistory()
+  const [skin] = useSkin()
   const [email, setEmail] = useState()
+  const history = useHistory()
 
   const illustration = skin === 'dark' ? 'forgot-password-v2-dark.svg' : 'forgot-password-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
@@ -35,7 +34,6 @@ const ForgotPassword = () => {
   const submit = async (e) => {
     e.preventDefault()
     const { data } = await axios.post(`${process.env.REACT_APP_HOST_URI}${endPoints['Users']}/checkEmail`, { email })
-    console.log(data)
     if (data.ok === true) {
       toast.warning(
         <ToastError />,
@@ -44,8 +42,8 @@ const ForgotPassword = () => {
     } else {
       sendEmail('ForgotPassword', { email })
     }
-    //setEmail()
-    //history.push('/')
+    setEmail()
+    history.push('/')
   }
 
   if (!isUserLoggedIn()) {

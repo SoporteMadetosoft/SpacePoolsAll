@@ -1,5 +1,7 @@
 // ** Routes Imports
+import { getUserData } from '../../auth/utils'
 import CustomersRoutes from './customers/Customers'
+import PagesRoutes from './Pages'
 
 // ** Document title
 const TemplateTitle = '%s - SpacePools'
@@ -11,7 +13,8 @@ const DefaultRoute = main !== null ? `/${main.subject}` : ''
 
 // ** Merge Routes
 const Routes = [
-  ...CustomersRoutes
+  ...CustomersRoutes,
+  ...PagesRoutes
 ]
 
 export { DefaultRoute, TemplateTitle, Routes }

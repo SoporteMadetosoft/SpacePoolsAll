@@ -1,0 +1,19 @@
+#actionButtons button{
+    text-align: center;
+    z-index: 999;
+    position: absolute;
+    top: 11vh;
+}
+
+.float-save{
+    right: 3vh;
+    width: 120px;
+}
+
+.float-back{
+    right: 16vh;
+    width: 120px;
+}
+
+
+

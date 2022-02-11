@@ -12,7 +12,7 @@ import generator from 'generate-password'
 import { recoverPassword } from '../../utility/helpers/Axios/recoverPassword'
 
 const ResetPassword = () => {
-  const [skin, setSkin] = useSkin()
+  const [skin] = useSkin()
   const { token } = useParams()
   const [password, setPassword] = useState()
   const [confirmPassword, setConfirmPassword] = useState()
@@ -98,7 +98,6 @@ const ResetPassword = () => {
     }
 
     if (error) {
-      console.log(error)
       toast.warning(<ToastError msg={error} />)
     } else {
       recoverPassword('Users', { email, password })

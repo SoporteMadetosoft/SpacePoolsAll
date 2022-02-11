@@ -8,7 +8,7 @@ import classnames from 'classnames'
 import { FormattedMessage } from 'react-intl'
 
 // ** Vertical Menu Array Of Items
-import navigation from '@src/components/navigation'
+import navigation from '@components/navigation'
 
 // ** Utils
 import { isNavLinkActive, search, getAllParents } from '@layouts/utils'
@@ -82,20 +82,20 @@ const VerticalNavMenuLink = ({
         /*eslint-disable */
         {...(item.externalLink === true
           ? {
-              href: item.navLink || '/'
-            }
+            href: item.navLink || '/'
+          }
           : {
-              to: item.navLink || '/',
-              isActive: (match, location) => {
-                if (!match) {
-                  return false
-                }
-
-                if (match.url && match.url !== '' && match.url === item.navLink) {
-                  currentActiveItem = item.navLink
-                }
+            to: item.navLink || '/',
+            isActive: (match, location) => {
+              if (!match) {
+                return false
               }
-            })}
+
+              if (match.url && match.url !== '' && match.url === item.navLink) {
+                currentActiveItem = item.navLink
+              }
+            }
+          })}
         /*eslint-enable */
         onClick={e => {
           if (!item.navLink.length) {

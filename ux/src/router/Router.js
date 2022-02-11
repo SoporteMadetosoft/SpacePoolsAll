@@ -21,10 +21,10 @@ import { DefaultRoute, Routes } from './routes'
 
 // ** Layouts
 import BlankLayout from '@layouts/BlankLayout'
-import VerticalLayout from '@src/components/layouts/VerticalLayout'
+import VerticalLayout from '@components/layouts/VerticalLayout'
 import { useDispatch } from 'react-redux'
-import { handleLogout } from '../views/authentication/redux/actions'
-import { handleAbilityCheck } from '../utility/helpers/handleAbilityCheck'
+import { handleLogout } from '@auth/redux/actions'
+import { handleAbilityCheck } from '@helpers/handleAbilityCheck'
 // import HorizontalLayout from '@src/layouts/HorizontalLayout'
 
 const Router = () => {
@@ -81,7 +81,6 @@ const Router = () => {
       action = route.meta.action ? route.meta.action : null
       resource = route.meta.resource ? route.meta.resource : null
     }
-
     if (
       (!isUserLoggedIn() && route.meta === undefined) ||
       (!isUserLoggedIn() && route.meta && !route.meta.authRoute && !route.meta.publicRoute)
@@ -92,7 +91,6 @@ const Router = () => {
        ** If user is not Logged in & route.meta.authRoute, !route.meta.publicRoute are undefined
        ** Then redirect user to login
        */
-
       return <Redirect to='/login' />
     } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
       // ** If route has meta and authRole and user is Logged in then redirect user to home page (DefaultRoute)

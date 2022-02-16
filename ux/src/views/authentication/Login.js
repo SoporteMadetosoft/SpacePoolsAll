@@ -14,18 +14,17 @@ import { getHomeRouteForLoggedInUser, isObjEmpty } from '@utils'
 import { Coffee } from 'react-feather'
 import { Row, Col, CardImg, CardTitle, CardText, Form, Input, FormGroup, Label, Button } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
-import Swal from 'sweetalert2'
 
-const ToastContent = ({ name, role }) => (
+const ToastContent = ({ title, color, message }) => (
   <Fragment>
     <div className='toastify-header'>
       <div className='title-wrapper'>
-        <Avatar size='sm' color='success' icon={<Coffee size={12} />} />
-        <h6 className='toast-title font-weight-bold'>Bienvenido/a, {name}</h6>
+        <Avatar size='sm' color={color} icon={<Coffee size={12} />} />
+        <h6 className='toast-title font-weight-bold'>{title}</h6>
       </div>
     </div>
     <div className='toastify-body'>
-      <span>Has iniciado sesión correctamente como {role}.</span>
+      <span>{message}</span>
     </div>
   </Fragment>
 )
@@ -35,7 +34,7 @@ const Login = () => {
   const ability = useContext(AbilityContext)
   const dispatch = useDispatch()
   const history = useHistory()
-  const [email, setEmail] = useState('')
+  const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
 
   const { register, errors, handleSubmit } = useForm()
@@ -48,26 +47,21 @@ const Login = () => {
     if (isObjEmpty(errors)) {
 
       useJwt
-        .login({ email, password })
+        .login({ login, password })
         .then(res => {
-          if (res.data.ok === false) {
-            Swal.fire({
-              title: '¡Error!',
-              text: res.data.data,
-              icon: 'error',
-              timer: 3000,
-              timerProgressBar: true,
-              customClass: {
-                confirmButton: 'btn btn-success'
-              }
-            })
+          console.log(res)
+          if (res.data.status === 401) {
+            toast.error(
+              <ToastContent title={'Acceso denegado'} message={'No se han podido validar los datos de acceso'} color='danger' />,
+              { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+            )
           } else {
-            const data = { ...res.data.data.userData, accessToken: res.data.data.accessToken }
+            const { data } = res
             dispatch(handleLogin(data))
-            ability.update(res.data.data.userData.ability)
-            history.push(getHomeRouteForLoggedInUser(data.role))
+            // ability.update(res.data.data.userData.ability)
+            // history.push(getHomeRouteForLoggedInUser(data.role))
             toast.success(
-              <ToastContent name={data.fullName || data.username || 'No usename'} role={data.role || 'Admin'} />,
+              <ToastContent title={`Acceso autorizado`} message={'Se han validado los datos de acceso'} color='success' />,
               { transition: Slide, hideProgressBar: true, autoClose: 2000 }
             )
           }
@@ -90,7 +84,7 @@ const Login = () => {
               <CardImg src={logoLogin} style={{ width: '200px' }} />
             </div>
             <CardTitle tag='h2' className='font-weight-bold mb-1 d-flex d-lg-flex align-items-center justify-content-center mb-1'>
-              Bienvenido a Beta SFP
+              Bienvenido a CONMED
             </CardTitle>
 
             <CardText className='mb-1 d-flex d-lg-flex align-items-center justify-content-center'>
@@ -99,17 +93,17 @@ const Login = () => {
 
             <Form className='auth-login-form mt-2' onSubmit={handleSubmit(onSubmit)}>
               <FormGroup>
-                <Label className='form-label' for='login-email'>
+                <Label className='form-label' for='login'>
                   Login
                 </Label>
                 <Input
                   autoFocus
-                  value={email}
-                  id='login-email'
-                  name='login-email'
+                  value={login}
+                  id='login'
+                  name='login'
                   placeholder='Login'
-                  onChange={e => setEmail(e.target.value)}
-                  className={classnames({ 'is-invalid': errors['login-email'] })}
+                  onChange={e => setLogin(e.target.value)}
+                  className={classnames({ 'is-invalid': errors['login'] })}
                   innerRef={register({ required: true, validate: value => value !== '' })}
                 />
               </FormGroup>

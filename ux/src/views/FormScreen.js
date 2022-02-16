@@ -35,7 +35,7 @@ export const FormScreen = (props) => {
     const breadCrumTitle = (id) ? `Editar ${title}` : `Añadir ${title}`
 
     useEffect(() => {
-        (id) ? dispatch(handleStartEditing(endPoint, id)) : dispatch(GetSetNextId(endPoint, autoincrement))
+        (id && autoincrement) ? dispatch(handleStartEditing(endPoint, id)) : dispatch(GetSetNextId(endPoint, autoincrement))
         dispatch(initNormalForm(structure))
         dispatch(setSchema(errors))
     }, [initNormalForm])
@@ -63,7 +63,7 @@ export const FormScreen = (props) => {
                 <div className="card">
                     <div className=" card-body row pb-3 px-3">
                         {
-                            base.map((e) => {
+                            base && base.map((e) => {
                                 const clase = `col-${e.col[1]} col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`
                                 const Component = e.endPoint ? Select : e.area ? Textarea : Input
                                 return (
@@ -76,7 +76,7 @@ export const FormScreen = (props) => {
                     </div>
                 </div>
                 {
-                    repeaters.map((e) => {
+                    repeaters && repeaters.map((e) => {
                         return (
                             <div className="card">
                                 <div className="card-body">

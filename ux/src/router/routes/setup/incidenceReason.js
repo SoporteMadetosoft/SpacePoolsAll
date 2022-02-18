@@ -21,7 +21,7 @@ const IncidenceReasonRoutes = [
         component: () => <ListScreen {...base} />,
         meta: {
             action: 'read',
-            resource: 'customers'
+            resource: 'incidenceReason'
         }
     },
     {
@@ -31,7 +31,7 @@ const IncidenceReasonRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'insert',
-            resource: 'customers'
+            resource: 'incidenceReason'
         }
     },
     {
@@ -41,7 +41,7 @@ const IncidenceReasonRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'update',
-            resource: 'customers'
+            resource: 'incidenceReason'
         }
     }
 ]

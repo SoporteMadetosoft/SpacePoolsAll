@@ -4,7 +4,7 @@ import { FormScreen } from '../../../views/FormScreen'
 import { ListScreen } from '../../../views/ListScreen'
 
 const base = {
-    title: 'Organización de ventas',
+    title: 'Tipos de préstamo',
     endPoint: 'SalesOrg',
     list: {
         columns: LoanTypeList
@@ -21,7 +21,7 @@ const LoanTypeRoutes = [
         component: () => <ListScreen {...base} />,
         meta: {
             action: 'read',
-            resource: 'customers'
+            resource: 'loanType'
         }
     },
     {
@@ -31,7 +31,7 @@ const LoanTypeRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'insert',
-            resource: 'customers'
+            resource: 'loanType'
         }
     },
     {
@@ -41,7 +41,7 @@ const LoanTypeRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'update',
-            resource: 'customers'
+            resource: 'loanType'
         }
     }
 ]

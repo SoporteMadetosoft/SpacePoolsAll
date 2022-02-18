@@ -21,7 +21,7 @@ const DepositOrgRoutes = [
         component: () => <ListScreen {...base} />,
         meta: {
             action: 'read',
-            resource: 'customers'
+            resource: 'depositOrg'
         }
     },
     {
@@ -31,7 +31,7 @@ const DepositOrgRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'insert',
-            resource: 'customers'
+            resource: 'depositOrg'
         }
     },
     {
@@ -41,7 +41,7 @@ const DepositOrgRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'update',
-            resource: 'customers'
+            resource: 'depositOrg'
         }
     }
 ]

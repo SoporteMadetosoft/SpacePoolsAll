@@ -1,6 +1,5 @@
 // ** Routes Imports
 import { getUserData } from '../../auth/utils'
-import CustomersRoutes from './customers/Customers'
 import PagesRoutes from './Pages'
 import setupRoutes from './setup'
 
@@ -14,7 +13,6 @@ const DefaultRoute = main !== null ? `/${main.subject}` : ''
 
 // ** Merge Routes
 const Routes = [
-  ...CustomersRoutes,
   ...PagesRoutes,
   ...setupRoutes
 ]

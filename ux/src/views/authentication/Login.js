@@ -43,27 +43,35 @@ const Login = () => {
     source = require(`@src/assets/images/backgrounds/${illustration}`).default
   const logoLogin = require(`@src/assets/images/ico/favicon.png`).default
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     if (isObjEmpty(errors)) {
 
       useJwt
         .login({ login, password })
         .then(res => {
-          console.log(res)
-          if (res.data.status === 401) {
+          const { data } = res
+          if (data.status === 401) {
             toast.error(
               <ToastContent title={'Acceso denegado'} message={'No se han podido validar los datos de acceso'} color='danger' />,
               { transition: Slide, hideProgressBar: true, autoClose: 2000 }
             )
           } else {
-            const { data } = res
             dispatch(handleLogin(data))
-            // ability.update(res.data.data.userData.ability)
-            // history.push(getHomeRouteForLoggedInUser(data.role))
-            toast.success(
-              <ToastContent title={`Acceso autorizado`} message={'Se han validado los datos de acceso'} color='success' />,
-              { transition: Slide, hideProgressBar: true, autoClose: 2000 }
-            )
+            const access = getHomeRouteForLoggedInUser()
+            console.log(access)
+            if (access) {
+              ability.update(data.ability)
+              toast.success(
+                <ToastContent title={`Acceso autorizado`} message={'Se han validado los datos de acceso'} color='success' />,
+                { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+              )
+              history.push(access)
+            } else {
+              toast.error(
+                <ToastContent title={'Acceso denegado'} message={'No se tienen permisos de acceso'} color='danger' />,
+                { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+              )
+            }
           }
         })
         .catch(err => console.log(err))

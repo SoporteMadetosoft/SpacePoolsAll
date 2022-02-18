@@ -21,7 +21,7 @@ const ModelRoutes = [
         component: () => <ListScreen {...base} />,
         meta: {
             action: 'read',
-            resource: 'customers'
+            resource: 'model'
         }
     },
     {
@@ -31,7 +31,7 @@ const ModelRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'insert',
-            resource: 'customers'
+            resource: 'model'
         }
     },
     {
@@ -41,7 +41,7 @@ const ModelRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'update',
-            resource: 'customers'
+            resource: 'model'
         }
     }
 ]

@@ -1,66 +1,33 @@
-const globalEndpoints = {
-    FileManager: '/global/fileManager',
-    ForgotPassword: '/global/forgotPassword',
-    ItemType: '/global/itemType',
-    Language: '/global/language',
-    Logos: '/global/logos',
-    Mode: '/global/mode',
-    Status: '/global/status',
-    ProductionStatus: '/global/productionStatus',
-    PurchaseStatus: '/global/purchaseStatus',
-    Show: '/global/show',
-    PayDay: '/global/payday'
-}
-
 const setupEndpoints = {
-    PaymentMethods: '/setup/general/paymentMethod',
-    Departments: '/setup/general/department',
-    AddressesTypes: '/setup/general/addressesTypes',
-    Taxes: '/setup/general/tax',
+    AddressType: '/setup/general/address-types',
+    Department: '/setup/general/department',
 
-    CustomerType: '/setup/customers/type',
-    CustomerCategory: '/setup/customers/category',
-    Activity: '/setup/customers/activities',
-    Origin: '/setup/customers/origin',
+    SalesOrg: '/setup/centers/sales-org',
+    ConditionalOrg: '/setup/centers/conditional-org',
+    DepositOrg: '/setup/centers/deposit-org',
+    Zone: '/setup/centers/zone',
 
-    VendorType: '/setup/vendors/type',
+    ProcedureFamily: '/setup/procedures/procedure-family',
+
+    Family: '/setup/items/family',
+
+    IncidenceType: '/setup/incidences/incidence-type',
+    IncidenceReason: '/setup/incidences/incidence-reason',
+
+    LoanType: '/setup/loans/loan-type',
 
     Brand: '/setup/vehicles/brand',
-    Model: '/setup/vehicles/model',
-
-    Place: '/setup/items/place',
-    Colors: '/setup/items/colors'
+    Model: '/setup/vehicles/model'
 }
 
 export const endPoints = {
 
-    Customers: '/customers',
-    Vendors: '/vendors',
-    CustomerData: '/customerData',
     Notification: '/notification',
-
-    Carriers: '/carriers',
-    Vehicles: '/vehicles',
-    VRepair: '/vehicles/repair',
-    Trailers: '/trailers',
     Alerts: '/alerts',
-    TRepair: '/trailers/repair',
-    AlertStock: '/alertsStock',
-    Purchases: '/purchases',
 
-    Pools: '/pools',
-
-    Orders: '/orders',
-    Delivery: '/delivery',
-    Items: '/items/item',
-    ItemColors: '/items/itemColors',
-    Family: '/items/productFamily',
-    Productions: '/production',
     Calendar: '/calendar',
     Users: '/users',
     Roles: '/roles',
     Logs: '/logs',
-
-    ...globalEndpoints,
     ...setupEndpoints
 }

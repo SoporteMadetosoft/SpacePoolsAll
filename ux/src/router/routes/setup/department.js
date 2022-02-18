@@ -1,49 +1,49 @@
-import { FamilyForm } from '../../../fixed/family/familyForm'
-import { FamilyList } from '../../../fixed/family/familyList'
+import { DepartmentForm } from '../../../fixed/department/departmentForm'
+import { DepartmentList } from '../../../fixed/department/departmentList'
 import { FormScreen } from '../../../views/FormScreen'
 import { ListScreen } from '../../../views/ListScreen'
 
 const base = {
-    title: 'Familias',
-    endPoint: 'Family',
+    title: 'Departamentos',
+    endPoint: 'Department',
     list: {
-        columns: FamilyList
+        columns: DepartmentList
     },
     form: {
-        form: FamilyForm
+        form: DepartmentForm
     }
 }
-const FamilyRoutes = [
+const DepartmentRoutes = [
     {
-        path: '/setup/items/family',
+        path: '/setup/general/department',
         exact: true,
         layout: 'VerticalLayout',
         component: () => <ListScreen {...base} />,
         meta: {
             action: 'read',
-            resource: 'family'
+            resource: 'department'
         }
     },
     {
-        path: '/setup/items/family/add',
+        path: '/setup/general/department/add',
         exact: true,
         layout: 'VerticalLayout',
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'insert',
-            resource: 'family'
+            resource: 'department'
         }
     },
     {
-        path: '/setup/items/family/edit/:id',
+        path: '/setup/general/department/edit/:id',
         exact: true,
         layout: 'VerticalLayout',
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'update',
-            resource: 'family'
+            resource: 'department'
         }
     }
 ]
 
-export default FamilyRoutes
+export default DepartmentRoutes

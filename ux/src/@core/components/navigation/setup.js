@@ -9,30 +9,49 @@ export default [
     icon: <FontAwesomeIcon icon={faCogs} />,
     children: [
       {
+        id: 'sGeneral',
+        title: 'General',
+        icon: <FontAwesomeIcon icon={faArrowsAlt} />,
+        children: [
+          {
+            id: 'addressType',
+            title: 'Tipos de dirección',
+            icon: <Circle size={12} />,
+            navLink: '/setup/general/address-type'
+          },
+          {
+            id: 'department',
+            title: 'Departamentos',
+            icon: <Circle size={12} />,
+            navLink: '/setup/general/department'
+          }
+        ]
+      },
+      {
         id: 'sCenters',
         title: 'Centros',
         icon: <FontAwesomeIcon icon={faArrowsAlt} />,
         children: [
           {
-            id: 'sSales-org',
+            id: 'salesOrg',
             title: 'Organización de ventas',
             icon: <Circle size={12} />,
             navLink: '/setup/centers/sales-org'
           },
           {
-            id: 'sConditional-org',
+            id: 'conditionalOrg',
             title: 'Organización condicional',
             icon: <Circle size={12} />,
             navLink: '/setup/centers/conditional-org'
           },
           {
-            id: 'sDeposit-org',
+            id: 'depositOrg',
             title: 'Organización de depósitos',
             icon: <Circle size={12} />,
             navLink: '/setup/centers/deposit-org'
           },
           {
-            id: 'sZone',
+            id: 'zone',
             title: 'Zonas',
             icon: <Circle size={12} />,
             navLink: '/setup/centers/zone'
@@ -45,7 +64,7 @@ export default [
         icon: <FontAwesomeIcon icon={faUser} />,
         children: [
           {
-            id: 'sProcedure-family',
+            id: 'procedureFamily',
             title: 'Familias del procedimiento',
             icon: <Circle size={12} />,
             navLink: '/setup/procedures/procedure-family'
@@ -58,7 +77,7 @@ export default [
         icon: <FontAwesomeIcon icon={faBoxes} />,
         children: [
           {
-            id: 'sFamily',
+            id: 'family',
             title: 'Familias',
             icon: <Circle size={12} />,
             navLink: '/setup/items/family'
@@ -71,14 +90,14 @@ export default [
         icon: <FontAwesomeIcon icon={faTruckMoving} />,
         children: [
           {
-            id: 'sIncidence-type',
-            title: 'Tipo de incidencia',
+            id: 'incidenceType',
+            title: 'Tipos de incidencia',
             icon: <Circle size={12} />,
             navLink: '/setup/incidences/incidence-type'
           },
           {
-            id: 'sReason',
-            title: 'Motivo',
+            id: 'incidenceReason',
+            title: 'Motivos',
             icon: <Circle size={12} />,
             navLink: '/setup/incidences/incidence-reason'
           }
@@ -90,8 +109,8 @@ export default [
         icon: <FontAwesomeIcon icon={faCube} />,
         children: [
           {
-            id: 'sLoan-type',
-            title: 'Ubicaciones',
+            id: 'loanType',
+            title: 'Tipos de préstamo',
             icon: <Circle size={12} />,
             navLink: '/setup/loans/loan-type'
           }
@@ -103,14 +122,14 @@ export default [
         icon: <FontAwesomeIcon icon={faCube} />,
         children: [
           {
-            id: 'sBrand',
-            title: 'Marca',
+            id: 'brand',
+            title: 'Marcas',
             icon: <Circle size={12} />,
             navLink: '/setup/vehicles/brand'
           },
           {
-            id: 'sModel',
-            title: 'Modelo',
+            id: 'model',
+            title: 'Modelos',
             icon: <Circle size={12} />,
             navLink: '/setup/vehicles/model'
           }

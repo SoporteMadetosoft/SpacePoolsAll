@@ -1,49 +1,49 @@
-import { FamilyForm } from '../../../fixed/family/familyForm'
-import { FamilyList } from '../../../fixed/family/familyList'
+import { AddressTypeForm } from '../../../fixed/addressType/addressTypeForm'
+import { AddressTypeList } from '../../../fixed/addressType/addressTypeList'
 import { FormScreen } from '../../../views/FormScreen'
 import { ListScreen } from '../../../views/ListScreen'
 
 const base = {
-    title: 'Familias',
-    endPoint: 'Family',
+    title: 'Tipos de dirección',
+    endPoint: 'AddressType',
     list: {
-        columns: FamilyList
+        columns: AddressTypeList
     },
     form: {
-        form: FamilyForm
+        form: AddressTypeForm
     }
 }
-const FamilyRoutes = [
+const AddressTypeRoutes = [
     {
-        path: '/setup/items/family',
+        path: '/setup/general/address-type',
         exact: true,
         layout: 'VerticalLayout',
         component: () => <ListScreen {...base} />,
         meta: {
             action: 'read',
-            resource: 'family'
+            resource: 'addressType'
         }
     },
     {
-        path: '/setup/items/family/add',
+        path: '/setup/general/address-type/add',
         exact: true,
         layout: 'VerticalLayout',
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'insert',
-            resource: 'family'
+            resource: 'addressType'
         }
     },
     {
-        path: '/setup/items/family/edit/:id',
+        path: '/setup/general/address-type/edit/:id',
         exact: true,
         layout: 'VerticalLayout',
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'update',
-            resource: 'family'
+            resource: 'addressType'
         }
     }
 ]
 
-export default FamilyRoutes
+export default AddressTypeRoutes

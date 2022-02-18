@@ -21,7 +21,7 @@ const ConditionalOrgRoutes = [
         component: () => <ListScreen {...base} />,
         meta: {
             action: 'read',
-            resource: 'customers'
+            resource: 'conditionalOrg'
         }
     },
     {
@@ -31,7 +31,7 @@ const ConditionalOrgRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'insert',
-            resource: 'customers'
+            resource: 'conditionalOrg'
         }
     },
     {
@@ -41,7 +41,7 @@ const ConditionalOrgRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'update',
-            resource: 'customers'
+            resource: 'conditionalOrg'
         }
     }
 ]

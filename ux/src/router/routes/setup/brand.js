@@ -21,7 +21,7 @@ const BrandRoutes = [
         component: () => <ListScreen {...base} />,
         meta: {
             action: 'read',
-            resource: 'customers'
+            resource: 'brand'
         }
     },
     {
@@ -31,7 +31,7 @@ const BrandRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'insert',
-            resource: 'customers'
+            resource: 'brand'
         }
     },
     {
@@ -41,7 +41,7 @@ const BrandRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'update',
-            resource: 'customers'
+            resource: 'brand'
         }
     }
 ]

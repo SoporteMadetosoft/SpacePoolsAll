@@ -16,8 +16,8 @@ export const LoanTypeList = [
         width: '8%'
     },
     {
-        name: 'name',
-        selector: 'Tipo de préstamo',
+        name: 'Tipo de préstamo',
+        selector: 'name',
         sortable: true,
         searchable: true,
         width: '77%'

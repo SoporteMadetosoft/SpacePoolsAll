@@ -16,8 +16,8 @@ export const AddressTypeList = [
         width: '8%'
     },
     {
-        name: 'name',
-        selector: 'Tipo de dirección',
+        name: 'Tipo de dirección',
+        selector: 'name',
         sortable: true,
         searchable: true,
         width: '77%'

@@ -16,8 +16,8 @@ export const IncidenceTypeList = [
         width: '8%'
     },
     {
-        name: 'name',
-        selector: 'Organización de ventas',
+        name: 'Organización de ventas',
+        selector: 'name',
         sortable: true,
         searchable: true,
         width: '77%'

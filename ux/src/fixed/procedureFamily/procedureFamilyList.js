@@ -16,8 +16,8 @@ export const ProcedureFamilyList = [
         width: '8%'
     },
     {
-        name: 'sales-org',
-        selector: 'Familia de procedimiento',
+        name: 'Familia de procedimiento',
+        selector: 'name',
         sortable: true,
         searchable: true,
         width: '77%'

@@ -16,8 +16,8 @@ export const BrandList = [
         width: '8%'
     },
     {
-        name: 'name',
-        selector: 'Marca',
+        name: 'Marca',
+        selector: 'name',
         sortable: true,
         searchable: true,
         width: '77%'

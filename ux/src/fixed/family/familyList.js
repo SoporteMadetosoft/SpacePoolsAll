@@ -16,8 +16,8 @@ export const FamilyList = [
         width: '8%'
     },
     {
-        name: 'name',
-        selector: 'Familia',
+        name: 'Familia',
+        selector: 'name',
         sortable: true,
         searchable: true,
         width: '39%'

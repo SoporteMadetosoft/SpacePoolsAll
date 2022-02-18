@@ -1,5 +1,5 @@
 const setupEndpoints = {
-    AddressType: '/setup/general/address-types',
+    AddressType: '/setup/general/address-type',
     Department: '/setup/general/department',
 
     SalesOrg: '/setup/centers/sales-org',

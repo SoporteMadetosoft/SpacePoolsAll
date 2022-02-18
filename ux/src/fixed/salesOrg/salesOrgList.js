@@ -16,8 +16,8 @@ export const SalesOrgList = [
         width: '8%'
     },
     {
-        name: 'name',
-        selector: 'Tipo de incidencia',
+        name: 'Organización de ventas',
+        selector: 'name',
         sortable: true,
         searchable: true,
         width: '77%'

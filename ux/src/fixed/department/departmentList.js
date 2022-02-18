@@ -16,8 +16,8 @@ export const DepartmentList = [
         width: '8%'
     },
     {
-        name: 'name',
-        selector: 'Departamento',
+        name: 'Departamento',
+        selector: 'name',
         sortable: true,
         searchable: true,
         width: '77%'

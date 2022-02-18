@@ -16,15 +16,15 @@ export const ModelList = [
         width: '8%'
     },
     {
-        name: 'name',
-        selector: 'Modelo',
+        name: 'Modelo',
+        selector: 'name',
         sortable: true,
         searchable: true,
         width: '39%'
     },
     {
-        name: 'brand',
-        selector: 'Marca',
+        name: 'Marca',
+        selector: 'brand',
         sortable: true,
         searchable: true,
         width: '38%'

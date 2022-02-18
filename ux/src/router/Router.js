@@ -156,21 +156,9 @@ const Router = () => {
                             setTransition={setTransition}
                             /* Conditional props */
                             /*eslint-disable */
-                            {...(route.appLayout
-                              ? {
-                                appLayout: route.appLayout
-                              }
-                              : {})}
-                            {...(route.meta
-                              ? {
-                                routeMeta: route.meta
-                              }
-                              : {})}
-                            {...(route.className
-                              ? {
-                                wrapperClass: route.className
-                              }
-                              : {})}
+                            {...(route.appLayout ? { appLayout: route.appLayout } : {})}
+                            {...(route.meta ? { routeMeta: route.meta } : {})}
+                            {...(route.className ? { wrapperClass: route.className } : {})}
                           /*eslint-enable */
                           >
                             <FinalRoute route={route} {...props} />
@@ -211,7 +199,7 @@ const Router = () => {
         />
         <IdleTimer
           ref={idleRef}
-          timeout={360000}
+          timeout={3600000}
           onIdle={() => dispatch(handleLogout())}
         >
           {ResolveRoutes()}

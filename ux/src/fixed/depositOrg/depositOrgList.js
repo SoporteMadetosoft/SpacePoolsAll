@@ -16,8 +16,8 @@ export const DepositOrgList = [
         width: '8%'
     },
     {
-        name: 'name',
-        selector: 'Organización de depósitos',
+        name: 'Organización de depósitos',
+        selector: 'name',
         sortable: true,
         searchable: true,
         width: '77%'

@@ -16,8 +16,8 @@ export const IncidenceReasonList = [
         width: '8%'
     },
     {
-        name: 'name',
-        selector: 'Motivo de incidencia',
+        name: 'Motivo de incidencia',
+        selector: 'name',
         sortable: true,
         searchable: true,
         width: '77%'

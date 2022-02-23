@@ -3,7 +3,7 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'Space SpacePools G',
+    appName: 'CONMED',
     appLogoImage: require('@src/assets/images/logo/favicon.png').default
   },
   layout: {

@@ -1,6 +1,6 @@
 export default [
   {
     header: 'Menú',
-    group: ['customers', 'vendors', 'carriers', 'vehicles', 'trailers', 'pools', 'items', 'family', 'purchases', 'orders', 'delivery', 'production', 'calendar']
+    group: ['mutuas', 'centers', 'doctors', 'procedures', 'materials', 'instruments', 'instrumentals', 'sheets', 'surgeries', 'calendar', 'routes', 'incidences', 'loans', 'deposits', 'sales', 'delivery-note', 'vehicles']
   }
 ]

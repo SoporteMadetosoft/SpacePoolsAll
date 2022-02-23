@@ -13,7 +13,7 @@ export const addSelectOptions = (key, options) => ({
 export const startAddSelectOptions = (endPoint, key, labelName = 'name') => {
 
     return async (dispatch) => {
-        const { data: { data } } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}/list`, {
+        const { data } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}`, {
             headers: {
                 'Content-type': 'application/json',
                 'x-token': token

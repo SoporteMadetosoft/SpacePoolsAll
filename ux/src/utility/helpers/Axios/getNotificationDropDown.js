@@ -1,6 +1,5 @@
 import axios from "axios"
 import { endPoints } from "@fixed/endPoints"
-import Media from "reactstrap/lib/Media"
 
 export const getNotificationDropDown = (endPoint) => {
   return new Promise(async (resolve, reject) => {

@@ -81,6 +81,7 @@ const Router = () => {
       action = route.meta.action ? route.meta.action : null
       resource = route.meta.resource ? route.meta.resource : null
     }
+    console.log('AAA')
     if (
       (!isUserLoggedIn() && route.meta === undefined) ||
       (!isUserLoggedIn() && route.meta && !route.meta.authRoute && !route.meta.publicRoute)
@@ -156,21 +157,9 @@ const Router = () => {
                             setTransition={setTransition}
                             /* Conditional props */
                             /*eslint-disable */
-                            {...(route.appLayout
-                              ? {
-                                appLayout: route.appLayout
-                              }
-                              : {})}
-                            {...(route.meta
-                              ? {
-                                routeMeta: route.meta
-                              }
-                              : {})}
-                            {...(route.className
-                              ? {
-                                wrapperClass: route.className
-                              }
-                              : {})}
+                            {...(route.appLayout ? { appLayout: route.appLayout } : {})}
+                            {...(route.meta ? { routeMeta: route.meta } : {})}
+                            {...(route.className ? { wrapperClass: route.className } : {})}
                           /*eslint-enable */
                           >
                             <FinalRoute route={route} {...props} />
@@ -203,7 +192,7 @@ const Router = () => {
         <Route
           exact
           path='/misc/not-authorized'
-          render={props => (
+          render={() => (
             <Layouts.BlankLayout>
               <NotAuthorized />
             </Layouts.BlankLayout>
@@ -211,7 +200,7 @@ const Router = () => {
         />
         <IdleTimer
           ref={idleRef}
-          timeout={360000}
+          timeout={3600000}
           onIdle={() => dispatch(handleLogout())}
         >
           {ResolveRoutes()}

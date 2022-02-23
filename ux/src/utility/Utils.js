@@ -1,3 +1,5 @@
+import { endPoints } from "../fixed/endPoints"
+
 // ** Checks if an object is empty (returns boolean)
 export const isObjEmpty = obj => Object.keys(obj).length === 0
 
@@ -59,11 +61,12 @@ export const getUserData = () => JSON.parse(localStorage.getItem('userData'))
  * ? NOTE: If you have different pages to navigate based on user ability then this function can be useful. However, you need to update it.
  * @param {String} userRole Role of user
  */
-export const getHomeRouteForLoggedInUser = userRole => {
-  const data = getUserData()
-  const main = data.ability.find(reg => reg.action === 'read')
-  if (userRole !== '') {
-    return `/${main.subject}`
+export const getHomeRouteForLoggedInUser = () => {
+  const { ability } = getUserData()
+  const main = ability.find(reg => reg.action === 'read')
+  if (main.subject) {
+    const endP = main.subject.charAt(0).toUpperCase() + main.subject.slice(1)
+    return endPoints[endP]
   }
   return '/login'
 }

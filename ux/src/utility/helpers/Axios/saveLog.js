@@ -4,7 +4,7 @@ import { logMessages } from "@fixed/logMessages"
 import { getUserData } from "../../../auth/utils"
 import { dateTimeNow } from "../dateTimeNow"
 
-export const saveLog = async (endPoint, action, file = null) => {
+export const saveLog = async (endPoint, action) => {
     const idUsuario = getUserData()
     const acciones = ['añadido', 'actualizado', 'eliminado', 'verificado']
 

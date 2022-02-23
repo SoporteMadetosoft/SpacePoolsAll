@@ -1,14 +1,14 @@
+import { useState, Fragment } from 'react'
 import { isUserLoggedIn } from '@utils'
 import { useSkin } from '@hooks/useSkin'
 import { ChevronLeft } from 'react-feather'
 import { Link, Redirect, useHistory } from 'react-router-dom'
 import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, Button } from 'reactstrap'
-import '@styles/base/pages/page-auth.scss'
-import { sendEmail } from '../../utility/helpers/Axios/sendEmail'
-import { useState, Fragment } from 'react'
-import axios from 'axios'
-import { endPoints } from '../../fixed/endPoints'
 import { toast, Slide } from 'react-toastify'
+import axios from 'axios'
+import { sendEmail } from '../../utility/helpers/Axios/sendEmail'
+import { endPoints } from '../../fixed/endPoints'
+import '@styles/base/pages/page-auth.scss'
 
 const ToastError = () => (
   <Fragment>

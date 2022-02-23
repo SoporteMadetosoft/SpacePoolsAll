@@ -1,4 +1,4 @@
-import { validator } from "../../utility/formValidator/ValidationTypes"
+import { validator } from "../../../utility/formValidator/ValidationTypes"
 
 export const CustomerForm = {
     structure: {

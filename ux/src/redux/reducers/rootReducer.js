@@ -14,7 +14,6 @@ import selectReducer from './selects'
 
 import fileUpload from './fileUpload'
 
-import canvasReducer from './canvas'
 import ordersReducer from './orders'
 import calenderReducer from './calendar'
 import permisosReducer from './permisos'
@@ -29,7 +28,6 @@ const rootReducer = combineReducers({
   normalForm,
   selectReducer,
   fileUpload,
-  canvasReducer,
   ordersReducer,
   calenderReducer,
   permisosReducer,

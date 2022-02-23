@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import { FamilyForm } from '../../../fixed/setup/family/familyForm'
 import { FamilyList } from '../../../fixed/setup/family/familyList'
-=======
-import { FamilyForm } from '../../../fixed/family/familyForm'
-import { FamilyList } from '../../../fixed/family/familyList'
->>>>>>> 710498fa0e745d4ad55e02b9f89ae58e86b613b9
 import { FormScreen } from '../../../views/FormScreen'
 import { ListScreen } from '../../../views/ListScreen'
 

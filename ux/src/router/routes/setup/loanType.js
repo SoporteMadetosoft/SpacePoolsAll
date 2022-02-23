@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import { LoanTypeForm } from '../../../fixed/setup/loanType/loanTypeForm'
 import { LoanTypeList } from '../../../fixed/setup/loanType/loanTypeList'
-=======
-import { LoanTypeForm } from '../../../fixed/loanType/loanTypeForm'
-import { LoanTypeList } from '../../../fixed/loanType/loanTypeList'
->>>>>>> 710498fa0e745d4ad55e02b9f89ae58e86b613b9
 import { FormScreen } from '../../../views/FormScreen'
 import { ListScreen } from '../../../views/ListScreen'
 

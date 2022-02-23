@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import { ModelForm } from '../../../fixed/setup/model/modelForm'
 import { ModelList } from '../../../fixed/setup/model/modelList'
-=======
-import { ModelForm } from '../../../fixed/model/modelForm'
-import { ModelList } from '../../../fixed/model/modelList'
->>>>>>> 710498fa0e745d4ad55e02b9f89ae58e86b613b9
 import { FormScreen } from '../../../views/FormScreen'
 import { ListScreen } from '../../../views/ListScreen'
 

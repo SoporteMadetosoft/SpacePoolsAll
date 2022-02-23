@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import { SalesOrgForm } from '../../../fixed/setup/salesOrg/salesOrgForm'
 import { SalesOrgList } from '../../../fixed/setup/salesOrg/salesOrgList'
-=======
-import { SalesOrgForm } from '../../../fixed/salesOrg/salesOrgForm'
-import { SalesOrgList } from '../../../fixed/salesOrg/salesOrgList'
->>>>>>> 710498fa0e745d4ad55e02b9f89ae58e86b613b9
 import { FormScreen } from '../../../views/FormScreen'
 import { ListScreen } from '../../../views/ListScreen'
 

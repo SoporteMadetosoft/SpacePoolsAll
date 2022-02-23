@@ -35,11 +35,7 @@ export const FormScreen = (props) => {
     const breadCrumTitle = (id) ? `Editar ${title}` : `Añadir ${title}`
 
     useEffect(() => {
-<<<<<<< HEAD
         (id && !autoincrement) ? dispatch(handleStartEditing(endPoint, id)) : dispatch(GetSetNextId(endPoint, autoincrement))
-=======
-        (id && autoincrement) ? dispatch(handleStartEditing(endPoint, id)) : dispatch(GetSetNextId(endPoint, autoincrement))
->>>>>>> 710498fa0e745d4ad55e02b9f89ae58e86b613b9
         dispatch(initNormalForm(structure))
         dispatch(setSchema(errors))
     }, [initNormalForm])

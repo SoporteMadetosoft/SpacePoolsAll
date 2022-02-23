@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import { ProcedureFamilyForm } from '../../../fixed/setup/procedureFamily/procedureFamilyForm'
 import { ProcedureFamilyList } from '../../../fixed/setup/procedureFamily/procedureFamilyList'
+=======
+import { ProcedureFamilyForm } from '../../../fixed/procedureFamily/procedureFamilyForm'
+import { ProcedureFamilyList } from '../../../fixed/procedureFamily/procedureFamilyList'
+>>>>>>> 710498fa0e745d4ad55e02b9f89ae58e86b613b9
 import { FormScreen } from '../../../views/FormScreen'
 import { ListScreen } from '../../../views/ListScreen'
 

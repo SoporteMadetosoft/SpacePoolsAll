@@ -32,7 +32,7 @@ export const CustomFilter = ({ columns, searchColumnValue, handleFilter, areFilt
 
                 filters.push(
                     <td key={`${col.selector}`} style={{ width: col.width, padding: '0rem 0rem 0rem 1rem', height: '2.7rem' }}>
-                        {col.searchable && <Select styles={styles} hasLabel={false} placeholder={col.name} endPoint={col.select} onSelect={(e) => handleFilter(col.selector, e === null ? [''] : [e.value], isSelect)} />}
+                        {col.searchable && <Select styles={styles} hasLabel={false} placeholder={col.name} containerClassname='mt-0' endPoint={col.select} customOptions={col.customOptions} onSelect={(e) => handleFilter(col.selector, [e?.value], isSelect)} />}
                     </td>)
 
             } else if (col.time) {

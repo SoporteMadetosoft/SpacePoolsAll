@@ -10,7 +10,7 @@ export const Input = (props) => {
 
     const { name, label, className = '', placeholder = label,
         type = "text", styles, errMsg = 'Campo requerido', readonly = false, disabled = false,
-        symbol = false, defecto = '', position, zone } = props
+        symbol = false, defecto = null, position, zone } = props
 
     const dispatch = useDispatch()
     const { normalForm, formValidator } = useSelector(state => state)

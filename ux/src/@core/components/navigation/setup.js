@@ -1,6 +1,5 @@
-import { Circle } from 'react-feather'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCogs, faUser, faBoxes, faTruckMoving, faCube, faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCogs, faBoxes, faCircleNotch, faBorderAll, faHospital, faProjectDiagram, faExclamationTriangle, faHandHoldingUsd, faCar } from '@fortawesome/free-solid-svg-icons'
 
 export default [
   {
@@ -11,18 +10,18 @@ export default [
       {
         id: 'sGeneral',
         title: 'General',
-        icon: <FontAwesomeIcon icon={faArrowsAlt} />,
+        icon: <FontAwesomeIcon icon={faBorderAll} />,
         children: [
           {
             id: 'addressType',
             title: 'Tipos de dirección',
-            icon: <Circle size={12} />,
+            icon: <FontAwesomeIcon icon={faCircleNotch} />,
             navLink: '/setup/general/address-type'
           },
           {
             id: 'department',
             title: 'Departamentos',
-            icon: <Circle size={12} />,
+            icon: <FontAwesomeIcon icon={faCircleNotch} />,
             navLink: '/setup/general/department'
           }
         ]
@@ -30,30 +29,30 @@ export default [
       {
         id: 'sCenters',
         title: 'Centros',
-        icon: <FontAwesomeIcon icon={faArrowsAlt} />,
+        icon: <FontAwesomeIcon icon={faHospital} />,
         children: [
           {
             id: 'salesOrg',
-            title: 'Organización de ventas',
-            icon: <Circle size={12} />,
+            title: 'Org. de ventas',
+            icon: <FontAwesomeIcon icon={faCircleNotch} />,
             navLink: '/setup/centers/sales-org'
           },
           {
             id: 'conditionalOrg',
-            title: 'Organización condicional',
-            icon: <Circle size={12} />,
+            title: 'Org. condicional',
+            icon: <FontAwesomeIcon icon={faCircleNotch} />,
             navLink: '/setup/centers/conditional-org'
           },
           {
             id: 'depositOrg',
-            title: 'Organización de depósitos',
-            icon: <Circle size={12} />,
+            title: 'Org. de depósitos',
+            icon: <FontAwesomeIcon icon={faCircleNotch} />,
             navLink: '/setup/centers/deposit-org'
           },
           {
             id: 'zone',
             title: 'Zonas',
-            icon: <Circle size={12} />,
+            icon: <FontAwesomeIcon icon={faCircleNotch} />,
             navLink: '/setup/centers/zone'
           }
         ]
@@ -61,12 +60,12 @@ export default [
       {
         id: 'sProcedures',
         title: 'Procedimientos',
-        icon: <FontAwesomeIcon icon={faUser} />,
+        icon: <FontAwesomeIcon icon={faProjectDiagram} />,
         children: [
           {
             id: 'procedureFamily',
             title: 'Familias del procedimiento',
-            icon: <Circle size={12} />,
+            icon: <FontAwesomeIcon icon={faCircleNotch} />,
             navLink: '/setup/procedures/procedure-family'
           }
         ]
@@ -79,7 +78,7 @@ export default [
           {
             id: 'family',
             title: 'Familias',
-            icon: <Circle size={12} />,
+            icon: <FontAwesomeIcon icon={faCircleNotch} />,
             navLink: '/setup/items/family'
           }
         ]
@@ -87,18 +86,18 @@ export default [
       {
         id: 'sIncidences',
         title: 'Incidencias',
-        icon: <FontAwesomeIcon icon={faTruckMoving} />,
+        icon: <FontAwesomeIcon icon={faExclamationTriangle} />,
         children: [
           {
             id: 'incidenceType',
             title: 'Tipos de incidencia',
-            icon: <Circle size={12} />,
+            icon: <FontAwesomeIcon icon={faCircleNotch} />,
             navLink: '/setup/incidences/incidence-type'
           },
           {
             id: 'incidenceReason',
             title: 'Motivos',
-            icon: <Circle size={12} />,
+            icon: <FontAwesomeIcon icon={faCircleNotch} />,
             navLink: '/setup/incidences/incidence-reason'
           }
         ]
@@ -106,12 +105,12 @@ export default [
       {
         id: 'sLoans',
         title: 'Préstamos',
-        icon: <FontAwesomeIcon icon={faCube} />,
+        icon: <FontAwesomeIcon icon={faHandHoldingUsd} />,
         children: [
           {
             id: 'loanType',
             title: 'Tipos de préstamo',
-            icon: <Circle size={12} />,
+            icon: <FontAwesomeIcon icon={faCircleNotch} />,
             navLink: '/setup/loans/loan-type'
           }
         ]
@@ -119,18 +118,18 @@ export default [
       {
         id: 'sVehicles',
         title: 'Vahículos',
-        icon: <FontAwesomeIcon icon={faCube} />,
+        icon: <FontAwesomeIcon icon={faCar} />,
         children: [
           {
             id: 'brand',
             title: 'Marcas',
-            icon: <Circle size={12} />,
+            icon: <FontAwesomeIcon icon={faCircleNotch} />,
             navLink: '/setup/vehicles/brand'
           },
           {
             id: 'model',
             title: 'Modelos',
-            icon: <Circle size={12} />,
+            icon: <FontAwesomeIcon icon={faCircleNotch} />,
             navLink: '/setup/vehicles/model'
           }
         ]

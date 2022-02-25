@@ -14,28 +14,29 @@ import { constructSelect } from '../../../utility/helpers/deconstructSelect'
 export const Select = (props) => {
 
     const { name, label, className = '', endPoint, placeholder = label,
-        labelName = 'name', errMsg = 'Campo requerido', isClearable = true, onSelect, containerStyle = {},
+        labelName = 'name', errMsg = 'Campo requerido', isClearable = true, onSelect,
+        containerStyle = {}, containerClassname = 'mt-2',
         styles = '', defecto = false, customOptions,
         zone, position } = props
 
     const dispatch = useDispatch()
-    const { selectReducer, normalForm, formValidator } = useSelector(state => state)
+    const { selectReducer, formValidator } = useSelector(state => state)
 
     const { [endPoint]: options } = selectReducer
 
-    const findSelectedOpt = (values) => {
-        return customOptions ? customOptions?.find(o => o.value === values) : options?.find(o => o.value === values)
-    }
+    // const findSelectedOpt = (values) => {
+    //     return customOptions ? customOptions?.find(o => o.value === values) : options?.find(o => o.value === values)
+    // }
 
-    const value =
-        (!(normalForm[name] || zone)) ? ((defecto && options) && options[defecto].value)
-            : zone ? findSelectedOpt(normalForm[zone][position][name])
-                : findSelectedOpt(normalForm[name])
+    // const value =
+    //     (!(normalForm[name] || zone)) ? ((defecto && options) && options[defecto].value)
+    //         : zone ? findSelectedOpt(normalForm[zone][position][name])
+    //             : findSelectedOpt(normalForm[name])
 
-    const handleSelectChange = ({ value }) => {
+    const handleSelectChange = (target) => {
         if (formValidator.errors && formValidator.errors[name]) delete formValidator.errors[name]
         dispatch(removeError(formValidator.errors))
-        dispatch(handleChangeController(name, value ? value : null))
+        dispatch(handleChangeController(name, target ? target.value : null))
     }
 
     const handleSelectRepeaterChange = (key, element) => {
@@ -47,7 +48,7 @@ export const Select = (props) => {
     useEffect(() => dispatch(startAddSelectOptions(endPoint, endPoint, labelName)), [])
 
     return (
-        <div className='mt-2' style={{ ...containerStyle }}>
+        <div className={containerClassname} style={{ ...containerStyle }}>
             {
                 label &&
                 <label className="control-label d-flex justify-content-between">{label} {<InputValidator errMsg={errMsg} errors={formValidator.errors} target={name} />}</label>
@@ -61,7 +62,7 @@ export const Select = (props) => {
                 styles={styles}
                 options={customOptions ? customOptions : options}
                 placeholder={placeholder}
-                value={value}
+                // value={value}
                 onChange={onSelect ? onSelect
                     : zone ? ((value) => handleSelectRepeaterChange(name, value))
                         : handleSelectChange}

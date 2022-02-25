@@ -58,7 +58,6 @@ const Login = () => {
           } else {
             dispatch(handleLogin(data))
             const access = getHomeRouteForLoggedInUser()
-            console.log(access)
             if (access) {
               ability.update(data.ability)
               toast.success(

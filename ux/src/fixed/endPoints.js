@@ -22,12 +22,16 @@ const setupEndpoints = {
 
 export const endPoints = {
 
+    Mutuas: '/mutua',
+    Doctors: '/doctor',
+    Procedures: '/procedure',
+
     Notification: '/notification',
     Alerts: '/alerts',
 
     Calendar: '/calendar',
-    Users: '/users',
-    Roles: '/roles',
+    Users: '/user',
+    Roles: '/role',
     Logs: '/logs',
     ...setupEndpoints
 }

@@ -18,6 +18,7 @@ import { RepeaterScreen } from './RepeaterScreen'
 import { DocScreen } from './DocScreen'
 import { MkDir } from '@helpers/Axios/MkDir'
 import { fetch } from '../utility/helpers/Axios/fetch'
+import { MultiSelect } from '../@core/components/form/MultiSelect'
 
 export const FormScreen = (props) => {
 
@@ -65,7 +66,11 @@ export const FormScreen = (props) => {
                         {
                             base && base.map((e) => {
                                 const clase = `col-${e.col[1]} col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`
-                                const Component = e.endPoint ? Select : e.area ? Textarea : Input
+                                const Component =
+                                    (e.endPoint && e.multi) ? MultiSelect
+                                        : (e.endPoint && !e.multi) ? Select
+                                            : e.area ? Textarea
+                                                : Input
                                 return (
                                     <div className={clase}>
                                         <Component {...e} />

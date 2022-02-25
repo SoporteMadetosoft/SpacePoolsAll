@@ -14,35 +14,32 @@ export const MultiSelect = (props) => {
 
     const { name, label, className = '', endPoint, placeholder = label,
         labelName = 'name', errMsg = 'Campo requerido', isClearable = true, onSelect, containerStyle = {},
-        styles = '', defecto = false, defaultOptions } = props
+        containerClassname = 'mt-2',
+        styles = '', customOptions,
+        zone, position } = props
 
     const dispatch = useDispatch()
-    const { selectReducer, normalForm, formValidator } = useSelector(state => state)
-    let { [endPoint]: options } = selectReducer
-    const isValueEmpty = normalForm[name] && Object.keys(normalForm[name]).length > 0
-    options = defaultOptions ? defaultOptions : options
+    const { selectReducer, formValidator } = useSelector(state => state)
 
-    const value = isValueEmpty ? normalForm[name].map(element => ({ value: element.id, label: element[labelName] })) : (defecto !== false && options !== undefined) && options[defecto]
+    const { [endPoint]: options } = selectReducer
 
     const handleSelectChange = (value) => {
-
-        if (formValidator.errors && formValidator.errors[name]) {
-            delete formValidator.errors[name]
-        }
+        if (formValidator.errors && formValidator.errors[name]) delete formValidator.errors[name]
         dispatch(removeError(formValidator.errors))
-
-        const selectedValue = value.map(element => ({ id: element.value, [labelName]: element.label }))
-
-        dispatch(handleChangeController(name, selectedValue))
+        dispatch(handleChangeController(name, value.map(element => (element.value))))
     }
 
-    useEffect(() => {
-        dispatch(startAddSelectOptions(endPoint, endPoint, labelName))
-    }, [])
+    const handleSelectRepeaterChange = (key, element) => {
+        const el = constructSelect(element)
+        const obj = { name: key, value: el.id }
+        dispatch(editRepeaterRegister(zone, position, obj))
+    }
+
+    useEffect(() => dispatch(startAddSelectOptions(endPoint, endPoint, labelName)), [])
 
 
     return (
-        <div className='mt-2' style={{ ...containerStyle }}>
+        <div className={containerClassname} style={{ ...containerStyle }}>
             {
                 label &&
                 <label className="control-label d-flex justify-content-between">{label} {<InputValidator errMsg={errMsg} errors={formValidator.errors} target={name} />}</label>
@@ -54,11 +51,12 @@ export const MultiSelect = (props) => {
                 classNamePrefix={'select'}
                 theme={selectThemeColors}
                 styles={styles}
-                options={options}
+                options={customOptions ? customOptions : options}
                 placeholder={placeholder}
-                value={value}
                 isMulti={true}
-                onChange={onSelect ? onSelect : handleSelectChange}
+                onChange={onSelect ? onSelect
+                    : zone ? ((value) => handleSelectRepeaterChange(name, value))
+                        : handleSelectChange}
             />
         </div>
     )

@@ -14,9 +14,9 @@ import { constructSelect } from '../../../utility/helpers/deconstructSelect'
 export const Select = (props) => {
 
     const { name, label, className = '', endPoint, placeholder = label,
-        labelName = 'name', errMsg = 'Campo requerido', isClearable = true, onSelect,
-        containerStyle = {}, containerClassname = 'mt-2',
-        styles = '', defecto = false, customOptions,
+        labelName = 'name', errMsg = 'Campo requerido', isClearable = true, onSelect, containerStyle = {},
+        containerClassname = 'mt-2',
+        styles = '', customOptions,
         zone, position } = props
 
     const dispatch = useDispatch()

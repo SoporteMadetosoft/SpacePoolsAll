@@ -19,6 +19,7 @@ import { DocScreen } from './DocScreen'
 import { MkDir } from '@helpers/Axios/MkDir'
 import { fetch } from '../utility/helpers/Axios/fetch'
 import { MultiSelect } from '../@core/components/form/MultiSelect'
+import { InputPassword } from '../@core/components/form/Password'
 
 export const FormScreen = (props) => {
 
@@ -65,17 +66,14 @@ export const FormScreen = (props) => {
                     <div className=" card-body row pb-3 px-3">
                         {
                             base && base.map((e) => {
-                                const clase = `col-${e.col[1]} col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`
+                                const clase = `mt-2 col-${e.col[1]} col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`
                                 const Component =
                                     (e.endPoint && e.multi) ? MultiSelect
                                         : (e.endPoint && !e.multi) ? Select
                                             : e.area ? Textarea
-                                                : Input
-                                return (
-                                    <div className={clase}>
-                                        <Component {...e} />
-                                    </div>
-                                )
+                                                : e.type === 'password' ? InputPassword : Input
+
+                                return <Component {...e} containerClassname={clase} />
                             })
                         }
                     </div>

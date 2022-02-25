@@ -8,7 +8,7 @@ import { InputValidator } from './InputValidator'
 
 export const Input = (props) => {
 
-    const { name, label, className = '', placeholder = label,
+    const { name, label, className = '', placeholder = label, containerClassname = 'mt-2',
         type = "text", styles, errMsg = 'Campo requerido', readonly = false, disabled = false,
         symbol = false, defecto = null, position, zone } = props
 
@@ -29,7 +29,7 @@ export const Input = (props) => {
     }
 
     return (
-        <div className='mt-2'>
+        <div className={containerClassname}>
             {
                 label &&
                 <label className="control-label d-flex justify-content-between">{label} {<InputValidator errMsg={errMsg} errors={formValidator.errors} target={name} />}</label>

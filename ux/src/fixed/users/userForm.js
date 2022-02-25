@@ -32,16 +32,10 @@ export const UserForm = {
             label: 'Teléfono'
         },
         {
-            col: [6, 3, 3],
+            col: [6, 6, 6],
             type: 'password',
             name: 'password',
             label: 'Contraseña'
-        },
-        {
-            col: [6, 3, 3],
-            type: 'password',
-            name: 'confirmPassword',
-            label: 'Confirmar'
         },
         {
             col: [6, 3, 3],

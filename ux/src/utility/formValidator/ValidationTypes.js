@@ -6,6 +6,7 @@ const isEmail = (value) => {
 const isRequired = (value) => {
     return !!value
 }
+
 export const validate = (schema, form) => {
     const errors = {}
     Object.keys(schema).forEach(inputName => {

@@ -25,7 +25,7 @@ export const ProcedureList = [
     },
     {
         name: 'Familia del procedimiento',
-        selector: 'family',
+        selector: 'familyId',
         sortable: true,
         searchable: true,
         width: '45%',
@@ -42,7 +42,7 @@ export const ProcedureList = [
             return (
                 <div className='d-flex'>
                     {ability.can('update', 'procedures') && (
-                        <Link to={`/procedures/edit/${row.id}`}>
+                        <Link to={`/procedure/edit/${row.id}`}>
                             <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>

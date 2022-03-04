@@ -13,7 +13,7 @@ export const ListScreen = (props) => {
     const { registros: data } = useSelector(state => state.registrosReducer)
 
     const { title, endPoint, list } = props
-
+    console.log("listscreen", endPoint)
     useEffect(() => {
         handleFullClean(dispatch)
         dispatch(startLoadingTable(endPoint))

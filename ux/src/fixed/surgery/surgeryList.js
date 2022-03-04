@@ -10,13 +10,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEdit } from '@fortawesome/pro-light-svg-icons'
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
-export const DoctorList = [
+export const SurgeryList = [
     {
         name: 'Nº',
         selector: 'id',
         sortable: true,
         searchable: true,
-        width: '10%',
+        width: '5%',
         cell: row => {
             return (
                 <div className="d-flex">
@@ -30,36 +30,56 @@ export const DoctorList = [
         }
     },
     {
-        name: 'Nombre doctor',
-        selector: 'name',
+        name: 'Paciente',
+        selector: 'patient',
         sortable: true,
         searchable: true,
-        width: '30%'
+        width: '12%'
     },
     {
-        name: 'Nombre completo',
-        selector: 'fullName',
+        name: 'Mutua',
+        selector: 'mutuaId',
         sortable: true,
         searchable: true,
-        width: '45%'
+        width: '17%',
+        cell: (row) => row.mutua?.name
     },
     {
-        name: 'Estado',
-        selector: 'status',
+        name: 'Centro',
+        selector: 'centerId',
         sortable: true,
-        searchable: false,
-        select: 'Status',
-        width: '10%',
-        cell: row => {
-            return (
-                <>
-                    {row.status === true
-                        ? (<Badge color='light-success'>Activo</Badge>)
-                        : (<Badge color='light-danger'>Inactivo</Badge>)
-                    }
-                </>
-            )
-        }
+        searchable: true,
+        width: '17%',
+        cell: (row) => row.center?.name
+    },
+    {
+        name: 'Doctor',
+        selector: 'doctorId',
+        sortable: true,
+        searchable: true,
+        width: '13%',
+        cell: (row) => row.doctor?.name
+    },
+    {
+        name: 'Fecha cirugía',
+        selector: 'surgeryDate',
+        sortable: true,
+        searchable: true,
+        width: '9%'
+    },
+    {
+        name: 'Hora cirugía',
+        selector: 'surgeryTime',
+        sortable: true,
+        searchable: true,
+        width: '9%'
+    },
+    {
+        name: 'Comentario',
+        selector: 'comments',
+        sortable: true,
+        searchable: true,
+        width: '13%'
     },
     {
         name: '',
@@ -71,14 +91,14 @@ export const DoctorList = [
 
             return (
                 <div className='d-flex'>
-                    {ability.can('update', 'doctors') && (
-                        <Link to={`/doctor/edit/${row.id}`}>
+                    {ability.can('update', 'surgery') && (
+                        <Link to={`/surgery/edit/${row.id}`}>
                             <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>
                         </Link>
                     )}
-                    {ability.can('delete', 'doctors') && (
+                    {ability.can('delete', 'surgery') && (
                         <Link onClick={(e) => {
                             dispatch(startDeleteRegister(row.id))
                         }}>
@@ -88,6 +108,7 @@ export const DoctorList = [
                         </Link>
                     )}
                 </div>
+
             )
         }
     }

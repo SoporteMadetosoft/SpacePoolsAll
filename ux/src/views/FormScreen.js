@@ -45,14 +45,18 @@ export const FormScreen = (props) => {
     const submit = async (e) => {
         e.preventDefault()
         const errors = validate(formValidator.schema, normalForm)
+        console.log("guardar", errors)
         if (Object.keys(errors).length) {
             dispatch(setErrors(errors))
         } else {
+            console.log("endpoint", endPoint)
+            console.log("data", normalForm)
+            /*
             if (documents) {
                 const filePath2 = !normalForm['filePath'] ? await MkDir(endPoint, filePath) : normalForm['filePath']
                 normalForm['documents'] = await preSubmit(filePath2, upload, file, normalForm['documents'])
                 normalForm['filePath'] = filePath2
-            }
+            }*/
             fetch(endPoint, id, { ...normalForm }, 'POST')
             history.goBack()
         }

@@ -9,7 +9,6 @@ export const fetch = async (endPoint, id = null, params = null, method = 'GET') 
         method = method === 'POST' ? 'PUT' : method
         url += `/${id}`
     }
-
     const { data } = await axios(url, {
         method,
         data: { ...params },
@@ -19,6 +18,4 @@ export const fetch = async (endPoint, id = null, params = null, method = 'GET') 
         }
     })
     return data
-
-
 }

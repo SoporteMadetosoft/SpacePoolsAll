@@ -17,21 +17,22 @@ export const Select = (props) => {
         labelName = 'name', errMsg = 'Campo requerido', isClearable = true, onSelect, containerStyle = {},
         containerClassname = 'mt-2',
         styles = '', customOptions,
+        defecto = null,
         zone, position } = props
 
     const dispatch = useDispatch()
-    const { selectReducer, formValidator } = useSelector(state => state)
+    const { normalForm, selectReducer, formValidator } = useSelector(state => state)
 
     const { [endPoint]: options } = selectReducer
 
-    // const findSelectedOpt = (values) => {
-    //     return customOptions ? customOptions?.find(o => o.value === values) : options?.find(o => o.value === values)
-    // }
+    const findSelectedOpt = (values) => {
+        return customOptions ? customOptions?.find(o => o.value === values) : options?.find(o => o.value === values)
+    }
 
-    // const value =
-    //     (!(normalForm[name] || zone)) ? ((defecto && options) && options[defecto].value)
-    //         : zone ? findSelectedOpt(normalForm[zone][position][name])
-    //             : findSelectedOpt(normalForm[name])
+    const value =
+        (!((normalForm[name] !== undefined && normalForm[name] !== null) || zone)) ? ((defecto && options) && options[defecto].value)
+            : zone ? findSelectedOpt(normalForm[zone][position][name])
+                : findSelectedOpt(normalForm[name])
 
     const handleSelectChange = (target) => {
         if (formValidator.errors && formValidator.errors[name]) delete formValidator.errors[name]
@@ -44,7 +45,6 @@ export const Select = (props) => {
         const obj = { name: key, value: el.id }
         dispatch(editRepeaterRegister(zone, position, obj))
     }
-
     useEffect(() => dispatch(startAddSelectOptions(endPoint, endPoint, labelName)), [])
 
     return (
@@ -62,7 +62,7 @@ export const Select = (props) => {
                 styles={styles}
                 options={customOptions ? customOptions : options}
                 placeholder={placeholder}
-                // value={value}
+                value={value}
                 onChange={onSelect ? onSelect
                     : zone ? ((value) => handleSelectRepeaterChange(name, value))
                         : handleSelectChange}

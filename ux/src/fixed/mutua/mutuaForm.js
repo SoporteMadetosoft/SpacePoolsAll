@@ -10,18 +10,18 @@ export const MutuaForm = {
     documents: true,
     base: [
         {
-            col: [6, 2, 2],
+            col: [1, 1, 1],
             readonly: true,
             name: 'id',
             label: 'Nº Mutua'
         },
         {
-            col: [6, 6, 6],
+            col: [7, 7, 7],
             name: 'name',
             label: 'Nombre'
         },
         {
-            col: [6, 2, 2],
+            col: [2, 2, 2],
             name: 'status',
             label: 'Estado',
             endPoint: 'Status',
@@ -31,7 +31,7 @@ export const MutuaForm = {
             ]
         },
         {
-            col: [6, 2, 2],
+            col: [2, 2, 2],
             name: 'mode',
             label: 'Modo',
             endPoint: 'Mode',

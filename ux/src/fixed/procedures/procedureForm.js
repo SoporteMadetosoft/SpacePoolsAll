@@ -16,12 +16,12 @@ export const ProcedureForm = {
         {
             col: [6, 5, 5],
             name: 'name',
-            label: 'Nombre'
+            label: 'Nombre Procedimiento'
         },
         {
             col: [6, 5, 5],
-            name: 'fullName',
-            label: 'Familia',
+            name: 'familyId',
+            label: 'Familia del procedimiento',
             endPoint: 'ProcedureFamily'
         }
     ]

@@ -39,9 +39,9 @@ const Login = () => {
 
   const { register, errors, handleSubmit } = useForm()
 
-  const illustration = skin === 'dark' ? 'background1.png' : 'background1.png',
-    source = require(`@src/assets/images/backgrounds/${illustration}`).default
-  const logoLogin = require(`@src/assets/images/ico/favicon.png`).default
+  const illustration = skin === 'dark' ? 'background1.jpg' : 'background1.jpg',
+  source = require(`@src/assets/images/backgrounds/${illustration}`).default
+  const logoLogin = require(`@src/assets/images/logo/logo.png`).default
 
   const onSubmit = () => {
     if (isObjEmpty(errors)) {
@@ -88,12 +88,9 @@ const Login = () => {
         <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12' style={{ padding: '0px', margin: '0px' }}>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
             <div className="d-flex d-lg-flex align-items-center justify-content-center mb-2">
-              <CardImg src={logoLogin} style={{ width: '200px' }} />
+              <CardImg src={logoLogin} style={{ width: '300px' }} />
             </div>
-            <CardTitle tag='h2' className='font-weight-bold mb-1 d-flex d-lg-flex align-items-center justify-content-center mb-1'>
-              Bienvenido a CONMED
-            </CardTitle>
-
+          
             <CardText className='mb-1 d-flex d-lg-flex align-items-center justify-content-center'>
               Por favor, introduce tus datos de acceso
             </CardText>

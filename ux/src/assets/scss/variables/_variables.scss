@@ -22,3 +22,11 @@ $primary: #3b81d1;
 .navigation {
     font-size: .9rem;
 }
+
+
+.center-fallback {
+    position: absolute;
+    top: 50%;
+    right:50%;
+    transform: translate(-50%, -50%);
+}

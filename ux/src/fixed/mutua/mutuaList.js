@@ -16,7 +16,7 @@ export const MutuaList = [
         selector: 'id',
         sortable: true,
         searchable: true,
-        width: '8%',
+        width: '10%',
         cell: row => {
             return (
                 <div className="d-flex">
@@ -30,7 +30,7 @@ export const MutuaList = [
         }
     },
     {
-        name: 'Nombre',
+        name: 'Nombre Mutua',
         selector: 'name',
         sortable: true,
         searchable: true,
@@ -42,7 +42,7 @@ export const MutuaList = [
         sortable: true,
         searchable: false,
         select: 'Status',
-        width: '9%',
+        width: '10%',
         cell: row => {
             return (
                 <>
@@ -65,7 +65,7 @@ export const MutuaList = [
             return (
                 <div className='d-flex'>
                     {ability.can('update', 'mutuas') && (
-                        <Link to={`/mutuas/edit/${row.id}`}>
+                        <Link to={`/mutua/edit/${row.id}`}>
                             <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>

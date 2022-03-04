@@ -7,7 +7,7 @@ export const SalesOrgForm = {
     },
     base: [
         {
-            col: [6, 4, 4],
+            col: [12, 16, 6],
             name: 'name',
             label: 'Organización de ventas'
         }

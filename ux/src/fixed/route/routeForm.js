@@ -1,33 +1,27 @@
 import { validator } from "../../utility/formValidator/ValidationTypes"
 
-export const DoctorForm = {
+export const RouteForm = {
     structure: {
         documents: []
     },
     errors: {
-        name: { validations: [validator.isRequired] },
-        fullName: { validations: [validator.isRequired] }
+        name: { validations: [validator.isRequired] }
     },
     documents: true,
     base: [
         {
-            col: [1, 1, 1],
+            col: [6, 2, 2],
             readonly: true,
             name: 'id',
-            label: 'Nº Doctor'
+            label: 'Nº Route'
         },
         {
-            col: [2, 2, 2],
+            col: [6, 6, 6],
             name: 'name',
-            label: 'Nombre doctor'
+            label: 'Nombre'
         },
         {
-            col: [5, 5, 5],
-            name: 'fullName',
-            label: 'Nombre completo'
-        },
-        {
-            col: [2, 2, 2],
+            col: [6, 2, 2],
             name: 'status',
             label: 'Estado',
             endPoint: 'Status',
@@ -37,7 +31,7 @@ export const DoctorForm = {
             ]
         },
         {
-            col: [2, 2, 2],
+            col: [6, 2, 2],
             name: 'mode',
             label: 'Modo',
             endPoint: 'Mode',

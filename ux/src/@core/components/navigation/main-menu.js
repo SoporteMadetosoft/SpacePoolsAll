@@ -58,10 +58,10 @@ export default [
         ]
     },
     {
-        id: 'surgeries',
+        id: 'surgery',
         title: 'Cirugías',
         icon: <FontAwesomeIcon icon={faSyringe} />,
-        navLink: '/surgeries'
+        navLink: '/surgery'
     },
     {
         id: 'calendar',

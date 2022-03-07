@@ -12,7 +12,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 export const MutuaList = [
     {
-        name: 'Nº',
+        name: 'Nº Mutua',
         selector: 'id',
         sortable: true,
         searchable: true,

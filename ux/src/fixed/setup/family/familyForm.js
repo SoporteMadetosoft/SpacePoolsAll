@@ -7,12 +7,12 @@ export const FamilyForm = {
     },
     base: [
         {
-            col: [6, 4, 4],
+            col: [6, 6, 6],
             name: 'name',
             label: 'Familia'
         },
         {
-            col: [6, 4, 4],
+            col: [6, 6, 6],
             name: 'parentId',
             label: 'Padre',
             endPoint: 'Family'

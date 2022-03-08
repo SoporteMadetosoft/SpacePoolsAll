@@ -10,24 +10,25 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 export const FamilyList = [
     {
-        name: 'Nº',
+        name: 'Nº Familia',
         selector: 'id',
         sortable: true,
-        width: '8%'
+        width: '10%'
     },
     {
         name: 'Familia',
         selector: 'name',
         sortable: true,
         searchable: true,
-        width: '39%'
+        width: '45%'
     },
     {
-        name: 'parent',
-        selector: 'Padre',
+        name: 'Padre',
+        selector: 'parentId',
         sortable: true,
         searchable: true,
-        width: '38%'
+        width: '40%',
+        cell: (row) => row.parent?.name
     },
     {
         name: '',

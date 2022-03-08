@@ -13,14 +13,14 @@ export const BrandList = [
         name: 'Nº',
         selector: 'id',
         sortable: true,
-        width: '8%'
+        width: '10%'
     },
     {
         name: 'Marca',
         selector: 'name',
         sortable: true,
         searchable: true,
-        width: '77%'
+        width: '85%'
     },
     {
         name: '',

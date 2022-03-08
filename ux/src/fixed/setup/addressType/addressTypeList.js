@@ -10,17 +10,17 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 export const AddressTypeList = [
     {
-        name: 'Nº',
+        name: 'Nº Dirección',
         selector: 'id',
         sortable: true,
-        width: '8%'
+        width: '10%'
     },
     {
         name: 'Tipo de dirección',
         selector: 'name',
         sortable: true,
         searchable: true,
-        width: '77%'
+        width: '85%'
     },
     {
         name: '',

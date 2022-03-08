@@ -7,7 +7,7 @@ export const AddressTypeForm = {
     },
     base: [
         {
-            col: [6, 4, 4],
+            col: [12, 12, 12],
             name: 'name',
             label: 'Tipo de dirección'
         }

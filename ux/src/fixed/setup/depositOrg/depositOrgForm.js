@@ -7,7 +7,7 @@ export const DepositOrgForm = {
     },
     base: [
         {
-            col: [6, 4, 4],
+            col: [12, 12, 12],
             name: 'name',
             label: 'Organización de depósitos'
         }

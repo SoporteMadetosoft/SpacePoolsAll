@@ -10,17 +10,17 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 export const DepartmentList = [
     {
-        name: 'Nº',
+        name: 'Nº Departamento',
         selector: 'id',
         sortable: true,
-        width: '8%'
+        width: '12%'
     },
     {
         name: 'Departamento',
         selector: 'name',
         sortable: true,
         searchable: true,
-        width: '77%'
+        width: '83%'
     },
     {
         name: '',

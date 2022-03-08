@@ -10,7 +10,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 export const BrandList = [
     {
-        name: 'Nº',
+        name: 'Nº Marca',
         selector: 'id',
         sortable: true,
         width: '10%'

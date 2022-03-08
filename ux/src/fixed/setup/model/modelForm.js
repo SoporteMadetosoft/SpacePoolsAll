@@ -7,12 +7,12 @@ export const ModelForm = {
     },
     base: [
         {
-            col: [6, 4, 4],
+            col: [6, 6, 6],
             name: 'name',
             label: 'Modelo'
         },
         {
-            col: [6, 4, 4],
+            col: [6, 6, 6],
             name: 'brandId',
             label: 'Marca',
             endPoint: 'Brand'

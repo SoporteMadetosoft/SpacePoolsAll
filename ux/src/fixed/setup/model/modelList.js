@@ -10,25 +10,24 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 export const ModelList = [
     {
-        name: 'Nº',
+        name: 'Nº Modelo',
         selector: 'id',
         sortable: true,
-        width: '8%'
+        width: '10%'
     },
     {
-        name: 'Model',
-        selector: 'modelId',
+        name: 'Modelo',
+        selector: 'name',
         sortable: true,
         searchable: true,
-        width: '38%',
-        cell: (row) => row.model?.name
+        width: '40%'
     },
     {
         name: 'Marca',
         selector: 'brandId',
         sortable: true,
         searchable: true,
-        width: '38%',
+        width: '45%',
         cell: (row) => row.brand?.name
     },
     {

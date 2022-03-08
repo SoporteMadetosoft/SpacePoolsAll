@@ -11,6 +11,7 @@ import BrandRoutes from "./brand"
 import ModelRoutes from "./model"
 import AddressTypeRoutes from "./addressType"
 import DepartmentRoutes from "./department"
+import ZoneRoutes from "./zone"
 
 // ** Merge Routes
 const setupRoutes = [
@@ -25,7 +26,8 @@ const setupRoutes = [
     ...BrandRoutes,
     ...ModelRoutes,
     ...AddressTypeRoutes,
-    ...DepartmentRoutes
+    ...DepartmentRoutes,
+    ...ZoneRoutes
 ]
 
 export default setupRoutes

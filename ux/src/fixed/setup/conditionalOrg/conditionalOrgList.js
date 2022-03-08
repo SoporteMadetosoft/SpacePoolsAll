@@ -10,17 +10,17 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 export const ConditionalOrgList = [
     {
-        name: 'Nº',
+        name: 'Nº Condicional',
         selector: 'id',
         sortable: true,
-        width: '8%'
+        width: '11%'
     },
     {
         name: 'Organización condicional',
         selector: 'name',
         sortable: true,
         searchable: true,
-        width: '77%'
+        width: '84%'
     },
     {
         name: '',

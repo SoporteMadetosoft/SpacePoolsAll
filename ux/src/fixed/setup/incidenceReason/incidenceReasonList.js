@@ -10,17 +10,17 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 export const IncidenceReasonList = [
     {
-        name: 'Nº',
+        name: 'Nº Motivo',
         selector: 'id',
         sortable: true,
-        width: '8%'
+        width: '10%'
     },
     {
         name: 'Motivo de incidencia',
         selector: 'name',
         sortable: true,
         searchable: true,
-        width: '77%'
+        width: '85%'
     },
     {
         name: '',

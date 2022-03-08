@@ -7,7 +7,7 @@ export const IncidenceReasonForm = {
     },
     base: [
         {
-            col: [6, 4, 4],
+            col: [12, 12, 12],
             name: 'name',
             label: 'Motivo de incidencia'
         }

@@ -4,7 +4,7 @@ import { FormScreen } from '../../../views/FormScreen'
 import { ListScreen } from '../../../views/ListScreen'
 
 const base = {
-    title: 'Centers',
+    title: 'Centros',
     endPoint: 'Centers',
     list: {
         columns: CenterList

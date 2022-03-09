@@ -28,5 +28,6 @@ export const endPoints = {
     Users: '/user',
     Roles: '/role',
     Logs: '/logs',
+    Incidences: '/incidence',
     ...setupEndpoints
 }

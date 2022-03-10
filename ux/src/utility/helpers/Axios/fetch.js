@@ -3,6 +3,7 @@ import { endPoints } from "@fixed/endPoints"
 
 export const fetch = async (endPoint, id = null, params = null, method = 'GET') => {
     const token = localStorage.getItem('accessToken') || ''
+    console.log("----------------------",endPoints)
     let url = `${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}`
 
     if (id) {

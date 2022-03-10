@@ -29,5 +29,13 @@ export const endPoints = {
     Roles: '/role',
     Logs: '/logs',
     Incidences: '/incidence',
+    Materials: '/material',
+    Instruments: '/instrument',
+    Instrumentals: '/instrumental',
+    Sheets: '/sheet',
+    Loans: '/loan',
+    Deposits: '/deposit',
+    Sales: '/sale',
+    Delivery: '/delivery',
     ...setupEndpoints
 }

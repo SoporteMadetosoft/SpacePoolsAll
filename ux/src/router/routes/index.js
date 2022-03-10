@@ -12,6 +12,14 @@ import RouteRoutes from './routes/Routes'
 import IncidenceRoutes from './incidences/Incidences'
 import setupRoutes from './setup'
 import UserRoutes from './users/Users'
+import MaterialsRoutes from './materials/Materials'
+import InstrumentsRoutes from './instruments/Instruments'
+import InstrumentalsRoutes from './instrumentals/Instrumentals'
+import SheetsRoutes from './sheets/Sheets'
+import LoansRoutes from './loans/Loans'
+import DepositsRoutes from './deposits/Deposits'
+import SalesRoutes from './sales/Sales'
+import DeliverysRoutes from './deliverys/Deliverys'
 
 // ** Document title
 const TemplateTitle = '%s - CONMED'
@@ -32,6 +40,14 @@ const Routes = [
   ...VehicleRoutes,
   ...RouteRoutes,
   ...IncidenceRoutes,
+  ...MaterialsRoutes,
+  ...InstrumentsRoutes,
+  ...InstrumentalsRoutes,
+  ...SheetsRoutes,
+  ...LoansRoutes,
+  ...DepositsRoutes,
+  ...SalesRoutes,
+  ...DeliverysRoutes,
   ...UserRoutes,
   ...setupRoutes
 ]

@@ -35,25 +35,25 @@ export default [
                 id: 'materials',
                 title: 'M. consumibles',
                 icon: <FontAwesomeIcon icon={faCircleNotch} />,
-                navLink: '/stock/materials'
+                navLink: '/materials'
             },
             {
                 id: 'instruments',
                 title: 'Instrumentos',
                 icon: <FontAwesomeIcon icon={faCircleNotch} />,
-                navLink: '/stock/instruments'
+                navLink: '/instruments'
             },
             {
                 id: 'instrumentals',
                 title: 'Instrumentales',
                 icon: <FontAwesomeIcon icon={faCircleNotch} />,
-                navLink: '/stock/instrumentals'
+                navLink: '/instrumentals'
             },
             {
                 id: 'sheets',
                 title: 'Fichas',
                 icon: <FontAwesomeIcon icon={faCircleNotch} />,
-                navLink: '/stock/sheets'
+                navLink: '/sheets'
             }
         ]
     },
@@ -105,10 +105,10 @@ export default [
                 navLink: '/sales'
             },
             {
-                id: 'deliveryNote',
+                id: 'delivery',
                 title: 'Albaranes',
                 icon: <FontAwesomeIcon icon={faCircleNotch} />,
-                navLink: '/delivery-note'
+                navLink: '/delivery'
             }
         ]
     },

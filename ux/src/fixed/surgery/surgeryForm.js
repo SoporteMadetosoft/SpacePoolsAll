@@ -14,14 +14,40 @@ export const SurgeryForm = {
             label: 'Nº Cirugía'
         },
         {
+            col: [6, 6, 6],
+            name: 'patient',
+            label: 'Paciente'
+        },
+        {
             col: [3, 3, 3],
             name: 'policyNumber',
             label: 'Nº de poliza'
         },
         {
-            col: [4, 4, 4],
-            name: 'patient',
-            label: 'Paciente'
+            col: [1, 1, 1],
+            name: 'urgency',
+            label: 'Urgencia',
+            endPoint: 'Urgency',
+            type: 'toggle'
+        },
+        {
+            col: [1, 1, 1],
+            name: 'demo',
+            label: 'Demo',
+            endPoint: 'Demo',
+            type: 'toggle'
+        },
+        {
+            col: [5, 5, 5],
+            name: 'mutuaId',
+            label: 'Mutua',
+            endPoint: 'Mutuas'
+        },
+        {
+            col: [5, 5, 5],
+            name: 'doctorId',
+            label: 'Doctor',
+            endPoint: 'Doctors'
         },
         {
             col: [2, 2, 2],
@@ -30,54 +56,22 @@ export const SurgeryForm = {
             type: 'date'
         },
         {
-            col: [2, 2, 2],
-            name: 'surgeryTime',
-            label: 'Hora cirugía',
-            type: 'time'
-        },
-        {
-            col: [2, 2, 2],
-            name: 'mutuaId',
-            label: 'Mutua',
-            endPoint: 'Mutuas'
-        },
-        {
-            col: [2, 2, 2],
-            name: 'doctorId',
-            label: 'Doctor',
-            endPoint: 'Doctors'
-        },
-        {
-            col: [2, 2, 2],
+            col: [5, 5, 5],
             name: 'centerId',
             label: 'Centro',
             endPoint: 'Centers'
         },
         {
-            col: [2, 2, 2],
+            col: [5, 5, 5],
             name: 'procedureId',
             label: 'Procedimiento',
             endPoint: 'Procedures'
         },
         {
             col: [2, 2, 2],
-            name: 'urgency',
-            label: 'Urgencia',
-            endPoint: 'Urgency',
-            customOptions: [
-                { value: true, label: 'Activo' },
-                { value: false, label: 'Inactivo' }
-            ]
-        },
-        {
-            col: [2, 2, 2],
-            name: 'demo',
-            label: 'Demo',
-            endPoint: 'Demo',
-            customOptions: [
-                { value: true, label: 'Activo' },
-                { value: false, label: 'Inactivo' }
-            ]
+            name: 'surgeryTime',
+            label: 'Hora cirugía',
+            type: 'time'
         },
         {
             col: [12, 12, 12],

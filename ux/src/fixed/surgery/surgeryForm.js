@@ -26,12 +26,14 @@ export const SurgeryForm = {
         {
             col: [2, 2, 2],
             name: 'surgeryDate',
-            label: 'Fecha cirugía'
+            label: 'Fecha cirugía',
+            type: 'date'
         },
         {
             col: [2, 2, 2],
             name: 'surgeryTime',
-            label: 'Hora cirugía'
+            label: 'Hora cirugía',
+            type: 'time'
         },
         {
             col: [2, 2, 2],

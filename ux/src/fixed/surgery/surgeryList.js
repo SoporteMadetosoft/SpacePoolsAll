@@ -34,14 +34,14 @@ export const SurgeryList = [
         selector: 'patient',
         sortable: true,
         searchable: true,
-        width: '12%'
+        width: '15%'
     },
     {
         name: 'Mutua',
         selector: 'mutuaId',
         sortable: true,
         searchable: true,
-        width: '17%',
+        width: '20%',
         cell: (row) => row.mutua?.name
     },
     {
@@ -49,7 +49,7 @@ export const SurgeryList = [
         selector: 'centerId',
         sortable: true,
         searchable: true,
-        width: '17%',
+        width: '20%',
         cell: (row) => row.center?.name
     },
     {
@@ -57,7 +57,7 @@ export const SurgeryList = [
         selector: 'doctorId',
         sortable: true,
         searchable: true,
-        width: '13%',
+        width: '15%',
         cell: (row) => row.doctor?.name
     },
     {
@@ -65,21 +65,14 @@ export const SurgeryList = [
         selector: 'surgeryDate',
         sortable: true,
         searchable: true,
-        width: '9%'
+        width: '10%'
     },
     {
         name: 'Hora cirugía',
         selector: 'surgeryTime',
         sortable: true,
         searchable: true,
-        width: '9%'
-    },
-    {
-        name: 'Comentario',
-        selector: 'comments',
-        sortable: true,
-        searchable: true,
-        width: '13%'
+        width: '10%'
     },
     {
         name: '',

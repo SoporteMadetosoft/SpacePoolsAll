@@ -13,9 +13,27 @@ export const MaterialForm = {
             label: 'Nº Material'
         },
         {
-            col: [7, 7, 7],
-            name: 'name',
-            label: 'Nombre'
+            col: [2, 2, 2],
+            name: 'lote',
+            label: 'Lote'
+        },
+        {
+            col: [3, 3, 3],
+            name: 'reference',
+            label: 'Referencia'
+        },
+        {
+            col: [2, 2, 2],
+            name: 'weight',
+            label: 'Peso'
+        },
+        {
+            col: [2, 2, 2],
+            name: 'expiration',
+            label: 'Caducidad',
+            endPoint: 'Status',
+            type: "date"
+
         },
         {
             col: [2, 2, 2],
@@ -28,9 +46,41 @@ export const MaterialForm = {
             ]
         },
         {
+            col: [3, 3, 3],
+            name: 'gtin',
+            label: 'GTIN'
+        },
+        {
+            col: [3, 3, 3],
+            name: 'quantityGtin',
+            label: 'Cantidad por GTIN'
+        },
+        {
+            col: [3, 3, 3],
+            name: 'stock',
+            label: 'Stock'
+        },
+        {
+            col: [3, 3, 3],
+            name: 'minimumStock',
+            label: 'Stock mínimo'
+        },
+        {
+            col: [6, 6, 6],
+            name: 'familyId',
+            label: 'Familia',
+            endPoint: 'Family'
+        },
+        {
+            col: [6, 6, 6],
+            name: 'subFamilyId',
+            label: 'Subfamilia',
+            endPoint: 'Family'
+        },
+        {
             col: [12, 12, 12],
-            name: 'observations',
-            label: 'Observaciones'
+            name: 'description',
+            label: 'Descripción'
         }
     ]
 }

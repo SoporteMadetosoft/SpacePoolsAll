@@ -3,19 +3,27 @@ import { validator } from "../../utility/formValidator/ValidationTypes"
 export const SaleForm = {
     structure: {},
     errors: {
-        name: { validations: [validator.isRequired] }
+        centerId: { validations: [validator.isRequired] }
     },
     base: [
         {
             col: [1, 1, 1],
             readonly: true,
             name: 'id',
-            label: 'Nº Sale'
+            label: 'Nº Venta'
         },
         {
             col: [7, 7, 7],
-            name: 'name',
-            label: 'Nombre'
+            name: 'centerId',
+            label: 'Centro',
+            endPoint: 'Centers'
+        },
+        {
+            col: [2, 2, 2],
+            name: 'deliveryDay',
+            label: 'Dia de entrega',
+            endPoint: 'DeliveryDay',
+            type: "date"
         },
         {
             col: [2, 2, 2],
@@ -26,11 +34,6 @@ export const SaleForm = {
                 { value: true, label: 'Activo' },
                 { value: false, label: 'Inactivo' }
             ]
-        },
-        {
-            col: [12, 12, 12],
-            name: 'observations',
-            label: 'Observaciones'
         }
     ]
 }

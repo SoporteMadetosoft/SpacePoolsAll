@@ -16,43 +16,21 @@ export const InstrumentalList = [
         selector: 'id',
         sortable: true,
         searchable: true,
-        width: '10%',
-        cell: row => {
-            return (
-                <div className="d-flex">
-                    {row.mode === true
-                        ? (<Check className="mr-1" color="green" size={15} />)
-                        : (<Slash className="mr-1" color="red" size={15} />)
-                    }
-                    <label>{row.id}</label>
-                </div>
-            )
-        }
+        width: '13%'
     },
     {
-        name: 'Nombre Instrumental',
-        selector: 'name',
+        name: 'Referencia',
+        selector: 'reference',
         sortable: true,
         searchable: true,
-        width: '75%'
+        width: '20%'
     },
     {
-        name: 'Estado',
-        selector: 'status',
+        name: 'Descripción',
+        selector: 'description',
         sortable: true,
-        searchable: false,
-        select: 'Status',
-        width: '10%',
-        cell: row => {
-            return (
-                <>
-                    {row.status === true
-                        ? (<Badge color='light-success'>Activo</Badge>)
-                        : (<Badge color='light-danger'>Inactivo</Badge>)
-                    }
-                </>
-            )
-        }
+        searchable: true,
+        width: '62%'
     },
     {
         name: '',
@@ -64,14 +42,14 @@ export const InstrumentalList = [
 
             return (
                 <div className='d-flex'>
-                    {ability.can('update', 'materials') && (
-                        <Link to={`/stock/material/edit/${row.id}`}>
+                    {ability.can('update', 'instrumentals') && (
+                        <Link to={`instrumentals/edit/${row.id}`}>
                             <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>
                         </Link>
                     )}
-                    {ability.can('delete', 'materials') && (
+                    {ability.can('delete', 'instrumentals') && (
                         <Link onClick={(e) => {
                             dispatch(startDeleteRegister(row.id))
                         }}>

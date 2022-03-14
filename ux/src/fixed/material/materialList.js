@@ -19,7 +19,7 @@ export const MaterialList = [
         width: '10%'
     },
     {
-        name: 'Nombre Stock',
+        name: 'Nombre',
         selector: 'name',
         sortable: true,
         searchable: true,
@@ -43,7 +43,7 @@ export const MaterialList = [
             return (
                 <div className='d-flex'>
                     {ability.can('update', 'materials') && (
-                        <Link to={`/material/edit/${row.id}`}>
+                        <Link to={`/materials/edit/${row.id}`}>
                             <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>

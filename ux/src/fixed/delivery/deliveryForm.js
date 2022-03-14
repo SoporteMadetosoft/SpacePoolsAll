@@ -3,34 +3,96 @@ import { validator } from "../../utility/formValidator/ValidationTypes"
 export const DeliveryForm = {
     structure: {},
     errors: {
-        name: { validations: [validator.isRequired] }
+        patient: { validations: [validator.isRequired] }
     },
     base: [
         {
             col: [1, 1, 1],
             readonly: true,
             name: 'id',
-            label: 'Nº Delivery'
+            label: 'Nº Albarán'
         },
         {
-            col: [7, 7, 7],
-            name: 'name',
-            label: 'Nombre'
+            col: [11, 11, 11],
+            name: 'patient',
+            label: 'Paciente'
         },
         {
-            col: [2, 2, 2],
-            name: 'status',
-            label: 'Estado',
-            endPoint: 'Status',
-            customOptions: [
-                { value: true, label: 'Activo' },
-                { value: false, label: 'Inactivo' }
-            ]
+            col: [3, 3, 3],
+            name: 'surgeryNum',
+            label: 'Nº Cirugía'
+        },
+        {
+            col: [3, 3, 3],
+            name: 'policyNum',
+            label: 'Nº de poliza'
+        },
+        {
+            col: [3, 3, 3],
+            name: 'surgeryDate',
+            label: 'Fecha cirugía',
+            endPoint: 'SurgeryDate',
+            type: "date"
+        },
+        {
+            col: [3, 3, 3],
+            name: 'surgeryTime',
+            label: 'Hora cirugía',
+            endPoint: 'SurgeryTime',
+            type: "time"
+        },
+        {
+            col: [6, 6, 6],
+            name: 'deliveryOrigin',
+            label: 'Origen',
+            endPoint: 'DeliveryOrigin'
+        },
+        {
+            col: [6, 6, 6],
+            name: 'mutuaId',
+            label: 'Mutua',
+            endPoint: 'Mutuas'
+        },
+        {
+            col: [6, 6, 6],
+            name: 'doctorId',
+            label: 'Doctor',
+            endPoint: 'Doctors'
+        },
+        {
+            col: [6, 6, 6],
+            name: 'centerId',
+            label: 'Centro',
+            endPoint: 'Centers'
+        },
+        {
+            col: [6, 6, 6],
+            name: 'procedureId',
+            label: 'Tipo de operación ',
+            endPoint: 'Procedures'
+        },
+        {
+            col: [6, 6, 6],
+            name: 'instrumentId',
+            label: 'Instrumento',
+            endPoint: 'Instruments'
+        },
+        {
+            col: [6, 6, 6],
+            name: 'instrumentalId',
+            label: 'Instrumental',
+            endPoint: 'Instrumentals'
+        },
+        {
+            col: [6, 6, 6],
+            name: 'materialId',
+            label: 'Materiales consumibles',
+            endPoint: 'Materials'
         },
         {
             col: [12, 12, 12],
             name: 'observations',
-            label: 'Observaciones'
+            label: 'Comentarios'
         }
     ]
 }

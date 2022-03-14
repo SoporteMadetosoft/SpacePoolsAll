@@ -3,19 +3,19 @@ import { validator } from "../../utility/formValidator/ValidationTypes"
 export const InstrumentalForm = {
     structure: {},
     errors: {
-        name: { validations: [validator.isRequired] }
+        gtin: { validations: [validator.isRequired] }
     },
     base: [
         {
             col: [1, 1, 1],
             readonly: true,
             name: 'id',
-            label: 'Nº Instrumental'
+            label: 'Nº Instrument'
         },
         {
-            col: [7, 7, 7],
-            name: 'name',
-            label: 'Nombre'
+            col: [3, 3, 3],
+            name: 'gtin',
+            label: 'Código de barras'
         },
         {
             col: [2, 2, 2],
@@ -28,9 +28,26 @@ export const InstrumentalForm = {
             ]
         },
         {
+            col: [6, 6, 6],
+            name: 'reference',
+            label: 'Referencia'
+        },
+        {
+            col: [6, 6, 6],
+            name: 'familyId',
+            label: 'Familia',
+            endPoint: 'Family'
+        },
+        {
+            col: [6, 6, 6],
+            name: 'subFamilyId',
+            label: 'Subfamilia',
+            endPoint: 'Family'
+        },
+        {
             col: [12, 12, 12],
-            name: 'observations',
-            label: 'Observaciones'
+            name: 'description',
+            label: 'Descripción'
         }
     ]
 }

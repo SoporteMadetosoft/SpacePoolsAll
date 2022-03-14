@@ -28,14 +28,14 @@ export const SurgeryForm = {
             name: 'urgency',
             label: 'Urgencia',
             endPoint: 'Urgency',
-            type: 'toggle'
+            type: "toggle"
         },
         {
             col: [1, 1, 1],
             name: 'demo',
             label: 'Demo',
             endPoint: 'Demo',
-            type: 'toggle'
+            type: "toggle"
         },
         {
             col: [5, 5, 5],

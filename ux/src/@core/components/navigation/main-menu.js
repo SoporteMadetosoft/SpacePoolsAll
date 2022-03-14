@@ -67,7 +67,8 @@ export default [
         id: 'calendar',
         title: 'Calendario',
         icon: <FontAwesomeIcon icon={faCalendar} />,
-        navLink: '/calendar'
+        //navLink: '/calendar'
+        navLink: '/commingSoon'
     },
     {
         id: 'vehicles',
@@ -79,7 +80,8 @@ export default [
         id: 'routes',
         title: 'Rutas',
         icon: <FontAwesomeIcon icon={faRoute} />,
-        navLink: '/routes'
+        //navLink: '/routes'
+        navLink: '/commingSoon'
     },
     {
         id: 'gestion',
@@ -116,6 +118,7 @@ export default [
         id: 'incidences',
         title: 'Incidencias',
         icon: <FontAwesomeIcon icon={faExclamationTriangle} />,
-        navLink: '/incidences'
+        //navLink: '/incidences'
+        navLink: '/commingSoon'
     }
 ]

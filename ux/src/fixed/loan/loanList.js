@@ -64,14 +64,14 @@ export const LoanList = [
 
             return (
                 <div className='d-flex'>
-                    {ability.can('update', 'materials') && (
-                        <Link to={`/stock/material/edit/${row.id}`}>
+                    {ability.can('update', 'loans') && (
+                        <Link to={`loans/edit/${row.id}`}>
                             <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>
                         </Link>
                     )}
-                    {ability.can('delete', 'materials') && (
+                    {ability.can('delete', 'loans') && (
                         <Link onClick={(e) => {
                             dispatch(startDeleteRegister(row.id))
                         }}>

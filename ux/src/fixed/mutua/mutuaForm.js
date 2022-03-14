@@ -1,13 +1,10 @@
 import { validator } from "../../utility/formValidator/ValidationTypes"
 
 export const MutuaForm = {
-    structure: {
-        documents: []
-    },
+    structure: {},
     errors: {
         name: { validations: [validator.isRequired] }
     },
-    documents: true,
     base: [
         {
             col: [1, 1, 1],

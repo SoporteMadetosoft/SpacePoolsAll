@@ -16,25 +16,16 @@ export const SaleList = [
         selector: 'id',
         sortable: true,
         searchable: true,
-        width: '10%',
-        cell: row => {
-            return (
-                <div className="d-flex">
-                    {row.mode === true
-                        ? (<Check className="mr-1" color="green" size={15} />)
-                        : (<Slash className="mr-1" color="red" size={15} />)
-                    }
-                    <label>{row.id}</label>
-                </div>
-            )
-        }
+        width: '10%'
     },
     {
-        name: 'Nombre Sale',
-        selector: 'name',
+        name: 'Centro',
+        selector: 'centerId',
         sortable: true,
-        searchable: true,
-        width: '75%'
+        searchable: false,
+        select: 'Center',
+        width: '75%',
+        cell: row => row.center?.name
     },
     {
         name: 'Estado',
@@ -64,14 +55,14 @@ export const SaleList = [
 
             return (
                 <div className='d-flex'>
-                    {ability.can('update', 'materials') && (
-                        <Link to={`/stock/material/edit/${row.id}`}>
+                    {ability.can('update', 'sales') && (
+                        <Link to={`sales/edit/${row.id}`}>
                             <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>
                         </Link>
                     )}
-                    {ability.can('delete', 'materials') && (
+                    {ability.can('delete', 'sales') && (
                         <Link onClick={(e) => {
                             dispatch(startDeleteRegister(row.id))
                         }}>

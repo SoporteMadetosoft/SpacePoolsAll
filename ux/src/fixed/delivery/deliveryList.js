@@ -12,48 +12,85 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 export const DeliveryList = [
     {
-        name: 'Nº Delivery',
+        name: 'Nº Albarán',
         selector: 'id',
         sortable: true,
         searchable: true,
-        width: '10%',
-        cell: row => {
-            return (
-                <div className="d-flex">
-                    {row.mode === true
-                        ? (<Check className="mr-1" color="green" size={15} />)
-                        : (<Slash className="mr-1" color="red" size={15} />)
-                    }
-                    <label>{row.id}</label>
-                </div>
-            )
-        }
+        width: '10%'
     },
+    // {
+    //     name: 'Origen',
+    //     selector: 'deliveryOrigin',
+    //     sortable: true,
+    //     searchable: true,
+    //     width: '5%'
+    // },
     {
-        name: 'Nombre Delivery',
-        selector: 'name',
+        name: 'Nº Cirugía',
+        selector: 'surgeryNum',
         sortable: true,
         searchable: true,
-        width: '75%'
+        width: '13%'
     },
     {
-        name: 'Estado',
-        selector: 'status',
+        name: 'Nº de poliza',
+        selector: 'policyNum',
         sortable: true,
-        searchable: false,
-        select: 'Status',
-        width: '10%',
-        cell: row => {
-            return (
-                <>
-                    {row.status === true
-                        ? (<Badge color='light-success'>Activo</Badge>)
-                        : (<Badge color='light-danger'>Inactivo</Badge>)
-                    }
-                </>
-            )
-        }
+        searchable: true,
+        width: '12%'
     },
+    {
+        name: 'Paciente',
+        selector: 'patient',
+        sortable: true,
+        searchable: true,
+        width: '10%'
+    },
+    {
+        name: 'Mutua',
+        selector: 'mutuaId',
+        sortable: true,
+        searchable: true,
+        width: '10%',
+        cell: row => row.mutua?.name
+    },
+    {
+        name: 'Doctor',
+        selector: 'doctorId',
+        sortable: true,
+        searchable: true,
+        width: '10%',
+        cell: row => row.doctor?.name
+    },
+    {
+        name: 'Centro',
+        selector: 'centerId',
+        sortable: true,
+        searchable: true,
+        width: '10%',
+        cell: row => row.center?.name
+    },
+    {
+        name: 'Fecha cirugía',
+        selector: 'surgeryDate',
+        sortable: true,
+        searchable: true,
+        width: '10%'
+    },
+    {
+        name: 'Hora cirugía',
+        selector: 'surgeryTime',
+        sortable: true,
+        searchable: true,
+        width: '10%'
+    },
+    // {
+    //     name: 'Tipo de operación ',
+    //     selector: 'deliveryOrigin',
+    //     sortable: true,
+    //     searchable: true,
+    //     width: '5%'
+    // },
     {
         name: '',
         width: '5%',
@@ -64,14 +101,14 @@ export const DeliveryList = [
 
             return (
                 <div className='d-flex'>
-                    {ability.can('update', 'materials') && (
-                        <Link to={`/stock/material/edit/${row.id}`}>
+                    {ability.can('update', 'delivery') && (
+                        <Link to={`delivery/edit/${row.id}`}>
                             <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>
                         </Link>
                     )}
-                    {ability.can('delete', 'materials') && (
+                    {ability.can('delete', 'delivery') && (
                         <Link onClick={(e) => {
                             dispatch(startDeleteRegister(row.id))
                         }}>

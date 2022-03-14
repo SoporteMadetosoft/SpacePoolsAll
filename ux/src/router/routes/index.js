@@ -20,6 +20,7 @@ import LoansRoutes from './loans/Loans'
 import DepositsRoutes from './deposits/Deposits'
 import SalesRoutes from './sales/Sales'
 import DeliverysRoutes from './deliverys/Deliverys'
+import ComingSoon from '../../views/misc/ComingSoon'
 
 // ** Document title
 const TemplateTitle = '%s - CONMED'
@@ -38,8 +39,8 @@ const Routes = [
   ...ProcedureRoutes,
   ...SurgeryRoutes,
   ...VehicleRoutes,
-  ...RouteRoutes,
-  ...IncidenceRoutes,
+  //...RouteRoutes,
+  //...IncidenceRoutes,
   ...MaterialsRoutes,
   ...InstrumentsRoutes,
   ...InstrumentalsRoutes,
@@ -49,7 +50,17 @@ const Routes = [
   ...SalesRoutes,
   ...DeliverysRoutes,
   ...UserRoutes,
-  ...setupRoutes
+  ...setupRoutes,
+  {
+    path: '/commingSoon',
+    exact: true,
+    layout: 'VerticalLayout',
+    component: () => ComingSoon(),
+    meta: {
+        action: 'read',
+        resource: 'loans'
+    }
+  }
 ]
 
 export { DefaultRoute, TemplateTitle, Routes }

@@ -5,7 +5,7 @@ import { ListScreen } from '../../../views/ListScreen'
 
 const base = {
     title: 'Tipos de préstamo',
-    endPoint: 'SalesOrg',
+    endPoint: 'LoanType',
     list: {
         columns: LoanTypeList
     },

@@ -12,29 +12,47 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 export const LoanList = [
     {
-        name: 'Nº Loan',
+        name: 'Nº Préstamo',
         selector: 'id',
         sortable: true,
         searchable: true,
-        width: '10%',
-        cell: row => {
-            return (
-                <div className="d-flex">
-                    {row.mode === true
-                        ? (<Check className="mr-1" color="green" size={15} />)
-                        : (<Slash className="mr-1" color="red" size={15} />)
-                    }
-                    <label>{row.id}</label>
-                </div>
-            )
-        }
+        width: '10%'
     },
     {
-        name: 'Nombre Loan',
+        name: 'Tipo',
+        selector: 'loanTypeId',
+        sortable: true,
+        searchable: true,
+        width: '15%',
+        cell: row => row.loanType?.name
+    },
+    {
+        name: 'Stock',
         selector: 'name',
         sortable: true,
         searchable: true,
-        width: '75%'
+        width: '10%'
+    },
+    {
+        name: 'Cliente',
+        selector: 'customer',
+        sortable: true,
+        searchable: true,
+        width: '15%'
+    },
+    {
+        name: 'Ubicación',
+        selector: 'name',
+        sortable: true,
+        searchable: true,
+        width: '20%'
+    },
+    {
+        name: 'Día de adquisición',
+        selector: 'startDay',
+        sortable: true,
+        searchable: true,
+        width: '15%'
     },
     {
         name: 'Estado',

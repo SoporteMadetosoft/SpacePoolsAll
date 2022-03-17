@@ -27,7 +27,14 @@ export const VehicleForm = {
             col: [4, 4, 4],
             name: 'modelId',
             label: 'Modelo',
-            endPoint: 'Model'
+            endPoint: 'Model',
+            master: {
+                name: 'brandId',
+                endPoint: 'Brand',
+                onChange: (value) => {
+                    return value ? {filter: [`brandId||$eq||${value}`]} : null
+                } 
+            }
         }
     ]
 }

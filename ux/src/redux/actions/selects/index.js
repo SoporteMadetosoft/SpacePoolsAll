@@ -10,15 +10,11 @@ export const addSelectOptions = (key, options) => ({
     payload: { key, options }
 })
 
-export const startAddSelectOptions = (endPoint, key, labelName = 'name') => {
+export const startAddSelectOptions = (endPoint, key, labelName = 'name', params ) => {
     return async (dispatch) => {
-        const { data } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}`, {
-            headers: {
-                'Content-type': 'application/json',
-                'x-token': token
-            }
-        })
-
+        const request = { headers: {'Content-type': 'application/json', 'x-token': token } }
+        if (params) request["params"] = params
+        const { data } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}`, request)
         dispatch(addSelectOptions(key, data.map(option => ({ label: option[labelName], value: option.id }))))
     }
 }

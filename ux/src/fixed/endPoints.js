@@ -7,6 +7,7 @@ const setupEndpoints = {
     Zone: '/setup/centers/zone',
     ProcedureFamily: '/setup/procedures/procedure-family',
     Family: '/setup/items/family',
+    SubFamily: '/setup/items/family',
     IncidenceType: '/setup/incidences/incidence-type',
     IncidenceReason: '/setup/incidences/incidence-reason',
     LoanType: '/setup/loans/loan-type',

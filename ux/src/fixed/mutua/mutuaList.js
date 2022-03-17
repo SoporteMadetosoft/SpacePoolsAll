@@ -1,4 +1,3 @@
-import { Check, Slash } from "react-feather"
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import { startDeleteRegister } from "@redux/actions/custom"
@@ -16,18 +15,7 @@ export const MutuaList = [
         selector: 'id',
         sortable: true,
         searchable: true,
-        width: '10%',
-        cell: row => {
-            return (
-                <div className="d-flex">
-                    {row.mode === true
-                        ? (<Check className="mr-1" color="green" size={15} />)
-                        : (<Slash className="mr-1" color="red" size={15} />)
-                    }
-                    <label>{row.id}</label>
-                </div>
-            )
-        }
+        width: '10%'
     },
     {
         name: 'Nombre Mutua',
@@ -81,7 +69,6 @@ export const MutuaList = [
                         </Link>
                     )}
                 </div>
-
             )
         }
     }

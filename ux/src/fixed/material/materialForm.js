@@ -3,7 +3,10 @@ import { validator } from "../../utility/formValidator/ValidationTypes"
 export const MaterialForm = {
     structure: {},
     errors: {
-        name: { validations: [validator.isRequired] }
+        name: { validations: [validator.isRequired] },
+        lote: { validations: [validator.isRequired] },
+        reference: { validations: [validator.isRequired] },
+        gtin: { validations: [validator.isRequired] }
     },
     base: [
         {
@@ -79,7 +82,14 @@ export const MaterialForm = {
             col: [6, 6, 6],
             name: 'subFamilyId',
             label: 'Subfamilia',
-            endPoint: 'Family'
+            endPoint: 'SubFamily',
+            master: {
+                name: 'familyId',
+                endPoint: 'Family',
+                onChange: (value) => {
+                    return value ? {filter: [`parentId||$eq||${value}`]} : null
+                } 
+            }
         },
         {
             col: [12, 12, 12],

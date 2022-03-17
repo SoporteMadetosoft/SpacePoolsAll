@@ -16,18 +16,7 @@ export const DoctorList = [
         selector: 'id',
         sortable: true,
         searchable: true,
-        width: '10%',
-        cell: row => {
-            return (
-                <div className="d-flex">
-                    {row.mode === true
-                        ? (<Check className="mr-1" color="green" size={15} />)
-                        : (<Slash className="mr-1" color="red" size={15} />)
-                    }
-                    <label>{row.id}</label>
-                </div>
-            )
-        }
+        width: '10%'
     },
     {
         name: 'Nombre doctor',

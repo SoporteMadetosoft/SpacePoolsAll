@@ -18,21 +18,13 @@ export const Select = (props) => {
         containerClassname = 'mt-2',
         styles = '', customOptions,
         defecto = null,
-        zone, position } = props
+        zone, position, master = null } = props
 
     const dispatch = useDispatch()
     const { normalForm, selectReducer, formValidator } = useSelector(state => state)
 
-    const { [endPoint]: options } = selectReducer
-
-    const findSelectedOpt = (values) => {
-        return customOptions ? customOptions?.find(o => o.value === values) : options?.find(o => o.value === values)
-    }
-
-    const value =
-        (!((normalForm[name] !== undefined && normalForm[name] !== null) || zone)) ? ((defecto && options) && options[defecto].value)
-            : zone ? findSelectedOpt(normalForm[zone][position][name])
-                : findSelectedOpt(normalForm[name])
+    let { [endPoint]: options } = selectReducer
+    options = customOptions ? customOptions : options
 
     const handleSelectChange = (target) => {
         if (formValidator.errors && formValidator.errors[name]) delete formValidator.errors[name]
@@ -40,12 +32,29 @@ export const Select = (props) => {
         dispatch(handleChangeController(name, target ? target.value : null))
     }
 
+    const findSelectedOpt = (values) => {
+        const selectedOption = options?.find(o => o.value === values)
+        console.log(name, values, selectedOption, options)
+        if (selectedOption === undefined && (options || options?.length === 0)) handleSelectChange()
+        return selectedOption
+    }
+
+    let value
+    if (!((normalForm[name] !== undefined && normalForm[name] !== null) || zone)) {
+        value = (defecto && options) && options[defecto]?.value
+    } else {
+        value = findSelectedOpt(zone ? normalForm[zone][position][name] : normalForm[name])
+    }
+    
+
     const handleSelectRepeaterChange = (key, element) => {
         const el = constructSelect(element)
         const obj = { name: key, value: el.id }
         dispatch(editRepeaterRegister(zone, position, obj))
     }
-    useEffect(() => dispatch(startAddSelectOptions(endPoint, endPoint, labelName)), [])
+    useEffect(() => {
+        dispatch(startAddSelectOptions(endPoint, endPoint, labelName, master?.onChange(normalForm[master?.name])))
+    }, [normalForm[master?.name]])
 
     return (
         <div className={containerClassname} style={{ ...containerStyle }}>
@@ -57,10 +66,11 @@ export const Select = (props) => {
                 isClearable={isClearable}
                 className={`${className} ${formValidator.errors && formValidator.errors[name] ? 'border-danger rounded' : ''}`}
                 name={name}
+                isDisabled={options?.length === 0 }
                 classNamePrefix={'select'}
                 theme={selectThemeColors}
                 styles={styles}
-                options={customOptions ? customOptions : options}
+                options={options}
                 placeholder={placeholder}
                 value={value}
                 onChange={onSelect ? onSelect

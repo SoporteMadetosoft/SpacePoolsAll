@@ -3,7 +3,10 @@ import { validator } from "../../utility/formValidator/ValidationTypes"
 export const CenterForm = {
     structure: {},
     errors: {
-        name: { validations: [validator.isRequired] }
+        name: { validations: [validator.isRequired] },
+        code: { validations: [validator.isRequired] },
+        oracleNumber: { validations: [validator.isRequired] },
+        cif: { validations: [validator.isRequired] }
     },
     base: [
         {
@@ -13,7 +16,7 @@ export const CenterForm = {
             label: 'Nº Centro'
         },
         {
-            col: [5, 5, 5],
+            col: [4, 4, 4],
             name: 'name',
             label: 'Nombre centro'
         },
@@ -38,14 +41,14 @@ export const CenterForm = {
             ]
         },
         {
-            col: [2, 2, 2],
-            name: 'code',
-            label: 'Código centro'
+            col: [3, 3, 3],
+            name: 'oracleNumber',
+            label: 'Nº Centro de oracle'
         },
         {
             col: [2, 2, 2],
-            name: 'oracleNumber',
-            label: 'Nº Centro de oracle'
+            name: 'code',
+            label: 'Código centro'
         },
         {
             col: [2, 2, 2],
@@ -71,19 +74,19 @@ export const CenterForm = {
             col: [4, 4, 4],
             name: 'salesOrgId',
             label: 'Organizacion de ventas',
-            endPoint: 'SalesOrgId'
+            endPoint: 'SalesOrg'
         },
         {
             col: [4, 4, 4],
             name: 'conditionalOrgId',
             label: 'Organizacion condicionales',
-            endPoint: 'ConditionalOrgId'
+            endPoint: 'ConditionalOrg'
         },
         {
             col: [4, 4, 4],
             name: 'depositsOrgId',
             label: 'Organizacion de depositos',
-            endPoint: 'DepositsOrgId'
+            endPoint: 'DepositOrg'
         },
         {
             col: [4, 4, 4],

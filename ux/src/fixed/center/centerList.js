@@ -1,4 +1,3 @@
-import { Check, Slash } from "react-feather"
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import { startDeleteRegister } from "@redux/actions/custom"
@@ -16,32 +15,32 @@ export const CenterList = [
         selector: 'id',
         sortable: true,
         searchable: true,
-        width: '10%',
-        cell: row => {
-            return (
-                <div className="d-flex">
-                    {row.mode === true
-                        ? (<Check className="mr-1" color="green" size={15} />)
-                        : (<Slash className="mr-1" color="red" size={15} />)
-                    }
-                    <label>{row.id}</label>
-                </div>
-            )
-        }
+        width: '10%'
     },
     {
         name: 'Cód Centro',
         selector: 'code',
         sortable: true,
         searchable: true,
-        width: '10%'
+        width: '20%'
     },
     {
         name: 'Nombre',
         selector: 'name',
         sortable: true,
         searchable: true,
-        width: '55%'
+        width: '25%'
+    },
+    {
+        name: 'Población',
+        selector: 'addresses',
+        sortable: true,
+        searchable: true,
+        width: '20%',
+        cell: row => {
+            //TODO CON-169
+            return row.addresses?.name
+        }
     },
     {
         name: 'Teléfono',

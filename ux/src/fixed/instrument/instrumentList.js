@@ -1,9 +1,7 @@
-import { Check, Slash } from "react-feather"
 import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
-import Badge from "reactstrap/lib/Badge"
 import { useContext } from "react"
 import { AbilityContext } from '@src/utility/context/Can'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"

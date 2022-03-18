@@ -22,14 +22,12 @@ export const DepositForm = {
             col: [2, 2, 2],
             name: 'deliveryDay',
             label: 'Dia de entrega',
-            endPoint: 'DeliveryDay',
             type: "date"
         },
         {
             col: [2, 2, 2],
             name: 'collectionDay',
             label: 'Dia de recogida',
-            endPoint: 'CollectionDay',
             type: "date"
         },
         {

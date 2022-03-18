@@ -3,6 +3,8 @@ import { validator } from "../../utility/formValidator/ValidationTypes"
 export const InstrumentForm = {
     structure: {},
     errors: {
+        reference: { validations: [validator.isRequired] },
+        serialNumber: { validations: [validator.isRequired] },
         gtin: { validations: [validator.isRequired] }
     },
     base: [
@@ -26,7 +28,6 @@ export const InstrumentForm = {
             col: [2, 2, 2],
             name: 'lastReviewDate',
             label: 'Fecha última revisión',
-            endPoint: 'lastDate',
             type: "date"
         },
         {
@@ -59,7 +60,13 @@ export const InstrumentForm = {
             col: [6, 6, 6],
             name: 'subFamilyId',
             label: 'Subfamilia',
-            endPoint: 'Family'
+            endPoint: 'SubFamily',
+            master: {
+                name: 'familyId',
+                onChange: (value) => {
+                    return value ? {filter: [`parentId||$eq||${value}`]} : null
+                } 
+            }
         },
         {
             col: [12, 12, 12],

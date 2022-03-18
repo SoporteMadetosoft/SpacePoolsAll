@@ -1,7 +1,10 @@
 import { validator } from "../../utility/formValidator/ValidationTypes"
 
 export const CenterForm = {
-    structure: {},
+    structure: {
+        addresses: [],
+        contacts: []
+    },
     errors: {
         name: { validations: [validator.isRequired] },
         code: { validations: [validator.isRequired] },
@@ -107,6 +110,61 @@ export const CenterForm = {
             col: [12, 12, 12],
             name: 'observations',
             label: 'Observaciones'
+        }
+    ],
+    repeaters: [
+        {
+            titulo: 'Direcciones',
+            endPoint: 'addresses',
+            structure: [
+                {
+                    isDefault: false,
+                    address: '',
+                    population: '',
+                    province: '',
+                    postcode: ''
+                }
+            ],
+            base: [
+                {
+                    col: [3, 3, 3],
+                    name: 'addressTypeId',
+                    label: 'Tipo dirección'
+                },
+                {
+                    col: [3, 3, 3],
+                    name: 'address',
+                    label: 'Direccion'
+                },
+                {
+                    col: [3, 3, 3],
+                    name: 'population',
+                    label: 'Población'
+                },
+                {
+                    col: [3, 3, 3],
+                    name: 'province',
+                    label: 'Provincia'
+                },
+                {
+                    col: [3, 3, 3],
+                    name: 'postCode',
+                    label: 'CP'
+                },
+                {
+                    col: [3, 3, 3],
+                    name: 'isDefault',
+                    label: 'Principal',
+                    type: 'radiobutton',
+                    zone: 'addresses'
+                }
+            ]
+        },
+        {
+            titulo: 'Contactos',
+            endPoint: 'contacts',
+            structure: [],
+            base: []
         }
     ]
 }

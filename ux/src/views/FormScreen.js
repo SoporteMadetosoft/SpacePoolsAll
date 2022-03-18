@@ -6,9 +6,6 @@ import { Form } from 'reactstrap'
 import { GetSetNextId, handleStartEditing, initNormalForm } from '@redux/actions/normalForm'
 import BreadCrumbs from '@components/breadcrumbs'
 
-import { Input } from '@components/form/Input'
-import { Select } from '@components/form/Select'
-import { Textarea } from '@components/form/Textarea'
 import { preSubmit } from '@components/preSubmit/preSubmit'
 import { ActionButtons } from '@components/actionButtons/ActionButtons'
 import { setErrors, setSchema } from '@redux/actions/formValidator'
@@ -18,9 +15,8 @@ import { RepeaterScreen } from './RepeaterScreen'
 import { DocScreen } from './DocScreen'
 import { MkDir } from '@helpers/Axios/MkDir'
 import { fetch } from '../utility/helpers/Axios/fetch'
-import { MultiSelect } from '../@core/components/form/MultiSelect'
-import { InputPassword } from '../@core/components/form/Password'
-import { Toggle } from '../@core/components/form/Toggle'
+import { SelectorComponent } from '../utility/helpers/selectorComponent'
+
 
 export const FormScreen = (props) => {
 
@@ -71,13 +67,7 @@ export const FormScreen = (props) => {
                         {
                             base && base.map((e) => {
                                 const clase = `mt-2 col-${e.col[1]} col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`
-                                const Component =
-                                    (e.endPoint && e.multi) ? MultiSelect
-                                        : (e.endPoint && !e.multi && !e.type) ? Select
-                                            : (e.endPoint && e.type === 'toggle') ? Toggle
-                                                : e.area ? Textarea
-                                                    : e.type === 'password' ? InputPassword : Input
-
+                                const Component = SelectorComponent(e)
                                 return <Component {...e} containerClassname={clase} />
                             })
                         }

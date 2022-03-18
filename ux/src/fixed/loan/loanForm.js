@@ -3,7 +3,9 @@ import { validator } from "../../utility/formValidator/ValidationTypes"
 export const LoanForm = {
     structure: {},
     errors: {
-        reference: { validations: [validator.isRequired] }
+        customer: { validations: [validator.isRequired] },
+        startDay: { validations: [validator.isRequired] },
+        endDay: { validations: [validator.isRequired] }
     },
     base: [
         {
@@ -42,14 +44,12 @@ export const LoanForm = {
             col: [3, 3, 3],
             name: 'startDay',
             label: 'Día de adquisición',
-            endPoint: 'StartDay',
             type: "date"
         },
         {
             col: [3, 3, 3],
             name: 'endDay',
             label: 'Día de baja',
-            endPoint: 'EndDay',
             type: "date"
         },
         {

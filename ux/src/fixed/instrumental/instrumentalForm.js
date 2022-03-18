@@ -42,7 +42,13 @@ export const InstrumentalForm = {
             col: [6, 6, 6],
             name: 'subFamilyId',
             label: 'Subfamilia',
-            endPoint: 'Family'
+            endPoint: 'SubFamily',
+            master: {
+                name: 'familyId',
+                onChange: (value) => {
+                    return value ? {filter: [`parentId||$eq||${value}`]} : null
+                } 
+            }
         },
         {
             col: [12, 12, 12],

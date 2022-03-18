@@ -15,7 +15,7 @@ export const Select = (props) => {
 
     const { name, label, className = '', endPoint, placeholder = label,
         labelName = 'name', errMsg = 'Campo requerido', isClearable = true, onSelect, containerStyle = {},
-        containerClassname = 'mt-2',
+        containerClassname = 'mt-1',
         styles = '', customOptions,
         defecto = null,
         zone, position, master = null } = props
@@ -34,7 +34,6 @@ export const Select = (props) => {
 
     const findSelectedOpt = (values) => {
         const selectedOption = options?.find(o => o.value === values)
-        console.log(name, values, selectedOption, options)
         if (selectedOption === undefined && (options || options?.length === 0)) handleSelectChange()
         return selectedOption
     }

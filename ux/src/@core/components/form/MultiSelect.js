@@ -14,7 +14,7 @@ export const MultiSelect = (props) => {
 
     const { name, label, className = '', endPoint, placeholder = label,
         labelName = 'name', errMsg = 'Campo requerido', isClearable = true, onSelect, containerStyle = {},
-        containerClassname = 'mt-2',
+        containerClassname = 'mt-1',
         styles = '', customOptions,
         zone, position } = props
 

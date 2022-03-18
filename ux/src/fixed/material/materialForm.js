@@ -34,8 +34,7 @@ export const MaterialForm = {
             col: [2, 2, 2],
             name: 'expiration',
             label: 'Caducidad',
-            endPoint: 'Expiration',
-            type: "date"
+            type: 'date'
         },
         {
             col: [2, 2, 2],
@@ -85,7 +84,6 @@ export const MaterialForm = {
             endPoint: 'SubFamily',
             master: {
                 name: 'familyId',
-                endPoint: 'Family',
                 onChange: (value) => {
                     return value ? {filter: [`parentId||$eq||${value}`]} : null
                 } 

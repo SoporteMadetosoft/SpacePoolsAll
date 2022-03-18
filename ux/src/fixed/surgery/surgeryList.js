@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux"
 import DropdownItem from "reactstrap/lib/DropdownItem"
 import { startDeleteRegister } from "@redux/actions/custom"
 import { Link } from "react-router-dom"
-import Badge from "reactstrap/lib/Badge"
 import { useContext } from "react"
 import { AbilityContext } from '@src/utility/context/Can'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -16,7 +15,7 @@ export const SurgeryList = [
         selector: 'id',
         sortable: true,
         searchable: true,
-        width: '5%',
+        width: '10%',
         cell: row => {
             return (
                 <div className="d-flex">
@@ -57,7 +56,7 @@ export const SurgeryList = [
         selector: 'doctorId',
         sortable: true,
         searchable: true,
-        width: '15%',
+        width: '14%',
         cell: (row) => row.doctor?.name
     },
     {
@@ -65,14 +64,14 @@ export const SurgeryList = [
         selector: 'surgeryDate',
         sortable: true,
         searchable: true,
-        width: '10%'
+        width: '8%'
     },
     {
         name: 'Hora cirugía',
         selector: 'surgeryTime',
         sortable: true,
         searchable: true,
-        width: '10%'
+        width: '8%'
     },
     {
         name: '',

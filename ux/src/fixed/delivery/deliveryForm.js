@@ -31,14 +31,12 @@ export const DeliveryForm = {
             col: [3, 3, 3],
             name: 'surgeryDate',
             label: 'Fecha cirugía',
-            endPoint: 'SurgeryDate',
             type: "date"
         },
         {
             col: [3, 3, 3],
             name: 'surgeryTime',
             label: 'Hora cirugía',
-            endPoint: 'SurgeryTime',
             type: "time"
         },
         {

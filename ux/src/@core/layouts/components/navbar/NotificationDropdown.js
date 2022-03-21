@@ -29,7 +29,7 @@ const NotificationDropdown = () => {
 
   useEffect(() => {
 
-    dispatch(AlertLoad())
+    //dispatch(AlertLoad())
 
   }, [])
 

@@ -8,7 +8,7 @@ export const DepositForm = {
     base: [
         {
             col: [1, 1, 1],
-            readonly: true,
+            readOnly: true,
             name: 'id',
             label: 'Nº depósito'
         },

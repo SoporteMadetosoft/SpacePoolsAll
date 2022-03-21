@@ -29,7 +29,7 @@ const NavbarBookmarks = props => {
 
   // ** ComponentDidMount
   useEffect(() => {
-    dispatch(getBookmarks())
+    //dispatch(getBookmarks())
   }, [])
 
   // ** Removes query in store

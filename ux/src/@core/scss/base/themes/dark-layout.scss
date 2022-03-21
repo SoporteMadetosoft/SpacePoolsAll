@@ -1098,7 +1098,7 @@
     }
 
     &:disabled,
-    &[readonly='readonly'] {
+    &[readOnly='readOnly'] {
       opacity: 0.5;
     }
   }

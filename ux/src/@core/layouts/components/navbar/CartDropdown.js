@@ -51,7 +51,6 @@ const CartDropdown = () => {
           >
             {store.cart.map(item => {
               total += item.price
-
               return (
                 <Media key={item.id} className='align-items-center'>
                   <img className='d-block rounded mr-1' src={item.image} alt={item.name} width='62' />

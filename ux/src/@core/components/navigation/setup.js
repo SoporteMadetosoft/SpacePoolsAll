@@ -117,7 +117,7 @@ export default [
       },
       {
         id: 'sVehicles',
-        title: 'Vahículos',
+        title: 'Vehículos',
         icon: <FontAwesomeIcon icon={faCar} />,
         children: [
           {

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { Form } from 'reactstrap'
 
-import { GetSetNextId, handleStartEditing, initNormalForm } from '@redux/actions/normalForm'
+import { handleStartEditing, initNormalForm } from '@redux/actions/normalForm'
 import BreadCrumbs from '@components/breadcrumbs'
 
 import { preSubmit } from '@components/preSubmit/preSubmit'
@@ -34,7 +34,7 @@ export const FormScreen = (props) => {
     const breadCrumTitle = (id) ? `Editar ${title}` : `Añadir ${title}`
 
     useEffect(() => {
-        (id && !autoincrement) ? dispatch(handleStartEditing(endPoint, id)) : dispatch(GetSetNextId(endPoint, autoincrement))
+        if ( id ) dispatch(handleStartEditing(endPoint, id))
         dispatch(initNormalForm(structure))
         dispatch(setSchema(errors))
     }, [initNormalForm])

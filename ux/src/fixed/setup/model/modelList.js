@@ -42,16 +42,16 @@ export const ModelList = [
                 <div className='d-flex'>
                     {ability.can('update', 'model') && (
                         <Link to={`/setup/vehicles/model/edit/${row.id}`}>
-                            <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
+                            <DropdownItem href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>
                         </Link>
                     )}
                     {ability.can('delete', 'model') && (
-                        <Link onClick={(e) => {
+                        <Link to={`#`} onClick={(e) => {
                             dispatch(startDeleteRegister(row.id))
                         }}>
-                            <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
+                            <DropdownItem href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faTrash} />
                             </DropdownItem>
                         </Link>

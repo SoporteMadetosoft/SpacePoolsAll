@@ -1,6 +1,5 @@
 import { formTypes } from "../../types/normalForm/types"
 import { getFormData } from "../../../utility/helpers/Axios/getFormData"
-import { getNextId } from "../../../utility/helpers/Axios/getNextId"
 
 export const handleChangeController = (name, value) => ({
     type: formTypes.inputChange,
@@ -40,12 +39,5 @@ export const handleStartEditing = (endpoint, id) => {
     return async (dispatch) => {
         const data = await getFormData(endpoint, id)
         dispatch(fillFormData(data))
-    }
-}
-
-export const GetSetNextId = (endPoint, name) => {
-    return async (dispatch) => {
-        const next = await getNextId(endPoint)
-        dispatch(handleChangeController(name, next))
     }
 }

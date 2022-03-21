@@ -9,7 +9,7 @@ export const ProcedureForm = {
     base: [
         {
             col: [6, 2, 2],
-            readonly: true,
+            readOnly: true,
             name: 'id',
             label: 'Nº Procedimiento'
         },

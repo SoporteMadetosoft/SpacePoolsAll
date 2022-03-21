@@ -24,6 +24,7 @@ export const CustomDataTable = (props) => {
 
   const history = useHistory()
   const ability = useContext(AbilityContext)
+  const pathname = useLocation().pathname
 
   const { title, addButton = true, backButton = false, columns, data = [], filters } = props
 
@@ -148,7 +149,7 @@ export const CustomDataTable = (props) => {
             }
             {
               addButton && (can && ability.can('insert', can)) && (
-                <Link to={`${useLocation().pathname}/add`}>
+                <Link to={`${pathname}/add`}>
                   <Button className='ml-2' color='primary'>
                     <Plus size={15} />
                     <span className='align-middle ml-50'>Añadir {title}</span>

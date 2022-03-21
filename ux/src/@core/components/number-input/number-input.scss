@@ -44,7 +44,7 @@
   }
 
   &.disabled,
-  &.readonly {
+  &.readOnly {
     &:focus,
     &:active,
     &:focus-within {
@@ -135,7 +135,7 @@
     }
 
     &:not(.disabled),
-    &:not(.readonly) {
+    &:not(.readOnly) {
       &:focus,
       &:active,
       &:focus-within {
@@ -144,7 +144,7 @@
     }
 
     &.disabled,
-    &.readonly {
+    &.readOnly {
       .btn {
         background-color: $theme-dark-input-disabled-border-color;
       }

@@ -160,10 +160,10 @@
   }
 }
 
-// ? Added bg color for flatpickr input only as it has default readonly attribute
-.flatpickr-input[readonly],
-.flatpickr-input ~ .form-control[readonly],
-.flatpickr-human-friendly[readonly] {
+// ? Added bg color for flatpickr input only as it has default readOnly attribute
+.flatpickr-input[readOnly],
+.flatpickr-input ~ .form-control[readOnly],
+.flatpickr-human-friendly[readOnly] {
   background-color: inherit;
   opacity: 1 !important;
 }

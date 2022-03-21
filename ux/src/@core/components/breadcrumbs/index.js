@@ -19,7 +19,6 @@ const BreadCrumbs = props => {
   const { breadCrumbTitle, breadCrumbParent, breadCrumbParent2, breadCrumbParent3, breadCrumbActive = breadCrumbTitle } = props
 
   const history = useHistory()
-
   return (
     <div className='content-header row'>
       <div className='content-header-left col-md-9 col-12 mb-2'>
@@ -63,6 +62,5 @@ export default BreadCrumbs
 
 // ** PropTypes
 BreadCrumbs.propTypes = {
-  breadCrumbTitle: Proptypes.string.isRequired,
-  breadCrumbActive: Proptypes.string.isRequired
+  breadCrumbTitle: Proptypes.string.isRequired
 }

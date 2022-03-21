@@ -85,16 +85,16 @@ export const SurgeryList = [
                 <div className='d-flex'>
                     {ability.can('update', 'surgery') && (
                         <Link to={`/surgery/edit/${row.id}`}>
-                            <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
+                            <DropdownItem href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>
                         </Link>
                     )}
                     {ability.can('delete', 'surgery') && (
-                        <Link onClick={(e) => {
+                        <Link to={`#`} onClick={(e) => {
                             dispatch(startDeleteRegister(row.id))
                         }}>
-                            <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
+                            <DropdownItem href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faTrash} />
                             </DropdownItem>
                         </Link>

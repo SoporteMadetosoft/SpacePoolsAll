@@ -9,8 +9,8 @@ import { InputValidator } from './InputValidator'
 export const Input = (props) => {
 
     const { name, label, className = '', placeholder = label, containerClassname = 'mt-1',
-        type = "text", styles, errMsg = 'Campo requerido', readonly = false, disabled = false,
-        symbol = false, defecto = null, position, zone } = props
+        type = "text", styles, errMsg = 'Campo requerido', readOnly = false, disabled = false,
+        symbol = false, defecto = "", position, zone } = props
 
     const dispatch = useDispatch()
     const { normalForm, formValidator } = useSelector(state => state)
@@ -27,7 +27,6 @@ export const Input = (props) => {
         const obj = { name: target.name, value: target.value }
         dispatch(editRepeaterRegister(zone, position, obj))
     }
-
     return (
         <div className={containerClassname} >
             {
@@ -39,7 +38,7 @@ export const Input = (props) => {
                     style={{ ...styles }}
                     type={type}
                     disabled={disabled}
-                    readonly={readonly && 'readonly'}
+                    readOnly={readOnly && 'readOnly'}
                     className={`form-control ${className} ${formValidator.errors && formValidator.errors[name] ? 'borderless border-danger rounded' : ''}`}
                     name={name}
                     placeholder={placeholder}

@@ -42,16 +42,16 @@ export const InstrumentList = [
                 <div className='d-flex'>
                     {ability.can('update', 'instruments') && (
                         <Link to={`instruments/edit/${row.id}`}>
-                            <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
+                            <DropdownItem href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>
                         </Link>
                     )}
                     {ability.can('delete', 'instruments') && (
-                        <Link onClick={(e) => {
+                        <Link to={`#`} onClick={(e) => {
                             dispatch(startDeleteRegister(row.id))
                         }}>
-                            <DropdownItem tag='a' href='/' style={{ padding: '0.65rem 0.5rem' }}>
+                            <DropdownItem href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faTrash} />
                             </DropdownItem>
                         </Link>

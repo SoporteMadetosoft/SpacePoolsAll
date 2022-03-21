@@ -37,19 +37,19 @@ const IntlDropdown = () => {
         <span className='selected-language'>{langObj[intlContext.locale]}</span>
       </DropdownToggle>
       <DropdownMenu className='mt-0' right>
-        <DropdownItem href='/' tag='a' onClick={e => handleLangUpdate(e, 'en')}>
+        <DropdownItem href='/' onClick={e => handleLangUpdate(e, 'en')}>
           <ReactCountryFlag className='country-flag' countryCode='us' svg />
           <span className='ml-1'>English</span>
         </DropdownItem>
-        <DropdownItem href='/' tag='a' onClick={e => handleLangUpdate(e, 'fr')}>
+        <DropdownItem href='/' onClick={e => handleLangUpdate(e, 'fr')}>
           <ReactCountryFlag className='country-flag' countryCode='fr' svg />
           <span className='ml-1'>French</span>
         </DropdownItem>
-        <DropdownItem href='/' tag='a' onClick={e => handleLangUpdate(e, 'de')}>
+        <DropdownItem href='/' onClick={e => handleLangUpdate(e, 'de')}>
           <ReactCountryFlag className='country-flag' countryCode='de' svg />
           <span className='ml-1'>German</span>
         </DropdownItem>
-        <DropdownItem href='/' tag='a' onClick={e => handleLangUpdate(e, 'pt')}>
+        <DropdownItem href='/' onClick={e => handleLangUpdate(e, 'pt')}>
           <ReactCountryFlag className='country-flag' countryCode='pt' svg />
           <span className='ml-1'>Portuguese</span>
         </DropdownItem>

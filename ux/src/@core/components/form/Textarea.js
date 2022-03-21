@@ -7,7 +7,7 @@ import { InputValidator } from './InputValidator'
 
 export const Textarea = (props) => {
 
-    const { name, label, className, placeholder = label, styles, errMsg = '', readonly = false, disabled } = props
+    const { name, label, className, placeholder = label, styles, errMsg = '', readOnly = false, disabled } = props
 
     const dispatch = useDispatch()
     const { normalForm, formValidator } = useSelector(state => state)
@@ -26,7 +26,7 @@ export const Textarea = (props) => {
             <textarea
                 style={{ ...styles }}
                 disabled={disabled}
-                readonly={readonly && 'readonly'}
+                readOnly={readOnly && 'readOnly'}
                 className={`form-control ${className} ${formValidator.errors && formValidator.errors[name] ? 'borderless border-danger rounded' : ''}`}
                 name={name}
                 placeholder={placeholder}

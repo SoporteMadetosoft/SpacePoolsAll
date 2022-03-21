@@ -8,7 +8,7 @@ export const SheetForm = {
     base: [
         {
             col: [1, 1, 1],
-            readonly: true,
+            readOnly: true,
             name: 'id',
             label: 'Nº Sheet'
         },

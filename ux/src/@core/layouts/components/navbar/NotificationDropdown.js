@@ -79,7 +79,7 @@ const NotificationDropdown = () => {
       </DropdownToggle>
       <DropdownMenu tag='ul' right className='dropdown-menu-media mt-0'>
         <li className='dropdown-menu-header'>
-          <DropdownItem className='d-flex' tag='div' header>
+          <DropdownItem toggle={null} className='d-flex' tag='div' header>
             <h4 className='notification-title mb-0 mr-auto'>Notifications</h4>
             <Badge tag='div' color='light-primary' pill>
               {notification.length}

@@ -42,7 +42,7 @@ export const FamilyList = [
                 <div className='d-flex'>
                     {ability.can('update', 'family') && (
                         <Link to={`/setup/items/family/edit/${row.id}`}>
-                            <DropdownItem href='/' style={{ padding: '0.65rem 0.5rem' }}>
+                            <DropdownItem toggle={null} href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>
                         </Link>
@@ -51,7 +51,7 @@ export const FamilyList = [
                         <Link to={`#`} onClick={(e) => {
                             dispatch(startDeleteRegister(row.id))
                         }}>
-                            <DropdownItem href='/' style={{ padding: '0.65rem 0.5rem' }}>
+                            <DropdownItem toggle={null} href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faTrash} />
                             </DropdownItem>
                         </Link>

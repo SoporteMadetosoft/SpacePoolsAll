@@ -25,7 +25,7 @@ export const RepeaterScreen = (props) => {
             <Repeater count={count}>
                 {i => <div key={i} ><RepeaterForm position={i} endPoint={endPoint} base={base} /></div>}
             </Repeater>
-            <Button.Ripple className='btn-icon form-control mt-1 btn-sm' color='primary' outline onClick={increaseCount}>
+            <Button.Ripple className='btn-icon form-control mt-1 btn-sm' color='primary' outline={true} onClick={increaseCount}>
                 <Plus size={14} />
             </Button.Ripple>
         </>
@@ -43,18 +43,18 @@ const RepeaterForm = ({ position, endPoint, base }) => {
     return (
         <div className="border-bottom pb-1 mx-1">
             <div className='d-flex justify-content-end' style={{marginTop: '5px'}} >
-                <a className='text-danger' outline onClick={decreaseCount}>
+                <a className='text-danger' onClick={decreaseCount}>
                     <FontAwesomeIcon icon={faTrash} />
                 </a>
             </div>
             <div className="row">
                 {
-                    base.map((e) => {
+                    base.map((e, index) => {
                         const clase = `col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`
                         const Component = SelectorComponent(e)
                         return (
                             <div className={clase}>
-                                <Component {...e} position={position} zone={endPoint} />
+                                <Component {...e} key={index} position={position} zone={endPoint} />
                             </div>
                         )
                     })

@@ -112,7 +112,7 @@ const CartDropdown = () => {
       </DropdownToggle>
       <DropdownMenu right tag='ul' className='dropdown-menu-media dropdown-cart mt-0'>
         <li className='dropdown-menu-header'>
-          <DropdownItem tag='div' className='d-flex' header>
+          <DropdownItem toggle={null} tag='div' className='d-flex' header>
             <h4 className='notification-title mb-0 mr-auto'>My Cart</h4>
             <Badge color='light-primary' pill>
               {store.cart.length || 0} Items

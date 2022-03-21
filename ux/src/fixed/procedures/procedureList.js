@@ -43,7 +43,7 @@ export const ProcedureList = [
                 <div className='d-flex'>
                     {ability.can('update', 'procedures') && (
                         <Link to={`/procedure/edit/${row.id}`}>
-                            <DropdownItem href='/' style={{ padding: '0.65rem 0.5rem' }}>
+                            <DropdownItem toggle={null} href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>
                         </Link>
@@ -52,7 +52,7 @@ export const ProcedureList = [
                         <Link to={`#`} onClick={(e) => {
                             dispatch(startDeleteRegister(row.id))
                         }}>
-                            <DropdownItem href='/' style={{ padding: '0.65rem 0.5rem' }}>
+                            <DropdownItem toggle={null} href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faTrash} />
                             </DropdownItem>
                         </Link>

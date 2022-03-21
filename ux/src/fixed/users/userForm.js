@@ -47,7 +47,6 @@ export const UserForm = {
             col: [6, 3, 3],
             name: 'status',
             label: 'Estado',
-            endPoint: 'Status',
             customOptions: [
                 { value: true, label: 'Activo' },
                 { value: false, label: 'Inactivo' }

@@ -27,7 +27,6 @@ export const CenterForm = {
             col: [2, 2, 2],
             name: 'status',
             label: 'Estado',
-            endPoint: 'Status',
             customOptions: [
                 { value: true, label: 'Activo' },
                 { value: false, label: 'Inactivo' }
@@ -37,7 +36,6 @@ export const CenterForm = {
             col: [2, 2, 2],
             name: 'mode',
             label: 'Modo',
-            endPoint: 'Mode',
             customOptions: [
                 { value: true, label: 'Bloqueado' },
                 { value: false, label: 'No bloqueado' }
@@ -119,6 +117,8 @@ export const CenterForm = {
             structure: [
                 {
                     isDefault: false,
+                    addressTypeId: 0,
+                    centerId: 0,
                     address: '',
                     population: '',
                     province: '',
@@ -127,32 +127,33 @@ export const CenterForm = {
             ],
             base: [
                 {
-                    col: [3, 3, 3],
+                    col: [2, 2, 2],
                     name: 'addressTypeId',
-                    label: 'Tipo dirección'
+                    label: 'Tipo dirección',
+                    endPoint: 'AddressType'
                 },
                 {
-                    col: [3, 3, 3],
+                    col: [2, 2, 2],
                     name: 'address',
                     label: 'Direccion'
                 },
                 {
-                    col: [3, 3, 3],
+                    col: [2, 2, 2],
                     name: 'population',
                     label: 'Población'
                 },
                 {
-                    col: [3, 3, 3],
+                    col: [2, 2, 2],
                     name: 'province',
                     label: 'Provincia'
                 },
                 {
-                    col: [3, 3, 3],
+                    col: [2, 2, 2],
                     name: 'postcode',
                     label: 'CP'
                 },
                 {
-                    col: [3, 3, 3],
+                    col: [2, 2, 2],
                     name: 'isDefault',
                     label: 'Principal',
                     type: 'radiobutton',

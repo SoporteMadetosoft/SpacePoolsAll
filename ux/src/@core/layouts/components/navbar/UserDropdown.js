@@ -40,36 +40,36 @@ const UserDropdown = () => {
         <Avatar imgHeight='40' imgWidth='40' status='online' initials={true} content={(userData && userData['fullName']) || ''} />
       </DropdownToggle>
       <DropdownMenu right>
-        {/* <DropdownItem tag={Link} to='/pages/profile'>
+        {/* <DropdownItem toggle={null} tag={Link} to='/pages/profile'>
           <User size={14} className='mr-75' />
           <span className='align-middle'>Perfil</span>
         </DropdownItem> */}
-        {/* <DropdownItem tag={Link} to='/apps/email'>
+        {/* <DropdownItem toggle={null} tag={Link} to='/apps/email'>
           <Mail size={14} className='mr-75' />
           <span className='align-middle'>Inbox</span>
         </DropdownItem>
-        <DropdownItem tag={Link} to='/apps/todo'>
+        <DropdownItem toggle={null} tag={Link} to='/apps/todo'>
           <CheckSquare size={14} className='mr-75' />
           <span className='align-middle'>Tasks</span>
         </DropdownItem>
-        <DropdownItem tag={Link} to='/apps/chat'>
+        <DropdownItem toggle={null} tag={Link} to='/apps/chat'>
           <MessageSquare size={14} className='mr-75' />
           <span className='align-middle'>Chats</span>
         </DropdownItem> */}
-        {/* <DropdownItem divider /> */}
-        {/* <DropdownItem tag={Link} to='/pages/account-settings'>
+        {/* <DropdownItem toggle={null} divider /> */}
+        {/* <DropdownItem toggle={null} tag={Link} to='/pages/account-settings'>
           <Settings size={14} className='mr-75' />
           <span className='align-middle'>Settings</span>
         </DropdownItem>
-        <DropdownItem tag={Link} to='/pages/pricing'>
+        <DropdownItem toggle={null} tag={Link} to='/pages/pricing'>
           <CreditCard size={14} className='mr-75' />
           <span className='align-middle'>Pricing</span>
         </DropdownItem>
-        <DropdownItem tag={Link} to='/pages/faq'>
+        <DropdownItem toggle={null} tag={Link} to='/pages/faq'>
           <HelpCircle size={14} className='mr-75' />
           <span className='align-middle'>FAQ</span>
         </DropdownItem> */}
-        <DropdownItem tag={Link} to='/login' onClick={() => dispatch(handleLogout())}>
+        <DropdownItem toggle={null} tag={Link} to='/login' onClick={() => dispatch(handleLogout())}>
           <Power size={14} className='mr-75' />
           <span className='align-middle'>Cerrar Sesión</span>
         </DropdownItem>

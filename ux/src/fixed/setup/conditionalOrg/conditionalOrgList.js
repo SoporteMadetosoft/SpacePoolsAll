@@ -34,7 +34,7 @@ export const ConditionalOrgList = [
                 <div className='d-flex'>
                     {ability.can('update', 'conditionalOrg') && (
                         <Link to={`/setup/centers/conditional-org/edit/${row.id}`}>
-                            <DropdownItem href='/' style={{ padding: '0.65rem 0.5rem' }}>
+                            <DropdownItem toggle={null} href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>
                         </Link>
@@ -43,7 +43,7 @@ export const ConditionalOrgList = [
                         <Link to={`#`} onClick={(e) => {
                             dispatch(startDeleteRegister(row.id))
                         }}>
-                            <DropdownItem href='/' style={{ padding: '0.65rem 0.5rem' }}>
+                            <DropdownItem toggle={null} href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faTrash} />
                             </DropdownItem>
                         </Link>

@@ -65,20 +65,20 @@ export const FormScreen = (props) => {
                 <div className="card">
                     <div className=" card-body row pb-3 px-3">
                         {
-                            base && base.map((e) => {
+                            base && base.map((e, index) => {
                                 const clase = `mt-2 col-${e.col[1]} col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`
                                 const Component = SelectorComponent(e)
-                                return <Component {...e} containerClassname={clase} />
+                                return <Component {...e} key={index} containerClassname={clase} />
                             })
                         }
                     </div>
                 </div>
                 {
-                    repeaters && repeaters.map((e) => {
+                    repeaters && repeaters.map((e, index) => {
                         return (
                             <div className="card">
                                 <div className="card-body">
-                                    <RepeaterScreen {...e} />
+                                    <RepeaterScreen {...e} key={index} />
                                 </div>
                             </div>
                         )

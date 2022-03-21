@@ -11,7 +11,7 @@ import '@styles/react/libs/react-select/_react-select.scss'
 
 export const Toggle = (props) => {
 
-    const { name, label, className = '', endPoint, containerClassname = 'mt-1', color = "primary", zone, position} = props
+    const { name, label, className = '', containerClassname = 'mt-1', color = "primary", zone, position} = props
 
     const dispatch = useDispatch()
 
@@ -19,8 +19,6 @@ export const Toggle = (props) => {
 
     const value = !((normalForm[name] !== undefined && normalForm[name] !== null) || zone) ? false : zone ? normalForm[zone][position][name] : normalForm[name]
 
-
-    useEffect(() => dispatch(startAddSelectOptions(endPoint, endPoint)), [])
 
     return (
         <div className={containerClassname} >

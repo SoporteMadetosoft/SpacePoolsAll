@@ -21,7 +21,6 @@ export const MutuaForm = {
             col: [2, 2, 2],
             name: 'status',
             label: 'Estado',
-            endPoint: 'Status',
             customOptions: [
                 { value: true, label: 'Activo' },
                 { value: false, label: 'Inactivo' }
@@ -31,7 +30,6 @@ export const MutuaForm = {
             col: [2, 2, 2],
             name: 'mode',
             label: 'Modo',
-            endPoint: 'Mode',
             customOptions: [
                 { value: true, label: 'Bloqueado' },
                 { value: false, label: 'No bloqueado' }

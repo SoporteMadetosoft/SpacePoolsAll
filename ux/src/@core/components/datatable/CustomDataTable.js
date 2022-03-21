@@ -131,7 +131,7 @@ export const CustomDataTable = (props) => {
                 <Download size={15} />
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem className='w-100' onClick={() => downloadCSV(title, realData)}>
+                <DropdownItem toggle={null} className='w-100' onClick={() => downloadCSV(title, realData)}>
                   <FileText size={15} />
                   <span className='align-middle ml-50'>CSV</span>
                 </DropdownItem>

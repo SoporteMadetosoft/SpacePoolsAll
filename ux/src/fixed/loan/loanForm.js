@@ -28,7 +28,6 @@ export const LoanForm = {
             col: [2, 2, 2],
             name: 'status',
             label: 'Estado',
-            endPoint: 'Status',
             customOptions: [
                 { value: true, label: 'Activo' },
                 { value: false, label: 'Inactivo' }

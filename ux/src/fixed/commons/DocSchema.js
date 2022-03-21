@@ -44,7 +44,7 @@ export const DocSchema = [
                         </DropdownToggle>
                         <DropdownMenu right>
                             <Link to={`${row.url}`} target="_blank">
-                                <DropdownItem className='w-100'>
+                                <DropdownItem toggle={null} className='w-100'>
                                     <Eye size={15} />
                                     <span className='align-middle ml-50'>Ver documento</span>
                                 </DropdownItem>
@@ -52,7 +52,7 @@ export const DocSchema = [
                             <Link to={`#`} onClick={(e) => {
                                 dispatch(startDeleteFile(index, row.url))
                             }}>
-                                <DropdownItem href='/' className='w-100'>
+                                <DropdownItem toggle={null} href='/' className='w-100'>
                                     <Trash size={15} />
                                     <span className='align-middle ml-50'>Eliminar</span>
                                 </DropdownItem>

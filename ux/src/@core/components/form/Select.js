@@ -34,7 +34,7 @@ export const Select = (props) => {
 
     const findSelectedOpt = (values) => {
         const selectedOption = options?.find(o => o.value === values)
-        if (selectedOption === undefined && (options || options?.length === 0)) handleSelectChange()
+        if (selectedOption === undefined && (options && options?.length === 0)) handleSelectChange()
         return selectedOption
     }
 

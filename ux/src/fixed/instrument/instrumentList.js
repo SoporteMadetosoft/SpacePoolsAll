@@ -8,9 +8,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEdit } from '@fortawesome/pro-light-svg-icons'
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
-export const InstrumentList = [
+export const InstrumentTypeList = [
     {
-        name: 'Nº Instrument',
+        name: 'Nº InstrumentType',
         selector: 'id',
         sortable: true,
         searchable: true,
@@ -40,14 +40,14 @@ export const InstrumentList = [
 
             return (
                 <div className='d-flex'>
-                    {ability.can('update', 'instruments') && (
-                        <Link to={`instruments/edit/${row.id}`}>
+                    {ability.can('update', 'instrumentTypes') && (
+                        <Link to={`instrumentTypes/edit/${row.id}`}>
                             <DropdownItem toggle={null} href='/' style={{ padding: '0.65rem 0.5rem' }}>
                                 <FontAwesomeIcon icon={faEdit} />
                             </DropdownItem>
                         </Link>
                     )}
-                    {ability.can('delete', 'instruments') && (
+                    {ability.can('delete', 'instrumentTypes') && (
                         <Link to={`#`} onClick={(e) => {
                             dispatch(startDeleteRegister(row.id))
                         }}>

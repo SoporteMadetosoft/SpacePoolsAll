@@ -1,39 +1,29 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { handleChangeController } from '../../../redux/actions/normalForm'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircle } from '@fortawesome/pro-light-svg-icons'
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import RadioButton from '@material-ui/core/Radio'
-import { editRepeaterRegister, handleChangeController } from '../../../redux/actions/normalForm'
-import { startAddSelectOptions } from '../../../redux/actions/selects'
-import { removeError } from '../../../redux/actions/formValidator'
-import { InputValidator } from './InputValidator'
 
-import '@styles/react/libs/react-select/_react-select.scss'
-
-export const SelectBotton = (props) => {
-
-    const { name, label, className = '', containerClassname = 'mt-1', color = "primary", zone, position} = props
-
+export const SelectBotton = ({ name, label, className = '', containerClassname = 'mt-1', color = "primary", zone, position }) => {
     const dispatch = useDispatch()
-
     const { normalForm } = useSelector(state => state)
-
-    const value = normalForm[zone][position][name]
-    
-    const handleRadioChange = ({ target }) => {
-        const newRepeaterList = normalForm[zone].map((repeater, index) => {
-            return { ...repeater, [target.name]: index === position }
-        })
-        dispatch(handleChangeController(zone, newRepeaterList))
+    const handleRadioChange = ({ target }) => { dispatch(handleChangeController(zone, normalForm[zone].map((repeater, index) => { return { ...repeater, [target.name]: index === position } }))) }
+    let value = normalForm[zone][position][name]
+    if (position === 0 && normalForm[zone].every(a => !a[name])) {
+        value = true
+        handleRadioChange({ target: { name } })
     }
-
     return (
-        
         <div className={containerClassname} >
-
             { label && <label className="control-label d-flex justify-content-between ml-2">{label}</label> }
             <RadioButton
                 type="radio"
                 className={`${className} ml-2`}
                 name={name}
+                checkedIcon={<FontAwesomeIcon icon={faCheckCircle} />}
+                icon={<FontAwesomeIcon icon={faCircle} />}
                 color={color}
                 checked={value}
                 onChange={handleRadioChange}

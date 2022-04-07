@@ -38,8 +38,7 @@ export const CenterList = [
         searchable: true,
         width: '20%',
         cell: row => {
-            //TODO CON-169
-            return row.addresses?.name
+            return row.addresses?.find(a => a.isDefault)?.population
         }
     },
     {

@@ -21,17 +21,14 @@ import { SelectorComponent } from '../utility/helpers/selectorComponent'
 export const FormScreen = (props) => {
 
     const { title, endPoint, form: { form, docColumns } } = props
-    const { base, structure, errors, repeaters, autoincrement, documents } = form
-
+    const { base, structure, errors, repeaters, documents } = form
+    const dispatch = useDispatch()
     const history = useHistory()
     const { id } = useParams()
-    const dispatch = useDispatch()
     const { normalForm, formValidator, fileUpload } = useSelector(state => state)
     const { upload, filePath } = fileUpload
 
     const [file, setFile] = useState([])
-
-    const breadCrumTitle = (id) ? `Editar ${title}` : `Añadir ${title}`
 
     useEffect(() => {
         if ( id ) dispatch(handleStartEditing(endPoint, id))
@@ -60,15 +57,14 @@ export const FormScreen = (props) => {
 
     return (
         <>
-            <BreadCrumbs breadCrumbTitle={breadCrumTitle} breadCrumbParent={title} />
+            <BreadCrumbs breadCrumbTitle={id ? `Editar ${title}` : `Añadir ${title}`} breadCrumbParent={title} />
             <Form onSubmit={submit}>
                 <div className="card">
                     <div className=" card-body row pb-3 px-3">
                         {
                             base && base.map((e, index) => {
-                                const clase = `mt-2 col-${e.col[1]} col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`
                                 const Component = SelectorComponent(e)
-                                return <Component {...e} key={index} containerClassname={clase} />
+                                return <Component {...e} key={index} containerClassname={`mt-2 col-${e.col[1]} col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`} />
                             })
                         }
                     </div>

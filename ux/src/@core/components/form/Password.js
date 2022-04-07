@@ -14,12 +14,8 @@ import { Input } from './Input'
 
 export const InputPassword = () => {
     const dispatch = useDispatch()
-
     const { id } = useParams()
-
     const { normalForm } = useSelector(state => state)
-
-    const pass = normalForm.password ? normalForm.password : ''
 
     const SuccessProgressToast = () => (
         <>
@@ -38,19 +34,11 @@ export const InputPassword = () => {
 
     const generatePass = (e) => {
         e.preventDefault()
-        const password = generator.generate({
-            length: 12,
-            numbers: true,
-            symbols: true
-        })
+        const password = generator.generate({ length: 12, numbers: true, symbols: true })
         dispatch(handleChangeController('password', password))
         dispatch(handleChangeController('confirmPassword', password))
         navigator.clipboard.writeText(password)
         toast.success(<SuccessProgressToast />)
-    }
-
-    const handleInputChange = ({ target }) => {
-        dispatch(handleChangeController('password', target.value))
     }
 
     const submit = async (e) => {
@@ -78,35 +66,28 @@ export const InputPassword = () => {
                 dispatch(handleChangeController('password', ''))
                 dispatch(handleChangeController('confirmPassword', ''))
             }
-            const token = localStorage.getItem('accessToken') || ''
 
             const { data } = await axios.post(`${process.env.REACT_APP_HOST_URI}${endPoints['Users']}/checkUser`, { username: normalForm.login }, {
-                headers: {
-                    'Content-type': 'application/json',
-                    'x-token': token
-                }
+                headers: { 'Content-type': 'application/json', 'x-token': localStorage.getItem('accessToken') || '' }
             })
             if (data.ok === false) {
                 error = '¡Este usuario ya está introducido!'
                 dispatch(handleChangeController('login', ''))
             }
         }
-        if (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: error
-            })
-        }
-
+        if (error) Swal.fire({ icon: 'error', title: 'Error', text: error })
     }
 
     return (
         <>
             <div className='col-md-3'>
                 <div className="mt-2">
-                    <InputPasswordToggle onChange={handleInputChange} value={pass} name="password" label="Contraseña" />
-                    <PasswordStrengthBar minLength="8" shortScoreWord="Demasiado corta" scoreWords={['Débil', 'Floja', 'Media', 'Buena', 'Fuerte']} password={pass} />
+                    <InputPasswordToggle 
+                        onChange={({ target }) => dispatch(handleChangeController('password', target.value))}
+                        value={normalForm.password ? normalForm.password : ''} name="password" label="Contraseña" />
+                    <PasswordStrengthBar
+                        minLength="8" shortScoreWord="Demasiado corta" scoreWords={['Débil', 'Floja', 'Media', 'Buena', 'Fuerte']}
+                        password={normalForm.password ? normalForm.password : ''} />
                     <button className="form-control btn btn-primary" color='primary' onClick={generatePass}>Generar contraseña</button>
                 </div>
             </div>

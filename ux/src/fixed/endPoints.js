@@ -31,7 +31,7 @@ export const endPoints = {
     Logs: '/logs',
     Incidences: '/incidence',
     Materials: '/material',
-    Instruments: '/instrument',
+    InstrumentTypes: '/instrumentType',
     Instrumentals: '/instrumental',
     Sheets: '/sheet',
     Loans: '/loan',

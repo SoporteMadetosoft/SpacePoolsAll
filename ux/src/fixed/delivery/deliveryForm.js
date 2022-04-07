@@ -71,9 +71,9 @@ export const DeliveryForm = {
         },
         {
             col: [6, 6, 6],
-            name: 'instrumentId',
-            label: 'Instrumento',
-            endPoint: 'Instruments'
+            name: 'instrumentTypeId',
+            label: 'InstrumentTypeo',
+            endPoint: 'InstrumentTypes'
         },
         {
             col: [6, 6, 6],

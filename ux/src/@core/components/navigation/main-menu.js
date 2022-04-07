@@ -38,7 +38,7 @@ export default [
                 navLink: '/materials'
             },
             {
-                id: 'instruments',
+                id: 'instrumentTypes',
                 title: 'Instrumentos',
                 icon: <FontAwesomeIcon icon={faCircleNotch} />,
                 navLink: '/instruments'

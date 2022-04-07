@@ -1,6 +1,6 @@
 import { validator } from "../../utility/formValidator/ValidationTypes"
 
-export const InstrumentForm = {
+export const InstrumentTypeForm = {
     structure: {},
     errors: {
         reference: { validations: [validator.isRequired] },
@@ -12,7 +12,7 @@ export const InstrumentForm = {
             col: [1, 1, 1],
             readOnly: true,
             name: 'id',
-            label: 'Nº Instrument'
+            label: 'Nº InstrumentType'
         },
         {
             col: [4, 4, 4],

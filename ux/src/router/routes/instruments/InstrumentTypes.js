@@ -1,19 +1,19 @@
-import { InstrumentForm } from '../../../fixed/instrument/instrumentForm'
-import { InstrumentList } from '../../../fixed/instrument/instrumentList'
+import { InstrumentTypeForm } from '../../../fixed/instrument/instrumentForm'
+import { InstrumentTypeList } from '../../../fixed/instrument/instrumentList'
 import { FormScreen } from '../../../views/FormScreen'
 import { ListScreen } from '../../../views/ListScreen'
 
 const base = {
     title: 'Instrumentos',
-    endPoint: 'Instruments',
+    endPoint: 'InstrumentTypes',
     list: {
-        columns: InstrumentList
+        columns: InstrumentTypeList
     },
     form: {
-        form: InstrumentForm
+        form: InstrumentTypeForm
     }
 }
-const instrumentsRoutes = [
+const InstrumentTypesRoutes = [
     {
         path: '/instruments',
         exact: true,
@@ -21,7 +21,7 @@ const instrumentsRoutes = [
         component: () => <ListScreen {...base} />,
         meta: {
             action: 'read',
-            resource: 'instruments'
+            resource: 'instrumentTypes'
         }
     },
     {
@@ -31,7 +31,7 @@ const instrumentsRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'insert',
-            resource: 'instruments'
+            resource: 'instrumentTypes'
         }
     },
     {
@@ -41,9 +41,9 @@ const instrumentsRoutes = [
         component: () => <FormScreen {...base} />,
         meta: {
             action: 'update',
-            resource: 'instruments'
+            resource: 'instrumentTypes'
         }
     }
 ]
 
-export default instrumentsRoutes
+export default InstrumentTypesRoutes

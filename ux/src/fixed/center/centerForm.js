@@ -1,15 +1,19 @@
 import { validator } from "../../utility/formValidator/ValidationTypes"
+import { addressesRepiterForm } from "../repiters/addressesRepiterForm"
+import { contactsRepiterForm } from "../repiters/contactsRepiterForm"
 
 export const CenterForm = {
     structure: {
-        addresses: [],
-        contacts: []
+        addresses: addressesRepiterForm.structure,
+        contacts: contactsRepiterForm.structure
     },
     errors: {
         name: { validations: [validator.isRequired] },
         code: { validations: [validator.isRequired] },
         oracleNumber: { validations: [validator.isRequired] },
-        cif: { validations: [validator.isRequired] }
+        cif: { validations: [validator.isRequired] },
+        addresses: addressesRepiterForm.errors,
+        contacts: contactsRepiterForm.errors
     },
     base: [
         {
@@ -111,61 +115,7 @@ export const CenterForm = {
         }
     ],
     repeaters: [
-        {
-            titulo: 'Direcciones',
-            endPoint: 'addresses',
-            structure: [
-                {
-                    isDefault: false,
-                    addressTypeId: 0,
-                    centerId: 0,
-                    address: '',
-                    population: '',
-                    province: '',
-                    postcode: ''
-                }
-            ],
-            base: [
-                {
-                    col: [2, 2, 2],
-                    name: 'addressTypeId',
-                    label: 'Tipo dirección',
-                    endPoint: 'AddressType'
-                },
-                {
-                    col: [2, 2, 2],
-                    name: 'address',
-                    label: 'Direccion'
-                },
-                {
-                    col: [2, 2, 2],
-                    name: 'population',
-                    label: 'Población'
-                },
-                {
-                    col: [2, 2, 2],
-                    name: 'province',
-                    label: 'Provincia'
-                },
-                {
-                    col: [2, 2, 2],
-                    name: 'postcode',
-                    label: 'CP'
-                },
-                {
-                    col: [2, 2, 2],
-                    name: 'isDefault',
-                    label: 'Principal',
-                    type: 'radiobutton',
-                    zone: 'addresses'
-                }
-            ]
-        },
-        {
-            titulo: 'Contactos',
-            endPoint: 'contacts',
-            structure: [],
-            base: []
-        }
+        addressesRepiterForm.repeater,
+        contactsRepiterForm.repeater
     ]
 }

@@ -13,7 +13,7 @@ import IncidenceRoutes from './incidences/Incidences'
 import setupRoutes from './setup'
 import UserRoutes from './users/Users'
 import MaterialsRoutes from './materials/Materials'
-import InstrumentsRoutes from './instruments/Instruments'
+import InstrumentTypesRoutes from './instruments/InstrumentTypes'
 import InstrumentalsRoutes from './instrumentals/Instrumentals'
 import SheetsRoutes from './sheets/Sheets'
 import LoansRoutes from './loans/Loans'
@@ -21,6 +21,7 @@ import DepositsRoutes from './deposits/Deposits'
 import SalesRoutes from './sales/Sales'
 import DeliverysRoutes from './deliverys/Deliverys'
 import ComingSoon from '../../views/misc/ComingSoon'
+
 
 // ** Document title
 const TemplateTitle = '%s - CONMED'
@@ -42,7 +43,7 @@ const Routes = [
   //...RouteRoutes,
   //...IncidenceRoutes,
   ...MaterialsRoutes,
-  ...InstrumentsRoutes,
+  ...InstrumentTypesRoutes,
   ...InstrumentalsRoutes,
   ...SheetsRoutes,
   ...LoansRoutes,

@@ -15,7 +15,7 @@ const base = {
 }
 const InstrumentTypesRoutes = [
     {
-        path: '/instruments',
+        path: '/instrumentTypes',
         exact: true,
         layout: 'VerticalLayout',
         component: () => <ListScreen {...base} />,
@@ -25,7 +25,7 @@ const InstrumentTypesRoutes = [
         }
     },
     {
-        path: '/instruments/add',
+        path: '/instrumentTypes/add',
         exact: true,
         layout: 'VerticalLayout',
         component: () => <FormScreen {...base} />,
@@ -35,7 +35,7 @@ const InstrumentTypesRoutes = [
         }
     },
     {
-        path: '/instruments/edit/:id',
+        path: '/instrumentTypes/edit/:id',
         exact: true,
         layout: 'VerticalLayout',
         component: () => <FormScreen {...base} />,

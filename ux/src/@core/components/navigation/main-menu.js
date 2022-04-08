@@ -41,7 +41,7 @@ export default [
                 id: 'instrumentTypes',
                 title: 'Instrumentos',
                 icon: <FontAwesomeIcon icon={faCircleNotch} />,
-                navLink: '/instruments'
+                navLink: '/instrumentTypes'
             },
             {
                 id: 'instrumentals',

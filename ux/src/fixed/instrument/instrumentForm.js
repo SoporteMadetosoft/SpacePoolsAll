@@ -12,7 +12,7 @@ export const InstrumentTypeForm = {
             col: [1, 1, 1],
             readOnly: true,
             name: 'id',
-            label: 'Nº InstrumentType'
+            label: 'Nº Tipo Instrumento'
         },
         {
             col: [4, 4, 4],

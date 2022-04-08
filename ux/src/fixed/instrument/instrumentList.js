@@ -10,7 +10,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 export const InstrumentTypeList = [
     {
-        name: 'Nº InstrumentType',
+        name: 'Nº Tipo Instrumento',
         selector: 'id',
         sortable: true,
         searchable: true,

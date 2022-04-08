@@ -14,7 +14,7 @@ export const InstrumentalForm = {
             col: [1, 1, 1],
             readOnly: true,
             name: 'id',
-            label: 'Nº InstrumentType'
+            label: 'Nº Tipo Instrumento'
         },
         {
             col: [3, 3, 3],

@@ -15,7 +15,7 @@ export const startAddSelectOptions = (endPoint, key, labelName = 'name', params 
         const request = { headers: {'Content-type': 'application/json', 'x-token': token } }
         if (params) request["params"] = params
         const { data } = await axios.get(`${process.env.REACT_APP_HOST_URI}${endPoints[endPoint]}`, request)
-        dispatch(addSelectOptions(key, data.map(option => ({ label: option[labelName], value: option.id }))))
+        if (data.length > 0) dispatch(addSelectOptions(key, data.map(option => ({ label: option[labelName], value: option.id }))))
     }
 }
 export const startAddSelectStatus = (endPoint, key, labelName = 'name') => {

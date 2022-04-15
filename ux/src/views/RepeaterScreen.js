@@ -15,36 +15,32 @@ export const RepeaterScreen = ({ titulo, endPoint, structure, base }) => {
         <>
             <h1 className="card-title mb-0">{titulo}</h1>
             <Repeater count={repet ? repet.length : 0}>
-                {i => <div key={i} ><RepeaterForm position={i} endPoint={endPoint} base={base} /></div>}
+                {i => <div key={i} >
+                    <div className="border-bottom pb-1 mx-1">
+                        <div className='d-flex justify-content-end' style={{marginTop: '5px'}} >
+                            <a className='text-danger' onClick={() => dispatch(removeRepeaterRegister(endPoint, i))}>
+                                <FontAwesomeIcon icon={faTrash} />
+                            </a>
+                        </div>
+                    <div className="row">
+                    {//TODO - REFACTORIZAR para corregir el problema de que no se puede eliminar un registro
+                        base.map((e, index) => {
+                            const Component = SelectorComponent(e)
+                            console.log(e.name, index, i)
+                            return (
+                                <div className={`col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`}>
+                                    <Component {...e} key={index} position={i} zone={endPoint} />
+                                </div>
+                            )
+                        })
+                    }
+            </div>
+        </div>
+                    </div>}
             </Repeater>
             <Button.Ripple className='btn-icon form-control mt-1 btn-sm' color='primary' outline={true} onClick={() => dispatch(addRepeaterRegister(endPoint, { ...structure[0]}))}>
                 <Plus size={14} />
             </Button.Ripple>
         </>
-    )
-}
-
-const RepeaterForm = ({ position, endPoint, base }) => {
-    const dispatch = useDispatch()
-    return (
-        <div className="border-bottom pb-1 mx-1">
-            <div className='d-flex justify-content-end' style={{marginTop: '5px'}} >
-                <a className='text-danger' onClick={() => dispatch(removeRepeaterRegister(endPoint, position))}>
-                    <FontAwesomeIcon icon={faTrash} />
-                </a>
-            </div>
-            <div className="row">
-                {
-                    base.map((e, index) => {
-                        const Component = SelectorComponent(e)
-                        return (
-                            <div className={`col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`}>
-                                <Component {...e} key={index} position={position} zone={endPoint} />
-                            </div>
-                        )
-                    })
-                }
-            </div>
-        </div>
     )
 }

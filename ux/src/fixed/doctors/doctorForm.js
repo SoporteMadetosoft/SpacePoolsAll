@@ -2,13 +2,11 @@ import { validator } from "../../utility/formValidator/ValidationTypes"
 
 export const DoctorForm = {
     structure: {
-        documents: []
     },
     errors: {
         name: { validations: [validator.isRequired] },
         fullName: { validations: [validator.isRequired] }
     },
-    documents: true,
     base: [
         {
             col: [1, 1, 1],

@@ -1,13 +1,16 @@
 import { validator } from "../../utility/formValidator/ValidationTypes"
-import { instrumentTypesRepiterForm } from "../repiters/instrumentsRepiterForm"
+import { instrumentTypeRepiterForm } from "../repiters/instrumentTypeRepiterForm"
+import { materialRepiterForm } from "../repiters/materialRepiterForm"
 
 export const InstrumentalForm = {
     structure: {
-        instrumentTypeInInstrumental: instrumentTypesRepiterForm.structure
+        instrumentalInstrumentType: instrumentTypeRepiterForm.structure,
+        instrumentalMaterial: materialRepiterForm.structure
     },
     errors: {
         gtin: { validations: [validator.isRequired] },
-        instrumentTypeInInstrumental: instrumentTypesRepiterForm.errors
+        instrumentalInstrumentType: instrumentTypeRepiterForm.errors,
+        instrumentalMaterial: materialRepiterForm.errors
     },
     base: [
         {
@@ -59,5 +62,8 @@ export const InstrumentalForm = {
             label: 'Descripción'
         }
     ],
-    repeaters: [ instrumentTypesRepiterForm.repeater ]
+    repeaters: [
+        instrumentTypeRepiterForm.repeater,
+        materialRepiterForm.repeater
+    ]
 }

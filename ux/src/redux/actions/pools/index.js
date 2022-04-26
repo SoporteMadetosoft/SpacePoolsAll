@@ -17,6 +17,7 @@ export const fillFormData = (data) => ({
 export const handleStartEditing = (endpoint, id) => {
     return async (dispatch) => {
         const data = await getFormData(endpoint, id)
+        console.log(data)
         dispatch(fillFormData(data))
     }
 }
@@ -35,7 +36,7 @@ export const handleCalcuteTotalCost = () => {
                 contin = true
                 k = 0
             }
-           // dispatch(handleAddCost(totalCost))
+            // dispatch(handleAddCost(totalCost))
         }
     }
 }

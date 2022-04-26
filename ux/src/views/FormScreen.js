@@ -31,7 +31,7 @@ export const FormScreen = (props) => {
     const [file, setFile] = useState([])
 
     useEffect(() => {
-        if ( id ) dispatch(handleStartEditing(endPoint, id))
+        if (id) dispatch(handleStartEditing(endPoint, id))
         dispatch(initNormalForm(structure))
         dispatch(setSchema(errors))
     }, [initNormalForm])
@@ -39,7 +39,6 @@ export const FormScreen = (props) => {
     const submit = async (e) => {
         e.preventDefault()
         const errors = validate(formValidator.schema, normalForm)
-  
         if (Object.keys(errors).length) {
             dispatch(setErrors(errors))
         } else {

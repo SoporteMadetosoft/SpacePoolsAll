@@ -74,7 +74,8 @@ export const SurgeryForm = {
         {
             col: [12, 12, 12],
             name: 'comments',
-            label: 'Comentarios'
+            label: 'Comentarios',
+            type: 'area'
         }
     ]
 }

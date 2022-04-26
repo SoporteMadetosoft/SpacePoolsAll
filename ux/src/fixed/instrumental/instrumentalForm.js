@@ -14,13 +14,7 @@ export const InstrumentalForm = {
     },
     base: [
         {
-            col: [1, 1, 1],
-            readOnly: true,
-            name: 'id',
-            label: 'Nº Tipo Instrumento'
-        },
-        {
-            col: [3, 3, 3],
+            col: [4, 4, 4],
             name: 'gtin',
             label: 'Código de barras'
         },
@@ -52,13 +46,14 @@ export const InstrumentalForm = {
             master: {
                 name: 'familyId',
                 onChange: (value) => {
-                    return value ? {filter: [`parentId||$eq||${value}`]} : null
-                } 
+                    return value ? { filter: [`parentId||$eq||${value}`] } : null
+                }
             }
         },
         {
             col: [12, 12, 12],
             name: 'description',
+            type: 'area',
             label: 'Descripción'
         }
     ],

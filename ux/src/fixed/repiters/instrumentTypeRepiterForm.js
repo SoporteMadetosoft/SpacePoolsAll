@@ -3,16 +3,19 @@ import { validator } from "../../utility/formValidator/ValidationTypes"
 export const instrumentTypeRepiterForm = {
     structure: [],
     errors: {
-        reference: { validations: [validator.isRequired] }
+        instrumentTypeId: { validations: [validator.isRequired] }
     },
     repeater: {
         titulo: 'Instrumentos',
-        endPoint: 'InstrumentTypes',
-        structure: [ {} ],
+        endPoint: 'instrumentalInstrumentType', // tiene que coincidir con el padre
+        structure: {
+            instrumentTypeId: '',
+            amount: ''
+        },
         base: [
             {
                 col: [5, 5, 5],
-                name: 'instrumentType',
+                name: 'instrumentTypeId',
                 label: 'Instrumentos',
                 endPoint: 'InstrumentTypes',
                 labelName: 'reference'

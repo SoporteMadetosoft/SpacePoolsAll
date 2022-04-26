@@ -40,7 +40,7 @@ const Login = () => {
   const { register, errors, handleSubmit } = useForm()
 
   const illustration = skin === 'dark' ? 'background1.jpg' : 'background1.jpg',
-  source = require(`@src/assets/images/backgrounds/${illustration}`).default
+    source = require(`@src/assets/images/backgrounds/${illustration}`).default
   const logoLogin = require(`@src/assets/images/logo/logo.png`).default
 
   const onSubmit = () => {
@@ -74,7 +74,10 @@ const Login = () => {
             }
           }
         })
-        .catch(err => console.log(err))
+        .catch(err => toast.error(
+          <ToastContent title={'Acceso denegado'} message={'No se han podido validar los datos de acceso'} color='danger' />,
+          { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+        ))
     }
   }
 
@@ -91,7 +94,7 @@ const Login = () => {
             <div className="d-flex d-lg-flex align-items-center justify-content-center mb-2">
               <CardImg src={logoLogin} style={{ width: '300px' }} />
             </div>
-          
+
             <CardText className='mb-1 d-flex d-lg-flex align-items-center justify-content-center'>
               Por favor, introduce tus datos de acceso
             </CardText>

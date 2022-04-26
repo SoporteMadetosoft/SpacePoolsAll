@@ -17,28 +17,27 @@ export const RepeaterScreen = ({ titulo, endPoint, structure, base }) => {
             <Repeater count={repet ? repet.length : 0}>
                 {i => <div key={i} >
                     <div className="border-bottom pb-1 mx-1">
-                        <div className='d-flex justify-content-end' style={{marginTop: '5px'}} >
+                        <div className='d-flex justify-content-end' style={{ marginTop: '5px' }} >
                             <a className='text-danger' onClick={() => dispatch(removeRepeaterRegister(endPoint, i))}>
                                 <FontAwesomeIcon icon={faTrash} />
                             </a>
                         </div>
-                    <div className="row">
-                    {//TODO - REFACTORIZAR para corregir el problema de que no se puede eliminar un registro
-                        base.map((e, index) => {
-                            const Component = SelectorComponent(e)
-                            console.log(e.name, index, i)
-                            return (
-                                <div className={`col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`}>
-                                    <Component {...e} key={index} position={i} zone={endPoint} />
-                                </div>
-                            )
-                        })
-                    }
-            </div>
-        </div>
-                    </div>}
+                        <div className="row">
+                            {//TODO - REFACTORIZAR para corregir el problema de que no se puede eliminar un registro
+                                base.map((e, index) => {
+                                    const Component = SelectorComponent(e)
+                                    return (
+                                        <div className={`col-xs-${e.col[0]} col-md-${e.col[1]} col-lg-${e.col[2]}`}>
+                                            <Component {...e} key={index} position={i} zone={endPoint} />
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                </div>}
             </Repeater>
-            <Button.Ripple className='btn-icon form-control mt-1 btn-sm' color='primary' outline={true} onClick={() => dispatch(addRepeaterRegister(endPoint, { ...structure[0]}))}>
+            <Button.Ripple className='btn-icon form-control mt-1 btn-sm' color='primary' outline={true} onClick={() => dispatch(addRepeaterRegister(endPoint, { ...structure[0] }))}>
                 <Plus size={14} />
             </Button.Ripple>
         </>

@@ -3,16 +3,16 @@ import { validator } from "../../utility/formValidator/ValidationTypes"
 export const materialRepiterForm = {
     structure: [],
     errors: {
-        reference: { validations: [validator.isRequired] }
+        materialId: { validations: [validator.isRequired] }
     },
     repeater: {
         titulo: 'Materiales',
-        endPoint: 'Materials',
-        structure: [ {} ],
+        endPoint: 'instrumentalMaterial',
+        structure: [{}],
         base: [
             {
                 col: [5, 5, 5],
-                name: 'Material',
+                name: 'materialId',
                 label: 'Material',
                 endPoint: 'Materials',
                 labelName: 'reference'

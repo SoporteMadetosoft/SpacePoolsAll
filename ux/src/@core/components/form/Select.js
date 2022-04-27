@@ -26,12 +26,12 @@ export const Select = ({ name, label, className = '', endPoint, placeholder = la
     useEffect(() => dispatch(startAddSelectOptions(endPoint, endPoint, labelName, master?.onChange(normalForm[master?.name]))), [normalForm[master?.name]])
     return (
         <div className={containerClassname} style={{ ...containerStyle }}>
-            { label && <label className="control-label d-flex justify-content-between">{label} {<InputValidator errMsg={errMsg} errors={formValidator.errors} target={name} />}</label> }
+            {label && <label className="control-label d-flex justify-content-between">{label} {<InputValidator errMsg={errMsg} errors={formValidator.errors} target={name} />}</label>}
             <ReactSelect
                 isClearable={isClearable}
                 className={`${className} ${formValidator.errors && formValidator.errors[name] ? 'border-danger rounded' : ''}`}
                 name={name}
-                isDisabled={options?.length === 0 }
+                isDisabled={options?.length === 0}
                 classNamePrefix={'select'}
                 theme={selectThemeColors}
                 styles={styles}

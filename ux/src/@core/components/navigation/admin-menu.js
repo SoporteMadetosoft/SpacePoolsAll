@@ -1,12 +1,25 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExclamationCircle, faList, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faExclamationCircle, faList, faUser, faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 
 export default [
     {
-        id: 'users',
-        title: 'Usuarios',
+        id: 'usuariosRoles',
+        title: 'Usuarios / Roles',
         icon: <FontAwesomeIcon icon={faUser} />,
-        navLink: '/user'
+        children: [
+            {
+                id: 'users',
+                title: 'Usuarios',
+                icon: <FontAwesomeIcon icon={faCircleNotch} />,
+                navLink: '/user'
+            },
+            {
+                id: 'roles',
+                title: 'Roles',
+                icon: <FontAwesomeIcon icon={faCircleNotch} />,
+                navLink: '/role'
+            }
+        ]
     },
     {
         id: 'alerts',

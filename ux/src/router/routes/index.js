@@ -8,8 +8,8 @@ import PagesRoutes from './Pages'
 import ProcedureRoutes from './procedures/Procedures'
 import SurgeryRoutes from './surgery/Surgery'
 import VehicleRoutes from './vehicles/Vehicles'
-import RouteRoutes from './routes/Routes'
-import IncidenceRoutes from './incidences/Incidences'
+// import RouteRoutes from './routes/Routes'
+// import IncidenceRoutes from './incidences/Incidences'
 import setupRoutes from './setup'
 import UserRoutes from './users/Users'
 import MaterialsRoutes from './materials/Materials'
@@ -21,6 +21,7 @@ import DepositsRoutes from './deposits/Deposits'
 import SalesRoutes from './sales/Sales'
 import DeliverysRoutes from './deliverys/Deliverys'
 import ComingSoon from '../../views/misc/ComingSoon'
+import RoleRoutes from './roles/Roles'
 
 // ** Document title
 const TemplateTitle = '%s - CONMED'
@@ -50,6 +51,7 @@ const Routes = [
   ...SalesRoutes,
   ...DeliverysRoutes,
   ...UserRoutes,
+  ...RoleRoutes,
   ...setupRoutes,
   {
     path: '/commingSoon',
@@ -57,8 +59,8 @@ const Routes = [
     layout: 'VerticalLayout',
     component: () => ComingSoon(),
     meta: {
-        action: 'read',
-        resource: 'loans'
+      action: 'read',
+      resource: 'loans'
     }
   }
 ]

@@ -7,6 +7,7 @@ import { Toggle } from '@components/form/Toggle'
 import { SelectBotton } from '@components/form/SelectBotton'
 
 export const SelectorComponent = (component) => {
+    if (component.component) return component.component
     if (component.endPoint || component.customOptions) {
         if (component.multi) return MultiSelect
         else return Select
